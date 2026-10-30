@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Congratulations! Apna Store Setup Karein | SheetStore Pro</title>
+  <meta name="description" content="Aapka order confirm ho gaya hai. Ab sirf 2 clicks me apni website aur Google Sheet ko live karein." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              emerald: '#10B981',
+              gold: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[#0A0F1D] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-slate-800 bg-[#0E1528]/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
+          <i data-lucide="zap" class="w-5 h-5"></i>
+        </div>
+        <span class="font-heading font-extrabold text-lg text-white">SheetStore <span class="text-blue-500">Pro</span></span>
+      </div>
+      <a href="https://wa.me/919999999999?text=Namaste!%20Maine%20SheetStore%20Pro%20order%20kiya%20hai,%20mujhe%20support%20chahiye" 
+         target="_blank"
+         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold hover:bg-emerald-600 hover:text-white transition">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        <span>VIP WhatsApp Support</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN ONBOARDING LAUNCHPAD -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-12 flex-1 w-full">
+    
+    <!-- Success Banner -->
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 animate-bounce">
+        <i data-lucide="check-circle-2" class="w-9 h-9"></i>
+      </div>
+      <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs uppercase font-extrabold tracking-wider">Payment Confirmed</span>
+      <h1 class="font-heading font-black text-2xl sm:text-4xl text-white mt-3 mb-3">
+        Badhai Ho! Aapka Store Setup Ready Hai 🎉
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base">
+        Aapko koi coding ya server setup nahi karna hai. Niche diye gaye <strong class="text-white">sirf 2 buttons</strong> par click karein aur aapki website internet par LIVE ho jayegi!
+      </p>
+    </div>
+
+    <!-- 2 STEP ACTION CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      
+      <!-- STEP 1: GOOGLE SHEET -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-blue-500/50 transition rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group shadow-xl">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-500/40 text-blue-400 font-heading font-black text-lg flex items-center justify-center">1</span>
+            <span class="text-[11px] font-semibold text-emerald-400 flex items-center gap-1">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i> 10 Seconds
+            </span>
+          </div>
+
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Google Sheet Copy Karein</h3>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+            Niche diye gaye button par click karein. Yeh sheet <strong class="text-blue-300">aapke personal Google Drive</strong> me automatically copy ho jayegi saare pre-built products aur settings ke sath!
+          </p>
+        </div>
+
+        <div>
+          <!-- 1-Click Copy Link -->
+          <a href="https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/copy" 
+             target="_blank"
+             id="sheetCopyBtn"
+             class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition hover:scale-[1.02] active:scale-95">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>1-Click Copy Google Sheet</span>
+          </a>
+          <p class="text-[11px] text-slate-500 text-center mt-2.5">
+            Click karte hi Google Drive me 'Make a copy' par click karein.
+          </p>
+        </div>
+      </div>
+
+      <!-- STEP 2: GITHUB LAUNCH -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 transition rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group shadow-xl">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-heading font-black text-lg flex items-center justify-center">2</span>
+            <span class="text-[11px] font-semibold text-emerald-400 flex items-center gap-1">
+              <i data-lucide="globe" class="w-3.5 h-3.5"></i> 30 Seconds
+            </span>
+          </div>
+
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Website Internet Par Live Karein</h3>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+            Yeh link GitHub par aapke account me template copy karega. Bas <strong class="text-emerald-300">"Create Repository"</strong> dabate hi aapki website lifetime ke liye free live ho jayegi!
+          </p>
+        </div>
+
+        <div>
+          <!-- 1-Click GitHub Template Link -->
+          <a href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art" 
+             target="_blank"
+             class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition hover:scale-[1.02] active:scale-95">
+            <i data-lucide="rocket" class="w-4 h-4"></i>
+            <span>1-Click Launch on GitHub</span>
+          </a>
+          <p class="text-[11px] text-slate-500 text-center mt-2.5">
+            GitHub login karke green 'Create repository' button dabayein.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- QUICK 3-MINUTE VIDEO / GUIDE CARD -->
+    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+          <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-white">Video Walkthrough (Sirf 2 Minute)</h3>
+          <p class="text-xs text-slate-400">Dekhein kaise sheet me naya product add karein aur WhatsApp par orders receive karein.</p>
+        </div>
+      </div>
+
+      <!-- Video / Guide Steps Box -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm">
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80">
+          <div class="font-bold text-blue-400 mb-1">Kadam 1: Sheet Setup</div>
+          <p class="text-slate-400">Sheet me Extensions ➔ Apps Script me jakar 'setupAutoTabs' run karein aur Web App URL copy karein.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80">
+          <div class="font-bold text-emerald-400 mb-1">Kadam 2: Site Se Connect</div>
+          <p class="text-slate-400">Apni website ke footer me "Sheet Settings" dabayein aur apna WhatsApp number aur Sheet URL daal dein.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80">
+          <div class="font-bold text-amber-400 mb-1">Kadam 3: Sale Shuru!</div>
+          <p class="text-slate-400">Apne Instagram/Facebook bio ya ads me link share karein aur direct WhatsApp par UPI payment orders payein!</p>
+        </div>
+      </div>
+
+      <!-- Need Help Banner -->
+      <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="text-sm font-semibold text-white">Koi Pareshani Ya Doubt Hai?</div>
+          <div class="text-xs text-slate-400">Humari team aapko setup karne me personally help karegi.</div>
+        </div>
+        <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20setup%20me%20help%20chahiye" 
+           target="_blank"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition">
+          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+          <span>Ask on WhatsApp (Instant Reply)</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 py-6 text-center text-xs text-slate-500 bg-[#070B14]">
+    <div class="max-w-5xl mx-auto px-4">
+      <p>&copy; 2026 SheetStore Pro. All rights reserved. Zero hosting, zero domain hassle.</p>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VastuGeo Tools | 100% Accurate GeoGebra Vastu Software & Templates</title>
+  <meta name="description" content="Calculate 16 Zones, 32 Entrances & 45 Devtas in minutes with 100% degree accuracy using ready GeoGebra (.ggb) templates." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            vastu: {
+              gold: '#D4AF37',
+              goldLight: '#F5E6BE',
+              goldDark: '#997317',
+              navy: '#0B132B',
+              navyLight: '#1C2541',
+              accent: '#3A506B',
+              copper: '#D35400',
+              emerald: '#10B981',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar & glassmorphism */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B132B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 4px;
+    }
+    .glass-card {
+      background: rgba(28, 37, 65, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .glass-card:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #F9E79F 0%, #D4AF37 50%, #B7950B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge-pulse {
+      box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+      animation: pulse-gold 2s infinite;
+    }
+    @keyframes pulse-gold {
+      0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    }
+  </style>
+</head>
+
+<body class="bg-[#070B19] text-slate-100 font-sans antialiased selection:bg-vastu-gold selection:text-vastu-navy">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 text-slate-950 text-xs sm:text-sm font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 shadow-md">
+    <span class="inline-block px-2 py-0.5 bg-black text-amber-300 rounded text-xs uppercase tracking-wider font-extrabold">Offer</span>
+    <span id="announcementText">Special Launch Discount: 50% OFF on all GeoGebra Vastu Grids & Templates!</span>
+    <a href="#products" class="underline font-bold hover:text-white transition ml-1">Claim Offer &rarr;</a>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-[#070B19]/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div id="brandLogoContainer" class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-heading font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition overflow-hidden">
+          <i data-lucide="compass" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <span id="brandNameText" class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white flex items-center gap-1">
+            Vastu<span class="text-vastu-gold">Geo</span>
+          </span>
+          <p id="brandTaglineText" class="text-[10px] text-amber-200/70 tracking-widest uppercase font-semibold">Mathematical Vastu Tools</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#features" class="hover:text-vastu-gold transition">Kyu GeoGebra?</a>
+        <a href="#products" class="hover:text-vastu-gold transition">Softwares & Files</a>
+        <a href="#how-it-works" class="hover:text-vastu-gold transition">Kaise Kaam Karta Hai</a>
+        <a href="#faq" class="hover:text-vastu-gold transition">FAQs</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20GeoGebra%20Vastu%20Software%20ke%20bare%20me%20jaankari%20chahiye" 
+           target="_blank"
+           id="headerWaBtn"
+           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm transition shadow-lg shadow-emerald-900/30">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">WhatsApp Help</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-20 overflow-hidden">
+    <!-- Glow Background Accents -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[130px] pointer-events-none rounded-full"></div>
+    <div class="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-indigo-600/15 blur-[120px] pointer-events-none rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        
+        <!-- Trust Tag -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-vastu-navyLight/80 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-medium mb-6">
+          <i data-lucide="shield-check" class="w-4 h-4 text-vastu-gold"></i>
+          <span id="heroBadgeText">For Modern Vastu Consultants, Architects & Civil Engineers</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 id="heroTitleText" class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-6">
+          Khatam Karein Manual Compass Ki Galatfehmi. 
+          <span class="gold-gradient-text block mt-2">100% Accurate Vastu with GeoGebra</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p id="heroSubtitleText" class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+          Kisi bhi floor plan ko sirf 2 minute me <strong class="text-amber-300">16 Zones, 32 Entrances aur 45 Devtas</strong> ke sath degree-to-degree map karein. Ready-to-use <span class="text-white font-semibold">.ggb</span> templates bina kisi AutoCAD ya heavy software ke!
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition">
+            <i data-lucide="download" class="w-5 h-5"></i>
+            <span>Browse GeoGebra Files</span>
+          </a>
+          <a href="#how-it-works" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-semibold text-base border border-slate-700 hover:border-amber-400/40 transition">
+            <i data-lucide="play-circle" class="w-5 h-5 text-amber-400"></i>
+            <span>Kaise Chalate Hai Dekhein</span>
+          </a>
+        </div>
+
+        <!-- Fast Stats / Trust Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-800/80 text-left">
+          <div class="p-3 bg-slate-900/50 rounded-xl border border-slate-800">
+            <div class="text-amber-400 font-bold text-xl sm:text-2xl font-heading">0.1°</div>
+            <div class="text-xs text-slate-400">Exact Degree Accuracy</div>
+          </div>
+          <div class="p-3 bg-slate-900/50 rounded-xl border border-slate-800">
+            <div class="text-amber-400 font-bold text-xl sm:text-2xl font-heading">100% Free</div>
+            <div class="text-xs text-slate-400">GeoGebra Base Software</div>
+          </div>
+          <div class="p-3 bg-slate-900/50 rounded-xl border border-slate-800">
+            <div class="text-amber-400 font-bold text-xl sm:text-2xl font-heading">Instant</div>
+            <div class="text-xs text-slate-400">Direct Download on Phone/PC</div>
+          </div>
+          <div class="p-3 bg-slate-900/50 rounded-xl border border-slate-800">
+            <div class="text-amber-400 font-bold text-xl sm:text-2xl font-heading">Lifetime</div>
+            <div class="text-xs text-slate-400">One-time Price, No Monthly Fee</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY GEOGEBRA SECTION -->
+  <section id="features" class="py-16 bg-[#0B132B]/60 border-y border-slate-800/80 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-amber-400 mb-2">Modern Vastu Technology</h2>
+        <p class="font-heading font-bold text-2xl sm:text-4xl text-white">Traditional Compass vs GeoGebra Mapping</p>
+        <p class="text-slate-400 text-sm mt-3">Manual protector se degrees draw karne me 1-2 degree ka error bhi Devta ya Zone galat kar deta hai.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-5 border border-amber-500/20 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
+            <i data-lucide="target" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-white mb-2">Auto Center & North Locking</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Bas apne ghar/flat ka floor plan image upload karein. GeoGebra template automatically center point (Brahmasthan) aur North orientation lock kar deta hai.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-5 border border-amber-500/20 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
+            <i data-lucide="grid" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-white mb-2">16 Zones + 32 Entrances</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Har ek zone 22.5° aur entrance 11.25° bilkul mathematical division ke sath floor plan ke boundary par project hoti hai. Zero confusion!
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-5 border border-amber-500/20 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
+            <i data-lucide="sparkles" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-white mb-2">45 Devta Energy Grid</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Advanced Astro-Vastu aur Devta remedies ke liye pure 45 Devtaon ka padavinyas grid instantly plan par fit ho jata hai.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS SECTION (DYNAMICALLY LOADED FROM GOOGLE SHEET) -->
+  <section id="products" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-widest text-amber-400 mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live Catalog
+          </span>
+          <h2 class="font-heading font-extrabold text-2xl sm:text-4xl text-white">GeoGebra Vastu Tools & Software</h2>
+          <p class="text-slate-400 text-sm mt-1">Instant digital download. File open karein aur turant analysis start karein.</p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-wrap items-center gap-2 p-1.5 bg-slate-900/80 border border-slate-800 rounded-xl" id="categoryFilterContainer">
+          <button onclick="filterCategory('all')" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition">All Items</button>
+          <button onclick="filterCategory('software')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">GGB Software</button>
+          <button onclick="filterCategory('template')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">Chakra Grids</button>
+          <button onclick="filterCategory('bundle')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">Master Bundles</button>
+        </div>
+      </div>
+
+      <!-- Sync Status Indicator -->
+      <div id="syncStatus" class="mb-6 text-xs text-slate-400 flex items-center gap-2">
+        <i data-lucide="cloud" class="w-4 h-4 text-amber-400"></i>
+        <span>Ready • Direct instant delivery via WhatsApp</span>
+      </div>
+
+      <!-- PRODUCTS GRID -->
+      <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Products will be dynamically populated here via JavaScript or fallback to initial data -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION -->
+  <section id="how-it-works" class="py-16 bg-slate-900/50 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-amber-400 mb-2">Aasan 3 Kadam</h2>
+        <p class="font-heading font-bold text-2xl sm:text-3xl text-white">File Lene Aur Chalane Ka Tarika</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <!-- Step 1 -->
+        <div class="bg-slate-950/70 p-6 rounded-2xl border border-slate-800 text-center relative">
+          <div class="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 font-heading font-bold text-lg flex items-center justify-center mx-auto mb-4">1</div>
+          <h3 class="font-heading font-bold text-lg text-white mb-2">Product Choose Karein</h3>
+          <p class="text-slate-400 text-sm">Apni requirement ke hisab se 16 Zones, 32 Entrances ya Master Bundle select karein aur "Order on WhatsApp" click karein.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-slate-950/70 p-6 rounded-2xl border border-slate-800 text-center relative">
+          <div class="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 font-heading font-bold text-lg flex items-center justify-center mx-auto mb-4">2</div>
+          <h3 class="font-heading font-bold text-lg text-white mb-2">WhatsApp / UPI Payment</h3>
+          <p class="text-slate-400 text-sm">Aapko WhatsApp par direct UPI QR Code milega. 1 minute me payment complete karein aur screenshot bhej dein.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-slate-950/70 p-6 rounded-2xl border border-slate-800 text-center relative">
+          <div class="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-heading font-bold text-lg flex items-center justify-center mx-auto mb-4">3</div>
+          <h3 class="font-heading font-bold text-lg text-white mb-2">Turant .GGB File Receive</h3>
+          <p class="text-slate-400 text-sm">Payment confirm hote hi GeoGebra file (.ggb) aur use karne ka video guide aapke WhatsApp par turant mil jayega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQS ACCORDION -->
+  <section id="faq" class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-amber-400 mb-2">Aam Sawal</h2>
+        <p class="font-heading font-bold text-2xl sm:text-3xl text-white">Frequently Asked Questions</p>
+      </div>
+
+      <div class="space-y-4" id="faqAccordion">
+        <!-- FAQ 1 -->
+        <div class="glass-card rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between font-semibold text-white text-base">
+            <span>Kya GeoGebra software free hai?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-amber-400 transition-transform"></i>
+          </div>
+          <p class="text-slate-300 text-sm mt-3 hidden">
+            Haan, GeoGebra bilkul 100% Free Open-Source software hai. Aap isse Windows, Mac ya Mobile me bina kisi monthly subscription ke install kar sakte hain. Hum aapko ready-to-use Vastu templates (.ggb files) dete hain.
+          </p>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="glass-card rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between font-semibold text-white text-base">
+            <span>Payment ke baad file kab aur kaise milegi?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-amber-400 transition-transform"></i>
+          </div>
+          <p class="text-slate-300 text-sm mt-3 hidden">
+            Payment confirmation hote hi aapko WhatsApp par direct GeoGebra file (.ggb format) aur Google Drive backup link instantly bhej diya jata hai.
+          </p>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="glass-card rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between font-semibold text-white text-base">
+            <span>Kya ise chalane ke liye koi training ya computer expert hona zaroori hai?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-amber-400 transition-transform"></i>
+          </div>
+          <p class="text-slate-300 text-sm mt-3 hidden">
+            Bilkul nahi! File ke sath hum ek 5 minute ka simple step-by-step video bhejte hain. Bas floor plan image drag karein aur North degree set karein, baaki sab automatic calculate ho jata hai.
+          </p>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="glass-card rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between font-semibold text-white text-base">
+            <span>Kya future updates ya customer support milega?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-amber-400 transition-transform"></i>
+          </div>
+          <p class="text-slate-300 text-sm mt-3 hidden">
+            Haan! Agar file open karne ya floor plan map karne me koi bhi issue aaye, aap hume directly WhatsApp par contact kar sakte hain. Hum screen share ya video call par bhi guide karte hain.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#050811] border-t border-slate-800/80 py-12 text-slate-400 text-xs sm:text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <div>
+          <span id="footerBrandName" class="font-heading font-bold text-lg text-white">Vastu<span class="text-vastu-gold">Geo</span> Tools</span>
+          <p id="footerBrandTagline" class="text-slate-500 text-xs mt-1">Mathematical precision software & templates for Vastu Practitioners.</p>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="#products" class="hover:text-amber-400">Products</a>
+          <a href="#how-it-works" class="hover:text-amber-400">Process</a>
+          <a href="#faq" class="hover:text-amber-400">FAQ</a>
+          <a href="#" onclick="openConfigModal(); return false;" class="text-amber-400/80 hover:text-amber-300 underline">Sheet Settings</a>
+        </div>
+      </div>
+      <div class="border-t border-slate-800/60 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 VastuGeo. All Rights Reserved. Built for professionals.</p>
+        <p>Disclaimer: Tools are intended for architectural and Vedic Vastu energy planning.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20GeoGebra%20Vastu%20files%20ke%20bare%20me%20puchna%20hai" 
+     target="_blank" 
+     id="floatingWaBtn"
+     class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold shadow-2xl shadow-emerald-500/40 hover:scale-105 active:scale-95 transition">
+    <i data-lucide="message-circle" class="w-6 h-6 fill-current"></i>
+    <span class="text-sm hidden sm:inline">WhatsApp Enquiry</span>
+  </a>
+
+  <!-- ORDER MODAL (Direct WhatsApp + UPI QR) -->
+  <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B132B] border border-amber-500/30 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+      <!-- Close button -->
+      <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-2 border border-amber-500/20">
+          <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-heading font-bold text-xl text-white" id="modalProductTitle">Product Title</h3>
+        <p class="text-xs text-amber-400 font-semibold" id="modalProductCategory">Digital Software File</p>
+      </div>
+
+      <!-- Price Box -->
+      <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 flex items-center justify-between mb-5">
+        <div>
+          <span class="text-xs text-slate-400 block">Offer Price:</span>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-bold font-heading text-emerald-400" id="modalSellingPrice">₹799</span>
+            <span class="text-xs text-slate-500 line-through" id="modalOriginalPrice">₹1,999</span>
+          </div>
+        </div>
+        <span class="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-lg">Instant Download</span>
+      </div>
+
+      <!-- Form Inputs -->
+      <div class="space-y-3 mb-5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka Naam (Optional)</label>
+          <input type="text" id="custName" placeholder="Jaise: Rajesh Sharma" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka City / State</label>
+          <input type="text" id="custCity" placeholder="Jaise: Jaipur, Rajasthan" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-amber-400 focus:outline-none" />
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="space-y-2.5">
+        <button onclick="submitOrderToWhatsApp()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition">
+          <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
+          <span>WhatsApp Par Order Bhejein</span>
+        </button>
+
+        <button onclick="toggleUpiView()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition">
+          <i data-lucide="qr-code" class="w-4 h-4 text-amber-400"></i>
+          <span id="upiToggleText">Direct UPI QR Code Se Pay Karein</span>
+        </button>
+      </div>
+
+      <!-- Hidden UPI Details Section -->
+      <div id="upiDetailsSection" class="hidden mt-4 pt-4 border-t border-slate-800 text-center">
+        <p class="text-xs text-slate-300 mb-2 font-medium">Scan QR to Pay via Any UPI App (GPay/PhonePe/Paytm)</p>
+        <div class="bg-white p-3 rounded-xl inline-block shadow-lg mx-auto">
+          <!-- Dynamic UPI QR using Google Charts API -->
+          <img id="upiQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi%3A%2F%2Fpay%3Fpa%3Dyourupi%40oksbi%26pn%3DVastuGeo%26cu%3DINR" alt="UPI QR" class="w-36 h-36 mx-auto" />
+        </div>
+        <p class="text-[11px] text-amber-400 font-mono mt-2" id="upiIdDisplay">UPI ID: vastuconsultant@upi</p>
+        <p class="text-[10px] text-slate-400 mt-1">Payment ke baad WhatsApp par screenshot bhejte hi file mil jayegi.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GOOGLE SHEET CONFIGURATION MODAL (For Store Owner) -->
+  <div id="configModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B132B] border border-slate-700 rounded-2xl max-w-lg w-full p-6 relative">
+      <button onclick="closeConfigModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+      <h3 class="font-heading font-bold text-xl text-white mb-1 flex items-center gap-2">
+        <i data-lucide="settings" class="w-5 h-5 text-amber-400"></i>
+        <span>Store & Google Sheet Settings</span>
+      </h3>
+      <p class="text-xs text-slate-400 mb-4">Apna WhatsApp Number aur Google Sheet URL yahan update karein.</p>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Number (with Country Code)</label>
+          <input type="text" id="configWaNumber" placeholder="919876543210" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
+          <span class="text-[10px] text-slate-500">Example: 91 followed by 10 digit number (bina + ya space ke)</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">UPI ID (for Direct QR)</label>
+          <input type="text" id="configUpiId" placeholder="yourname@okaxis" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Google Sheet JSON / Apps Script Web App URL</label>
+          <input type="text" id="configSheetUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
+          <span class="text-[10px] text-slate-500">Isko khali chhodne par default products load honge.</span>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button onclick="saveStoreSettings()" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm">Save & Refresh</button>
+          <button onclick="resetToDefaults()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-sm">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // ==========================================
+    // 1. DEFAULT SAMPLE PRODUCTS (Offline Fallback)
+    // ==========================================
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "ggb-16-zones",
+        title: "16 Zones GeoGebra Vastu Chakra Template",
+        category: "software",
+        badge: "Most Popular",
+        price_original: "1999",
+        price_selling: "799",
+        thumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
+        description: "Automatic North locking, 22.5 degree zone division and center-finding algorithm for any house plan.",
+        features: "16 Precise Vedic Zones, Auto Center Brahmasthan Finder, Works on PC & Mobile GeoGebra, Video Tutorial Included",
+        is_active: "TRUE"
+      },
+      {
+        id: "ggb-32-entrances",
+        title: "32 Entrances (Padavinyas) Calculator File",
+        category: "software",
+        badge: "High Accuracy",
+        price_original: "2499",
+        price_selling: "999",
+        thumbnail: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80",
+        description: "Calculate exact 11.25 degree energy entrance zones (N1 to N8, E1 to E8, S1 to S8, W1 to W8) effortlessly.",
+        features: "All 32 Door Entrances Marked, Exact Degree Projection on Outer Walls, Avoid Door Cut Errors, Lifetime Access",
+        is_active: "TRUE"
+      },
+      {
+        id: "ggb-45-devta",
+        title: "45 Devta Energy Grid (.GGB Template)",
+        category: "template",
+        badge: "Advanced Vastu",
+        price_original: "2999",
+        price_selling: "1299",
+        thumbnail: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80",
+        description: "Vedic 45 Devtas (32 outer + 13 inner devtas) mapped mathematically on your floor plan for precision remedies.",
+        features: "45 Devta Boundaries, Color-coded Energy Fields, Elemental balance check, GeoGebra 5 & 6 Compatible",
+        is_active: "TRUE"
+      },
+      {
+        id: "ggb-master-bundle",
+        title: "Complete Master Vastu GeoGebra Suite (All-In-One)",
+        category: "bundle",
+        badge: "Mega Saver 65% OFF",
+        price_original: "7499",
+        price_selling: "2499",
+        thumbnail: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
+        description: "Full suite containing 16 Zones + 32 Entrances + 45 Devtas + Ayadi Calculations + High-Res PNG Chakra Overlays.",
+        features: "All 5 Premium Files Included, Client Report Presentation Templates, Priority WhatsApp Support, Future Updates Included",
+        is_active: "TRUE"
+      },
+      {
+        id: "ggb-chakra-overlays",
+        title: "Transparent Shakti Chakra Overlays Pack (PNG/PDF)",
+        category: "template",
+        badge: "Essential",
+        price_original: "999",
+        price_selling: "499",
+        thumbnail: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80",
+        description: "Ultra High-Resolution transparent 360-degree Vastu Chakras with 16 zones and 32 entrances for Photoshop/Canva.",
+        features: "4000x4000px Ultra HD, Transparent Background, Clean Degree Markings, Instant Download",
+        is_active: "TRUE"
+      }
+    ];
+
+    // ==========================================
+    // 2. CONFIGURATION & STATE
+    // ==========================================
+    let currentProducts = [...DEFAULT_PRODUCTS];
+    let selectedProduct = null;
+    let activeFilter = 'all';
+
+    // Parse URL parameters for zero-code automatic setup
+    // Example: website.com/?wa=919876543210&upi=my@upi&sheet=https://...
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('wa')) {
+      localStorage.setItem('vastu_wa_num', urlParams.get('wa'));
+    }
+    if (urlParams.get('upi')) {
+      localStorage.setItem('vastu_upi_id', urlParams.get('upi'));
+    }
+    if (urlParams.get('sheet')) {
+      localStorage.setItem('vastu_sheet_url', urlParams.get('sheet'));
+    }
+
+    // Store settings saved in localStorage
+    const storeConfig = {
+      whatsappNumber: localStorage.getItem('vastu_wa_num') || "919999999999",
+      upiId: localStorage.getItem('vastu_upi_id') || "vastuconsultant@upi",
+      sheetUrl: localStorage.getItem('vastu_sheet_url') || ""
+    };
+
+    // Function to apply dynamic site settings to UI
+    function applySiteSettings(s) {
+      if (!s) return;
+      if (s.brand_name) {
+        const brandEls = [document.getElementById('brandNameText'), document.getElementById('footerBrandName')];
+        brandEls.forEach(el => { if (el) el.innerHTML = s.brand_name; });
+        document.title = s.brand_name + " | Mathematical Vastu Tools";
+      }
+      if (s.brand_tagline) {
+        const tagEls = [document.getElementById('brandTaglineText'), document.getElementById('footerBrandTagline')];
+        tagEls.forEach(el => { if (el) el.innerText = s.brand_tagline; });
+      }
+      if (s.logo_url && s.logo_url.trim()) {
+        const logoContainer = document.getElementById('brandLogoContainer');
+        if (logoContainer) {
+          logoContainer.innerHTML = `<img src="${s.logo_url}" alt="Logo" class="w-full h-full object-cover rounded-xl" />`;
+        }
+      }
+      if (s.announcement_text) {
+        const el = document.getElementById('announcementText');
+        if (el) el.innerText = s.announcement_text;
+      }
+      if (s.hero_badge) {
+        const el = document.getElementById('heroBadgeText');
+        if (el) el.innerText = s.hero_badge;
+      }
+      if (s.hero_title) {
+        const el = document.getElementById('heroTitleText');
+        if (el) el.innerHTML = s.hero_title;
+      }
+      if (s.hero_subtitle) {
+        const el = document.getElementById('heroSubtitleText');
+        if (el) el.innerHTML = s.hero_subtitle;
+      }
+      if (s.whatsapp_number) {
+        storeConfig.whatsappNumber = s.whatsapp_number;
+        localStorage.setItem('vastu_wa_num', s.whatsapp_number);
+      }
+      if (s.upi_id) {
+        storeConfig.upiId = s.upi_id;
+        localStorage.setItem('vastu_upi_id', s.upi_id);
+      }
+      applyContactDetails();
+    }
+
+    // Update WhatsApp links on page
+    function applyContactDetails() {
+      const headerWa = document.getElementById('headerWaBtn');
+      const floatingWa = document.getElementById('floatingWaBtn');
+      const upiDisplay = document.getElementById('upiIdDisplay');
+
+      const waMsg = encodeURIComponent("Namaste! Mujhe GeoGebra Vastu Software ke bare me jaankari chahiye.");
+      const waLink = `https://wa.me/${storeConfig.whatsappNumber}?text=${waMsg}`;
+
+      if (headerWa) headerWa.href = waLink;
+      if (floatingWa) floatingWa.href = waLink;
+      if (upiDisplay) upiDisplay.innerText = `UPI ID: ${storeConfig.upiId}`;
+    }
+
+    // ==========================================
+    // 3. FETCH PRODUCTS & SETTINGS FROM GOOGLE SHEET
+    // ==========================================
+    async function fetchProductsFromSheet() {
+      const syncStatus = document.getElementById('syncStatus');
+      
+      if (!storeConfig.sheetUrl || storeConfig.sheetUrl.trim() === "") {
+        console.log("No custom Google Sheet URL specified. Using built-in products.");
+        renderProducts(currentProducts);
+        return;
+      }
+
+      syncStatus.innerHTML = `<i data-lucide="loader" class="w-4 h-4 text-amber-400 animate-spin"></i><span>Syncing catalog from Google Sheet...</span>`;
+      lucide.createIcons();
+
+      try {
+        const response = await fetch(storeConfig.sheetUrl);
+        const data = await response.json();
+        
+        // 1. Sync dynamic settings
+        if (data.settings && Object.keys(data.settings).length > 0) {
+          applySiteSettings(data.settings);
+          localStorage.setItem('vastu_cached_settings', JSON.stringify(data.settings));
+        }
+
+        // 2. Sync dynamic products
+        let products = [];
+        if (Array.isArray(data)) {
+          products = data;
+        } else if (data.products && Array.isArray(data.products)) {
+          products = data.products;
+        }
+
+        if (products.length > 0) {
+          // Filter only active items if is_active column exists
+          currentProducts = products.filter(p => !p.is_active || String(p.is_active).toUpperCase() === "TRUE");
+          syncStatus.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i><span class="text-emerald-400 font-medium">Live Synced with Google Sheet</span>`;
+        } else {
+          throw new Error("Empty product list");
+        }
+      } catch (err) {
+        console.warn("Could not load from Google Sheet. Using fallback data.", err);
+        syncStatus.innerHTML = `<i data-lucide="info" class="w-4 h-4 text-amber-400"></i><span>Displaying ready catalog (${currentProducts.length} items)</span>`;
+      }
+
+      renderProducts(currentProducts);
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // 4. RENDER PRODUCTS TO GRID
+    // ==========================================
+    function renderProducts(items) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+
+      const filtered = items.filter(item => {
+        if (activeFilter === 'all') return true;
+        return (item.category || '').toLowerCase() === activeFilter.toLowerCase();
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-12 glass-card rounded-2xl">
+            <i data-lucide="package-open" class="w-12 h-12 text-slate-500 mx-auto mb-3"></i>
+            <p class="text-slate-300 font-medium">Is category me abhi koi product nahi hai.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      filtered.forEach(p => {
+        const featuresArray = p.features ? p.features.split(',').map(f => f.trim()) : [];
+        const discountPercent = p.price_original && p.price_selling 
+          ? Math.round(((parseInt(p.price_original) - parseInt(p.price_selling)) / parseInt(p.price_original)) * 100) 
+          : 0;
+
+        const card = document.createElement('div');
+        card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/10";
+        
+        card.innerHTML = `
+          <div>
+            <!-- Thumbnail & Badge -->
+            <div class="relative h-48 w-full bg-slate-900 overflow-hidden">
+              <img src="${p.thumbnail || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80'}" 
+                   alt="${p.title}" 
+                   class="w-full h-full object-cover transition duration-500 hover:scale-105" 
+                   onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80';" />
+              
+              <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                ${p.badge ? `<span class="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">${p.badge}</span>` : ''}
+                ${discountPercent > 0 ? `<span class="px-2 py-1 rounded-md text-[11px] font-bold bg-rose-600 text-white shadow-md">${discountPercent}% OFF</span>` : ''}
+              </div>
+
+              <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[10px] uppercase font-semibold text-slate-300 border border-slate-700">
+                ${p.category || 'Digital File'}
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6">
+              <h3 class="font-heading font-bold text-lg text-white mb-2 leading-snug hover:text-amber-300 transition">
+                ${p.title}
+              </h3>
+              <p class="text-xs text-slate-400 mb-4 line-clamp-2">
+                ${p.description || ''}
+              </p>
+
+              <!-- Feature Bullets -->
+              ${featuresArray.length > 0 ? `
+                <ul class="space-y-1.5 mb-5 border-t border-slate-800/80 pt-3">
+                  ${featuresArray.slice(0, 3).map(f => `
+                    <li class="flex items-center gap-2 text-xs text-slate-300">
+                      <i data-lucide="check" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                      <span>${f}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- Price & Order CTA Footer -->
+          <div class="px-6 pb-6 pt-2 border-t border-slate-800/80">
+            <div class="flex items-baseline justify-between mb-4">
+              <div>
+                <span class="text-[11px] text-slate-400 block font-medium">Limited Price</span>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-2xl font-black font-heading text-emerald-400">₹${p.price_selling}</span>
+                  ${p.price_original ? `<span class="text-xs text-slate-500 line-through">₹${p.price_original}</span>` : ''}
+                </div>
+              </div>
+              <span class="text-[11px] text-amber-300 font-semibold flex items-center gap-1">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i> Instant .GGB
+              </span>
+            </div>
+
+            <button onclick="openOrderModal('${p.id}')" 
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition active:scale-95">
+              <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+              <span>Buy via WhatsApp</span>
+            </button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // 5. CATEGORY FILTER
+    // ==========================================
+    function filterCategory(cat) {
+      activeFilter = cat;
+      const buttons = document.querySelectorAll('.cat-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-slate-950');
+        btn.classList.add('text-slate-400');
+      });
+
+      event.target.classList.add('bg-amber-500', 'text-slate-950');
+      event.target.classList.remove('text-slate-400');
+
+      renderProducts(currentProducts);
+    }
+
+    // ==========================================
+    // 6. ORDER POPUP & WHATSAPP REDIRECT
+    // ==========================================
+    function openOrderModal(productId) {
+      selectedProduct = currentProducts.find(p => p.id === productId);
+      if (!selectedProduct) return;
+
+      document.getElementById('modalProductTitle').innerText = selectedProduct.title;
+      document.getElementById('modalProductCategory').innerText = (selectedProduct.category || "Software").toUpperCase() + " • .GGB DIGITAL FILE";
+      document.getElementById('modalSellingPrice').innerText = "₹" + selectedProduct.price_selling;
+      document.getElementById('modalOriginalPrice').innerText = selectedProduct.price_original ? "₹" + selectedProduct.price_original : "";
+
+      // Setup UPI QR Code URL
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=VastuGeo&am=${selectedProduct.price_selling}&cu=INR&tn=${encodeURIComponent(selectedProduct.title.substring(0, 20))}`;
+      document.getElementById('upiQrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+
+      document.getElementById('orderModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').classList.add('hidden');
+      document.getElementById('upiDetailsSection').classList.add('hidden');
+      document.getElementById('upiToggleText').innerText = "Direct UPI QR Code Se Pay Karein";
+    }
+
+    function toggleUpiView() {
+      const upiSec = document.getElementById('upiDetailsSection');
+      const toggleText = document.getElementById('upiToggleText');
+      if (upiSec.classList.contains('hidden')) {
+        upiSec.classList.remove('hidden');
+        toggleText.innerText = "UPI QR Chhupayein";
+      } else {
+        upiSec.classList.add('hidden');
+        toggleText.innerText = "Direct UPI QR Code Se Pay Karein";
+      }
+    }
+
+    function submitOrderToWhatsApp() {
+      if (!selectedProduct) return;
+
+      const name = document.getElementById('custName').value.trim();
+      const city = document.getElementById('custCity').value.trim();
+
+      let msg = `*Namaste VastuGeo!* 🪔\n\nMujhe yeh GeoGebra Software file chahiye:\n`;
+      msg += `📌 *Product:* ${selectedProduct.title}\n`;
+      msg += `💰 *Offer Price:* ₹${selectedProduct.price_selling}\n`;
+      if (name) msg += `👤 *Client Name:* ${name}\n`;
+      if (city) msg += `📍 *City:* ${city}\n`;
+      msg += `\nKripya mujhe UPI payment details & QR code bhej dijiye taaki main payment karke turant .ggb file download kar saku.`;
+
+      const targetUrl = `https://wa.me/${storeConfig.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+      window.open(targetUrl, '_blank');
+      closeOrderModal();
+    }
+
+    // ==========================================
+    // 7. FAQ ACCORDION
+    // ==========================================
+    function toggleFaq(card) {
+      const p = card.querySelector('p');
+      const icon = card.querySelector('i');
+      if (p.classList.contains('hidden')) {
+        p.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        p.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // ==========================================
+    // 8. CONFIG MODAL (Store Settings)
+    // ==========================================
+    function openConfigModal() {
+      document.getElementById('configWaNumber').value = storeConfig.whatsappNumber;
+      document.getElementById('configUpiId').value = storeConfig.upiId;
+      document.getElementById('configSheetUrl').value = storeConfig.sheetUrl;
+      document.getElementById('configModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeConfigModal() {
+      document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function saveStoreSettings() {
+      const waNum = document.getElementById('configWaNumber').value.trim();
+      const upiId = document.getElementById('configUpiId').value.trim();
+      const sheetUrl = document.getElementById('configSheetUrl').value.trim();
+
+      if (waNum) {
+        localStorage.setItem('vastu_wa_num', waNum);
+        storeConfig.whatsappNumber = waNum;
+      }
+      if (upiId) {
+        localStorage.setItem('vastu_upi_id', upiId);
+        storeConfig.upiId = upiId;
+      }
+      localStorage.setItem('vastu_sheet_url', sheetUrl);
+      storeConfig.sheetUrl = sheetUrl;
+
+      applyContactDetails();
+      closeConfigModal();
+      fetchProductsFromSheet();
+      alert("Settings saved successfully!");
+    }
+
+    function resetToDefaults() {
+      if (confirm("Reset to default configuration?")) {
+        localStorage.removeItem('vastu_wa_num');
+        localStorage.removeItem('vastu_upi_id');
+        localStorage.removeItem('vastu_sheet_url');
+        location.reload();
+      }
+    }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load cached settings immediately if available
+      try {
+        const cached = localStorage.getItem('vastu_cached_settings');
+        if (cached) {
+          applySiteSettings(JSON.parse(cached));
+        }
+      } catch (e) {}
+
+      applyContactDetails();
+      fetchProductsFromSheet();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
+
