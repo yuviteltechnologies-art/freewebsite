@@ -4,10 +4,14 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Base64
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 
 class MainActivity : Activity() {
 
@@ -89,10 +94,16 @@ class MainActivity : Activity() {
         )
     )
 
+    companion object {
+        private const val REQUEST_PICK_LOGO = 2001
+        private const val REQUEST_PICK_BANNER = 2002
+    }
+
     // Views in Website Customizer
     private lateinit var brandNameInput: EditText
     private lateinit var taglineInput: EditText
     private lateinit var logoUrlInput: EditText
+    private lateinit var bannerUrlInput: EditText
     private lateinit var fontFamilyInput: EditText
     private lateinit var headerColorInput: EditText
     private lateinit var footerColorInput: EditText
@@ -621,9 +632,35 @@ class MainActivity : Activity() {
         taglineInput = createInput("Zero Hosting & Domain E-Commerce")
         form.addView(taglineInput)
 
-        form.addView(createLabel("Custom Logo Image URL (PNG/SVG/WebP):"))
+        form.addView(createLabel("Custom Logo Image:"))
+        form.addView(createSizeBadge("📐 Logo Size: 512 x 512 px (Square 1:1, PNG/WebP)"))
         logoUrlInput = createInput("https://example.com/my-logo.png")
         form.addView(logoUrlInput)
+        val pickLogoBtn = Button(this).apply {
+            text = "🖼️ Phone Se Logo Photo Chunein"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setBackgroundColor(Color.parseColor("#1E293B"))
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(20, 10, 20, 10)
+            setOnClickListener { openImagePicker(REQUEST_PICK_LOGO) }
+        }
+        form.addView(pickLogoBtn)
+
+        form.addView(createLabel("Hero / Showcase Banner Image:"))
+        form.addView(createSizeBadge("📐 Banner Size: 1200 x 600 px (Landscape 2:1, WebP/JPG)"))
+        bannerUrlInput = createInput("https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80")
+        form.addView(bannerUrlInput)
+        val pickBannerBtn = Button(this).apply {
+            text = "🖼️ Phone Se Banner Photo Chunein"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setBackgroundColor(Color.parseColor("#1E293B"))
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(20, 10, 20, 10)
+            setOnClickListener { openImagePicker(REQUEST_PICK_BANNER) }
+        }
+        form.addView(pickBannerBtn)
 
         // 2. DESIGN & STYLING SECTION
         form.addView(createSectionHeader("🎨 2. FONTS & COLORS"))
@@ -804,6 +841,7 @@ class MainActivity : Activity() {
             brandNameInput.setText(s["brand_name"] ?: "")
             taglineInput.setText(s["brand_tagline"] ?: "")
             logoUrlInput.setText(s["logo_url"] ?: "")
+            bannerUrlInput.setText(s["banner_url"] ?: "")
             fontFamilyInput.setText(s["font_family"] ?: "")
             headerColorInput.setText(s["header_color"] ?: "")
             footerColorInput.setText(s["footer_color"] ?: "")
@@ -828,6 +866,7 @@ class MainActivity : Activity() {
             "brand_name" to brandNameInput.text.toString().trim(),
             "brand_tagline" to taglineInput.text.toString().trim(),
             "logo_url" to logoUrlInput.text.toString().trim(),
+            "banner_url" to bannerUrlInput.text.toString().trim(),
             "font_family" to fontFamilyInput.text.toString().trim(),
             "header_color" to headerColorInput.text.toString().trim(),
             "footer_color" to footerColorInput.text.toString().trim(),
@@ -989,6 +1028,89 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.parseColor("#1E293B"))
             setPadding(28, 24, 28, 24)
         }
+    }
+
+    private fun createSizeBadge(text: String): TextView {
+        return TextView(this).apply {
+            this.text = text
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#10B981"))
+            setBackgroundColor(Color.parseColor("#064E3B"))
+            setPadding(16, 6, 16, 6)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 0, 0, 8)
+            }
+        }
+    }
+
+    private fun openImagePicker(requestCode: Int) {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+        }
+        startActivityForResult(intent, requestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && data?.data != null) {
+            val uri: Uri = data.data!!
+            try {
+                val inputStream = contentResolver.openInputStream(uri)
+                val originalBitmap = BitmapFactory.decodeStream(inputStream)
+                inputStream?.close()
+
+                if (originalBitmap != null) {
+                    when (requestCode) {
+                        REQUEST_PICK_LOGO -> {
+                            // Scale down to max 300x300 for crisp lightweight square logo
+                            val scaled = scaleBitmap(originalBitmap, 300, 300)
+                            val base64 = bitmapToBase64(scaled)
+                            val dataUrl = "data:image/jpeg;base64,$base64"
+                            logoUrlInput.setText(dataUrl)
+                            Toast.makeText(this, "Logo photo chuni gayi! (300x300 px)", Toast.LENGTH_SHORT).show()
+                        }
+                        REQUEST_PICK_BANNER -> {
+                            // Scale down to max 800x400 for landscape banner
+                            val scaled = scaleBitmap(originalBitmap, 800, 400)
+                            val base64 = bitmapToBase64(scaled)
+                            val dataUrl = "data:image/jpeg;base64,$base64"
+                            bannerUrlInput.setText(dataUrl)
+                            Toast.makeText(this, "Banner photo chuni gayi! (800x400 px)", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, "Photo load karne me error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun scaleBitmap(bitmap: Bitmap, maxW: Int, maxH: Int): Bitmap {
+        var w = bitmap.width
+        var h = bitmap.height
+        if (w > maxW || h > maxH) {
+            val ratio = w.toFloat() / h.toFloat()
+            if (ratio > 1) {
+                w = maxW
+                h = (maxW / ratio).toInt()
+            } else {
+                h = maxH
+                w = (maxH * ratio).toInt()
+            }
+            return Bitmap.createScaledBitmap(bitmap, w, h, true)
+        }
+        return bitmap
+    }
+
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+        val byteArray = outputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP)
     }
 
     private fun checkPermissions() {

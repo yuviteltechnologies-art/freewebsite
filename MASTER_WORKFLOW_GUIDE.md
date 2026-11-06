@@ -129,10 +129,29 @@ Yeh feature aapke Android App ke **🌐 Settings (Tab 3)** me fully add kar diya
   - `[ 🛍️ Clean (Jakarta) ]` ➔ Ultra-clean corporate & minimal font.
 - Bas jo style pasand ho uspe ungli se tap karein, website ki saari badi headlines turant us font me convert ho jayengi!
 
-### 2. 🖼️ Custom Logo Badalna
-- **Kaise Karein:** App me **"Custom Logo Image URL"** ka box hai.
-- Wahan apne logo image ka direct link paste karein (jaise: `https://i.imgur.com/my-logo.png` ya koi bhi online photo link).
-- Save dabate hi website ke top navigation bar me default icon hatkar aapka **asli logo** lag jayega!
+### 2. 🖼️ Custom Logo Aur Banner Photo Badalna (Phone Gallery Se)
+- **Kaise Karein:**
+  - App me ab **"🖼️ Phone Se Logo Photo Chunein"** aur **"🖼️ Phone Se Banner Photo Chunein"** ka direct button de diya gaya hai!
+  - Button dabate hi aapke mobile ki gallery khul jayegi. Jo photo pasand ho use select karein.
+  - App apne aap us photo ko sahi size me compress karke website ke liye fit kar dega.
+  - Ya fir agar aapke paas koi online image link hai (jaise Google Drive ya Imgur ka), toh aap link bhi paste kar sakte hain.
+
+---
+
+### 📐 Har Photo Ka Sahi Size (Ready-Made Size Cheatsheet)
+
+Website fast chale aur photo kabhi fati ya stretch hui na dikhe, iske liye har jagah ka exact size note kar lein:
+
+| Photo Kahan Lagegi | Sahi Size (Pixels) | Shape / Ratio | Kaisi File Best Hai? |
+|---|---|---|---|
+| 🏢 **Brand Logo** | **`512 x 512 px`** | Square (1:1) | PNG (Transparent Background) ya WebP (<100 KB) |
+| 🖼️ **Hero / Showcase Banner** | **`1200 x 600 px`** | Landscape (2:1) | WebP ya JPG (<300 KB) |
+| 📦 **Product Thumbnail (Samaan)** | **`600 x 600 px`** | Square (1:1) | WebP ya JPG (<150 KB) |
+| 🛡️ **Trust / Offer Badges** | **`128 x 128 px`** | Square (1:1) | PNG Icon (<50 KB) |
+
+> 💡 **Tip:** Canva (Free App) me bas **"Custom Size"** par click karein, upar table me se size daalein, apna design banayein aur save kar lein!
+
+---
 
 ### 3. 🎨 Header & Footer Ka Color Badalna (1-Tap Color Selection)
 - **Aapko koi bhi `#` ya color code type karne ki bilkul zaroorat nahi hai:**  
