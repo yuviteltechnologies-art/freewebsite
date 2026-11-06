@@ -35,7 +35,7 @@ In links ko apne paas bookmark karke rakh lein:
 * **Aapka Guided Onboarding Dashboard:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html](https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html)
 * **Aapka Live Demo Store:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/demo.html](https://yuviteltechnologies-art.github.io/freewebsite/demo.html)
 * **Aapka Google Sheet Web App Link:**  
-  `https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec`
+  `https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec`
 * **Mobile App Ka Folder:** `g:\Vastu_website\android-admin-app`
 
 ---

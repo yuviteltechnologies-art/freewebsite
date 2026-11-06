@@ -198,7 +198,7 @@ class MainActivity : Activity() {
 
     private fun getSheetUrl(): String {
         val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
-        return prefs.getString("sheet_web_app_url", "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec") ?: "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec"
+        return prefs.getString("sheet_web_app_url", "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec") ?: "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
     }
 
     private fun saveSheetUrl(url: String) {
