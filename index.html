@@ -490,9 +490,9 @@
             <p class="text-xs text-slate-400 mt-1">Sab kuch shamil hai: Code + Google Sheet Template + Video Tutorials</p>
           </div>
           <div class="text-right">
-            <span class="text-xs text-slate-500 line-through">Regular ₹2,499</span>
+            <span class="text-xs text-slate-500 line-through" id="displayOrigPrice">Regular ₹99</span>
             <div class="flex items-baseline gap-1">
-              <span class="text-4xl sm:text-5xl font-black font-heading text-white">₹499</span>
+              <span class="text-4xl sm:text-5xl font-black font-heading text-white" id="displaySellingPrice">₹10</span>
               <span class="text-xs text-slate-400">/ One-time</span>
             </div>
           </div>
@@ -514,7 +514,7 @@
         <div class="space-y-3">
           <button onclick="openPaymentModal()" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-xl shadow-blue-600/30 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
             <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
-            <span>Instant Access Paayein - ₹499 (Pay via UPI / Card)</span>
+            <span id="displayBtnPriceText">Instant Access Paayein - ₹10 (Pay via UPI / QR)</span>
           </button>
           <p class="text-[11px] text-slate-500 text-center flex items-center justify-center gap-1">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> 100% Secure Checkout • Instant Delivery on Thank You Page
@@ -641,8 +641,8 @@
             <span class="text-sm font-bold text-white">SheetStore Pro Lifetime Kit</span>
           </div>
           <div class="text-right">
-            <span class="text-xs text-slate-500 line-through block">₹2,499</span>
-            <span class="text-xl font-black font-heading text-emerald-400">₹499</span>
+            <span class="text-xs text-slate-500 line-through block" id="modalOrigPrice">₹99</span>
+            <span class="text-xl font-black font-heading text-emerald-400" id="modalSellingPrice">₹10</span>
           </div>
         </div>
 
@@ -658,33 +658,45 @@
           </div>
         </div>
 
-        <!-- 1-Tap Mobile UPI Intent Button -->
-        <a id="mobileUpiIntentBtn" href="#" 
-           class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-95 text-center">
-          <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
-          <span>Pay ₹499 via UPI App (GPay / PhonePe / Paytm)</span>
-        </a>
-
-        <!-- Toggle Desktop QR View -->
-        <div class="text-center">
-          <button type="button" onclick="toggleQrView()" class="text-xs text-blue-400 hover:text-blue-300 underline font-medium inline-flex items-center gap-1">
+        <!-- QR Display Section (PROMINENT & DYNAMIC) -->
+        <div id="desktopQrBox" class="text-center bg-slate-950 p-4 rounded-2xl border border-slate-800/80 shadow-inner">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
             <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
-            <span id="qrToggleLabel">Ya Desktop UPI QR Code Scan Karein</span>
-          </button>
+            <span id="qrAmountBadge">Scan Karein • Amount: ₹10</span>
+          </div>
+          
+          <div class="bg-white p-3 rounded-2xl inline-block shadow-2xl mx-auto mb-2 border-2 border-slate-200">
+            <img id="upiDynamicQr" src="" alt="UPI Dynamic QR" class="w-44 h-44 mx-auto" />
+          </div>
+          
+          <p class="text-xs font-mono text-emerald-400 font-semibold" id="displayUpiId">UPI ID: payments@upi</p>
+          <p class="text-[11px] text-slate-400 mt-1">GPay, PhonePe, Paytm, BHIM kisi se bhi scan karein — amount auto fill aayega!</p>
         </div>
 
-        <!-- QR Display Section -->
-        <div id="desktopQrBox" class="hidden text-center bg-slate-950/80 p-4 rounded-xl border border-slate-800">
-          <div class="bg-white p-2.5 rounded-xl inline-block shadow-lg mx-auto mb-2">
-            <img id="upiDynamicQr" src="" alt="UPI QR" class="w-36 h-36 mx-auto" />
+        <!-- 1-Tap Direct UPI App Buttons -->
+        <div class="space-y-2">
+          <p class="text-[11px] text-center text-slate-400 font-medium">Ya mobile me direct UPI app se pay karein:</p>
+          <div class="grid grid-cols-3 gap-2">
+            <a id="gpayDirectBtn" href="#" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <span>🟢 GPay</span>
+            </a>
+            <a id="phonepeDirectBtn" href="#" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <span>🟣 PhonePe</span>
+            </a>
+            <a id="paytmDirectBtn" href="#" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <span>🔵 Paytm</span>
+            </a>
           </div>
-          <p class="text-xs font-mono text-emerald-400" id="displayUpiId">UPI ID: payments@upi</p>
-          <p class="text-[11px] text-slate-400 mt-1">Scan via any UPI App (GPay, PhonePe, Paytm, BHIM, Cred)</p>
+          <a id="mobileUpiIntentBtn" href="#" 
+             class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition">
+            <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+            <span id="modalPayBtnText">Pay ₹10 via Default UPI App</span>
+          </a>
         </div>
 
         <!-- Move to Step 2 Button -->
-        <div class="pt-2">
-          <button onclick="goToStep2()" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition">
+        <div class="pt-1">
+          <button onclick="goToStep2()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition">
             <span>Payment Ho Gayi ➔ UTR Enter Karein</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
@@ -817,7 +829,7 @@
       name: "",
       phone: "",
       product: "SheetStore Pro Lifetime Kit",
-      amount: 499,
+      amount: 10, // Live Test Price ₹10 (controllable from mobile app)
       utr: ""
     };
 
@@ -843,16 +855,32 @@
       }
 
       document.getElementById('displayOrderId').innerText = currentOrder.id;
-      document.getElementById('displayUpiId').innerText = `UPI ID: ${storeConfig.upiId}`;
+      const upiId = (storeConfig.upiId && storeConfig.upiId.trim() && storeConfig.upiId !== 'payments@upi') ? storeConfig.upiId : 'payments@upi';
+      document.getElementById('displayUpiId').innerText = `UPI ID: ${upiId}`;
 
-      // Build UPI intent link: upi://pay?pa=...&pn=SheetStorePro&am=499&cu=INR&tn=ORD-XXXXX
       const cleanOrderId = currentOrder.id.replace('#', '');
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=SheetStorePro&am=${currentOrder.amount}&cu=INR&tn=${cleanOrderId}`;
+      const brandName = storeConfig.brandName || "SheetStorePro";
+      const amount = currentOrder.amount || 10;
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
+
       document.getElementById('mobileUpiIntentBtn').href = upiUrl;
 
-      // Build Dynamic QR code image
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+      // 1-Tap App-Specific Intents
+      const gpayBtn = document.getElementById('gpayDirectBtn');
+      if (gpayBtn) gpayBtn.href = `gpay://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
+
+      const phonepeBtn = document.getElementById('phonepeDirectBtn');
+      if (phonepeBtn) phonepeBtn.href = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
+
+      const paytmBtn = document.getElementById('paytmDirectBtn');
+      if (paytmBtn) paytmBtn.href = `paytmmp://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
+
+      // Build High-Quality Dynamic QR Code image for EXACT amount
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
       document.getElementById('upiDynamicQr').src = qrUrl;
+
+      const qrBadge = document.getElementById('qrAmountBadge');
+      if (qrBadge) qrBadge.innerText = `Scan Karein • Amount: ₹${amount}`;
 
       goToStep1();
       document.getElementById('payModal').classList.remove('hidden');
@@ -1154,6 +1182,37 @@
         const showcaseImg = document.getElementById('demoShowcaseImg');
         if (showcaseImg) showcaseImg.src = s.banner_url;
       }
+
+      // 16. Dynamic Product Pricing (Controllable from Mobile App)
+      let dynamicPrice = 10; // Default live test price ₹10
+      if (s.main_product_price && Number(s.main_product_price) > 0) {
+        dynamicPrice = Number(s.main_product_price);
+      } else if (products && Array.isArray(products) && products.length > 0) {
+        const p = products.find(prod => prod.id === 'prod-sheetstore-master-kit') || products[0];
+        if (p && p.price_selling) {
+          dynamicPrice = Number(p.price_selling) || 10;
+        }
+      } else if (localStorage.getItem('store_product_price')) {
+        dynamicPrice = Number(localStorage.getItem('store_product_price')) || 10;
+      }
+
+      currentOrder.amount = dynamicPrice;
+      localStorage.setItem('store_product_price', dynamicPrice);
+
+      const sellPriceEl = document.getElementById('displaySellingPrice');
+      if (sellPriceEl) sellPriceEl.innerText = `₹${dynamicPrice}`;
+
+      const modalPriceEl = document.getElementById('modalSellingPrice');
+      if (modalPriceEl) modalPriceEl.innerText = `₹${dynamicPrice}`;
+
+      const btnPriceEl = document.getElementById('displayBtnPriceText');
+      if (btnPriceEl) btnPriceEl.innerText = `Instant Access Paayein - ₹${dynamicPrice} (Pay via UPI / QR)`;
+
+      const modalPayText = document.getElementById('modalPayBtnText');
+      if (modalPayText) modalPayText.innerText = `Pay ₹${dynamicPrice} via Default UPI App`;
+
+      const qrBadge = document.getElementById('qrAmountBadge');
+      if (qrBadge) qrBadge.innerText = `Scan Karein • Amount: ₹${dynamicPrice}`;
     }
 
     const THEME_NAMES = {
@@ -1190,9 +1249,14 @@
       try {
         const res = await fetch(storeConfig.sheetUrl);
         const data = await res.json();
-        if (data && data.settings) {
-          applySiteSettings(data.settings);
-          localStorage.setItem('store_cached_settings', JSON.stringify(data.settings));
+        if (data) {
+          if (data.settings) {
+            applySiteSettings(data.settings, data.products);
+            localStorage.setItem('store_cached_settings', JSON.stringify(data.settings));
+          }
+          if (data.products) {
+            localStorage.setItem('store_cached_products', JSON.stringify(data.products));
+          }
         }
       } catch (err) {
         console.warn("Error fetching settings from sheet:", err);
@@ -1206,7 +1270,8 @@
 
       try {
         const cached = localStorage.getItem('store_cached_settings');
-        if (cached) applySiteSettings(JSON.parse(cached));
+        const cachedProducts = localStorage.getItem('store_cached_products');
+        if (cached) applySiteSettings(JSON.parse(cached), cachedProducts ? JSON.parse(cachedProducts) : null);
       } catch (e) {}
 
       syncConfigWithUI();

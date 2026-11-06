@@ -110,6 +110,7 @@ class MainActivity : Activity() {
     private lateinit var heroTitleInput: EditText
     private lateinit var heroSubtitleInput: EditText
     private lateinit var ctaTextInput: EditText
+    private lateinit var mainProductPriceInput: EditText
     private lateinit var waNumberInput: EditText
     private lateinit var upiIdInput: EditText
     private lateinit var announcementInput: EditText
@@ -702,6 +703,10 @@ class MainActivity : Activity() {
         ctaTextInput = createInput("Get Store Now")
         form.addView(ctaTextInput)
 
+        form.addView(createLabel("Main Website Product Price in ₹ (Live Test Ke Liye ₹10):"))
+        mainProductPriceInput = createInput("10")
+        form.addView(mainProductPriceInput)
+
         form.addView(createLabel("Top Announcement Bar Text:"))
         announcementInput = createInput("Special Discount Today! 80% OFF")
         form.addView(announcementInput)
@@ -848,6 +853,7 @@ class MainActivity : Activity() {
             heroTitleInput.setText(s["hero_title"] ?: "")
             heroSubtitleInput.setText(s["hero_subtitle"] ?: "")
             ctaTextInput.setText(s["cta_text"] ?: "")
+            mainProductPriceInput.setText(s["main_product_price"] ?: "10")
             waNumberInput.setText(s["whatsapp_number"] ?: "")
             upiIdInput.setText(s["upi_id"] ?: "")
             announcementInput.setText(s["announcement_text"] ?: "")
@@ -873,6 +879,7 @@ class MainActivity : Activity() {
             "hero_title" to heroTitleInput.text.toString().trim(),
             "hero_subtitle" to heroSubtitleInput.text.toString().trim(),
             "cta_text" to ctaTextInput.text.toString().trim(),
+            "main_product_price" to mainProductPriceInput.text.toString().trim(),
             "whatsapp_number" to waNumberInput.text.toString().trim(),
             "upi_id" to upiIdInput.text.toString().trim(),
             "announcement_text" to announcementInput.text.toString().trim()
