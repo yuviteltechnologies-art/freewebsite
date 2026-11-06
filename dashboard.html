@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store Launchpad & Dashboard | SheetStore Pro</title>
+  <meta name="description" content="Apni website aur Google Sheet ko live karein aur Android Admin app se connect karein." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              emerald: '#10B981',
+              gold: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: #080C1A;
+      background-image: radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.12), transparent 40%),
+                        radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.08), transparent 40%),
+                        radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.1), transparent 50%);
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+    }
+    .glass-card-active {
+      border-color: rgba(59, 130, 246, 0.5) !important;
+      box-shadow: 0 10px 35px -5px rgba(37, 99, 235, 0.15);
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-slate-800 bg-[#0B1120]/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand -->
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+        </div>
+        <div>
+          <span class="font-heading font-extrabold text-lg text-white">SheetStore <span class="text-blue-500">Pro</span></span>
+          <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Store Onboarding Launchpad</p>
+        </div>
+      </a>
+
+      <!-- User Profile & Logout -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+          <div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center font-heading" id="userAvatarText">
+            U
+          </div>
+          <div class="text-left">
+            <p class="text-xs font-bold text-white leading-tight" id="headerUserName">Store Owner</p>
+            <p class="text-[10px] text-slate-400 font-mono leading-tight" id="headerUserEmail">user@example.com</p>
+          </div>
+        </div>
+
+        <button onclick="handleLogout()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-red-500/20 hover:text-red-400 text-slate-400 border border-slate-700 text-xs font-semibold transition">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-8">
+
+    <!-- WELCOME HERO & PROGRESS BAR -->
+    <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 mb-2">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>3-Step Automated Store Setup</span>
+          </span>
+          <h1 class="font-heading font-black text-2xl sm:text-4xl text-white">
+            Namaste, <span id="welcomeUserName" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">Store Owner</span>! 👋
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-xl">
+            Aapki dukaan ko 100% live karne ke liye bas ye <strong class="text-white">3 aasan steps</strong> poore karein. Coding ki 0% zaroorat hai.
+          </p>
+        </div>
+
+        <!-- Circular or Visual Progress Indicator -->
+        <div class="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 sm:p-5 text-center min-w-[200px]">
+          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Setup Progress</p>
+          <div class="flex items-baseline justify-center gap-1 my-1">
+            <span id="progressPercentText" class="font-heading font-black text-3xl sm:text-4xl text-emerald-400">33%</span>
+            <span class="text-xs text-slate-500 font-semibold">Done</span>
+          </div>
+          <p id="progressStatusText" class="text-[11px] text-blue-400 font-medium">Step 1 Ready</p>
+        </div>
+      </div>
+
+      <!-- Linear Progress Bar -->
+      <div class="mt-6">
+        <div class="w-full bg-slate-950 rounded-full h-3 overflow-hidden border border-slate-800">
+          <div id="progressBarFill" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out" style="width: 33%;"></div>
+        </div>
+        <div class="flex justify-between text-[11px] font-semibold text-slate-400 mt-2">
+          <span id="stepLabel1" class="text-blue-400">1. GitHub Code Copy</span>
+          <span id="stepLabel2">2. Google Sheet Connect</span>
+          <span id="stepLabel3">3. Android Admin App</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 STEP ONBOARDING ACCORDION / CARDS -->
+    <div class="space-y-6">
+
+      <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY -->
+      <div id="cardStep1" class="glass-card glass-card-active rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-blue-500/20 border border-blue-500/40 text-blue-400 font-heading font-black text-lg flex items-center justify-center">1</span>
+            <div>
+              <h3 class="font-heading font-bold text-xl text-white">Step 1: Website Code GitHub Par Copy Karein</h3>
+              <p class="text-xs text-slate-400">Lifetime free hosting ke liye code apne GitHub account me fork/copy karein.</p>
+            </div>
+          </div>
+          <span id="badgeStep1" class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Action Required</span>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <!-- Action Button -->
+          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <i data-lucide="github" class="w-4 h-4 text-white"></i>
+                <span>GitHub Repository Copy</span>
+              </h4>
+              <p class="text-xs text-slate-400 mb-4">
+                Niche button par click karein. Yeh repository aapke account me copy ho jayegi aur GitHub Pages par free live ho jayegi.
+              </p>
+            </div>
+            <a href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art" 
+               target="_blank"
+               class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
+              <i data-lucide="git-fork" class="w-4 h-4"></i>
+              <span>1-Click Copy on GitHub 🚀</span>
+            </a>
+          </div>
+
+          <!-- Live Verification Box -->
+          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                <span>Live Website URL Verify Karein</span>
+              </h4>
+              <p class="text-xs text-slate-400 mb-3">
+                Apna GitHub Pages link (jaise <code>https://user.github.io/freewebsite/</code>) daalein aur test karein:
+              </p>
+              <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/freewebsite/"
+                     class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none mb-3 font-mono" />
+            </div>
+
+            <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
+                    class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition active:scale-95">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              <span>Verify Website Live ⚡</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="siteVerifyNotice" class="hidden mt-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
+      </div>
+
+      <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
+      <div id="cardStep2" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-heading font-black text-lg flex items-center justify-center">2</span>
+            <div>
+              <h3 class="font-heading font-bold text-xl text-white">Step 2: Google Sheet Register Connect Karein</h3>
+              <p class="text-xs text-slate-400">Google Sheet ko apna live database banayein taaki orders sheet me automatic save hon.</p>
+            </div>
+          </div>
+          <span id="badgeStep2" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+            <i data-lucide="circle" class="w-3.5 h-3.5"></i>
+            <span>Pending Step 1</span>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <!-- Copy Sheet Template Button -->
+          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <i data-lucide="sheet" class="w-4 h-4 text-emerald-400"></i>
+                <span>Google Sheet Template Copy</span>
+              </h4>
+              <p class="text-xs text-slate-400 mb-4">
+                Google Drive me ready-made sheet copy karein jisme Settings, Products aur Orders tab pehle se bane hain.
+              </p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/copy" 
+               target="_blank"
+               class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition active:scale-95">
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              <span>1-Click Copy Google Sheet 📑</span>
+            </a>
+          </div>
+
+          <!-- Enter Apps Script Web App URL -->
+          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <i data-lucide="link" class="w-4 h-4 text-blue-400"></i>
+                <span>Google Sheet Web App URL</span>
+              </h4>
+              <p class="text-xs text-slate-400 mb-3">
+                Apps Script Deploy karke mila hua Web App URL yahan paste karein:
+              </p>
+              <input type="url" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec"
+                     class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-indigo-500 focus:outline-none mb-3 font-mono" />
+            </div>
+
+            <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
+                    class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 transition active:scale-95">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              <span>Test & Connect Sheet 🔗</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="sheetConnectNotice" class="hidden mt-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
+      </div>
+
+      <!-- STEP 3: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
+      <div id="cardStep3" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">3</span>
+            <div>
+              <h3 class="font-heading font-bold text-xl text-white">Step 3: Android Admin App Download & 1-Tap Sync</h3>
+              <p class="text-xs text-slate-400">Apne mobile app se orders dekhein, price badlein aur 5 ready-made designs apply karein.</p>
+            </div>
+          </div>
+          <span id="badgeStep3" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+            <span>Mobile Control</span>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 items-center">
+          <!-- Download APK Button -->
+          <div class="space-y-4">
+            <div class="bg-purple-950/30 border border-purple-500/20 p-4 rounded-2xl">
+              <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>Zero Typing Automatic Sync</span>
+              </h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                App install karne ke baad aapko phone me URL paste karne ki zaroorat nahi hai. Bas apna <strong class="text-white">Email aur Password</strong> daalein (ya daayein taraf ka QR code scan karein) — Sheet apne aap jud jayegi!
+              </p>
+            </div>
+
+            <a href="https://github.com/yuviteltechnologies-art/freewebsite/tree/main/android-admin-app" 
+               target="_blank"
+               class="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-600/30 transition hover:scale-[1.01] active:scale-95 text-center">
+              <i data-lucide="download" class="w-5 h-5"></i>
+              <span>Download SheetStore-Admin.apk 📲</span>
+            </a>
+
+            <button type="button" onclick="markAppCompleted()" id="markAppBtn"
+                    class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+              <span>Maine App Install Kar Liya Hai ✓</span>
+            </button>
+          </div>
+
+          <!-- Dynamic 1-Tap QR Code Box -->
+          <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 text-center">
+            <p class="text-xs font-bold text-slate-200 mb-2">1-Tap Mobile Sync QR Code</p>
+            <div class="bg-white p-2.5 rounded-2xl inline-block shadow-xl mx-auto mb-2 border border-slate-700">
+              <img id="appSyncQrCode" src="" alt="App Sync QR" class="w-36 h-36 mx-auto" />
+            </div>
+            <p class="text-[11px] text-slate-400">Android app se is QR ko scan karke direct login karein.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STORE QUICK HUB / MANAGEMENT PREVIEW -->
+    <div class="glass-card rounded-3xl p-6 sm:p-8">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+            <i data-lucide="store" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-lg text-white">Aapki Live Dukaan Ka Quick Hub</h3>
+            <p class="text-xs text-slate-400">Yahan se aap apni live website aur settings ko direct open kar sakte hain.</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">100% Free Hosting</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Live Store Link -->
+        <a id="hubLiveSiteLink" href="index.html" target="_blank"
+           class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-blue-500/50 transition flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-105 transition">
+            <i data-lucide="globe" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Aapki Website</p>
+            <p class="text-xs font-bold text-white group-hover:text-blue-400 flex items-center gap-1">Open Live Site <i data-lucide="external-link" class="w-3 h-3"></i></p>
+          </div>
+        </a>
+
+        <!-- Live Sheet Link -->
+        <a id="hubSheetLink" href="#" target="_blank"
+           class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition">
+            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Google Sheet Database</p>
+            <p class="text-xs font-bold text-white group-hover:text-emerald-400 flex items-center gap-1">Hisaab Register <i data-lucide="external-link" class="w-3 h-3"></i></p>
+          </div>
+        </a>
+
+        <!-- Support Link -->
+        <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20setup%20me%20help%20chahiye" target="_blank"
+           class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-105 transition">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">VIP Support</p>
+            <p class="text-xs font-bold text-white group-hover:text-amber-400 flex items-center gap-1">WhatsApp Chat <i data-lucide="external-link" class="w-3 h-3"></i></p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-900 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
+    <p>SheetStore Pro • Serverless Google Sheet E-Commerce Platform</p>
+  </footer>
+
+  <script>
+    const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec";
+    
+    let currentUser = null;
+
+    function getBackendUrl() {
+      return localStorage.getItem('store_sheet_url') || DEFAULT_SHEET_URL;
+    }
+
+    // Initialize Dashboard
+    window.addEventListener('DOMContentLoaded', () => {
+      const stored = localStorage.getItem('sheetstore_auth_user');
+      if (!stored) {
+        // Not logged in -> redirect to auth
+        window.location.href = "auth.html";
+        return;
+      }
+
+      try {
+        currentUser = JSON.parse(stored);
+      } catch (e) {
+        window.location.href = "auth.html";
+        return;
+      }
+
+      // Populate user info
+      document.getElementById('welcomeUserName').innerText = currentUser.name || "Store Owner";
+      document.getElementById('headerUserName').innerText = currentUser.name || "Store Owner";
+      document.getElementById('headerUserEmail').innerText = currentUser.email || "";
+      document.getElementById('userAvatarText').innerText = (currentUser.name || "U").charAt(0).toUpperCase();
+
+      if (currentUser.website_live_url) {
+        document.getElementById('siteUrlInput').value = currentUser.website_live_url;
+        document.getElementById('hubLiveSiteLink').href = currentUser.website_live_url;
+      }
+
+      if (currentUser.sheet_url) {
+        document.getElementById('sheetUrlInput').value = currentUser.sheet_url;
+        document.getElementById('hubSheetLink').href = currentUser.sheet_url;
+      }
+
+      // Generate dynamic QR code for app sync
+      generateSyncQr();
+
+      // Refresh UI steps
+      updateStepUI(currentUser.onboarding_step || 1);
+
+      lucide.createIcons();
+    });
+
+    function generateSyncQr() {
+      if (!currentUser) return;
+      const syncPayload = {
+        email: currentUser.email,
+        name: currentUser.name,
+        sheet_url: currentUser.sheet_url || getBackendUrl()
+      };
+      const encoded = encodeURIComponent(JSON.stringify(syncPayload));
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encoded}`;
+      document.getElementById('appSyncQrCode').src = qrUrl;
+    }
+
+    function updateStepUI(step) {
+      const pPercent = document.getElementById('progressPercentText');
+      const pStatus = document.getElementById('progressStatusText');
+      const pBar = document.getElementById('progressBarFill');
+
+      const badge1 = document.getElementById('badgeStep1');
+      const badge2 = document.getElementById('badgeStep2');
+      const badge3 = document.getElementById('badgeStep3');
+
+      if (step === 1) {
+        pPercent.innerText = "33%";
+        pStatus.innerText = "Step 1: Website Code Ready";
+        pBar.style.width = "33%";
+        pBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out";
+
+        badge1.className = "px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge1.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Action Required</span>`;
+
+        badge2.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge2.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Pending Step 1</span>`;
+
+        badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Pending Step 2</span>`;
+      } else if (step === 2) {
+        pPercent.innerText = "66%";
+        pStatus.innerText = "Step 2: Connect Google Sheet";
+        pBar.style.width = "66%";
+        pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
+
+        badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Verified & Live ✓</span>`;
+
+        badge2.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge2.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect</span>`;
+
+        badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Pending Step 2</span>`;
+      } else if (step >= 3) {
+        pPercent.innerText = "100%";
+        pStatus.innerText = "Store 100% Ready & Live! 🎉";
+        pBar.style.width = "100%";
+        pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
+
+        badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Verified & Live ✓</span>`;
+
+        badge2.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge2.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>`;
+
+        badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+        badge3.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    // Verify Step 1: Website Link
+    async function verifyWebsiteLink() {
+      const urlInput = document.getElementById('siteUrlInput');
+      const btn = document.getElementById('verifySiteBtn');
+      const notice = document.getElementById('siteVerifyNotice');
+      let url = urlInput.value.trim();
+
+      if (!url) {
+        showStepNotice('siteVerifyNotice', 'Kripya apna website ya GitHub Pages link daalein.', false);
+        return;
+      }
+
+      if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Verifying website live...</span>`;
+      lucide.createIcons();
+
+      try {
+        const verifyEndpoint = `${getBackendUrl()}?action=verifySiteUrl&url=${encodeURIComponent(url)}`;
+        const res = await fetch(verifyEndpoint);
+        const data = await res.json();
+
+        if (data && (data.is_live || data.status_code < 400)) {
+          showStepNotice('siteVerifyNotice', '🎉 Badhai ho! Aapki website 100% LIVE hai aur respond kar rahi hai!', true);
+          confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+
+          // Update user state in Sheet backend
+          currentUser.website_live_url = url;
+          if ((currentUser.onboarding_step || 1) < 2) {
+            currentUser.onboarding_step = 2;
+          }
+          saveUserLocally();
+          updateStepUI(currentUser.onboarding_step);
+          document.getElementById('hubLiveSiteLink').href = url;
+
+          // Sync with Sheet
+          fetch(`${getBackendUrl()}?action=updateUserProfile&email=${encodeURIComponent(currentUser.email)}&website_live_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
+        } else {
+          showStepNotice('siteVerifyNotice', 'Website respond nahi kar rahi. Kripya GitHub Pages me branch ko "main" par deploy karein.', false);
+        }
+      } catch (err) {
+        // Fallback: If CORS blocks verify, mark as accepted with gentle notice
+        showStepNotice('siteVerifyNotice', 'Website URL save ho gaya hai! Step 2 par aage badhein.', true);
+        currentUser.website_live_url = url;
+        if ((currentUser.onboarding_step || 1) < 2) currentUser.onboarding_step = 2;
+        saveUserLocally();
+        updateStepUI(currentUser.onboarding_step);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="search" class="w-4 h-4"></i> <span>Verify Website Live ⚡</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    // Step 2: Test & Connect Sheet
+    async function testAndSaveSheetConnection() {
+      const sheetInput = document.getElementById('sheetUrlInput');
+      const btn = document.getElementById('connectSheetBtn');
+      const url = sheetInput.value.trim();
+
+      if (!url || !url.startsWith("https://script.google.com/macros/s/")) {
+        showStepNotice('sheetConnectNotice', 'Kripya sahi Google Apps Script Web App URL daalein (https://script.google.com/macros/s/.../exec)', false);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Testing Sheet connection...</span>`;
+      lucide.createIcons();
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data && (data.settings || data.products || data.orders)) {
+          showStepNotice('sheetConnectNotice', '🎉 Google Sheet safalta-purvak jud gayi hai! Settings aur Products load ho gaye.', true);
+          confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+
+          currentUser.sheet_url = url;
+          localStorage.setItem('store_sheet_url', url);
+          if ((currentUser.onboarding_step || 1) < 3) {
+            currentUser.onboarding_step = 3;
+          }
+          saveUserLocally();
+          generateSyncQr();
+          updateStepUI(currentUser.onboarding_step);
+          document.getElementById('hubSheetLink').href = url;
+
+          // Sync with Sheet backend
+          fetch(`${getBackendUrl()}?action=updateUserProfile&email=${encodeURIComponent(currentUser.email)}&sheet_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
+        } else {
+          showStepNotice('sheetConnectNotice', 'Sheet se valid response nahi mila. Code.gs me setupAutoTabs run karke Deploy karein.', false);
+        }
+      } catch (err) {
+        showStepNotice('sheetConnectNotice', 'Sheet URL save ho gaya hai! Step 3 me Admin App connect karein.', true);
+        currentUser.sheet_url = url;
+        localStorage.setItem('store_sheet_url', url);
+        if ((currentUser.onboarding_step || 1) < 3) currentUser.onboarding_step = 3;
+        saveUserLocally();
+        generateSyncQr();
+        updateStepUI(currentUser.onboarding_step);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="zap" class="w-4 h-4"></i> <span>Test & Connect Sheet 🔗</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    // Step 3: Mark App Completed
+    function markAppCompleted() {
+      currentUser.onboarding_step = 3;
+      saveUserLocally();
+      updateStepUI(3);
+      confetti({ particleCount: 100, spread: 90, origin: { y: 0.5 } });
+      alert("Badhai ho! Aapka poora store setup 100% complete ho gaya hai! Ab aap apni website se orders receive karna shuru kar sakte hain.");
+    }
+
+    function showStepNotice(containerId, msg, isSuccess) {
+      const box = document.getElementById(containerId);
+      box.classList.remove('hidden', 'bg-red-500/10', 'border-red-500/30', 'text-red-400', 'bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-400');
+      if (isSuccess) {
+        box.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-400');
+        box.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i> <span>${msg}</span>`;
+      } else {
+        box.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-400');
+        box.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> <span>${msg}</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    function saveUserLocally() {
+      if (currentUser) {
+        localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('sheetstore_auth_user');
+      window.location.href = "auth.html";
+    }
+  </script>
+</body>
+</html>

@@ -141,12 +141,25 @@ class MainActivity : Activity() {
         }
         topBar.addView(appTitle)
 
+        // User Auth Login Button
+        val authBtn = Button(this).apply {
+            val email = getLoggedInEmail()
+            text = if (email.isNotEmpty()) "👤 ${getLoggedInName()}" else "👤 Login"
+            textSize = 11f
+            setTextColor(Color.parseColor("#10B981"))
+            setBackgroundColor(Color.parseColor("#0F172A"))
+            setPadding(20, 10, 20, 10)
+            setOnClickListener { showAuthDialog(this) }
+        }
+        topBar.addView(authBtn)
+
         // Sheet URL Settings Button
         val settingsBtn = Button(this).apply {
             text = "⚙️ Sheet URL"
             textSize = 11f
             setTextColor(Color.parseColor("#38BDF8"))
             setBackgroundColor(Color.parseColor("#0F172A"))
+            setPadding(20, 10, 20, 10)
             setOnClickListener { showSheetUrlDialog() }
         }
         topBar.addView(settingsBtn)
@@ -215,6 +228,121 @@ class MainActivity : Activity() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    private fun getLoggedInEmail(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        return prefs.getString("logged_in_email", "") ?: ""
+    }
+
+    private fun getLoggedInName(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        val name = prefs.getString("logged_in_name", "") ?: ""
+        return if (name.isNotEmpty()) name.split(" ").firstOrNull() ?: name else "Account"
+    }
+
+    private fun saveAuthSession(name: String, email: String, sheetUrl: String?) {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+            .putString("logged_in_name", name)
+            .putString("logged_in_email", email)
+        if (!sheetUrl.isNullOrEmpty()) {
+            edit.putString("sheet_web_app_url", sheetUrl)
+        }
+        edit.apply()
+    }
+
+    private fun clearAuthSession() {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        prefs.edit()
+            .remove("logged_in_name")
+            .remove("logged_in_email")
+            .apply()
+    }
+
+    private fun showAuthDialog(authBtn: Button) {
+        val currentEmail = getLoggedInEmail()
+        if (currentEmail.isNotEmpty()) {
+            val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+            val name = prefs.getString("logged_in_name", "User") ?: "User"
+            val sheetUrl = getSheetUrl()
+
+            val msg = "👤 Logged in as: $name\n✉️ Email: $currentEmail\n\n📊 Connected Sheet:\n${sheetUrl.take(45)}..."
+
+            AlertDialog.Builder(this)
+                .setTitle("Account Info")
+                .setMessage(msg)
+                .setPositiveButton("OK", null)
+                .setNegativeButton("🚪 Log Out") { _, _ ->
+                    clearAuthSession()
+                    authBtn.text = "👤 Login"
+                    Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+                }
+                .show()
+        } else {
+            val dialogLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(50, 40, 50, 20)
+            }
+
+            val emailInput = EditText(this).apply {
+                hint = "Email Address (e.g. name@example.com)"
+                inputType = android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                setTextColor(Color.BLACK)
+                setPadding(24, 20, 24, 20)
+            }
+            dialogLayout.addView(emailInput)
+
+            val passInput = EditText(this).apply {
+                hint = "Password"
+                inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                setTextColor(Color.BLACK)
+                setPadding(24, 20, 24, 20)
+            }
+            dialogLayout.addView(passInput)
+
+            AlertDialog.Builder(this)
+                .setTitle("Store Portal Login 🔐")
+                .setMessage("Website / Dashboard wala Email aur Password daalein. Aapka Sheet URL apne aap connect ho jayega!")
+                .setView(dialogLayout)
+                .setPositiveButton("Log In 🚀") { _, _ ->
+                    val email = emailInput.text.toString().trim()
+                    val pass = passInput.text.toString().trim()
+
+                    if (email.isEmpty() || pass.isEmpty()) {
+                        Toast.makeText(this, "Email aur Password dono zaroori hain", Toast.LENGTH_SHORT).show()
+                        return@setPositiveButton
+                    }
+
+                    val url = getSheetUrl()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            val call = ApiClient.service.login(url, "login", email, pass)
+                            val res = call.execute()
+                            val body = res.body()
+
+                            withContext(Dispatchers.Main) {
+                                if (body != null && body.success && body.user != null) {
+                                    val u = body.user
+                                    saveAuthSession(u.name ?: "User", u.email ?: email, u.sheetUrl)
+                                    authBtn.text = "👤 ${getLoggedInName()}"
+                                    Toast.makeText(this@MainActivity, "Welcome ${u.name}! Connected to Sheet 🚀", Toast.LENGTH_LONG).show()
+                                    fetchDashboard()
+                                } else {
+                                    val errMsg = body?.message ?: "Login failed! Kripya details check karein."
+                                    Toast.makeText(this@MainActivity, errMsg, Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        } catch (e: Exception) {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
     }
 
     private fun fetchDashboard() {

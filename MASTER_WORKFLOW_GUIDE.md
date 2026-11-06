@@ -31,6 +31,8 @@ Aap is poore system ko ek aam dukaan ki tarah samjhein:
 In links ko apne paas bookmark karke rakh lein:
 
 * **Aapki Live Website:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/](https://yuviteltechnologies-art.github.io/freewebsite/)
+* **Aapka Portal Login & Sign Up:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/auth.html](https://yuviteltechnologies-art.github.io/freewebsite/auth.html)
+* **Aapka Guided Onboarding Dashboard:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html](https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html)
 * **Aapka Live Demo Store:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/demo.html](https://yuviteltechnologies-art.github.io/freewebsite/demo.html)
 * **Aapka Google Sheet Web App Link:**  
   `https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec`
@@ -225,6 +227,41 @@ Aapko kisi coder ke paas jane ki zaroorat nahi hai, website ka ek-ek word aapke 
 1. Mobile app ye sara data Google Sheet ki `Settings` tab me bhej deti hai.
 2. Website turant Google Sheet se ye naya data fetch karti hai.
 3. 2 second ke andar poori live website par naya logo, naya font, naye colors, naya price aur naya text lag jata hai!
+
+---
+
+## 🚀 Naya SaaS Feature: User Sign Up, Interactive 3-Step Dashboard & Unified Mobile App Login
+
+Aapka poora system ab ek multi-user **SaaS Platform** ban chuka hai! Har customer ab apna account khud bana kar apna store live kar sakta hai:
+
+### 1. 🔐 Zero-Cost Database (Google Sheet me `Users` Tab)
+- Google Sheet me automatic **`Users`** tab add ho chuka hai jo har user ka record rakhta hai:
+  - User ID, Name, Email, Password Hash (SHA-256), Phone, GitHub Repo Link, Website Live Link, Connected Sheet URL, aur Onboarding Status.
+  - Iska 0% hosting cost hai aur kisi paid database ki zaroorat nahi hai.
+
+### 2. 🔑 Portal Sign Up & Login Screen ([auth.html](https://yuviteltechnologies-art.github.io/freewebsite/auth.html))
+- Website par upar **"Login / Setup"** button lagaya gaya hai.
+- Customer yahan aakar apna Email aur Password daal kar login ya sign up karta hai.
+- Login hote hi system usko seedha uske personalized **Guided Dashboard** par bhej deta hai.
+
+### 3. 📊 Interactive 3-Step Guided Dashboard ([dashboard.html](https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html))
+Dashboard par aate hi customer ko 3 interactive steps dikhte hain jo uski ungli pakad kar setup karate hain:
+- **Step 1 (GitHub Template Fork & Live Verification):**
+  - `[ 1-Click Copy on GitHub 🚀 ]` dabane par GitHub par repository copy hoti hai.
+  - Niche user apna link daal kar **"Verify Website Live ⚡"** dabata hai. System live check karke green badge `[ Verified & Live ✓ ]` unlock kar deta hai aur progress bar 66% par chali jaati hai!
+- **Step 2 (Google Sheet Database Connect):**
+  - `[ 1-Click Copy Google Sheet 📑 ]` dabakar sheet copy hoti hai.
+  - User apna Apps Script Web App link daal kar **"Test & Connect Sheet 🔗"** dabata hai. System settings aur products verify karke `[ Connected ✓ ]` kar deta hai aur user ki profile me sheet URL save kar deta hai!
+- **Step 3 (Android Admin APK & 1-Tap Sync):**
+  - Direct download button: `[ Download SheetStore-Admin.apk 📲 ]`.
+  - Saath me ek **Dynamic 1-Tap QR Code** dikhta hai.
+  - Customer ko mobile me lambi link type nahi karni padti!
+
+### 4. 📱 Android App Me Wahi Login Daalein (Sheet Auto-Sync!)
+- Jab customer apne phone me Android Admin App kholega, top bar me usko **`👤 Login`** button dikhega.
+- Wo bas apna wahi **Email aur Password** daalega jo usne dashboard par banaya tha.
+- **Jadu (Automatic Binding):** App automatically Google Sheet se us user ki connected Sheet URL nikal leti hai aur bind kar leti hai!
+- Customer ko mobile me koi link copy-paste nahi karni padti, uska dashboard turant live ho jata hai!
 
 ---
 

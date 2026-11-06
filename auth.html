@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Sign Up | SheetStore Pro Portal</title>
+  <meta name="description" content="Apne SheetStore Pro account me login karein aur apni website, Google Sheet aur Android App ko manage karein." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              emerald: '#10B981',
+              gold: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: #080C1A;
+      background-image: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.18), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.12), transparent 40%);
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-slate-800/80 bg-[#0B1120]/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+        </div>
+        <div>
+          <span class="font-heading font-extrabold text-lg text-white">SheetStore <span class="text-blue-500">Pro</span></span>
+          <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Zero Hosting • Zero Domain</p>
+        </div>
+      </a>
+      
+      <a href="index.html" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-white transition">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Website Par Wapas Jayein</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN AUTH CONTAINER -->
+  <main class="flex-1 flex items-center justify-center p-4 sm:p-6 py-12">
+    <div class="w-full max-w-md">
+
+      <!-- Brand Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <!-- Heading -->
+        <div class="text-center mb-6">
+          <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span>Google Sheet Secure Auth</span>
+          </span>
+          <h1 class="font-heading font-black text-2xl sm:text-3xl text-white mt-3" id="formHeaderTitle">
+            Portal Me Login Karein
+          </h1>
+          <p class="text-xs text-slate-400 mt-1" id="formHeaderSubtitle">
+            Apna Email aur Password daal kar dashboard open karein.
+          </p>
+        </div>
+
+        <!-- Dual Tab Switcher -->
+        <div class="grid grid-cols-2 p-1 bg-slate-900/90 rounded-2xl mb-6 border border-slate-800">
+          <button id="tabLoginBtn" type="button" onclick="switchAuthTab('login')"
+                  class="py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow">
+            <i data-lucide="log-in" class="w-4 h-4"></i>
+            <span>Log In</span>
+          </button>
+          <button id="tabSignupBtn" type="button" onclick="switchAuthTab('signup')"
+                  class="py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white">
+            <i data-lucide="user-plus" class="w-4 h-4"></i>
+            <span>Sign Up</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Alert Message -->
+        <div id="alertBox" class="hidden mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2">
+          <i id="alertIcon" data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span id="alertMsg">Alert message</span>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="email" id="loginEmail" required placeholder="name@example.com"
+                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-bold text-slate-300">Password</label>
+            </div>
+            <div class="relative">
+              <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="password" id="loginPassword" required placeholder="••••••••"
+                     class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
+              <button type="button" onclick="togglePassVisibility('loginPassword')" class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="loginSubmitBtn"
+                  class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+            <i data-lucide="arrow-right-circle" class="w-4 h-4"></i>
+            <span>Dashboard Me Login Karein 🚀</span>
+          </button>
+        </form>
+
+        <!-- SIGN UP FORM (HIDDEN BY DEFAULT) -->
+        <form id="signupForm" onsubmit="handleSignupSubmit(event)" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">Aapka Pura Naam</label>
+            <div class="relative">
+              <i data-lucide="user" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="text" id="signupName" required placeholder="e.g. Rajesh Kumar"
+                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="email" id="signupEmail" required placeholder="name@example.com"
+                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">WhatsApp / Mobile Number</label>
+            <div class="relative">
+              <i data-lucide="phone" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="tel" id="signupPhone" placeholder="e.g. 9876543210"
+                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">Naya Password Banayein</label>
+            <div class="relative">
+              <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="password" id="signupPassword" required placeholder="Kam se kam 6 akshar"
+                     class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
+              <button type="button" onclick="togglePassVisibility('signupPassword')" class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="signupSubmitBtn"
+                  class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span>Naya Account Banayein ⚡</span>
+          </button>
+        </form>
+
+        <!-- Footer Notice -->
+        <p class="text-[11px] text-slate-500 text-center mt-6">
+          🔐 Yeh credentials aapke **Android Admin Mobile App** me bhi kaam aayenge.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-900 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
+    <p>SheetStore Pro • Serverless Google Sheet E-Commerce System</p>
+  </footer>
+
+  <script>
+    // Sheet Backend URL
+    const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec";
+    
+    function getSheetUrl() {
+      return localStorage.getItem('store_sheet_url') || DEFAULT_SHEET_URL;
+    }
+
+    // Auto-redirect if already logged in
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      const existingUser = localStorage.getItem('sheetstore_auth_user');
+      if (existingUser) {
+        try {
+          const u = JSON.parse(existingUser);
+          if (u && u.email) {
+            // Already logged in -> jump to dashboard
+            window.location.href = "dashboard.html";
+          }
+        } catch(e) {}
+      }
+    });
+
+    function switchAuthTab(mode) {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const tabLoginBtn = document.getElementById('tabLoginBtn');
+      const tabSignupBtn = document.getElementById('tabSignupBtn');
+      const title = document.getElementById('formHeaderTitle');
+      const subtitle = document.getElementById('formHeaderSubtitle');
+      hideAlert();
+
+      if (mode === 'signup') {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+
+        tabLoginBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white";
+        tabSignupBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow";
+
+        title.innerText = "Naya Account Banayein";
+        subtitle.innerText = "Sirf 30 seconds me apna store account setup karein.";
+      } else {
+        signupForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+
+        tabLoginBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow";
+        tabSignupBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white";
+
+        title.innerText = "Portal Me Login Karein";
+        subtitle.innerText = "Apna Email aur Password daal kar dashboard open karein.";
+      }
+      lucide.createIcons();
+    }
+
+    function togglePassVisibility(id) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') {
+        input.type = 'text';
+      } else {
+        input.type = 'password';
+      }
+    }
+
+    function showAlert(msg, isSuccess = false) {
+      const box = document.getElementById('alertBox');
+      const text = document.getElementById('alertMsg');
+      const icon = document.getElementById('alertIcon');
+
+      box.classList.remove('hidden', 'bg-red-500/10', 'border-red-500/30', 'text-red-400', 'bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-400');
+      
+      if (isSuccess) {
+        box.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-400');
+        icon.setAttribute('data-lucide', 'check-circle');
+      } else {
+        box.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-400');
+        icon.setAttribute('data-lucide', 'alert-circle');
+      }
+      text.innerText = msg;
+      lucide.createIcons();
+    }
+
+    function hideAlert() {
+      document.getElementById('alertBox').classList.add('hidden');
+    }
+
+    // Handle Login Submit
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      hideAlert();
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const btn = document.getElementById('loginSubmitBtn');
+
+      if (!email || !password) {
+        showAlert("Kripya Email aur Password dono daalein.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Checking credentials...</span>`;
+      lucide.createIcons();
+
+      try {
+        const url = `${getSheetUrl()}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data && data.success && data.user) {
+          showAlert("Login safal! Dashboard open ho raha hai...", true);
+          localStorage.setItem('sheetstore_auth_user', JSON.stringify(data.user));
+          if (data.user.sheet_url) {
+            localStorage.setItem('store_sheet_url', data.user.sheet_url);
+          }
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 800);
+        } else {
+          showAlert(data.message || "Email ya Password galat hai.");
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="arrow-right-circle" class="w-4 h-4"></i> <span>Dashboard Me Login Karein 🚀</span>`;
+          lucide.createIcons();
+        }
+      } catch (err) {
+        console.error(err);
+        showAlert("Backend se judne me dikkat aayi. Kripya thodi der baad dobara koshish karein.");
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="arrow-right-circle" class="w-4 h-4"></i> <span>Dashboard Me Login Karein 🚀</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    // Handle Sign Up Submit
+    async function handleSignupSubmit(e) {
+      e.preventDefault();
+      hideAlert();
+
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const btn = document.getElementById('signupSubmitBtn');
+
+      if (password.length < 6) {
+        showAlert("Password kam se kam 6 akshar ka hona chahiye.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Account ban raha hai...</span>`;
+      lucide.createIcons();
+
+      try {
+        const url = `${getSheetUrl()}?action=signup&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data && data.success && data.user) {
+          showAlert("Account ban gaya! Welcome to SheetStore Pro 🎉", true);
+          localStorage.setItem('sheetstore_auth_user', JSON.stringify(data.user));
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
+        } else {
+          showAlert(data.message || "Registration fail ho gaya. Kripya details check karein.");
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> <span>Naya Account Banayein ⚡</span>`;
+          lucide.createIcons();
+        }
+      } catch (err) {
+        console.error(err);
+        showAlert("Registration me error aayi. Internet connection check karein.");
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> <span>Naya Account Banayein ⚡</span>`;
+        lucide.createIcons();
+      }
+    }
+  </script>
+</body>
+</html>

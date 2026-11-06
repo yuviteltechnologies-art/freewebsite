@@ -50,3 +50,21 @@ data class ApiResponse(
     @SerializedName("error") val error: String?
 )
 
+data class AuthUser(
+    @SerializedName("id") val id: String?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("email") val email: String?,
+    @SerializedName("phone") val phone: String?,
+    @SerializedName("github_repo_url") val githubRepoUrl: String?,
+    @SerializedName("website_live_url") val websiteLiveUrl: String?,
+    @SerializedName("sheet_url") val sheetUrl: String?,
+    @SerializedName("onboarding_step") val onboardingStep: Int?
+)
+
+data class LoginResponse(
+    @SerializedName("success") val success: Boolean,
+    @SerializedName("message") val message: String?,
+    @SerializedName("user") val user: AuthUser?,
+    @SerializedName("error") val error: String?
+)
+

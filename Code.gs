@@ -86,6 +86,18 @@ function doGet(e) {
     if (action === "approveOrder") {
       return handleMarkPaid(ss, params);
     }
+    if (action === "signup") {
+      return handleSignup(ss, params);
+    }
+    if (action === "login") {
+      return handleLogin(ss, params);
+    }
+    if (action === "updateUserProfile") {
+      return handleUpdateUserProfile(ss, params);
+    }
+    if (action === "verifySiteUrl") {
+      return handleVerifySiteUrl(params);
+    }
 
     // ----------------------------------------------------
     // DEFAULT: Fetch Site Settings + Products Catalog
@@ -147,6 +159,14 @@ function doPost(e) {
       return handleUpdateProduct(ss, params);
     } else if (action === "addProduct") {
       return handleAddProduct(ss, params);
+    } else if (action === "signup") {
+      return handleSignup(ss, params);
+    } else if (action === "login") {
+      return handleLogin(ss, params);
+    } else if (action === "updateUserProfile") {
+      return handleUpdateUserProfile(ss, params);
+    } else if (action === "verifySiteUrl") {
+      return handleVerifySiteUrl(params);
     }
 
     return returnJsonResponse({ error: "Unknown action", received: action });
@@ -563,6 +583,257 @@ function handleAddProduct(ss, params) {
 }
 
 /**
+ * Helper: Compute SHA-256 Hash of string
+ */
+function hashPassword(str) {
+  if (!str) return "";
+  var signature = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(str), Utilities.Charset.UTF_8);
+  var output = "";
+  for (var i = 0; i < signature.length; i++) {
+    var val = signature[i];
+    if (val < 0) val += 256;
+    var byteString = val.toString(16);
+    if (byteString.length == 1) byteString = "0" + byteString;
+    output += byteString;
+  }
+  return output;
+}
+
+/**
+ * Helper: Ensure 'Users' Sheet exists with appropriate headers & styling
+ */
+function getOrCreateUsersSheet(ss) {
+  var sheet = ss.getSheetByName("Users");
+  if (!sheet) {
+    sheet = ss.insertSheet("Users");
+    var headers = [
+      "User ID",
+      "Date & Time",
+      "Full Name",
+      "Email Address",
+      "Password Hash",
+      "WhatsApp / Phone",
+      "GitHub Repo URL",
+      "Website Live URL",
+      "Google Sheet Web App URL",
+      "Onboarding Step",
+      "Account Status"
+    ];
+    sheet.appendRow(headers);
+    sheet.getRange(1, 1, 1, headers.length)
+      .setFontWeight("bold")
+      .setBackground("#0F172A")
+      .setFontColor("#38BDF8");
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 120);
+    sheet.setColumnWidth(2, 160);
+    sheet.setColumnWidth(3, 160);
+    sheet.setColumnWidth(4, 220);
+    sheet.setColumnWidth(5, 180);
+    sheet.setColumnWidth(6, 140);
+    sheet.setColumnWidth(7, 260);
+    sheet.setColumnWidth(8, 260);
+    sheet.setColumnWidth(9, 320);
+    sheet.setColumnWidth(10, 130);
+    sheet.setColumnWidth(11, 120);
+  }
+  return sheet;
+}
+
+/**
+ * 9. User Sign Up Handler
+ */
+function handleSignup(ss, params) {
+  var email = params.email ? String(params.email).trim().toLowerCase() : "";
+  var password = params.password ? String(params.password).trim() : "";
+  var name = params.name ? String(params.name).trim() : "Store Owner";
+  var phone = params.phone ? String(params.phone).trim() : "";
+
+  if (!email || !password) {
+    return returnJsonResponse({ success: false, message: "Email aur Password dono zaroori hain!" });
+  }
+
+  var uSheet = getOrCreateUsersSheet(ss);
+  var data = uSheet.getDataRange().getValues();
+
+  // Check if user already exists
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][3]).trim().toLowerCase() === email) {
+      return returnJsonResponse({
+        success: false,
+        message: "Yeh email pehle se registered hai! Kripya Login karein."
+      });
+    }
+  }
+
+  var userId = "#USR-" + Math.floor(100000 + Math.random() * 900000);
+  var dateStr = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy, hh:mm a");
+  var passHash = hashPassword(password);
+  var step = 1;
+  var status = "ACTIVE";
+
+  uSheet.appendRow([userId, dateStr, name, email, passHash, phone, "", "", "", step, status]);
+  SpreadsheetApp.flush();
+
+  return returnJsonResponse({
+    success: true,
+    message: "Registration successful! Welcome to SheetStore Pro.",
+    user: {
+      id: userId,
+      name: name,
+      email: email,
+      phone: phone,
+      github_repo_url: "",
+      website_live_url: "",
+      sheet_url: "",
+      onboarding_step: step,
+      status: status
+    }
+  });
+}
+
+/**
+ * 10. User Login Handler
+ */
+function handleLogin(ss, params) {
+  var email = params.email ? String(params.email).trim().toLowerCase() : "";
+  var password = params.password ? String(params.password).trim() : "";
+
+  if (!email || !password) {
+    return returnJsonResponse({ success: false, message: "Email aur Password dono zaroori hain!" });
+  }
+
+  var uSheet = getOrCreateUsersSheet(ss);
+  var data = uSheet.getDataRange().getValues();
+  var passHash = hashPassword(password);
+
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    if (String(row[3]).trim().toLowerCase() === email) {
+      var storedPass = String(row[4]).trim();
+      // Allow SHA-256 match or direct match
+      if (storedPass === passHash || storedPass === password) {
+        return returnJsonResponse({
+          success: true,
+          message: "Login successful!",
+          user: {
+            id: row[0],
+            created_at: row[1],
+            name: row[2],
+            email: row[3],
+            phone: row[5],
+            github_repo_url: row[6],
+            website_live_url: row[7],
+            sheet_url: row[8],
+            onboarding_step: Number(row[9]) || 1,
+            status: row[10] || "ACTIVE"
+          }
+        });
+      } else {
+        return returnJsonResponse({ success: false, message: "Galat password! Dobara koshish karein." });
+      }
+    }
+  }
+
+  return returnJsonResponse({ success: false, message: "Yeh email registered nahi mila. Pehle Sign Up karein." });
+}
+
+/**
+ * 11. User Profile Update (GitHub repo, live site URL, sheet URL, step)
+ */
+function handleUpdateUserProfile(ss, params) {
+  var email = params.email ? String(params.email).trim().toLowerCase() : "";
+  var userId = params.user_id ? String(params.user_id).trim() : "";
+
+  if (!email && !userId) {
+    return returnJsonResponse({ success: false, message: "User identify karne ke liye email ya user_id zaroori hai!" });
+  }
+
+  var uSheet = getOrCreateUsersSheet(ss);
+  var data = uSheet.getDataRange().getValues();
+  var userRow = -1;
+
+  for (var i = 1; i < data.length; i++) {
+    if ((email && String(data[i][3]).trim().toLowerCase() === email) ||
+        (userId && String(data[i][0]).trim() === userId)) {
+      userRow = i + 1;
+      break;
+    }
+  }
+
+  if (userRow === -1) {
+    return returnJsonResponse({ success: false, message: "User account nahi mila!" });
+  }
+
+  if (params.name !== undefined) uSheet.getRange(userRow, 3).setValue(params.name);
+  if (params.phone !== undefined) uSheet.getRange(userRow, 6).setValue(params.phone);
+  if (params.github_repo_url !== undefined) uSheet.getRange(userRow, 7).setValue(params.github_repo_url);
+  if (params.website_live_url !== undefined) uSheet.getRange(userRow, 8).setValue(params.website_live_url);
+  if (params.sheet_url !== undefined) uSheet.getRange(userRow, 9).setValue(params.sheet_url);
+  if (params.onboarding_step !== undefined) uSheet.getRange(userRow, 10).setValue(params.onboarding_step);
+  if (params.status !== undefined) uSheet.getRange(userRow, 11).setValue(params.status);
+
+  SpreadsheetApp.flush();
+
+  var updated = uSheet.getRange(userRow, 1, 1, 11).getValues()[0];
+  return returnJsonResponse({
+    success: true,
+    message: "Profile successfully updated!",
+    user: {
+      id: updated[0],
+      created_at: updated[1],
+      name: updated[2],
+      email: updated[3],
+      phone: updated[5],
+      github_repo_url: updated[6],
+      website_live_url: updated[7],
+      sheet_url: updated[8],
+      onboarding_step: Number(updated[9]) || 1,
+      status: updated[10]
+    }
+  });
+}
+
+/**
+ * 12. Verify If GitHub Pages / Website URL is 100% Live
+ */
+function handleVerifySiteUrl(params) {
+  var url = params.url ? String(params.url).trim() : "";
+  if (!url) {
+    return returnJsonResponse({ success: false, is_live: false, message: "URL provide nahi kiya gaya" });
+  }
+  if (!/^https?:\/\//i.test(url)) {
+    url = "https://" + url;
+  }
+
+  try {
+    var response = UrlFetchApp.fetch(url, {
+      muteHttpExceptions: true,
+      followRedirects: true,
+      validateHttpsCertificates: true
+    });
+    var code = response.getResponseCode();
+    var isLive = (code >= 200 && code < 400);
+
+    return returnJsonResponse({
+      success: true,
+      url: url,
+      status_code: code,
+      is_live: isLive,
+      message: isLive ? "Website LIVE hai aur respond kar rahi hai!" : "Website se HTTP " + code + " mila."
+    });
+  } catch (err) {
+    return returnJsonResponse({
+      success: false,
+      url: url,
+      is_live: false,
+      error: err.toString(),
+      message: "Website tak pahunch nahi sake. URL verify karein."
+    });
+  }
+}
+
+/**
  * Helper: Read Site Settings from 'Settings' Sheet
  */
 function getSheetSettings(ss) {
@@ -826,6 +1097,11 @@ function setupAutoTabs() {
       // Ignore if cannot delete
     }
   }
+
+  // ----------------------------------------------------
+  // 4. Create or Ensure 'Users' Sheet
+  // ----------------------------------------------------
+  getOrCreateUsersSheet(ss);
 
   SpreadsheetApp.flush();
 }

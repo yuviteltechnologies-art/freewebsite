@@ -32,6 +32,14 @@ interface ApiService {
     ): Call<ApiResponse>
 
     @GET
+    fun login(
+        @Url fullUrl: String,
+        @Query("action") action: String = "login",
+        @Query("email") email: String,
+        @Query("password") pass: String
+    ): Call<com.sheetstore.admin.models.LoginResponse>
+
+    @GET
     fun sendBankNotification(
         @Url fullUrl: String,
         @Query("action") action: String = "bankNotification",
