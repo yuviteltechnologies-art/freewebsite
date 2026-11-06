@@ -98,6 +98,9 @@ function doGet(e) {
     if (action === "verifySiteUrl") {
       return handleVerifySiteUrl(params);
     }
+    if (action === "changePassword") {
+      return handleChangePassword(ss, params);
+    }
 
     // ----------------------------------------------------
     // DEFAULT: Fetch Site Settings + Products Catalog
@@ -167,6 +170,8 @@ function doPost(e) {
       return handleUpdateUserProfile(ss, params);
     } else if (action === "verifySiteUrl") {
       return handleVerifySiteUrl(params);
+    } else if (action === "changePassword") {
+      return handleChangePassword(ss, params);
     }
 
     return returnJsonResponse({ error: "Unknown action", received: action });
@@ -276,14 +281,29 @@ function handleCheckOrderStatus(ss, params) {
       }
 
       var isPaid = (rowStatus === "PAID" || isVerified);
-      return returnJsonResponse({
-        success: true,
-        order_id: row[0],
-        status: isPaid ? "PAID" : "PENDING",
-        customer_name: row[2],
-        product: row[4],
-        amount: row[5]
-      });
+      if (isPaid) {
+        var userAcc = autoProvisionUserOnPaymentSuccess(ss, row[2], row[3], params.email || "");
+        return returnJsonResponse({
+          success: true,
+          order_id: row[0],
+          status: "PAID",
+          customer_name: row[2],
+          customer_phone: row[3],
+          product: row[4],
+          amount: row[5],
+          login_identifier: userAcc.login_id,
+          default_password: "123456"
+        });
+      } else {
+        return returnJsonResponse({
+          success: true,
+          order_id: row[0],
+          status: "PENDING",
+          customer_name: row[2],
+          product: row[4],
+          amount: row[5]
+        });
+      }
     }
   }
 
@@ -308,7 +328,15 @@ function handleMarkPaid(ss, params) {
       ordersSheet.getRange(i + 1, 8).setValue("PAID").setFontColor("#10B981").setFontWeight("bold");
       ordersSheet.getRange(i + 1, 9).setValue(true);
       SpreadsheetApp.flush();
-      return returnJsonResponse({ success: true, order_id: orderId, status: "PAID" });
+      var userAcc = autoProvisionUserOnPaymentSuccess(ss, data[i][2], data[i][3], params.email || "");
+      return returnJsonResponse({
+        success: true,
+        order_id: orderId,
+        status: "PAID",
+        customer_name: data[i][2],
+        login_identifier: userAcc.login_id,
+        default_password: "123456"
+      });
     }
   }
 
@@ -367,6 +395,7 @@ function handleBankNotification(ss, params) {
       ordersSheet.getRange(i + 1, 8).setValue("PAID").setFontColor("#10B981").setFontWeight("bold");
       ordersSheet.getRange(i + 1, 9).setValue(true);
       SpreadsheetApp.flush();
+      autoProvisionUserOnPaymentSuccess(ss, row[2], row[3], "");
       break;
     }
   }
@@ -693,23 +722,116 @@ function handleSignup(ss, params) {
 }
 
 /**
- * 10. User Login Handler
+ * Helper: Auto-Provision User Account upon Payment Success (Default Password: 123456)
+ */
+function autoProvisionUserOnPaymentSuccess(ss, customerName, customerPhone, customerEmail) {
+  var name = customerName ? String(customerName).trim() : "Store Owner";
+  var rawPhone = customerPhone ? String(customerPhone).trim() : "";
+  var cleanPhone = rawPhone.replace(/\D/g, '');
+  if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
+
+  var email = customerEmail ? String(customerEmail).trim().toLowerCase() : "";
+  if (!email && cleanPhone) {
+    email = cleanPhone + "@client.store"; // Fallback username
+  }
+
+  var uSheet = getOrCreateUsersSheet(ss);
+  var data = uSheet.getDataRange().getValues();
+  var found = false;
+  var existingUser = null;
+
+  for (var i = 1; i < data.length; i++) {
+    var r = data[i];
+    var rEmail = String(r[3]).trim().toLowerCase();
+    var rPhone = String(r[5]).trim().replace(/\D/g, '');
+    if (rPhone.length > 10) rPhone = rPhone.slice(-10);
+
+    if ((cleanPhone && rPhone === cleanPhone) || (email && rEmail === email)) {
+      found = true;
+      existingUser = {
+        id: r[0],
+        name: r[2],
+        login_id: cleanPhone || email,
+        is_new: false
+      };
+      break;
+    }
+  }
+
+  if (found) {
+    return existingUser;
+  }
+
+  // Create new user with default password '123456'
+  var userId = "#USR-" + Math.floor(100000 + Math.random() * 900000);
+  var dateStr = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy, hh:mm a");
+  var defaultPass = "123456";
+  var passHash = hashPassword(defaultPass);
+  var step = 1;
+  var status = "ACTIVE";
+
+  uSheet.appendRow([userId, dateStr, name, email, passHash, cleanPhone, "", "", "", step, status]);
+  SpreadsheetApp.flush();
+
+  // If customer provided an actual email address, send welcome email with credentials
+  if (customerEmail && customerEmail.indexOf("@") !== -1 && customerEmail.indexOf("client.store") === -1) {
+    try {
+      var subject = "🎉 Aapka SheetStore Pro Setup Ready Hai! [Login Details]";
+      var body = "Namaste " + name + ",\n\n" +
+        "Aapka payment safal ho gaya hai! Aapka SheetStore Pro portal account activate kar diya gaya hai.\n\n" +
+        "------------------------------------\n" +
+        "Aapke Portal Login Credentials:\n" +
+        "------------------------------------\n" +
+        "Portal Login URL: https://yuviteltechnologies-art.github.io/freewebsite/auth.html\n" +
+        "Login ID (Mobile No): " + (cleanPhone || email) + "\n" +
+        "Default Password: " + defaultPass + "\n\n" +
+        "Aap dashboard me jaakar apna password kabhi bhi change kar sakte hain.\n\n" +
+        "Dhanyawad,\nSheetStore Pro Team";
+      MailApp.sendEmail(customerEmail, subject, body);
+    } catch (mailErr) {
+      // Ignore mail quota error
+    }
+  }
+
+  return {
+    id: userId,
+    name: name,
+    login_id: cleanPhone || email,
+    default_password: defaultPass,
+    is_new: true
+  };
+}
+
+/**
+ * 10. User Login Handler (Supports Mobile Number OR Email + Default Password '123456')
  */
 function handleLogin(ss, params) {
-  var email = params.email ? String(params.email).trim().toLowerCase() : "";
+  var rawIdentifier = params.identifier || params.email || params.phone || "";
+  var identifier = String(rawIdentifier).trim().toLowerCase();
   var password = params.password ? String(params.password).trim() : "";
 
-  if (!email || !password) {
-    return returnJsonResponse({ success: false, message: "Email aur Password dono zaroori hain!" });
+  if (!identifier || !password) {
+    return returnJsonResponse({ success: false, message: "Mobile Number / Email aur Password dono zaroori hain!" });
   }
 
   var uSheet = getOrCreateUsersSheet(ss);
   var data = uSheet.getDataRange().getValues();
   var passHash = hashPassword(password);
 
+  var cleanPhone = identifier.replace(/\D/g, '');
+  if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
+
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
-    if (String(row[3]).trim().toLowerCase() === email) {
+    var rowEmail = String(row[3]).trim().toLowerCase();
+    var rowPhone = String(row[5]).trim().replace(/\D/g, '');
+    if (rowPhone.length > 10) rowPhone = rowPhone.slice(-10);
+
+    var matches = (rowEmail && rowEmail === identifier) ||
+                  (cleanPhone && rowPhone && rowPhone === cleanPhone) ||
+                  (String(row[0]).trim().toLowerCase() === identifier);
+
+    if (matches) {
       var storedPass = String(row[4]).trim();
       // Allow SHA-256 match or direct match
       if (storedPass === passHash || storedPass === password) {
@@ -730,12 +852,69 @@ function handleLogin(ss, params) {
           }
         });
       } else {
-        return returnJsonResponse({ success: false, message: "Galat password! Dobara koshish karein." });
+        return returnJsonResponse({ success: false, message: "Galat password! Agar aapne abhi purchase kiya hai toh default password '123456' try karein." });
       }
     }
   }
 
-  return returnJsonResponse({ success: false, message: "Yeh email registered nahi mila. Pehle Sign Up karein." });
+  return returnJsonResponse({ 
+    success: false, 
+    message: "Yeh Mobile/Email registered nahi mila. Portal sirf paid customers ke liye hai — website se purchase karte hi account automatic ban jata hai!" 
+  });
+}
+
+/**
+ * Change Password Handler (Customer can change default '123456' to their own secret password)
+ */
+function handleChangePassword(ss, params) {
+  var rawIdentifier = params.identifier || params.email || params.phone || "";
+  var identifier = String(rawIdentifier).trim().toLowerCase();
+  var oldPassword = params.old_password ? String(params.old_password).trim() : "";
+  var newPassword = params.new_password ? String(params.new_password).trim() : "";
+
+  if (!identifier || !oldPassword || !newPassword) {
+    return returnJsonResponse({ success: false, message: "Sabhi fields bharna zaroori hai!" });
+  }
+
+  if (newPassword.length < 4) {
+    return returnJsonResponse({ success: false, message: "Naya password kam se kam 4 akshar ka hona chahiye!" });
+  }
+
+  var uSheet = getOrCreateUsersSheet(ss);
+  var data = uSheet.getDataRange().getValues();
+  var cleanPhone = identifier.replace(/\D/g, '');
+  if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
+
+  var oldHash = hashPassword(oldPassword);
+  var newHash = hashPassword(newPassword);
+
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var rEmail = String(row[3]).trim().toLowerCase();
+    var rPhone = String(row[5]).trim().replace(/\D/g, '');
+    if (rPhone.length > 10) rPhone = rPhone.slice(-10);
+
+    var matches = (rEmail && rEmail === identifier) ||
+                  (cleanPhone && rPhone && rPhone === cleanPhone) ||
+                  (String(row[0]).trim().toLowerCase() === identifier);
+
+    if (matches) {
+      var storedPass = String(row[4]).trim();
+      if (storedPass === oldHash || storedPass === oldPassword) {
+        // Update password hash in sheet
+        uSheet.getRange(i + 1, 5).setValue(newHash);
+        SpreadsheetApp.flush();
+        return returnJsonResponse({ 
+          success: true, 
+          message: "🎉 Password successfully update ho gaya! Ab naye password se login karein." 
+        });
+      } else {
+        return returnJsonResponse({ success: false, message: "Purana password galat hai! Kripya dobara check karein." });
+      }
+    }
+  }
+
+  return returnJsonResponse({ success: false, message: "User account nahi mila!" });
 }
 
 /**

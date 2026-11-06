@@ -230,38 +230,37 @@ Aapko kisi coder ke paas jane ki zaroorat nahi hai, website ka ek-ek word aapke 
 
 ---
 
-## 🚀 Naya SaaS Feature: User Sign Up, Interactive 3-Step Dashboard & Unified Mobile App Login
+## 🚀 Paid-Customer SaaS Feature: Payment Approval Par Auto-Account & Default Password (123456)
 
-Aapka poora system ab ek multi-user **SaaS Platform** ban chuka hai! Har customer ab apna account khud bana kar apna store live kar sakta hai:
+Aapne poocha tha ki *open sign-up ki jagah sirf payment karne wale ko access mile, payment approve hote hi auto account ban jaye default password 123456 ke sath, aur wo baad me password change kar sake:*  
+Yeh poora system implement ho chuka hai! Aaiye samajhte hain:
 
-### 1. 🔐 Zero-Cost Database (Google Sheet me `Users` Tab)
-- Google Sheet me automatic **`Users`** tab add ho chuka hai jo har user ka record rakhta hai:
-  - User ID, Name, Email, Password Hash (SHA-256), Phone, GitHub Repo Link, Website Live Link, Connected Sheet URL, aur Onboarding Status.
-  - Iska 0% hosting cost hai aur kisi paid database ki zaroorat nahi hai.
+### 1. 🔐 Payment Hote Hi Auto-Account Creation
+- Jab koi customer website par ₹10 (ya ₹499) pay karta hai aur apna **WhatsApp Mobile No.** daalta hai:
+- Jaise hi aap Android App me **"Approve [✓]"** dabate hain ya SMS se auto-verify hota hai:
+  1. Google Sheet me `Users` tab me uska account **automatically create** ho jata hai!
+  2. **User ID:** Customer ka WhatsApp Mobile Number.
+  3. **Default Password:** **`123456`**.
+  4. Agar customer ne checkout par Email daali hai, toh usko welcome email bhi credentials ke sath chala jata hai!
 
-### 2. 🔑 Portal Sign Up & Login Screen ([auth.html](https://yuviteltechnologies-art.github.io/freewebsite/auth.html))
-- Website par upar **"Login / Setup"** button lagaya gaya hai.
-- Customer yahan aakar apna Email aur Password daal kar login ya sign up karta hai.
-- Login hote hi system usko seedha uske personalized **Guided Dashboard** par bhej deta hai.
+### 2. 🎉 Success Page Par 1-Click Launch ([success.html](https://yuviteltechnologies-art.github.io/freewebsite/success.html))
+- Payment verify hote hi customer ke samne green highlight box me uske credentials aate hain:
+  - `User ID / Mobile: 9876543210`
+  - `Default Password: 123456`
+- **1-Click Magic Button:** Customer ko password type karne ki bhi zaroorat nahi — bas **"1-Click Me Dashboard Kholein 🚀"** dabate hi uska dashboard turant login ho jata hai!
 
-### 3. 📊 Interactive 3-Step Guided Dashboard ([dashboard.html](https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html))
-Dashboard par aate hi customer ko 3 interactive steps dikhte hain jo uski ungli pakad kar setup karate hain:
-- **Step 1 (GitHub Template Fork & Live Verification):**
-  - `[ 1-Click Copy on GitHub 🚀 ]` dabane par GitHub par repository copy hoti hai.
-  - Niche user apna link daal kar **"Verify Website Live ⚡"** dabata hai. System live check karke green badge `[ Verified & Live ✓ ]` unlock kar deta hai aur progress bar 66% par chali jaati hai!
-- **Step 2 (Google Sheet Database Connect):**
-  - `[ 1-Click Copy Google Sheet 📑 ]` dabakar sheet copy hoti hai.
-  - User apna Apps Script Web App link daal kar **"Test & Connect Sheet 🔗"** dabata hai. System settings aur products verify karke `[ Connected ✓ ]` kar deta hai aur user ki profile me sheet URL save kar deta hai!
-- **Step 3 (Android Admin APK & 1-Tap Sync):**
-  - Direct download button: `[ Download SheetStore-Admin.apk 📲 ]`.
-  - Saath me ek **Dynamic 1-Tap QR Code** dikhta hai.
-  - Customer ko mobile me lambi link type nahi karni padti!
+### 3. 🔑 Manual Login Portal ([auth.html](https://yuviteltechnologies-art.github.io/freewebsite/auth.html))
+- Open public signup band kar diya gaya hai (taaki bina payment koi free me use na kar sake).
+- Customer apna **WhatsApp Mobile No. / Email** aur Password (`123456`) daal kar kabhi bhi login kar sakta hai.
 
-### 4. 📱 Android App Me Wahi Login Daalein (Sheet Auto-Sync!)
-- Jab customer apne phone me Android Admin App kholega, top bar me usko **`👤 Login`** button dikhega.
-- Wo bas apna wahi **Email aur Password** daalega jo usne dashboard par banaya tha.
-- **Jadu (Automatic Binding):** App automatically Google Sheet se us user ki connected Sheet URL nikal leti hai aur bind kar leti hai!
-- Customer ko mobile me koi link copy-paste nahi karni padti, uska dashboard turant live ho jata hai!
+### 4. 🔄 Password Badalne Ka Feature (Dashboard Ke Andar)
+- Dashboard kholne ke baad top bar me **"Password Badlein 🔑"** button hai.
+- Customer purana password (`123456`) aur apna man-pasand naya secret password daal kar 1-second me update kar sakta hai!
+
+### 5. 📱 Android App Me Wahi Login Daalein (Sheet Auto-Sync!)
+- Phone me Android Admin App khol kar top bar me **`👤 Login`** dabayein.
+- Apna **Mobile Number** aur password (`123456` ya naya password) daalein.
+- App apne aap Google Sheet se customer ka database link connect kar leti hai — **phone me lambi link type karne ka jhanjhat khatam!**
 
 ---
 

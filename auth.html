@@ -80,15 +80,15 @@
 
         <!-- Heading -->
         <div class="text-center mb-6">
-          <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
+          <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-            <span>Google Sheet Secure Auth</span>
+            <span>Verified Customer Portal</span>
           </span>
           <h1 class="font-heading font-black text-2xl sm:text-3xl text-white mt-3" id="formHeaderTitle">
             Portal Me Login Karein
           </h1>
           <p class="text-xs text-slate-400 mt-1" id="formHeaderSubtitle">
-            Apna Email aur Password daal kar dashboard open karein.
+            Apna WhatsApp Mobile No. aur Default Password (123456) daalein.
           </p>
         </div>
 
@@ -97,12 +97,12 @@
           <button id="tabLoginBtn" type="button" onclick="switchAuthTab('login')"
                   class="py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow">
             <i data-lucide="log-in" class="w-4 h-4"></i>
-            <span>Log In</span>
+            <span>Login Karein</span>
           </button>
-          <button id="tabSignupBtn" type="button" onclick="switchAuthTab('signup')"
+          <button id="tabSignupBtn" type="button" onclick="switchAuthTab('needAccess')"
                   class="py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white">
-            <i data-lucide="user-plus" class="w-4 h-4"></i>
-            <span>Sign Up</span>
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <span>Kit Khareedein</span>
           </button>
         </div>
 
@@ -115,21 +115,23 @@
         <!-- LOGIN FORM -->
         <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">Email Address</label>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">WhatsApp Mobile No. ya Email Address</label>
             <div class="relative">
-              <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
-              <input type="email" id="loginEmail" required placeholder="name@example.com"
+              <i data-lucide="smartphone" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+              <input type="text" id="loginIdentifier" required placeholder="e.g. 9876543210 ya name@example.com"
                      class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
             </div>
+            <p class="text-[10px] text-blue-400 mt-1">Payment ke waqt jo mobile number daala tha, wahi aapka User ID hai.</p>
           </div>
 
           <div>
             <div class="flex items-center justify-between mb-1.5">
               <label class="block text-xs font-bold text-slate-300">Password</label>
+              <span class="text-[10px] text-emerald-400 font-mono">Default: 123456</span>
             </div>
             <div class="relative">
               <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
-              <input type="password" id="loginPassword" required placeholder="••••••••"
+              <input type="password" id="loginPassword" required placeholder="Default '123456' ya naya password"
                      class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
               <button type="button" onclick="togglePassVisibility('loginPassword')" class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300">
                 <i data-lucide="eye" class="w-4 h-4"></i>
@@ -144,53 +146,25 @@
           </button>
         </form>
 
-        <!-- SIGN UP FORM (HIDDEN BY DEFAULT) -->
-        <form id="signupForm" onsubmit="handleSignupSubmit(event)" class="space-y-4 hidden">
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">Aapka Pura Naam</label>
-            <div class="relative">
-              <i data-lucide="user" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
-              <input type="text" id="signupName" required placeholder="e.g. Rajesh Kumar"
-                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
-            </div>
+        <!-- NEED ACCESS / BUY NOTICE (HIDDEN BY DEFAULT) -->
+        <div id="needAccessBox" class="space-y-4 hidden text-center">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto mb-2">
+            <i data-lucide="lock" class="w-6 h-6"></i>
           </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">Email Address</label>
-            <div class="relative">
-              <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
-              <input type="email" id="signupEmail" required placeholder="name@example.com"
-                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">WhatsApp / Mobile Number</label>
-            <div class="relative">
-              <i data-lucide="phone" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
-              <input type="tel" id="signupPhone" placeholder="e.g. 9876543210"
-                     class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">Naya Password Banayein</label>
-            <div class="relative">
-              <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
-              <input type="password" id="signupPassword" required placeholder="Kam se kam 6 akshar"
-                     class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-white focus:outline-none transition" />
-              <button type="button" onclick="togglePassVisibility('signupPassword')" class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300">
-                <i data-lucide="eye" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-
-          <button type="submit" id="signupSubmitBtn"
-                  class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 transition active:scale-95 flex items-center justify-center gap-2">
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
-            <span>Naya Account Banayein ⚡</span>
-          </button>
-        </form>
+          <h3 class="font-heading font-bold text-lg text-white">Sirf Paid Customers Ke Liye Access Hai</h3>
+          <p class="text-xs text-slate-300 leading-relaxed text-left bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800">
+            Open public sign up band hai. Jaise hi customer website par jakar product khareedta hai, **uske mobile number par account auto create ho jata hai** aur default password <strong>123456</strong> mil jata hai.
+          </p>
+          <a href="index.html#pricing" 
+             class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span>Website Par Jayein & Kit Khareedein (Sirf ₹10) ➔</span>
+          </a>
+          <p class="text-[11px] text-slate-400">
+            Agar aapne payment kar di hai aur login nahi ho raha, toh WhatsApp par sampark karein:
+            <a href="https://wa.me/919999999999" target="_blank" class="text-emerald-400 underline font-semibold ml-1">WhatsApp Support</a>
+          </p>
+        </div>
 
         <!-- Footer Notice -->
         <p class="text-[11px] text-slate-500 text-center mt-6">
@@ -231,31 +205,31 @@
 
     function switchAuthTab(mode) {
       const loginForm = document.getElementById('loginForm');
-      const signupForm = document.getElementById('signupForm');
+      const needAccessBox = document.getElementById('needAccessBox');
       const tabLoginBtn = document.getElementById('tabLoginBtn');
       const tabSignupBtn = document.getElementById('tabSignupBtn');
       const title = document.getElementById('formHeaderTitle');
       const subtitle = document.getElementById('formHeaderSubtitle');
       hideAlert();
 
-      if (mode === 'signup') {
+      if (mode === 'needAccess') {
         loginForm.classList.add('hidden');
-        signupForm.classList.remove('hidden');
+        needAccessBox.classList.remove('hidden');
 
         tabLoginBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white";
-        tabSignupBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow";
+        tabSignupBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-amber-600 text-white shadow";
 
-        title.innerText = "Naya Account Banayein";
-        subtitle.innerText = "Sirf 30 seconds me apna store account setup karein.";
+        title.innerText = "Paid Customer Access";
+        subtitle.innerText = "Khareedne ke baad automatic account create hota hai.";
       } else {
-        signupForm.classList.add('hidden');
+        needAccessBox.classList.add('hidden');
         loginForm.classList.remove('hidden');
 
         tabLoginBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow";
         tabSignupBtn.className = "py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white";
 
         title.innerText = "Portal Me Login Karein";
-        subtitle.innerText = "Apna Email aur Password daal kar dashboard open karein.";
+        subtitle.innerText = "Apna WhatsApp Mobile No. aur Default Password (123456) daalein.";
       }
       lucide.createIcons();
     }
@@ -291,17 +265,17 @@
       document.getElementById('alertBox').classList.add('hidden');
     }
 
-    // Handle Login Submit
+    // Handle Login Submit (Supports Mobile Number OR Email + Default Password '123456')
     async function handleLoginSubmit(e) {
       e.preventDefault();
       hideAlert();
 
-      const email = document.getElementById('loginEmail').value.trim();
+      const identifier = document.getElementById('loginIdentifier').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       const btn = document.getElementById('loginSubmitBtn');
 
-      if (!email || !password) {
-        showAlert("Kripya Email aur Password dono daalein.");
+      if (!identifier || !password) {
+        showAlert("Kripya Mobile Number / Email aur Password dono daalein.");
         return;
       }
 
@@ -310,7 +284,7 @@
       lucide.createIcons();
 
       try {
-        const url = `${getSheetUrl()}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+        const url = `${getSheetUrl()}?action=login&identifier=${encodeURIComponent(identifier)}&password=${encodeURIComponent(password)}`;
         const res = await fetch(url);
         const data = await res.json();
 
@@ -322,9 +296,9 @@
           }
           setTimeout(() => {
             window.location.href = "dashboard.html";
-          }, 800);
+          }, 700);
         } else {
-          showAlert(data.message || "Email ya Password galat hai.");
+          showAlert(data.message || "Mobile Number ya Password galat hai. Default password '123456' check karein.");
           btn.disabled = false;
           btn.innerHTML = `<i data-lucide="arrow-right-circle" class="w-4 h-4"></i> <span>Dashboard Me Login Karein 🚀</span>`;
           lucide.createIcons();
@@ -386,3 +360,4 @@
   </script>
 </body>
 </html>
+

@@ -76,6 +76,55 @@
       </p>
     </div>
 
+    <!-- PORTAL LOGIN ACCOUNT HIGHLIGHT BOX (NEW PAID ACCESS) -->
+    <div class="bg-gradient-to-br from-blue-950/80 via-slate-900/90 to-indigo-950/80 border-2 border-emerald-500/50 rounded-3xl p-6 sm:p-8 mb-10 shadow-2xl relative overflow-hidden text-center">
+      <div class="absolute -top-12 -right-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold uppercase tracking-wider mb-3">
+        <i data-lucide="key" class="w-3.5 h-3.5"></i>
+        <span>Portal Login Account Activated</span>
+      </span>
+
+      <h2 class="font-heading font-black text-xl sm:text-2xl text-white mb-2">
+        Aapka Store Portal Login Ready Hai! 🔐
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto mb-6">
+        Aapke mobile number par account auto-activate kar diya gaya hai. In credentials se aap Website Dashboard aur Android App dono me login kar sakte hain:
+      </p>
+
+      <!-- Credentials Display -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto mb-6 text-left">
+        <div class="bg-slate-950/90 p-4 rounded-2xl border border-slate-800">
+          <span class="text-[11px] text-slate-400 uppercase font-bold tracking-wider block mb-1">User ID / Mobile:</span>
+          <span id="displayUserLoginId" class="text-base font-bold text-white font-mono">Loading...</span>
+        </div>
+        <div class="bg-slate-950/90 p-4 rounded-2xl border border-slate-800">
+          <span class="text-[11px] text-slate-400 uppercase font-bold tracking-wider block mb-1">Default Password:</span>
+          <div class="flex items-center justify-between">
+            <span class="text-lg font-black text-emerald-400 font-mono">123456</span>
+            <span class="text-[10px] text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20">Change Anytime</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1-Click Launch Button -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="autoLoginAndLaunchDashboard()" 
+                class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition active:scale-95">
+          <i data-lucide="sparkles" class="w-4 h-4 fill-current"></i>
+          <span>1-Click Me Dashboard Kholein 🚀</span>
+        </button>
+        <a href="auth.html" class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Manual Login Page</span>
+        </a>
+      </div>
+
+      <p class="text-[11px] text-slate-400 mt-4">
+        💡 Dashboard kholne ke baad aap **"Password Badlein"** button par click karke apna secret password set kar sakte hain.
+      </p>
+    </div>
+
     <!-- 2 STEP ACTION CARDS -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
       
@@ -238,10 +287,18 @@
   </footer>
 
   <script>
+    let activeCustomer = {
+      name: "Store Owner",
+      phone: "",
+      email: ""
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const orderId = urlParams.get('order');
       const name = urlParams.get('name');
+      const phone = urlParams.get('phone');
+      const email = urlParams.get('email');
       const product = urlParams.get('product');
 
       if (orderId) {
@@ -249,7 +306,17 @@
       }
       if (name) {
         document.getElementById('welcomeHeading').innerText = `Badhai Ho, ${name}! Aapka Store Ready Hai 🎉`;
+        activeCustomer.name = name;
       }
+      if (phone) {
+        activeCustomer.phone = phone;
+      }
+      if (email) {
+        activeCustomer.email = email;
+      }
+
+      const displayLogin = phone || email || "Aapka Registered Mobile No.";
+      document.getElementById('displayUserLoginId').innerText = displayLogin;
 
       const wa = localStorage.getItem('store_wa_number') || localStorage.getItem('store_wa_num');
       if (wa) {
@@ -261,6 +328,17 @@
 
       lucide.createIcons();
     });
+
+    function autoLoginAndLaunchDashboard() {
+      const userSession = {
+        name: activeCustomer.name || "Store Owner",
+        email: activeCustomer.email || (activeCustomer.phone ? `${activeCustomer.phone}@client.store` : "owner@store.com"),
+        phone: activeCustomer.phone || "",
+        onboarding_step: 1
+      };
+      localStorage.setItem('sheetstore_auth_user', JSON.stringify(userSession));
+      window.location.href = "dashboard.html";
+    }
   </script>
 </body>
 </html>

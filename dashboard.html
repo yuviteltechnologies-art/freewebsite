@@ -72,7 +72,7 @@
       </a>
 
       <!-- User Profile & Logout -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5">
         <div class="hidden sm:flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl">
           <div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center font-heading" id="userAvatarText">
             U
@@ -82,6 +82,11 @@
             <p class="text-[10px] text-slate-400 font-mono leading-tight" id="headerUserEmail">user@example.com</p>
           </div>
         </div>
+
+        <button onclick="openChangePassModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-400 border border-blue-500/30 text-xs font-semibold transition hover:text-white">
+          <i data-lucide="key" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Password Badlein</span>
+        </button>
 
         <button onclick="handleLogout()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-red-500/20 hover:text-red-400 text-slate-400 border border-slate-700 text-xs font-semibold transition">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
@@ -372,6 +377,51 @@
 
   </main>
 
+  <!-- CHANGE PASSWORD MODAL -->
+  <div id="changePassModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl text-left border border-blue-500/40">
+      <button onclick="closeChangePassModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+          <i data-lucide="key" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-white">Naya Password Set Karein</h3>
+          <p class="text-xs text-slate-400">Default password (123456) ko apne secret password se badlein.</p>
+        </div>
+      </div>
+
+      <div id="changePassAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
+
+      <form onsubmit="handleChangePassSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Purana Password (Default: 123456)</label>
+          <input type="password" id="oldPasswordInput" required placeholder="Purana password"
+                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Naya Password</label>
+          <input type="password" id="newPasswordInput" required placeholder="Kam se kam 4 akshar"
+                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Naya Password Confirm Karein</label>
+          <input type="password" id="confirmPasswordInput" required placeholder="Dobara naya password daalein"
+                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
+        </div>
+
+        <button type="submit" id="changePassSubmitBtn"
+                class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Password Save Karein ⚡</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="border-t border-slate-900 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
     <p>SheetStore Pro • Serverless Google Sheet E-Commerce Platform</p>
@@ -624,6 +674,69 @@
       lucide.createIcons();
     }
 
+    function openChangePassModal() {
+      document.getElementById('changePassModal').classList.remove('hidden');
+      document.getElementById('changePassAlert').classList.add('hidden');
+      document.getElementById('oldPasswordInput').value = '';
+      document.getElementById('newPasswordInput').value = '';
+      document.getElementById('confirmPasswordInput').value = '';
+      lucide.createIcons();
+    }
+
+    function closeChangePassModal() {
+      document.getElementById('changePassModal').classList.add('hidden');
+    }
+
+    async function handleChangePassSubmit(e) {
+      e.preventDefault();
+      const oldPass = document.getElementById('oldPasswordInput').value.trim();
+      const newPass = document.getElementById('newPasswordInput').value.trim();
+      const confirmPass = document.getElementById('confirmPasswordInput').value.trim();
+      const alertBox = document.getElementById('changePassAlert');
+      const btn = document.getElementById('changePassSubmitBtn');
+
+      if (newPass !== confirmPass) {
+        alertBox.className = "mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2 bg-red-500/10 border-red-500/30 text-red-400";
+        alertBox.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> <span>Naya password match nahi ho raha hai!</span>`;
+        alertBox.classList.remove('hidden');
+        lucide.createIcons();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Updating password...</span>`;
+      lucide.createIcons();
+
+      try {
+        const identifier = currentUser.phone || currentUser.email || "";
+        const url = `${getBackendUrl()}?action=changePassword&identifier=${encodeURIComponent(identifier)}&old_password=${encodeURIComponent(oldPass)}&new_password=${encodeURIComponent(newPass)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data && data.success) {
+          alertBox.className = "mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2 bg-emerald-500/10 border-emerald-500/30 text-emerald-400";
+          alertBox.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i> <span>${data.message}</span>`;
+          alertBox.classList.remove('hidden');
+          confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+          setTimeout(() => {
+            closeChangePassModal();
+          }, 1500);
+        } else {
+          alertBox.className = "mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2 bg-red-500/10 border-red-500/30 text-red-400";
+          alertBox.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> <span>${data.message || 'Error occurred'}</span>`;
+          alertBox.classList.remove('hidden');
+        }
+      } catch (err) {
+        alertBox.className = "mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2 bg-red-500/10 border-red-500/30 text-red-400";
+        alertBox.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> <span>Password update fail ho gaya. Internet check karein.</span>`;
+        alertBox.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> <span>Password Save Karein ⚡</span>`;
+        lucide.createIcons();
+      }
+    }
+
     function saveUserLocally() {
       if (currentUser) {
         localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
@@ -637,3 +750,4 @@
   </script>
 </body>
 </html>
+

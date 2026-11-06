@@ -660,6 +660,10 @@
             <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Mobile No. <span class="text-rose-400">*</span></label>
             <input type="tel" id="custPhone" placeholder="10-digit number" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
           </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Email ID <span class="text-slate-500 font-normal">(Optional • Login details mail par pane ke liye)</span></label>
+            <input type="email" id="custEmail" placeholder="name@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
+          </div>
         </div>
 
         <!-- QR Display Section (PROMINENT & DYNAMIC) -->
@@ -909,6 +913,8 @@
     function goToStep2() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
+      const emailInput = document.getElementById('custEmail');
+      const email = emailInput ? emailInput.value.trim() : "";
 
       if (!name) {
         alert("Kripya apna Naam enter karein.");
@@ -923,6 +929,7 @@
 
       currentOrder.name = name;
       currentOrder.phone = phone;
+      currentOrder.email = email;
 
       document.getElementById('checkoutStep1').classList.add('hidden');
       document.getElementById('checkoutStep2').classList.remove('hidden');
@@ -963,7 +970,7 @@
       // If Google Sheet Web App URL is configured, record the order
       if (storeConfig.sheetUrl && storeConfig.sheetUrl.trim() !== "") {
         try {
-          const createUrl = `${storeConfig.sheetUrl}?action=createOrder&order_id=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&phone=${encodeURIComponent(currentOrder.phone)}&product=${encodeURIComponent(currentOrder.product)}&amount=${currentOrder.amount}&utr=${encodeURIComponent(currentOrder.utr)}`;
+          const createUrl = `${storeConfig.sheetUrl}?action=createOrder&order_id=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&phone=${encodeURIComponent(currentOrder.phone)}&email=${encodeURIComponent(currentOrder.email || '')}&product=${encodeURIComponent(currentOrder.product)}&amount=${currentOrder.amount}&utr=${encodeURIComponent(currentOrder.utr)}`;
           fetch(createUrl, { mode: 'no-cors' }).catch(err => console.log("Logged:", err));
         } catch (e) {
           console.warn("Sheet order record call:", e);
@@ -995,13 +1002,13 @@
         }
 
         try {
-          const checkUrl = `${storeConfig.sheetUrl}?action=checkOrderStatus&order_id=${encodeURIComponent(currentOrder.id)}&utr=${encodeURIComponent(currentOrder.utr)}`;
+          const checkUrl = `${storeConfig.sheetUrl}?action=checkOrderStatus&order_id=${encodeURIComponent(currentOrder.id)}&utr=${encodeURIComponent(currentOrder.utr)}&email=${encodeURIComponent(currentOrder.email || '')}`;
           const res = await fetch(checkUrl);
           const data = await res.json();
 
           if (data && data.status === "PAID") {
             clearInterval(pollInterval);
-            handleVerificationSuccess();
+            handleVerificationSuccess(data);
           }
         } catch (err) {
           console.log("Polling check:", err);
@@ -1009,14 +1016,17 @@
       }, 3000);
     }
 
-    function handleVerificationSuccess() {
+    function handleVerificationSuccess(paymentData) {
       document.getElementById('verifyingSpinner').classList.add('hidden');
       document.getElementById('verificationSuccessBox').classList.remove('hidden');
       lucide.createIcons();
 
+      const phoneParam = encodeURIComponent(currentOrder.phone || (paymentData && paymentData.customer_phone) || '');
+      const emailParam = encodeURIComponent(currentOrder.email || '');
+
       setTimeout(() => {
-        window.location.href = `success.html?order=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&status=PAID`;
-      }, 2000);
+        window.location.href = `success.html?order=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&phone=${phoneParam}&email=${emailParam}&status=PAID`;
+      }, 1500);
     }
 
     function sendOrderToWhatsAppFallback() {

@@ -286,15 +286,15 @@ class MainActivity : Activity() {
             }
 
             val emailInput = EditText(this).apply {
-                hint = "Email Address (e.g. name@example.com)"
-                inputType = android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                hint = "WhatsApp Mobile No. ya Email (e.g. 9876543210)"
+                inputType = android.text.InputType.TYPE_CLASS_TEXT
                 setTextColor(Color.BLACK)
                 setPadding(24, 20, 24, 20)
             }
             dialogLayout.addView(emailInput)
 
             val passInput = EditText(this).apply {
-                hint = "Password"
+                hint = "Password (Default: 123456)"
                 inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
                 setTextColor(Color.BLACK)
                 setPadding(24, 20, 24, 20)
@@ -303,7 +303,7 @@ class MainActivity : Activity() {
 
             AlertDialog.Builder(this)
                 .setTitle("Store Portal Login 🔐")
-                .setMessage("Website / Dashboard wala Email aur Password daalein. Aapka Sheet URL apne aap connect ho jayega!")
+                .setMessage("Website checkout wala Mobile Number aur Password daalein (Default: 123456). Aapka Sheet URL apne aap connect ho jayega!")
                 .setView(dialogLayout)
                 .setPositiveButton("Log In 🚀") { _, _ ->
                     val email = emailInput.text.toString().trim()
