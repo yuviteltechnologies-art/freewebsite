@@ -144,6 +144,13 @@
             <i data-lucide="arrow-right-circle" class="w-4 h-4"></i>
             <span>Dashboard Me Login Karein 🚀</span>
           </button>
+
+          <!-- 1-Click Demo / Testing Login Autofill Button -->
+          <button type="button" onclick="fillTestingCredentials()"
+                  class="w-full py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-blue-400 border border-blue-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-400"></i>
+            <span>Test ID & Password Auto-Fill (9999999999 / 123456) ⚡</span>
+          </button>
         </form>
 
         <!-- NEED ACCESS / BUY NOTICE (HIDDEN BY DEFAULT) -->
@@ -191,17 +198,32 @@
     // Auto-redirect if already logged in
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      const urlParams = new URLSearchParams(window.location.search);
+
+      // Check if user clicked demo test autofill
+      if (urlParams.get('test') || urlParams.get('fill')) {
+        fillTestingCredentials();
+      }
+
       const existingUser = localStorage.getItem('sheetstore_auth_user');
-      if (existingUser) {
+      if (existingUser && !urlParams.get('logout')) {
         try {
           const u = JSON.parse(existingUser);
-          if (u && u.email) {
+          if (u && (u.email || u.phone)) {
             // Already logged in -> jump to dashboard
             window.location.href = "dashboard.html";
           }
         } catch(e) {}
       }
     });
+
+    function fillTestingCredentials() {
+      const idInput = document.getElementById('loginIdentifier');
+      const passInput = document.getElementById('loginPassword');
+      if (idInput) idInput.value = '9999999999';
+      if (passInput) passInput.value = '123456';
+      showAlert("Testing credentials auto-filled! Ab 'Dashboard Me Login Karein 🚀' dabayein.", true);
+    }
 
     function switchAuthTab(mode) {
       const loginForm = document.getElementById('loginForm');
