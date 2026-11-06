@@ -91,13 +91,27 @@ $$\text{URL} = \text{https://} + \langle\text{aapka-github-username}\rangle + \t
 
 ---
 
-#### ⚡ Dashboard Ka "Smart URL Helper & Auto-Finder" Tool:
-Aapko lambi link yaad rakhne ya bananey ki bhi zaroorat nahi hai:
-1. Apne Dashboard ([dashboard.html](file:///g:/Vastu_website/dashboard.html)) me **Step 1** par jayein.
-2. Wahan **"GitHub Username"** box me bas apna username (jaise `rajeshkumar`) likhein.
-3. System turant 2 magic buttons dikhayega:
-   - **`Direct Pages Settings ↗`**: Is par click karte hi seedha wahi Settings > Pages ka page khul jayega jahan `main` aur `Save` dabana hai.
-   - **`Auto-Fill & Verify ⚡`**: Is par click karte hi link verification box me bhari jayegi aur test ho jayegi!
+#### ⚡ Dashboard Ka "Repo Link Paste ➔ Universal Formula ➔ Google Sheet Save" System:
+
+Aapko lambi link yaad rakhne ya bananey ki bhi bilkul zaroorat nahi hai:
+
+1. **Repo Public By Default Khulegi:**  
+   Dashboard me **"1-Click Copy on GitHub (Public) 🚀"** par click karein. Yeh link GitHub par automatically repository ka naam **`freewebsite`** aur visibility **`Public`** set karke kholta hai. Customer ko bas green button dabana hai!
+
+2. **Browser Ka Repo Link Paste Karein:**  
+   Jaise hi GitHub par repo ban jaye, browser ke address bar me jo link dikhe (jaise: `https://github.com/rajeshkumar/freewebsite`), use Dashboard me **"Repo Ka Link Paste Karein"** box me paste kar dein.
+
+3. **Universal Formula Se Live Link Automatic Banegi:**  
+   Dashboard bina kisi deri ke **Universal Formula** se live link bana dega:  
+   👉 `https://rajeshkumar.github.io/freewebsite/`
+
+4. **1-Click Pages Settings Kholein:**  
+   **`[ ⚙️ 1-Click Pages Settings ↗ ]`** par click karein aur GitHub par Branch ko **`main`** karke **Save** daba dein.
+
+5. **Google Sheet Me Automatic Save:**  
+   **`[ 💾 Google Sheet Me Save Karein ⚡ ]`** button dabate hi:
+   - Customer ka GitHub Repo link (`github_repo_url`) aur Live Website link (`website_live_url`) **Google Sheet ke `Users` aur `Settings` register me permanent save** ho jata hai!
+   - Website link verify hokar customer turant Step 2 par aage badh jata hai!
 
 ---
 

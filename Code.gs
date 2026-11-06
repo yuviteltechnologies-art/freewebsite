@@ -921,11 +921,13 @@ function handleChangePassword(ss, params) {
  * 11. User Profile Update (GitHub repo, live site URL, sheet URL, step)
  */
 function handleUpdateUserProfile(ss, params) {
-  var email = params.email ? String(params.email).trim().toLowerCase() : "";
-  var userId = params.user_id ? String(params.user_id).trim() : "";
+  var rawIdentifier = params.identifier || params.email || params.phone || params.user_id || "";
+  var identifier = String(rawIdentifier).trim().toLowerCase();
+  var cleanPhone = identifier.replace(/\D/g, '');
+  if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
 
-  if (!email && !userId) {
-    return returnJsonResponse({ success: false, message: "User identify karne ke liye email ya user_id zaroori hai!" });
+  if (!identifier && !cleanPhone) {
+    return returnJsonResponse({ success: false, message: "User identify karne ke liye identifier (mobile ya email) zaroori hai!" });
   }
 
   var uSheet = getOrCreateUsersSheet(ss);
@@ -933,8 +935,11 @@ function handleUpdateUserProfile(ss, params) {
   var userRow = -1;
 
   for (var i = 1; i < data.length; i++) {
-    if ((email && String(data[i][3]).trim().toLowerCase() === email) ||
-        (userId && String(data[i][0]).trim() === userId)) {
+    var rowEmail = String(data[i][3]).trim().toLowerCase();
+    var rowPhone = String(data[i][5]).trim().replace(/\D/g, '');
+    var rowId = String(data[i][0]).trim().toLowerCase();
+    if ((identifier && (rowEmail === identifier || rowId === identifier)) ||
+        (cleanPhone && rowPhone && rowPhone === cleanPhone)) {
       userRow = i + 1;
       break;
     }
@@ -952,12 +957,31 @@ function handleUpdateUserProfile(ss, params) {
   if (params.onboarding_step !== undefined) uSheet.getRange(userRow, 10).setValue(params.onboarding_step);
   if (params.status !== undefined) uSheet.getRange(userRow, 11).setValue(params.status);
 
+  // Also update website_url in Settings sheet if available
+  if (params.website_live_url) {
+    var sSheet = ss.getSheetByName("Settings");
+    if (sSheet) {
+      var sData = sSheet.getDataRange().getValues();
+      var foundSite = false;
+      for (var s = 1; s < sData.length; s++) {
+        if (String(sData[s][0]).trim().toLowerCase() === "website_url") {
+          sSheet.getRange(s + 1, 2).setValue(params.website_live_url);
+          foundSite = true;
+          break;
+        }
+      }
+      if (!foundSite) {
+        sSheet.appendRow(["website_url", params.website_live_url, "User Live Website URL"]);
+      }
+    }
+  }
+
   SpreadsheetApp.flush();
 
   var updated = uSheet.getRange(userRow, 1, 1, 11).getValues()[0];
   return returnJsonResponse({
     success: true,
-    message: "Profile successfully updated!",
+    message: "Profile and website URL successfully saved in Google Sheet!",
     user: {
       id: updated[0],
       created_at: updated[1],

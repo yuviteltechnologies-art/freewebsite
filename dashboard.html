@@ -196,7 +196,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <!-- 1. Fork/Create Repo Box -->
+          <!-- 1. Fork/Create Repo Box (PUBLIC BY DEFAULT) -->
           <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
@@ -204,78 +204,80 @@
                   <i data-lucide="github" class="w-4 h-4 text-white"></i>
                   <span>1. GitHub Repository Banayein</span>
                 </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">1-Click</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Default Public ✓</span>
               </div>
               <p class="text-xs text-slate-400 mb-3">
-                Niche button par click karein. Yeh hamare template se aapke GitHub account me naya repository bana dega.
+                Niche button par click karein. Yeh repository automatically <strong class="text-emerald-400">"Public"</strong> aur naam <strong class="text-white">"freewebsite"</strong> ke sath open hogi.
               </p>
-              <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl mb-4 text-[11px] text-slate-300">
-                <span class="text-amber-400 font-bold">⚠️ Zaroori Dhyan Dein:</span> Repository banate waqt option ko <strong class="text-white">"Public"</strong> hi rehne dein (Private me GitHub Pages free nahi hota).
+              
+              <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl mb-4 text-[11px] space-y-1">
+                <p class="text-emerald-400 font-bold flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                  <span>Pre-Configured: 100% Free Public Visibility</span>
+                </p>
+                <p class="text-slate-400 text-[10px]">
+                  GitHub khulte hi bas green color ka <strong>"Create repository from template"</strong> button daba dein!
+                </p>
               </div>
             </div>
             
-            <a href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art" 
+            <a href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=freewebsite&visibility=public" 
                target="_blank"
                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
               <i data-lucide="git-fork" class="w-4 h-4"></i>
-              <span>1-Click Copy on GitHub 🚀</span>
+              <span>1-Click Copy on GitHub (Public) 🚀</span>
             </a>
           </div>
 
-          <!-- 2. Smart URL Helper & Direct Opener -->
+          <!-- 2. Paste Repo Link & Universal Formula Generator -->
           <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                  <i data-lucide="sparkles" class="w-4 h-4 text-blue-400"></i>
-                  <span>2. Smart URL Helper & Direct Opener</span>
+                  <i data-lucide="link-2" class="w-4 h-4 text-blue-400"></i>
+                  <span>2. Repo Ka Link Paste Karein</span>
                 </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">Auto-Finder</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">Universal Formula</span>
               </div>
-              <p class="text-xs text-slate-400 mb-3">
-                Apna GitHub username likhein — hum aapki live link aur direct Pages Settings link bana denge:
+              <p class="text-xs text-slate-400 mb-2.5">
+                GitHub par repo banne ke baad browser me jo link aayi hai, use yahan paste karein:
               </p>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">GitHub Username</label>
-                  <input type="text" id="ghUsernameInput" placeholder="jaise: amitsharma"
-                         oninput="handleGhHelperChange()"
-                         class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Repo Name</label>
-                  <input type="text" id="ghRepoInput" value="freewebsite"
-                         oninput="handleGhHelperChange()"
-                         class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-                </div>
+              <!-- Main Repo Paste Input -->
+              <div class="relative mb-3">
+                <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/your-username/freewebsite"
+                       oninput="handleGhRepoPaste()"
+                       class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
               </div>
 
-              <!-- Computed Preview -->
-              <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl mb-3">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Aapki Live Website Link Yeh Hogi:</span>
+              <!-- Computed Result Card (Universal Formula) -->
+              <div id="ghFormulaResultCard" class="bg-slate-900/95 border border-emerald-500/30 p-3.5 rounded-xl mb-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[10px] text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1">
+                    <i data-lucide="sparkles" class="w-3 h-3"></i>
+                    <span>Aapki Live Website Link Hogi:</span>
+                  </span>
                   <button type="button" onclick="copyHelperUrl()" class="text-[10px] text-blue-400 hover:text-white font-bold flex items-center gap-1">
-                    <i data-lucide="copy" class="w-3 h-3"></i> Copy
+                    <i data-lucide="copy" class="w-3 h-3"></i> Copy Link
                   </button>
                 </div>
-                <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all">
+                <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1 px-2 rounded-lg bg-slate-950/80 border border-slate-800">
                   https://yourusername.github.io/freewebsite/
                 </div>
               </div>
             </div>
 
-            <!-- Direct Settings Button & Quick Paste Button -->
+            <!-- Two Powerful Action Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
                  class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 border border-blue-500/30 font-bold text-xs flex items-center justify-center gap-1.5 transition text-center">
                 <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-                <span>Direct Pages Settings ↗</span>
+                <span>1-Click Pages Settings ↗</span>
               </a>
-              <button type="button" onclick="useHelperUrlInVerification()"
-                      class="py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/20">
-                <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                <span>Auto-Fill & Verify ⚡</span>
+              <button type="button" onclick="saveRepoAndLiveSiteToGoogleSheet()" id="saveToSheetBtn"
+                      class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-emerald-500/20">
+                <i data-lucide="database" class="w-3.5 h-3.5"></i>
+                <span>Google Sheet Me Save Karein ⚡</span>
               </button>
             </div>
           </div>
@@ -287,9 +289,9 @@
             <div>
               <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                 <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-                <span>3. Live Website URL Verify Karein</span>
+                <span>3. Live Website URL Verify & Test Karein</span>
               </h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Apna GitHub Pages link daalkar live test karein:</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Yeh link aapki Google Sheet me save ho kar auto-test ho jayegi:</p>
             </div>
             <a id="previewDirectLink" href="#" target="_blank" class="hidden text-xs text-blue-400 hover:text-white font-semibold flex items-center gap-1">
               <span>Browser Me Kholein</span> <i data-lucide="external-link" class="w-3 h-3"></i>
@@ -301,7 +303,7 @@
                    class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
             
             <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
-                    class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95 shrink-0">
+                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition active:scale-95 shrink-0">
               <i data-lucide="search" class="w-4 h-4"></i>
               <span>Verify Website Live ⚡</span>
             </button>
@@ -565,20 +567,25 @@
       document.getElementById('headerUserEmail').innerText = currentUser.email || "";
       document.getElementById('userAvatarText').innerText = (currentUser.name || "U").charAt(0).toUpperCase();
 
+      if (currentUser.github_repo_url) {
+        const rInput = document.getElementById('ghRepoUrlInput');
+        if (rInput) rInput.value = currentUser.github_repo_url;
+        handleGhRepoPaste();
+      }
+
       if (currentUser.website_live_url) {
         document.getElementById('siteUrlInput').value = currentUser.website_live_url;
         document.getElementById('hubLiveSiteLink').href = currentUser.website_live_url;
 
-        // Try extracting github username and repo
-        const match = currentUser.website_live_url.match(/https?:\/\/([^.]+)\.github\.io\/([^/]+)/i);
-        if (match && match[1]) {
-          document.getElementById('ghUsernameInput').value = match[1];
-          if (match[2]) document.getElementById('ghRepoInput').value = match[2];
+        // Try extracting github username and repo if input empty
+        if (!document.getElementById('ghRepoUrlInput').value) {
+          const match = currentUser.website_live_url.match(/https?:\/\/([^.]+)\.github\.io\/([^/]+)/i);
+          if (match && match[1] && match[2]) {
+            document.getElementById('ghRepoUrlInput').value = `https://github.com/${match[1]}/${match[2]}`;
+            handleGhRepoPaste();
+          }
         }
       }
-
-      // Initialize helper preview
-      handleGhHelperChange();
 
       if (currentUser.sheet_url) {
         document.getElementById('sheetUrlInput').value = currentUser.sheet_url;
@@ -661,46 +668,149 @@
       lucide.createIcons();
     }
 
-    // Helper 1: Realtime GitHub link calculator & Direct Settings Link
-    function handleGhHelperChange() {
-      const userInput = document.getElementById('ghUsernameInput');
-      const repoInput = document.getElementById('ghRepoInput');
+    // Helper: Realtime GitHub Repo URL Paste Parser & Universal Formula Generator
+    function handleGhRepoPaste() {
+      const repoInput = document.getElementById('ghRepoUrlInput');
+      const val = (repoInput ? repoInput.value : '').trim();
       const preview = document.getElementById('ghPreviewLiveUrl');
       const directBtn = document.getElementById('ghDirectSettingsBtn');
-      if (!userInput || !preview) return;
+      const siteUrlInput = document.getElementById('siteUrlInput');
 
-      const user = userInput.value.trim().toLowerCase();
-      const repo = (repoInput && repoInput.value.trim()) || 'freewebsite';
+      if (!val) {
+        if (preview) preview.innerText = "https://yourusername.github.io/freewebsite/";
+        if (directBtn) directBtn.href = "https://github.com/settings";
+        return;
+      }
 
-      if (user) {
-        const liveUrl = `https://${user}.github.io/${repo}/`;
-        preview.innerText = liveUrl;
-        if (directBtn) directBtn.href = `https://github.com/${user}/${repo}/settings/pages`;
-      } else {
-        preview.innerText = `https://yourusername.github.io/${repo}/`;
-        if (directBtn) directBtn.href = `https://github.com/settings`;
+      // Regex to extract owner and repo from standard github URLs (e.g. https://github.com/owner/repo)
+      let match = val.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^\/\s#?]+)\/([^\/\s#?]+)/i);
+      if (!match) {
+        match = val.match(/^([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)$/);
+      }
+
+      if (match && match[1] && match[2]) {
+        const owner = match[1].trim();
+        let repo = match[2].trim().replace(/\.git$/i, '');
+        
+        // Universal Formula: https://<owner>.github.io/<repo>/
+        const liveWebsiteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`;
+        const settingsPagesUrl = `https://github.com/${owner}/${repo}/settings/pages`;
+
+        if (preview) preview.innerText = liveWebsiteUrl;
+        if (directBtn) directBtn.href = settingsPagesUrl;
+        if (siteUrlInput) siteUrlInput.value = liveWebsiteUrl;
+
+        currentUser.github_repo_url = val;
+        currentUser.website_live_url = liveWebsiteUrl;
       }
     }
 
     function copyHelperUrl() {
-      const url = document.getElementById('ghPreviewLiveUrl').innerText.trim();
-      if (url.includes('yourusername')) {
-        alert("Pehle apna GitHub username likhein!");
+      const preview = document.getElementById('ghPreviewLiveUrl');
+      const url = preview ? preview.innerText.trim() : '';
+      if (!url || url.includes('yourusername')) {
+        alert("Pehle apni GitHub repository ka link paste karein!");
         return;
       }
       navigator.clipboard.writeText(url);
       alert("Aapki Live Website Link Copy Ho Gayi:\n" + url);
     }
 
-    function useHelperUrlInVerification() {
-      const url = document.getElementById('ghPreviewLiveUrl').innerText.trim();
-      if (url.includes('yourusername')) {
-        alert("Kripya pehle apna GitHub username likhein!");
-        document.getElementById('ghUsernameInput').focus();
+    // Save GitHub Repo and Generated Live Site URL directly to Google Sheet
+    async function saveRepoAndLiveSiteToGoogleSheet() {
+      const repoInput = document.getElementById('ghRepoUrlInput');
+      const repoUrl = (repoInput ? repoInput.value : '').trim();
+      const preview = document.getElementById('ghPreviewLiveUrl');
+      let liveUrl = (document.getElementById('siteUrlInput').value || (preview ? preview.innerText : '') || '').trim();
+
+      if (!repoUrl) {
+        alert("Kripya pehle apni GitHub repository ka link paste karein!");
+        if (repoInput) repoInput.focus();
         return;
       }
-      document.getElementById('siteUrlInput').value = url;
-      verifyWebsiteLink();
+
+      if (liveUrl.includes('yourusername')) {
+        handleGhRepoPaste();
+        liveUrl = (document.getElementById('siteUrlInput').value || (preview ? preview.innerText : '') || '').trim();
+      }
+
+      if (liveUrl.includes('yourusername')) {
+        alert("Kripya sahi GitHub repository URL paste karein (jaise: https://github.com/username/freewebsite)");
+        if (repoInput) repoInput.focus();
+        return;
+      }
+
+      const btn = document.getElementById('saveToSheetBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Google Sheet Me Save Ho Raha Hai...</span>`;
+        lucide.createIcons();
+      }
+
+      currentUser.github_repo_url = repoUrl;
+      currentUser.website_live_url = liveUrl;
+      if ((currentUser.onboarding_step || 1) < 2) {
+        currentUser.onboarding_step = 2;
+      }
+      saveUserLocally();
+      updateStepUI(currentUser.onboarding_step);
+      document.getElementById('hubLiveSiteLink').href = liveUrl;
+
+      const previewDirectLink = document.getElementById('previewDirectLink');
+      if (previewDirectLink) {
+        previewDirectLink.href = liveUrl;
+        previewDirectLink.classList.remove('hidden');
+      }
+
+      try {
+        const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
+        const saveEndpoint = `${getBackendUrl()}?action=updateUserProfile&identifier=${encodeURIComponent(identifier)}&github_repo_url=${encodeURIComponent(repoUrl)}&website_live_url=${encodeURIComponent(liveUrl)}&onboarding_step=${currentUser.onboarding_step}`;
+        
+        await fetch(saveEndpoint);
+
+        confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+        showStepNotice(
+          'siteVerifyNotice',
+          `<div>
+            <p class="font-bold text-emerald-400">🎉 Safalta! Repo link aur Live Website URL aapki Google Sheet me SAFALTA-PURVAK SAVE ho gaye hain!</p>
+            <p class="text-[11px] text-slate-300 mt-1">
+              🌐 <strong>Live Website Link:</strong> <a href="${liveUrl}" target="_blank" class="text-blue-400 underline font-mono font-bold">${liveUrl}</a><br>
+              📁 <strong>GitHub Repository:</strong> <a href="${repoUrl}" target="_blank" class="text-slate-400 underline font-mono">${repoUrl}</a>
+            </p>
+            <p class="text-[11px] text-amber-300 mt-1">
+              👉 Agar aapne abhi tak GitHub Pages on nahi kiya hai, toh upar <strong>'1-Click Pages Settings'</strong> par click karke Branch <strong>main</strong> karke <strong>Save</strong> dabana na bhoolein!
+            </p>
+            <div class="mt-2.5 flex items-center gap-2">
+              <a href="#cardStep2" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
+                Step 2: Google Sheet Connect Karein ➔
+              </a>
+              <a href="${liveUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 font-bold text-xs border border-slate-700 transition">
+                Website Kholkar Dekhein ↗
+              </a>
+            </div>
+          </div>`,
+          true
+        );
+      } catch (err) {
+        showStepNotice(
+          'siteVerifyNotice',
+          `<div>
+            <p class="font-bold text-emerald-400">✅ Live Website link save ho gaya hai! Step 2 par aage badhein.</p>
+            <div class="mt-2">
+              <a href="#cardStep2" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
+                Step 2: Google Sheet Connect Karein ➔
+              </a>
+            </div>
+          </div>`,
+          true
+        );
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> <span>Google Sheet Me Saved ✓</span>`;
+          lucide.createIcons();
+        }
+      }
     }
 
     // Force save website URL if GitHub Pages is still compiling on GitHub's side
@@ -718,7 +828,8 @@
         previewDirectLink.href = url;
         previewDirectLink.classList.remove('hidden');
       }
-      fetch(`${getBackendUrl()}?action=updateUserProfile&email=${encodeURIComponent(currentUser.email)}&website_live_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
+      const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
+      fetch(`${getBackendUrl()}?action=updateUserProfile&identifier=${encodeURIComponent(identifier)}&website_live_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
       showStepNotice('siteVerifyNotice', '🎉 Website link safalta-purvak save ho gaya! Step 2 par aage badhein.', true);
       confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
     }
@@ -766,7 +877,8 @@
           }
 
           // Sync with Sheet
-          fetch(`${getBackendUrl()}?action=updateUserProfile&email=${encodeURIComponent(currentUser.email)}&website_live_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
+          const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
+          fetch(`${getBackendUrl()}?action=updateUserProfile&identifier=${encodeURIComponent(identifier)}&website_live_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
         } else {
           showStepNotice(
             'siteVerifyNotice',
@@ -844,7 +956,8 @@
           document.getElementById('hubSheetLink').href = url;
 
           // Sync with Sheet backend
-          fetch(`${getBackendUrl()}?action=updateUserProfile&email=${encodeURIComponent(currentUser.email)}&sheet_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
+          const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
+          fetch(`${getBackendUrl()}?action=updateUserProfile&identifier=${encodeURIComponent(identifier)}&sheet_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
         } else {
           showStepNotice('sheetConnectNotice', 'Sheet se valid response nahi mila. Code.gs me setupAutoTabs run karke Deploy karein.', false);
         }
