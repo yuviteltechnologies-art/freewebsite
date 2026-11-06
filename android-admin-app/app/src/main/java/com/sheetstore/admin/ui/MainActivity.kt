@@ -30,11 +30,64 @@ class MainActivity : Activity() {
     private lateinit var contentContainer: FrameLayout
     private lateinit var navBar: LinearLayout
 
-    private var currentTab = 0 // 0: Orders, 1: Website, 2: Products
+    private var currentTab = 0 // 0: Orders, 1: Templates, 2: Website, 3: Products
     private var dashboardData: DashboardResponse? = null
 
     private lateinit var ordersAdapter: OrdersAdapter
     private lateinit var productsAdapter: ProductsAdapter
+
+    // 5 Ready-made Website Templates
+    data class WebTheme(
+        val id: String,
+        val name: String,
+        val subtitle: String,
+        val description: String,
+        val bestFor: String,
+        val colors: List<String>
+    )
+
+    private val availableTemplates = listOf(
+        WebTheme(
+            id = "modern-blue",
+            name = "⚡ Modern Cyber Blue",
+            subtitle = "Tech, SaaS & Digital Store (Default)",
+            description = "Sleek dark slate aesthetic with electric blue glows and glassmorphism.",
+            bestFor = "Best for: Software, digital goods, web kits & modern agencies",
+            colors = listOf("#080C1A", "#2563EB", "#38BDF8")
+        ),
+        WebTheme(
+            id = "vedic-gold",
+            name = "🕉️ Royal Vedic Gold",
+            subtitle = "Vastu, Astrology & Luxury Spiritual",
+            description = "Majestic dark plum maroon with radiant sun gold and warm ambient lighting.",
+            bestFor = "Best for: Vastu Shastra, astrology, gemstones, spiritual items & luxury",
+            colors = listOf("#090510", "#F59E0B", "#D97706")
+        ),
+        WebTheme(
+            id = "minimal-light",
+            name = "🛍️ Clean Minimal Light",
+            subtitle = "Modern D2C Storefront (White)",
+            description = "Crisp white minimalist design with high-contrast text & emerald green accents.",
+            bestFor = "Best for: Clean retail, e-commerce, physical products & fashion",
+            colors = listOf("#F8FAFC", "#0F172A", "#059669")
+        ),
+        WebTheme(
+            id = "neon-violet",
+            name = "👾 Cyberpunk Neon Violet",
+            subtitle = "Creators, AI Prompts & Gaming",
+            description = "Pitch black background with radiant violet and neon pink gradients.",
+            bestFor = "Best for: AI prompts, video LUTs, Canva templates & gaming assets",
+            colors = listOf("#030107", "#8B5CF6", "#EC4899")
+        ),
+        WebTheme(
+            id = "emerald-pro",
+            name = "🌿 Emerald Business Pro",
+            subtitle = "Finance & High-Trust B2B",
+            description = "Corporate dark pine slate with vibrant mint green trust badges.",
+            bestFor = "Best for: Financial consulting, ebooks, coaching & corporate sales",
+            colors = listOf("#03140F", "#10B981", "#047857")
+        )
+    )
 
     // Views in Website Customizer
     private lateinit var brandNameInput: EditText
@@ -177,8 +230,9 @@ class MainActivity : Activity() {
 
         when (tabIndex) {
             0 -> contentContainer.addView(createOrdersTab())
-            1 -> contentContainer.addView(createWebsiteCustomizerTab())
-            2 -> contentContainer.addView(createProductsTab())
+            1 -> contentContainer.addView(createTemplatesTab())
+            2 -> contentContainer.addView(createWebsiteCustomizerTab())
+            3 -> contentContainer.addView(createProductsTab())
         }
         updateNavSelection()
     }
@@ -190,8 +244,12 @@ class MainActivity : Activity() {
                 ordersAdapter.updateData(orders)
                 updateStatsCard()
             }
-            1 -> populateSettingsFields()
-            2 -> {
+            1 -> {
+                contentContainer.removeAllViews()
+                contentContainer.addView(createTemplatesTab())
+            }
+            2 -> populateSettingsFields()
+            3 -> {
                 val products = dashboardData?.products ?: emptyList()
                 productsAdapter.updateData(products)
             }
@@ -307,6 +365,208 @@ class MainActivity : Activity() {
                         Toast.makeText(this@MainActivity, "Order ${order.orderId} Approved! ✓", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@MainActivity, "Approval failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    // ==========================================
+    // TAB 1: 5 READY-MADE WEBSITE TEMPLATES (1-CLICK SWITCHER)
+    // ==========================================
+    private fun createTemplatesTab(): View {
+        val scroll = ScrollView(this)
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(32, 32, 32, 48)
+        }
+
+        // Section Title & Subtitle
+        val heading = TextView(this).apply {
+            text = "🎨 1-Click Website Templates"
+            textSize = 18f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            setPadding(0, 0, 0, 6)
+        }
+        container.addView(heading)
+
+        val subtext = TextView(this).apply {
+            text = "Choose any ready-made design below. Ek click me live website ka theme, colors aur layout change ho jayega:"
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, 0, 0, 24)
+        }
+        container.addView(subtext)
+
+        val currentActiveId = (dashboardData?.settings?.get("template_id") ?: "modern-blue").trim().lowercase()
+
+        // 5 Ready-made Templates Cards
+        for (theme in availableTemplates) {
+            val isActive = (currentActiveId == theme.id)
+            val card = createTemplateCard(theme, isActive)
+            container.addView(card)
+        }
+
+        scroll.addView(container)
+        return scroll
+    }
+
+    private fun createTemplateCard(theme: WebTheme, isActive: Boolean): View {
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor(if (isActive) "#1E293B" else "#131C2E"))
+            setPadding(32, 32, 32, 32)
+            layoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 0, 0, 28)
+            }
+        }
+
+        // Top Row: Title + Status Badge
+        val topRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+
+        val titleView = TextView(this).apply {
+            text = theme.name
+            textSize = 15f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        topRow.addView(titleView)
+
+        val badge = TextView(this).apply {
+            if (isActive) {
+                text = "✓ ACTIVE LIVE"
+                setTextColor(Color.parseColor("#10B981"))
+                setBackgroundColor(Color.parseColor("#064E3B"))
+            } else {
+                text = "READY-MADE"
+                setTextColor(Color.parseColor("#94A3B8"))
+                setBackgroundColor(Color.parseColor("#0F172A"))
+            }
+            textSize = 10f
+            typeface = Typeface.DEFAULT_BOLD
+            setPadding(20, 8, 20, 8)
+        }
+        topRow.addView(badge)
+        card.addView(topRow)
+
+        // Subtitle
+        val subtitleView = TextView(this).apply {
+            text = theme.subtitle
+            textSize = 12f
+            setTextColor(Color.parseColor(if (theme.id == "vedic-gold") "#F59E0B" else "#38BDF8"))
+            typeface = Typeface.DEFAULT_BOLD
+            setPadding(0, 8, 0, 6)
+        }
+        card.addView(subtitleView)
+
+        // Description
+        val descView = TextView(this).apply {
+            text = theme.description
+            textSize = 12f
+            setTextColor(Color.parseColor("#CBD5E1"))
+            setPadding(0, 0, 0, 6)
+        }
+        card.addView(descView)
+
+        // Best For Tag
+        val bestForView = TextView(this).apply {
+            text = theme.bestFor
+            textSize = 11f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, 0, 0, 16)
+        }
+        card.addView(bestForView)
+
+        // Color Swatches Row
+        val swatchesRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, 0, 0, 20)
+        }
+
+        val paletteLabel = TextView(this).apply {
+            text = "Palette: "
+            textSize = 11f
+            setTextColor(Color.parseColor("#64748B"))
+        }
+        swatchesRow.addView(paletteLabel)
+
+        for (colorHex in theme.colors) {
+            val dot = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(40, 40).apply {
+                    setMargins(8, 0, 8, 0)
+                }
+                setBackgroundColor(Color.parseColor(colorHex))
+            }
+            swatchesRow.addView(dot)
+        }
+        card.addView(swatchesRow)
+
+        // Action Button
+        val applyBtn = Button(this).apply {
+            if (isActive) {
+                text = "Current Active Website Theme ✓"
+                setBackgroundColor(Color.parseColor("#065F46"))
+                setTextColor(Color.parseColor("#A7F3D0"))
+                isEnabled = false
+            } else {
+                text = "Apply This Template ⚡"
+                setBackgroundColor(Color.parseColor("#2563EB"))
+                setTextColor(Color.WHITE)
+                isEnabled = true
+                setOnClickListener {
+                    applyWebsiteTemplate(theme.id, theme.name)
+                }
+            }
+            textSize = 13f
+            typeface = Typeface.DEFAULT_BOLD
+            setPadding(0, 24, 0, 24)
+        }
+        card.addView(applyBtn)
+
+        return card
+    }
+
+    private fun applyWebsiteTemplate(templateId: String, templateTitle: String) {
+        val url = getSheetUrl()
+        if (url.isEmpty()) {
+            Toast.makeText(this, "Please configure Sheet URL first", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Toast.makeText(this, "Activating $templateTitle...", Toast.LENGTH_SHORT).show()
+
+        val body = mapOf(
+            "action" to "updateSettings",
+            "template_id" to templateId
+        )
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val call = ApiClient.service.updateSettings(fullUrl = url, body = body)
+                val response = call.execute()
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
+                        s["template_id"] = templateId
+                        dashboardData = dashboardData?.copy(settings = s)
+                        refreshCurrentTab()
+                        Toast.makeText(this@MainActivity, "🎉 '$templateTitle' activated! Website updated live.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Failed to update template", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -517,18 +777,19 @@ class MainActivity : Activity() {
         return LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             setBackgroundColor(Color.parseColor("#1E293B"))
-            setPadding(16, 20, 16, 20)
+            setPadding(8, 16, 8, 16)
 
             addView(createNavItem("🛒 Orders", 0))
-            addView(createNavItem("🌐 Website", 1))
-            addView(createNavItem("📦 Products", 2))
+            addView(createNavItem("🎨 Themes", 1))
+            addView(createNavItem("🌐 Settings", 2))
+            addView(createNavItem("📦 Products", 3))
         }
     }
 
     private fun createNavItem(label: String, index: Int): Button {
         return Button(this).apply {
             text = label
-            textSize = 12f
+            textSize = 11f
             typeface = Typeface.DEFAULT_BOLD
             setBackgroundColor(Color.TRANSPARENT)
             setTextColor(if (currentTab == index) Color.parseColor("#38BDF8") else Color.parseColor("#94A3B8"))

@@ -8,10 +8,10 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter & Outfit -->
+  <!-- Google Fonts: Inter, Outfit, Cinzel & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -23,6 +23,8 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             heading: ['"Outfit"', 'sans-serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+            space: ['"Space Grotesk"', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -40,25 +42,194 @@
   </script>
 
   <style>
+    /* ========================================================
+       5 READY-MADE THEME DEFINITIONS & CSS ENGINE
+       ======================================================== */
     ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #080C1A; }
-    ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: var(--theme-bg, #080C1A); }
+    ::-webkit-scrollbar-thumb { background: var(--theme-accent, #2563EB); border-radius: 4px; }
+
+    /* DEFAULT / THEME 1: Modern Cyber Blue */
+    :root, [data-theme="modern-blue"] {
+      --theme-bg: #080C1A;
+      --theme-bg-alt: #0B1124;
+      --theme-header-bg: rgba(8, 12, 26, 0.92);
+      --theme-card-bg: rgba(15, 23, 42, 0.78);
+      --theme-card-border: rgba(59, 130, 246, 0.22);
+      --theme-card-hover: rgba(59, 130, 246, 0.55);
+      --theme-text-primary: #F8FAFC;
+      --theme-text-secondary: #94A3B8;
+      --theme-accent: #2563EB;
+      --theme-accent-light: #38BDF8;
+      --theme-title-grad: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #1D4ED8 100%);
+      --theme-btn-grad: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      --theme-banner-grad: linear-gradient(to right, #1D4ED8, #4F46E5, #1D4ED8);
+      --theme-glow: rgba(59, 130, 246, 0.35);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* THEME 2: Royal Vedic Gold (Vastu / Astrology / Luxury) */
+    [data-theme="vedic-gold"] {
+      --theme-bg: #090510;
+      --theme-bg-alt: #130722;
+      --theme-header-bg: rgba(9, 5, 16, 0.94);
+      --theme-card-bg: rgba(22, 10, 36, 0.85);
+      --theme-card-border: rgba(245, 158, 11, 0.3);
+      --theme-card-hover: rgba(251, 191, 36, 0.7);
+      --theme-text-primary: #FFFBEB;
+      --theme-text-secondary: #E5D5B8;
+      --theme-accent: #F59E0B;
+      --theme-accent-light: #FDE68A;
+      --theme-title-grad: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
+      --theme-btn-grad: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
+      --theme-banner-grad: linear-gradient(to right, #92400E, #D97706, #78350F);
+      --theme-glow: rgba(245, 158, 11, 0.45);
+      --theme-font-heading: 'Cinzel', serif;
+    }
+
+    /* THEME 3: Clean Minimal Light (Modern D2C Store) */
+    [data-theme="minimal-light"] {
+      --theme-bg: #F8FAFC;
+      --theme-bg-alt: #F1F5F9;
+      --theme-header-bg: rgba(255, 255, 255, 0.95);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: #E2E8F0;
+      --theme-card-hover: #CBD5E1;
+      --theme-text-primary: #0F172A;
+      --theme-text-secondary: #64748B;
+      --theme-accent: #059669;
+      --theme-accent-light: #10B981;
+      --theme-title-grad: linear-gradient(135deg, #0F172A 0%, #059669 60%, #047857 100%);
+      --theme-btn-grad: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      --theme-banner-grad: linear-gradient(to right, #0F172A, #1E293B, #0F172A);
+      --theme-glow: rgba(15, 23, 42, 0.12);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* THEME 4: Cyberpunk Neon Violet (Gaming / Creator Store) */
+    [data-theme="neon-violet"] {
+      --theme-bg: #030107;
+      --theme-bg-alt: #0C0318;
+      --theme-header-bg: rgba(3, 1, 7, 0.94);
+      --theme-card-bg: rgba(18, 5, 36, 0.85);
+      --theme-card-border: rgba(168, 85, 247, 0.35);
+      --theme-card-hover: rgba(236, 72, 153, 0.7);
+      --theme-text-primary: #FFFFFF;
+      --theme-text-secondary: #D8B4FE;
+      --theme-accent: #8B5CF6;
+      --theme-accent-light: #F472B6;
+      --theme-title-grad: linear-gradient(135deg, #F472B6 0%, #A855F7 50%, #6366F1 100%);
+      --theme-btn-grad: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+      --theme-banner-grad: linear-gradient(to right, #6D28D9, #BE185D, #4C1D95);
+      --theme-glow: rgba(236, 72, 153, 0.45);
+      --theme-font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    /* THEME 5: Emerald Business Pro (High-Trust Finance / Agency) */
+    [data-theme="emerald-pro"] {
+      --theme-bg: #03140F;
+      --theme-bg-alt: #06231B;
+      --theme-header-bg: rgba(3, 20, 15, 0.94);
+      --theme-card-bg: rgba(8, 36, 28, 0.84);
+      --theme-card-border: rgba(16, 185, 129, 0.3);
+      --theme-card-hover: rgba(52, 211, 153, 0.65);
+      --theme-text-primary: #F0FDF4;
+      --theme-text-secondary: #A7F3D0;
+      --theme-accent: #10B981;
+      --theme-accent-light: #6EE7B7;
+      --theme-title-grad: linear-gradient(135deg, #6EE7B7 0%, #10B981 50%, #047857 100%);
+      --theme-btn-grad: linear-gradient(135deg, #10B981 0%, #047857 100%);
+      --theme-banner-grad: linear-gradient(to right, #065F46, #047857, #064E3B);
+      --theme-glow: rgba(16, 185, 129, 0.4);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* THEME-RESPONSIVE ELEMENT BINDINGS */
+    body {
+      background-color: var(--theme-bg) !important;
+      color: var(--theme-text-primary) !important;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      background-color: var(--theme-header-bg) !important;
+    }
+
     .glass-box {
-      background: rgba(15, 23, 42, 0.75);
+      background: var(--theme-card-bg) !important;
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(59, 130, 246, 0.2);
+      border: 1px solid var(--theme-card-border) !important;
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
     }
     .glass-box:hover {
-      border-color: rgba(59, 130, 246, 0.4);
+      border-color: var(--theme-card-hover) !important;
     }
+
+    .font-heading {
+      font-family: var(--theme-font-heading) !important;
+    }
+
     .text-gradient {
-      background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #1D4ED8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: var(--theme-title-grad) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
     }
+
     .badge-glow {
-      box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 25px -5px var(--theme-glow) !important;
     }
+
+    /* THEME 3 LIGHT OVERRIDES */
+    [data-theme="minimal-light"] .text-slate-100,
+    [data-theme="minimal-light"] .text-slate-200,
+    [data-theme="minimal-light"] .text-slate-300,
+    [data-theme="minimal-light"] .text-white {
+      color: #0F172A !important;
+    }
+    [data-theme="minimal-light"] .text-slate-400 {
+      color: #64748B !important;
+    }
+    [data-theme="minimal-light"] .bg-\[\#080C1A\] {
+      background-color: #F8FAFC !important;
+    }
+    [data-theme="minimal-light"] .bg-\[\#0B1124\] {
+      background-color: #F1F5F9 !important;
+    }
+    [data-theme="minimal-light"] .border-slate-800,
+    [data-theme="minimal-light"] .border-slate-700 {
+      border-color: #E2E8F0 !important;
+    }
+    [data-theme="minimal-light"] .text-blue-400,
+    [data-theme="minimal-light"] .text-blue-500 {
+      color: #059669 !important;
+    }
+    [data-theme="minimal-light"] .bg-blue-600 {
+      background-color: #0F172A !important;
+    }
+    [data-theme="minimal-light"] .hover\:bg-blue-500:hover {
+      background-color: #1E293B !important;
+    }
+
+    /* THEME 2 VEDIC GOLD ACCENTS */
+    [data-theme="vedic-gold"] .bg-\[\#0B1124\] { background-color: #130722 !important; }
+    [data-theme="vedic-gold"] .text-blue-400,
+    [data-theme="vedic-gold"] .text-blue-500 { color: #F59E0B !important; }
+    [data-theme="vedic-gold"] .bg-blue-600 { background-color: #D97706 !important; }
+    [data-theme="vedic-gold"] .hover\:bg-blue-500:hover { background-color: #B45309 !important; }
+
+    /* THEME 4 NEON VIOLET ACCENTS */
+    [data-theme="neon-violet"] .bg-\[\#0B1124\] { background-color: #0C0318 !important; }
+    [data-theme="neon-violet"] .text-blue-400,
+    [data-theme="neon-violet"] .text-blue-500 { color: #C084FC !important; }
+    [data-theme="neon-violet"] .bg-blue-600 { background-color: #8B5CF6 !important; }
+    [data-theme="neon-violet"] .hover\:bg-blue-500:hover { background-color: #7C3AED !important; }
+
+    /* THEME 5 EMERALD PRO ACCENTS */
+    [data-theme="emerald-pro"] .bg-\[\#0B1124\] { background-color: #06231B !important; }
+    [data-theme="emerald-pro"] .text-blue-400,
+    [data-theme="emerald-pro"] .text-blue-500 { color: #34D399 !important; }
+    [data-theme="emerald-pro"] .bg-blue-600 { background-color: #059669 !important; }
+    [data-theme="emerald-pro"] .hover\:bg-blue-500:hover { background-color: #047857 !important; }
   </style>
 </head>
 
@@ -935,6 +1106,39 @@
         const upiDisplay = document.getElementById('displayUpiId');
         if (upiDisplay) upiDisplay.innerText = `UPI ID: ${storeConfig.upiId}`;
       }
+
+      // 9. Dynamic Website Template (5 Ready-made Themes)
+      const themeId = s.template_id || s.theme || localStorage.getItem('store_active_template') || 'modern-blue';
+      applyTemplateTheme(themeId);
+    }
+
+    const THEME_NAMES = {
+      'modern-blue': '⚡ Modern Cyber Blue',
+      'vedic-gold': '🕉️ Royal Vedic Gold',
+      'minimal-light': '🛍️ Clean Minimal Light',
+      'neon-violet': '👾 Cyberpunk Neon Violet',
+      'emerald-pro': '🌿 Emerald Business Pro'
+    };
+
+    function applyTemplateTheme(id) {
+      if (!id) id = 'modern-blue';
+      id = id.trim().toLowerCase();
+      if (!THEME_NAMES[id]) id = 'modern-blue';
+
+      document.documentElement.setAttribute('data-theme', id);
+      document.body.setAttribute('data-theme', id);
+      localStorage.setItem('store_active_template', id);
+
+      const labelEl = document.getElementById('currentThemeLabel');
+      if (labelEl) labelEl.innerText = THEME_NAMES[id];
+
+      document.querySelectorAll('.theme-switcher-btn').forEach(btn => {
+        if (btn.getAttribute('data-theme-id') === id) {
+          btn.classList.add('ring-2', 'ring-amber-400', 'scale-110');
+        } else {
+          btn.classList.remove('ring-2', 'ring-amber-400', 'scale-110');
+        }
+      });
     }
 
     async function fetchSettingsFromSheet() {
@@ -952,6 +1156,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Immediate theme apply to eliminate flicker
+      const initialTheme = localStorage.getItem('store_active_template') || 'modern-blue';
+      applyTemplateTheme(initialTheme);
+
       try {
         const cached = localStorage.getItem('store_cached_settings');
         if (cached) applySiteSettings(JSON.parse(cached));
@@ -962,5 +1170,20 @@
       lucide.createIcons();
     });
   </script>
+
+  <!-- FLOATING LIVE THEME PREVIEW BAR (5 READY-MADE TEMPLATES) -->
+  <div id="themePreviewBar" class="fixed bottom-4 right-4 z-50 flex items-center gap-2 p-2 px-3 rounded-2xl bg-slate-950/95 backdrop-blur-md border border-slate-700/80 shadow-2xl transition hover:border-slate-500">
+    <div class="hidden sm:flex flex-col text-left pr-1">
+      <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Live Theme Switcher</span>
+      <span class="text-[11px] text-white font-bold" id="currentThemeLabel">⚡ Modern Blue</span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <button onclick="applyTemplateTheme('modern-blue')" data-theme-id="modern-blue" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow" title="Modern Cyber Blue (Tech / SaaS)">⚡ Blue</button>
+      <button onclick="applyTemplateTheme('vedic-gold')" data-theme-id="vedic-gold" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow" title="Royal Vedic Gold (Vastu / Astrology / Luxury)">🕉️ Vedic</button>
+      <button onclick="applyTemplateTheme('minimal-light')" data-theme-id="minimal-light" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-white text-slate-900 text-xs font-bold transition shadow" title="Clean Minimal Light (White D2C Store)">🛍️ Light</button>
+      <button onclick="applyTemplateTheme('neon-violet')" data-theme-id="neon-violet" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition shadow" title="Cyberpunk Neon Violet (Gaming / Creator)">👾 Neon</button>
+      <button onclick="applyTemplateTheme('emerald-pro')" data-theme-id="emerald-pro" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow" title="Emerald Business Pro (Finance / Corporate)">🌿 Emerald</button>
+    </div>
+  </div>
 </body>
 </html>

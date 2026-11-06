@@ -463,37 +463,28 @@ function handleUpdateSettings(ss, params) {
 
   var data = settingsSheet.getDataRange().getValues();
   var updatedKeys = [];
+  var ignoreKeys = ["action", "view", "format"];
 
-  var allowedKeys = [
-    "brand_name",
-    "brand_tagline",
-    "logo_url",
-    "announcement_text",
-    "hero_badge",
-    "hero_title",
-    "hero_subtitle",
-    "whatsapp_number",
-    "upi_id"
-  ];
+  // Dynamically update any setting passed in params (template_id, brand_name, etc.)
+  for (var key in params) {
+    if (params.hasOwnProperty(key) && ignoreKeys.indexOf(key) === -1) {
+      if (params[key] !== undefined && params[key] !== null) {
+        var newVal = String(params[key]).trim();
+        var found = false;
 
-  for (var k = 0; k < allowedKeys.length; k++) {
-    var key = allowedKeys[k];
-    if (params[key] !== undefined && params[key] !== null) {
-      var newVal = String(params[key]).trim();
-      var found = false;
-
-      for (var r = 1; r < data.length; r++) {
-        if (String(data[r][0]).trim().toLowerCase() === key.toLowerCase()) {
-          settingsSheet.getRange(r + 1, 2).setValue(newVal);
-          found = true;
-          break;
+        for (var r = 1; r < data.length; r++) {
+          if (String(data[r][0]).trim().toLowerCase() === key.toLowerCase()) {
+            settingsSheet.getRange(r + 1, 2).setValue(newVal);
+            found = true;
+            break;
+          }
         }
-      }
 
-      if (!found) {
-        settingsSheet.appendRow([key, newVal, "Updated via Android Admin App"]);
+        if (!found) {
+          settingsSheet.appendRow([key, newVal, "Updated via API / Android App"]);
+        }
+        updatedKeys.push(key);
       }
-      updatedKeys.push(key);
     }
   }
 
@@ -696,7 +687,8 @@ function setupAutoTabs() {
     ["hero_title", "Shopify aur WordPress ka Monthly Kharcha Band Karein.", "Main Badi Headline"],
     ["hero_subtitle", "Google Sheet ko apna backend banayein aur direct UPI QR & WhatsApp orders ke sath apni super fast e-commerce website live karein.", "Hero section ka description"],
     ["whatsapp_number", "919999999999", "Customer WhatsApp order number (with country code e.g. 91)"],
-    ["upi_id", "payments@upi", "UPI QR code payment address (GPay/PhonePe/Paytm)"]
+    ["upi_id", "payments@upi", "UPI QR code payment address (GPay/PhonePe/Paytm)"],
+    ["template_id", "modern-blue", "Active website template (modern-blue, vedic-gold, minimal-light, neon-violet, emerald-pro)"]
   ];
   
   for (var k = 0; k < defaultSettings.length; k++) {
