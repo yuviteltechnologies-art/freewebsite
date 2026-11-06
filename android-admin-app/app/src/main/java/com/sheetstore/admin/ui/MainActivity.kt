@@ -627,17 +627,29 @@ class MainActivity : Activity() {
 
         // 2. DESIGN & STYLING SECTION
         form.addView(createSectionHeader("🎨 2. FONTS & COLORS"))
-        form.addView(createLabel("Heading Font (Outfit, Cinzel, Space Grotesk, Plus Jakarta Sans):"))
+        form.addView(createLabel("Heading Font (Tap Button To Select):"))
         fontFamilyInput = createInput("Outfit")
         form.addView(fontFamilyInput)
+        form.addView(createFontChips { fontName, label ->
+            fontFamilyInput.setText(fontName)
+            Toast.makeText(this, "Font Chuna: $label", Toast.LENGTH_SHORT).show()
+        })
 
-        form.addView(createLabel("Header Background Color (e.g. #080C1A ya #1E1B4B):"))
+        form.addView(createLabel("Header Background Color (Tap Color To Select):"))
         headerColorInput = createInput("#080C1A")
         form.addView(headerColorInput)
+        form.addView(createColorChips { hex, name ->
+            headerColorInput.setText(hex)
+            Toast.makeText(this, "Header Color: $name", Toast.LENGTH_SHORT).show()
+        })
 
-        form.addView(createLabel("Footer Background Color (e.g. #050811 ya #0F172A):"))
+        form.addView(createLabel("Footer Background Color (Tap Color To Select):"))
         footerColorInput = createInput("#050811")
         form.addView(footerColorInput)
+        form.addView(createColorChips { hex, name ->
+            footerColorInput.setText(hex)
+            Toast.makeText(this, "Footer Color: $name", Toast.LENGTH_SHORT).show()
+        })
 
         // 3. TEXT & HEADLINES SECTION
         form.addView(createSectionHeader("✍️ 3. HEADLINES & BUTTONS"))
@@ -692,6 +704,98 @@ class MainActivity : Activity() {
             setTextColor(Color.parseColor("#38BDF8"))
             setPadding(0, 24, 0, 8)
         }
+    }
+
+    private fun createColorChips(onColorSelected: (String, String) -> Unit): LinearLayout {
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8, 0, 16)
+        }
+        val scroll = HorizontalScrollView(this).apply {
+            isHorizontalScrollBarEnabled = false
+        }
+        val chipsRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+
+        val palette = listOf(
+            Pair("🖤 Dark Slate", "#080C1A"),
+            Pair("💜 Royal Vedic", "#160826"),
+            Pair("💙 Tech Navy", "#0F172A"),
+            Pair("💚 Forest Pine", "#041D14"),
+            Pair("🖤 Pure Black", "#000000"),
+            Pair("🤍 Clean Slate", "#F8FAFC")
+        )
+
+        for (item in palette) {
+            val btn = Button(this).apply {
+                text = item.first
+                textSize = 10f
+                typeface = Typeface.DEFAULT_BOLD
+                setBackgroundColor(Color.parseColor("#1E293B"))
+                setTextColor(Color.WHITE)
+                setPadding(20, 10, 20, 10)
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 12, 0)
+                }
+                setOnClickListener {
+                    onColorSelected(item.second, item.first)
+                }
+            }
+            chipsRow.addView(btn)
+        }
+
+        scroll.addView(chipsRow)
+        container.addView(scroll)
+        return container
+    }
+
+    private fun createFontChips(onFontSelected: (String, String) -> Unit): LinearLayout {
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8, 0, 16)
+        }
+        val scroll = HorizontalScrollView(this).apply {
+            isHorizontalScrollBarEnabled = false
+        }
+        val chipsRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+
+        val fonts = listOf(
+            Pair("🕉️ Vedic (Cinzel)", "Cinzel"),
+            Pair("⚡ Modern (Outfit)", "Outfit"),
+            Pair("👾 Creative (Space)", "Space Grotesk"),
+            Pair("🛍️ Minimal (Jakarta)", "Plus Jakarta Sans")
+        )
+
+        for (item in fonts) {
+            val btn = Button(this).apply {
+                text = item.first
+                textSize = 10f
+                typeface = Typeface.DEFAULT_BOLD
+                setBackgroundColor(Color.parseColor("#1E293B"))
+                setTextColor(Color.parseColor("#38BDF8"))
+                setPadding(20, 10, 20, 10)
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 12, 0)
+                }
+                setOnClickListener {
+                    onFontSelected(item.second, item.first)
+                }
+            }
+            chipsRow.addView(btn)
+        }
+
+        scroll.addView(chipsRow)
+        container.addView(scroll)
+        return container
     }
 
     private fun populateSettingsFields() {

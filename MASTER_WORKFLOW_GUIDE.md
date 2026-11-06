@@ -121,25 +121,31 @@ Aapko website badalne ke liye computer kholne ki zaroorat nahi hai. Sab kuch aap
 Aapne poocha tha ki *theme ke alawa agar font, logo, header-footer colors aur likha hua content badalna ho toh kaise hoga?*  
 Yeh feature aapke Android App ke **🌐 Settings (Tab 3)** me fully add kar diya gaya hai! Dekhiye kya-kya badal sakte hain:
 
-### 1. 🔤 Font (Likhawat Ka Style) Badalna
-- **Kaise Karein:** App ke Settings tab me **"Heading Font"** ka box hai.
-- **Kya Likh Sakte Hain:**
-  - `Cinzel` ➔ Royal traditional serif font (Vastu, Astrology aur luxury ke liye best).
-  - `Outfit` ➔ Modern clean tech font (Default).
-  - `Space Grotesk` ➔ Bold futuristic font (Gaming aur digital goods ke liye).
-  - `Plus Jakarta Sans` ➔ Ultra-clean corporate font.
-- App me naam likh kar save karein, website ki saari badi headlines turant us font me convert ho jayengi!
+### 1. 🔤 Font (Likhawat Ka Style) 1-Tap Me Chunein
+- **Aapko font ka naam type nahi karna padega:** App me 4 ready-made clickable buttons diye gaye hain:
+  - `[ 🕉️ Vedic (Cinzel) ]` ➔ Royal traditional serif font (Vastu, Astrology aur luxury ke liye best).
+  - `[ ⚡ Modern (Outfit) ]` ➔ Modern clean tech font (Default).
+  - `[ 👾 Creative (Space) ]` ➔ Bold futuristic font (Gaming aur digital goods ke liye).
+  - `[ 🛍️ Clean (Jakarta) ]` ➔ Ultra-clean corporate & minimal font.
+- Bas jo style pasand ho uspe ungli se tap karein, website ki saari badi headlines turant us font me convert ho jayengi!
 
 ### 2. 🖼️ Custom Logo Badalna
 - **Kaise Karein:** App me **"Custom Logo Image URL"** ka box hai.
 - Wahan apne logo image ka direct link paste karein (jaise: `https://i.imgur.com/my-logo.png` ya koi bhi online photo link).
 - Save dabate hi website ke top navigation bar me default icon hatkar aapka **asli logo** lag jayega!
 
-### 3. 🎨 Header & Footer Ka Background Color Badalna
-- **Kaise Karein:** App me do color boxes hain:
-  - **Header Background Color:** e.g. `#080C1A` (Dark Slate), `#1E1B4B` (Royal Indigo), `#1A0B2E` (Plum Maroon), ya `#000000` (Pure Black).
-  - **Footer Background Color:** e.g. `#050811` ya `#0F172A`.
-- Apna pasandida color code daalein aur save karein — website ka top bar aur bottom footer turant naye color me badal jayega!
+### 3. 🎨 Header & Footer Ka Color Badalna (1-Tap Color Selection)
+- **Aapko koi bhi `#` ya color code type karne ki bilkul zaroorat nahi hai:**  
+  Manual code typing ka jhanjhat hata kar app me ready-made **Color Selection Buttons** de diye gaye hain:
+  - `[ 🖤 Dark Slate ]` ➔ Deep modern slate color
+  - `[ 💜 Royal Vedic ]` ➔ Majestic royal plum/maroon
+  - `[ 💙 Tech Navy ]` ➔ Deep indigo navy
+  - `[ 💚 Forest Pine ]` ➔ Deep rich green
+  - `[ 🖤 Pure Black ]` ➔ Classic pitch black
+  - `[ 🤍 Clean Slate ]` ➔ Fresh light white/slate
+- **Header ke liye:** Jo color chahiye us button par tap karein.
+- **Footer ke liye:** Jo color chahiye us button par tap karein.
+- Bas buttons par tap karke "Update Website Live 🚀" daba dein, website ka Header aur Footer naye rang me chamakne lagega!
 
 ### 4. ✍️ Website Ka Har Ek Text (Pura Content) Badalna
 Aapko kisi coder ke paas jane ki zaroorat nahi hai, website ka ek-ek word aapke mobile app se badal sakta hai:
