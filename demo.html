@@ -829,6 +829,28 @@
       // Dynamic Website Template (5 Ready-made Themes)
       const themeId = s.template_id || s.theme || localStorage.getItem('store_active_template') || 'modern-blue';
       applyTemplateTheme(themeId);
+
+      // Custom Font Style
+      if (s.font_family && String(s.font_family).trim()) {
+        const fontName = String(s.font_family).trim();
+        document.documentElement.style.setProperty('--theme-font-heading', `"${fontName}", sans-serif`);
+        document.querySelectorAll('.font-heading').forEach(el => {
+          el.style.fontFamily = `"${fontName}", sans-serif`;
+        });
+      }
+
+      // Custom Header Color
+      if (s.header_color && String(s.header_color).trim()) {
+        const hdr = document.querySelector('header');
+        if (hdr) hdr.style.backgroundColor = s.header_color;
+      }
+
+      // Custom Footer Color
+      if (s.footer_color && String(s.footer_color).trim()) {
+        const ftr = document.querySelector('footer');
+        if (ftr) ftr.style.backgroundColor = s.footer_color;
+      }
+
       applyContactDetails();
     }
 

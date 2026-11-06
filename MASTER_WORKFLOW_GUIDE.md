@@ -39,17 +39,20 @@ In links ko apne paas bookmark karke rakh lein:
 
 ---
 
-### Step 1: Website Kahan Hai Aur Kaise Kaam Karti Hai?
+### Step 1: Website Kahan Hai Aur Look/Theme Kaise Badalti Hai?
 
 Aapki website internet par bilkul free chal rahi hai (GitHub Pages par).
 * Jab bhi customer website kholega, usko sundar design, rate aur products dikhenge.
-* Is website me **5 Ready-made Designs (Themes)** pehle se dale hue hain:
-  1. ⚡ **Modern Blue:** Tech aur digital goods ke liye.
-  2. 🕉️ **Royal Vedic Gold:** Vastu, Jyotish, Kundli aur puja ke samaan ke liye.
-  3. 🛍️ **Clean Minimal Light:** Safed saaf-suthra store, kapde ya physical samaan ke liye.
-  4. 👾 **Neon Violet:** Creators, AI tools aur gaming ke liye.
-  5. 🌿 **Emerald Pro:** Business, finance aur agency ke liye.
-* Website ke right side me niche ek chota floating button bhi laga hai, jisse aap browser me bhi click karke designs check kar sakte hain.
+* **Website Ka Theme/Design Kahan Se Badlega?**  
+  👉 **Aapke Mobile App Se!**  
+  Android App kholkar jab aap **"🎨 Themes"** tab me kisi bhi template par **"Apply This Template ⚡"** dabate hain, toh poori duniya me live website ka theme, colors aur vibe 1-second me badal jata hai!
+* **App Me Yeh 5 Ready-made Designs Hain:**
+  1. ⚡ **Modern Blue:** Tech aur digital goods ke liye (Sleek slate + electric blue).
+  2. 🕉️ **Royal Vedic Gold:** Vastu Shastra, Jyotish, Kundli aur puja ke samaan ke liye (Royal maroon + glowing gold).
+  3. 🛍️ **Clean Minimal Light:** Safed saaf-suthra store, kapde ya physical samaan ke liye (Crisp white + emerald).
+  4. 👾 **Neon Violet:** Creators, AI tools aur gaming ke liye (Pitch black + neon pink/violet).
+  5. 🌿 **Emerald Pro:** Business, finance aur agency ke liye (Corporate pine + mint green).
+* *(Note: Website par bottom-right me jo chota button laga hai, wo sirf testing/preview ke liye hai, par permanent control aapke mobile app me hi hai).*
 
 ---
 
@@ -62,7 +65,7 @@ Google Sheet aapka register hai. Agar aapko kabhi naye sire se nayi sheet banani
 3. Hamare project ki file [`Code.gs`](file:///g:/Vastu_website/Code.gs) ko pura copy karke wahan paste kar dein.
 4. Upar ek dropdown dikhega jisme `doGet` likha hoga, us dropdown par click karke **`setupAutoTabs`** chunein aur **Run** dabayein.
    * *Jaise hi aap Run dabayenge, Google Sheet me 3 tabs apne aap ban jayenge:*
-     - **Settings:** Dukaan ka naam, UPI ID, WhatsApp number.
+     - **Settings:** Dukaan ka naam, UPI ID, WhatsApp number, Theme, Colors, Fonts.
      - **Products:** Saare bikne wale products aur unke daam.
      - **Orders:** Jo bhi customer khareedega uska live hisaab.
 5. Upar blue button **Deploy** dabayein ➔ **New deployment** chunein:
@@ -105,13 +108,51 @@ Aapko website badalne ke liye computer kholne ki zaroorat nahi hai. Sab kuch aap
   - Yahan 5 sundar ready-made designs ke card bane hain (Vedic Gold, Modern Blue, etc.).
   - Aap bas kisi bhi design ke niche **"Apply This Template ⚡"** dabayein.
   - 1 second me poori duniya me website ka rang-roop badal jayega!
-* 🌐 **Tab 3: Settings (Dukaan Ki Jaankari)**
-  - Dukaan ka naam badlein (Brand Name).
-  - Logo badlein, WhatsApp number badlein, UPI ID badlein.
-  - "Update Website Live" button dabate hi website par naya naam dikhne lagega.
+* 🌐 **Tab 3: Settings (Branding, Fonts, Colors & Text Studio)**
+  - Dukaan ka naam, Logo, Fonts, Header/Footer Colors aur website ka sara text yahan se badalta hai.
 * 📦 **Tab 4: Products (Rate List)**
   - Kisi bhi product ka Selling Price badlein.
   - Agar koi product khatam ho gaya ho, toh use Inactive kar dein taaki customer use na khareed sake.
+
+---
+
+## 🎨 Advance Customization: Font, Logo, Header/Footer Colors & Text App Se Kaise Badlein?
+
+Aapne poocha tha ki *theme ke alawa agar font, logo, header-footer colors aur likha hua content badalna ho toh kaise hoga?*  
+Yeh feature aapke Android App ke **🌐 Settings (Tab 3)** me fully add kar diya gaya hai! Dekhiye kya-kya badal sakte hain:
+
+### 1. 🔤 Font (Likhawat Ka Style) Badalna
+- **Kaise Karein:** App ke Settings tab me **"Heading Font"** ka box hai.
+- **Kya Likh Sakte Hain:**
+  - `Cinzel` ➔ Royal traditional serif font (Vastu, Astrology aur luxury ke liye best).
+  - `Outfit` ➔ Modern clean tech font (Default).
+  - `Space Grotesk` ➔ Bold futuristic font (Gaming aur digital goods ke liye).
+  - `Plus Jakarta Sans` ➔ Ultra-clean corporate font.
+- App me naam likh kar save karein, website ki saari badi headlines turant us font me convert ho jayengi!
+
+### 2. 🖼️ Custom Logo Badalna
+- **Kaise Karein:** App me **"Custom Logo Image URL"** ka box hai.
+- Wahan apne logo image ka direct link paste karein (jaise: `https://i.imgur.com/my-logo.png` ya koi bhi online photo link).
+- Save dabate hi website ke top navigation bar me default icon hatkar aapka **asli logo** lag jayega!
+
+### 3. 🎨 Header & Footer Ka Background Color Badalna
+- **Kaise Karein:** App me do color boxes hain:
+  - **Header Background Color:** e.g. `#080C1A` (Dark Slate), `#1E1B4B` (Royal Indigo), `#1A0B2E` (Plum Maroon), ya `#000000` (Pure Black).
+  - **Footer Background Color:** e.g. `#050811` ya `#0F172A`.
+- Apna pasandida color code daalein aur save karein — website ka top bar aur bottom footer turant naye color me badal jayega!
+
+### 4. ✍️ Website Ka Har Ek Text (Pura Content) Badalna
+Aapko kisi coder ke paas jane ki zaroorat nahi hai, website ka ek-ek word aapke mobile app se badal sakta hai:
+- **Hero Main Headline:** Jo sabse badi headline screen par aati hai (e.g. *"Vastu Shastra Se Badlein Apni Zindagi"* ya *"Apna E-Commerce Store Shuru Karein"*).
+- **Hero Subtitle:** Headline ke niche aane wala 2-line ka vivaran (description).
+- **CTA Button Text:** Main button par kya likha ho (e.g. *"Get Store Now"*, *"Abhi Khareedein ₹499"*, ya *"Consultation Book Karein"*).
+- **Top Announcement Bar:** Sabse upar chalne wala discount offer text (e.g. *"Diwali Special Offer: 80% OFF Today!"*).
+- **Brand Name & Tagline:** Dukaan ka naam aur slogan.
+
+👉 Jaise hi aap App me **"Update Website Live 🚀"** dabayenge:
+1. Mobile app ye sara data Google Sheet ki `Settings` tab me bhej deti hai.
+2. Website turant Google Sheet se ye naya data fetch karti hai.
+3. 2 second ke andar poori live website par naya logo, naya font, naye colors aur naya text lag jata hai!
 
 ---
 
@@ -153,9 +194,10 @@ Dekhiye customer ke order se lekar paise aane tak kya-kya hota hai:
 
 Agar aapko aage koi naya feature sochna ho ya is guide me add karna ho, toh aap yahan simple checklist me likh sakte hain:
 
-- [ ] **Mera Step 1:** Website par naya banner photo lagana.
-- [ ] **Mera Step 2:** WhatsApp par automatic bill (invoice) bhejna.
-- [ ] **Mera Step 3:** Ek naya product add karna.
+- [ ] **Mera Step 1:** Naya logo design banakar URL app me daalna.
+- [ ] **Mera Step 2:** Header aur footer ke colors apni pasand ke set karna.
+- [ ] **Mera Step 3:** Website ki main headline ko apne business ke hisaab se customize karna.
+- [ ] **Mera Step 4:** WhatsApp par customer ko automatic invoice bhejna.
 
 ---
 

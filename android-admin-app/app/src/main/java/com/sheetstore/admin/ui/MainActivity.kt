@@ -92,6 +92,13 @@ class MainActivity : Activity() {
     // Views in Website Customizer
     private lateinit var brandNameInput: EditText
     private lateinit var taglineInput: EditText
+    private lateinit var logoUrlInput: EditText
+    private lateinit var fontFamilyInput: EditText
+    private lateinit var headerColorInput: EditText
+    private lateinit var footerColorInput: EditText
+    private lateinit var heroTitleInput: EditText
+    private lateinit var heroSubtitleInput: EditText
+    private lateinit var ctaTextInput: EditText
     private lateinit var waNumberInput: EditText
     private lateinit var upiIdInput: EditText
     private lateinit var announcementInput: EditText
@@ -597,37 +604,68 @@ class MainActivity : Activity() {
         form.addView(heading)
 
         val subtext = TextView(this).apply {
-            text = "Yahan se website ka naam, headline, WhatsApp aur UPI ID live change karein:"
+            text = "Yahan se website ka pura data, logo, fonts, header/footer colors aur text live change karein:"
             textSize = 12f
             setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, 32)
+            setPadding(0, 0, 0, 24)
         }
         form.addView(subtext)
 
-        // Store Name
+        // 1. BRANDING SECTION
+        form.addView(createSectionHeader("🏢 1. BRANDING & LOGO"))
         form.addView(createLabel("Website Ka Naam (Brand Name):"))
         brandNameInput = createInput("SheetStore Pro")
         form.addView(brandNameInput)
 
-        // Tagline
         form.addView(createLabel("Brand Tagline:"))
         taglineInput = createInput("Zero Hosting & Domain E-Commerce")
         form.addView(taglineInput)
 
-        // WhatsApp Number
+        form.addView(createLabel("Custom Logo Image URL (PNG/SVG/WebP):"))
+        logoUrlInput = createInput("https://example.com/my-logo.png")
+        form.addView(logoUrlInput)
+
+        // 2. DESIGN & STYLING SECTION
+        form.addView(createSectionHeader("🎨 2. FONTS & COLORS"))
+        form.addView(createLabel("Heading Font (Outfit, Cinzel, Space Grotesk, Plus Jakarta Sans):"))
+        fontFamilyInput = createInput("Outfit")
+        form.addView(fontFamilyInput)
+
+        form.addView(createLabel("Header Background Color (e.g. #080C1A ya #1E1B4B):"))
+        headerColorInput = createInput("#080C1A")
+        form.addView(headerColorInput)
+
+        form.addView(createLabel("Footer Background Color (e.g. #050811 ya #0F172A):"))
+        footerColorInput = createInput("#050811")
+        form.addView(footerColorInput)
+
+        // 3. TEXT & HEADLINES SECTION
+        form.addView(createSectionHeader("✍️ 3. HEADLINES & BUTTONS"))
+        form.addView(createLabel("Hero Main Headline:"))
+        heroTitleInput = createInput("Shopify aur WordPress ka Monthly Kharcha Band Karein.")
+        form.addView(heroTitleInput)
+
+        form.addView(createLabel("Hero Subtitle / Description:"))
+        heroSubtitleInput = createInput("Google Sheet ko apna backend banayein aur super fast website live karein.")
+        form.addView(heroSubtitleInput)
+
+        form.addView(createLabel("Main CTA Button Text (e.g. Get Store Now / Buy Now):"))
+        ctaTextInput = createInput("Get Store Now")
+        form.addView(ctaTextInput)
+
+        form.addView(createLabel("Top Announcement Bar Text:"))
+        announcementInput = createInput("Special Discount Today! 80% OFF")
+        form.addView(announcementInput)
+
+        // 4. CONTACT & PAYMENTS SECTION
+        form.addView(createSectionHeader("💳 4. CONTACT & PAYMENTS"))
         form.addView(createLabel("WhatsApp Order Number (with 91):"))
         waNumberInput = createInput("919999999999")
         form.addView(waNumberInput)
 
-        // UPI ID
         form.addView(createLabel("UPI ID (Payments Received Here):"))
         upiIdInput = createInput("yourname@okaxis")
         form.addView(upiIdInput)
-
-        // Announcement Bar
-        form.addView(createLabel("Top Announcement Bar Text:"))
-        announcementInput = createInput("Special Discount Today! 80% OFF")
-        form.addView(announcementInput)
 
         // Save Button
         val saveBtn = Button(this).apply {
@@ -646,11 +684,28 @@ class MainActivity : Activity() {
         return scroll
     }
 
+    private fun createSectionHeader(title: String): TextView {
+        return TextView(this).apply {
+            text = title
+            textSize = 14f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, 24, 0, 8)
+        }
+    }
+
     private fun populateSettingsFields() {
         val s = dashboardData?.settings ?: return
         if (::brandNameInput.isInitialized) {
             brandNameInput.setText(s["brand_name"] ?: "")
             taglineInput.setText(s["brand_tagline"] ?: "")
+            logoUrlInput.setText(s["logo_url"] ?: "")
+            fontFamilyInput.setText(s["font_family"] ?: "")
+            headerColorInput.setText(s["header_color"] ?: "")
+            footerColorInput.setText(s["footer_color"] ?: "")
+            heroTitleInput.setText(s["hero_title"] ?: "")
+            heroSubtitleInput.setText(s["hero_subtitle"] ?: "")
+            ctaTextInput.setText(s["cta_text"] ?: "")
             waNumberInput.setText(s["whatsapp_number"] ?: "")
             upiIdInput.setText(s["upi_id"] ?: "")
             announcementInput.setText(s["announcement_text"] ?: "")
@@ -668,6 +723,13 @@ class MainActivity : Activity() {
             "action" to "updateSettings",
             "brand_name" to brandNameInput.text.toString().trim(),
             "brand_tagline" to taglineInput.text.toString().trim(),
+            "logo_url" to logoUrlInput.text.toString().trim(),
+            "font_family" to fontFamilyInput.text.toString().trim(),
+            "header_color" to headerColorInput.text.toString().trim(),
+            "footer_color" to footerColorInput.text.toString().trim(),
+            "hero_title" to heroTitleInput.text.toString().trim(),
+            "hero_subtitle" to heroSubtitleInput.text.toString().trim(),
+            "cta_text" to ctaTextInput.text.toString().trim(),
             "whatsapp_number" to waNumberInput.text.toString().trim(),
             "upi_id" to upiIdInput.text.toString().trim(),
             "announcement_text" to announcementInput.text.toString().trim()
