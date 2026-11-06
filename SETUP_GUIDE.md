@@ -1,5 +1,8 @@
 # SheetStore Pro - Setup & Complete 3-Level Verification Guide
 
+> 📖 **Pura Step-by-Step Architecture Guide:**  
+> Poore project ka detailed workflow, API reference, aur links dekhne ke liye [`MASTER_WORKFLOW_GUIDE.md`](file:///g:/Vastu_website/MASTER_WORKFLOW_GUIDE.md) open karein.
+
 Aapki website ab **3 Powerful Payment Verification Methods** ke sath 100% ready hai:
 - **Level 1 (Basic):** Direct WhatsApp Proof (Zero setup)
 - **Level 2 (Smart):** 1-Tap Google Sheet Mobile Checkbox (Pre-installed Google Sheets app)
