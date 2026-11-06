@@ -1,4 +1,11 @@
 .DS_Store
 Thumbs.db
 *.tmp
-
+.gradle/
+build/
+**/build/
+.idea/
+*.iml
+local.properties
+.cxx/
+captures/

@@ -418,6 +418,10 @@
           <a href="demo.html" class="hover:text-blue-400">Live Demo</a>
           <a href="#pricing" class="hover:text-blue-400">Pricing</a>
           <a href="#faq" class="hover:text-blue-400">FAQs</a>
+          <button onclick="openConfigModal()" class="text-slate-400 hover:text-blue-400 flex items-center gap-1">
+            <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+            <span>Sheet Settings</span>
+          </button>
         </div>
       </div>
       <div class="border-t border-slate-800/60 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
@@ -428,64 +432,443 @@
   </footer>
 
   <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20ke%20bare%20me%20jaankari%20chahiye" 
+  <a id="floatingWaBtn" href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20ke%20bare%20me%20jaankari%20chahiye" 
      target="_blank"
      class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold shadow-2xl shadow-emerald-500/40 hover:scale-105 active:scale-95 transition">
     <i data-lucide="message-circle" class="w-6 h-6 fill-current"></i>
     <span class="text-sm hidden sm:inline">WhatsApp Enquiry</span>
   </a>
 
-  <!-- PAYMENT CHECKOUT MODAL -->
-  <div id="payModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-blue-500/30 rounded-2xl max-w-md w-full p-6 relative shadow-2xl text-center">
+  <!-- PAYMENT CHECKOUT & 1-TAP VERIFICATION MODAL -->
+  <div id="payModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B132B] border border-blue-500/40 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl text-left">
       <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
 
-      <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-3 border border-blue-500/30">
-        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-5 pb-4 border-b border-slate-800">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-white">Secure Checkout & 1-Tap Verification</h3>
+          <p class="text-xs text-blue-400 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Direct Bank UPI • Instant Lifetime Access</span>
+          </p>
+        </div>
       </div>
 
-      <h3 class="font-heading font-bold text-xl text-white">Complete Your Order</h3>
-      <p class="text-xs text-slate-400 mb-4">SheetStore Pro Lifetime Access (₹499)</p>
+      <!-- STEP 1: CUSTOMER DETAILS & PAYMENT INTENT -->
+      <div id="checkoutStep1" class="space-y-4">
+        <!-- Order Summary Card -->
+        <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-400 block font-mono" id="displayOrderId">#ORD-......</span>
+            <span class="text-sm font-bold text-white">SheetStore Pro Lifetime Kit</span>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-500 line-through block">₹2,499</span>
+            <span class="text-xl font-black font-heading text-emerald-400">₹499</span>
+          </div>
+        </div>
 
-      <!-- Price Box -->
-      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-5 flex items-center justify-between">
-        <span class="text-xs text-slate-400">Total Payable:</span>
-        <span class="text-2xl font-black font-heading text-emerald-400">₹499</span>
-      </div>
+        <!-- Customer Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka Naam <span class="text-rose-400">*</span></label>
+            <input type="text" id="custName" placeholder="Jaise: Rahul Sharma" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Mobile No. <span class="text-rose-400">*</span></label>
+            <input type="tel" id="custPhone" placeholder="10-digit number" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
+          </div>
+        </div>
 
-      <!-- UPI QR Code -->
-      <div class="bg-white p-3 rounded-xl inline-block shadow-lg mb-3">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3Dyourupi%40oksbi%26pn%3DSheetStorePro%26am%3D499%26cu%3DINR%26tn%3DSheetStorePro" alt="UPI QR" class="w-36 h-36 mx-auto" />
-      </div>
-      <p class="text-xs font-mono text-amber-400 mb-1">Scan via GPay, PhonePe, Paytm</p>
-      <p class="text-[11px] text-slate-400 mb-4">Payment ke baad niche button dabakar turant launchpad kholiye:</p>
-
-      <div class="space-y-2">
-        <a href="success.html" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition">
-          <i data-lucide="check-circle" class="w-4 h-4"></i>
-          <span>Maine Payment Kar Di (Open Launchpad)</span>
+        <!-- 1-Tap Mobile UPI Intent Button -->
+        <a id="mobileUpiIntentBtn" href="#" 
+           class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-95 text-center">
+          <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+          <span>Pay ₹499 via UPI App (GPay / PhonePe / Paytm)</span>
         </a>
 
-        <a href="https://wa.me/919999999999?text=Namaste!%20Maine%20SheetStore%20Pro%20ke%20liye%20₹499%20pay%20kar%20diye%20hain" 
-           target="_blank"
-           class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition">
-          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-          <span>Send Screenshot on WhatsApp</span>
-        </a>
+        <!-- Toggle Desktop QR View -->
+        <div class="text-center">
+          <button type="button" onclick="toggleQrView()" class="text-xs text-blue-400 hover:text-blue-300 underline font-medium inline-flex items-center gap-1">
+            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+            <span id="qrToggleLabel">Ya Desktop UPI QR Code Scan Karein</span>
+          </button>
+        </div>
+
+        <!-- QR Display Section -->
+        <div id="desktopQrBox" class="hidden text-center bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+          <div class="bg-white p-2.5 rounded-xl inline-block shadow-lg mx-auto mb-2">
+            <img id="upiDynamicQr" src="" alt="UPI QR" class="w-36 h-36 mx-auto" />
+          </div>
+          <p class="text-xs font-mono text-emerald-400" id="displayUpiId">UPI ID: payments@upi</p>
+          <p class="text-[11px] text-slate-400 mt-1">Scan via any UPI App (GPay, PhonePe, Paytm, BHIM, Cred)</p>
+        </div>
+
+        <!-- Move to Step 2 Button -->
+        <div class="pt-2">
+          <button onclick="goToStep2()" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition">
+            <span>Payment Ho Gayi ➔ UTR Enter Karein</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: UTR NUMBER INPUT & VERIFY -->
+      <div id="checkoutStep2" class="hidden space-y-4">
+        <div class="bg-blue-950/40 border border-blue-500/30 rounded-xl p-3.5 text-xs text-blue-200 leading-relaxed flex items-start gap-2.5">
+          <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+          <span>Payment ke baad aapke UPI app (PhonePe/GPay) me <strong>12-digit UPI Reference No / UTR</strong> dikhta hai. Use niche enter karein:</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">12-Digit UPI Reference / UTR Number <span class="text-rose-400">*</span></label>
+          <input type="text" id="custUtr" maxlength="12" placeholder="Jaise: 412984920194" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono text-base tracking-widest focus:border-emerald-500 focus:outline-none" />
+          <p class="text-[11px] text-slate-400 mt-1.5">Yeh number aapke Google Sheet me instantly cross-verify hota hai.</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="space-y-2.5 pt-2">
+          <button onclick="submitOrderForVerification()" id="btnVerifyOrder" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition hover:scale-[1.01] active:scale-95">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+            <span>Verify & Unlock My Access (1-Tap Check)</span>
+          </button>
+
+          <!-- WhatsApp Direct Fallback Button -->
+          <button onclick="sendOrderToWhatsAppFallback()" type="button" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs flex items-center justify-center gap-2 border border-slate-700 transition">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span>Jaldi Chahiye? Send UTR on WhatsApp</span>
+          </button>
+
+          <button onclick="goToStep1()" type="button" class="w-full text-center text-xs text-slate-400 hover:text-white pt-1">
+            &larr; Wapas Step 1 Par Jayein
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: LIVE VERIFICATION STATUS (POLLING GOOGLE SHEET) -->
+      <div id="checkoutStep3" class="hidden text-center py-4 space-y-4">
+        <!-- Spinner / Pulse -->
+        <div id="verifyingSpinner" class="space-y-3">
+          <div class="relative w-16 h-16 mx-auto">
+            <div class="w-16 h-16 rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center text-blue-400">
+              <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+            </div>
+          </div>
+          <h4 class="text-base font-bold text-white">Order Recorded in Google Sheet!</h4>
+          <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
+            Aapka UTR Number Google Sheet me record ho gaya hai. Admin ke phone me <strong>1-Tap Checkbox</strong> tick hote hi yahan page live unlock ho jayega!
+          </p>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-blue-500/40 text-xs font-mono text-blue-300">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="pollCountdownText">Checking status (Attempt 1)...</span>
+          </div>
+        </div>
+
+        <!-- Success Animation (Hidden initially) -->
+        <div id="verificationSuccessBox" class="hidden space-y-3">
+          <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-xl shadow-emerald-500/30 animate-bounce">
+            <i data-lucide="check" class="w-8 h-8"></i>
+          </div>
+          <h4 class="text-xl font-black text-emerald-400">Payment 100% Verified! 🎉</h4>
+          <p class="text-xs text-slate-300">Aapka access unlock ho chuka hai. Launchpad par redirect kiya ja raha hai...</p>
+        </div>
+
+        <!-- WhatsApp Fallback while waiting -->
+        <div class="pt-4 border-t border-slate-800">
+          <p class="text-[11px] text-slate-400 mb-2">Wait nahi karna chahte? Seedha WhatsApp par UTR confirm karein:</p>
+          <button onclick="sendOrderToWhatsAppFallback()" class="w-full py-2.5 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg">
+            <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+            <span>Open WhatsApp with UTR Proof</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STORE & GOOGLE SHEET SETTINGS MODAL -->
+  <div id="configModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B132B] border border-slate-700 rounded-2xl max-w-lg w-full p-6 relative">
+      <button onclick="closeConfigModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+      <h3 class="font-heading font-bold text-xl text-white mb-1 flex items-center gap-2">
+        <i data-lucide="settings" class="w-5 h-5 text-blue-400"></i>
+        <span>Store & Google Sheet Settings</span>
+      </h3>
+      <p class="text-xs text-slate-400 mb-4">Apna WhatsApp Number, UPI ID aur Google Sheet Web App URL yahan enter karein.</p>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Number (with 91 country code)</label>
+          <input type="text" id="configWaNumber" placeholder="919876543210" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
+          <span class="text-[10px] text-slate-500">Example: 91 ke baad 10 digit number bina spaces ke</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">UPI ID (for Direct GPay/PhonePe/QR)</label>
+          <input type="text" id="configUpiId" placeholder="yourname@okaxis" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
+          <span class="text-[10px] text-slate-500">Customer is UPI address par paise bhejenge</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Google Sheet Apps Script Web App URL</label>
+          <input type="text" id="configSheetUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm font-mono text-xs" />
+          <span class="text-[10px] text-slate-500">Google Sheet me Code.gs deploy karke mila hua URL yahan paste karein.</span>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button onclick="saveStoreSettings()" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm">Save Settings</button>
+          <button onclick="closeConfigModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-sm">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    // Global Store Configuration synced with localStorage
+    let storeConfig = {
+      sheetUrl: localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec",
+      waNumber: localStorage.getItem('store_wa_number') || "919999999999",
+      upiId: localStorage.getItem('store_upi_id') || "payments@upi"
+    };
+
+    let currentOrder = {
+      id: "",
+      name: "",
+      phone: "",
+      product: "SheetStore Pro Lifetime Kit",
+      amount: 499,
+      utr: ""
+    };
+
+    let pollInterval = null;
+    let pollAttempts = 0;
+    const MAX_POLL_ATTEMPTS = 30; // 30 * 3s = 90 seconds
+
+    function generateOrderId() {
+      return "#ORD-" + Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function syncConfigWithUI() {
+      // Sync floating WhatsApp button
+      const floatingWa = document.getElementById('floatingWaBtn');
+      if (floatingWa) {
+        floatingWa.href = `https://wa.me/${storeConfig.waNumber}?text=${encodeURIComponent("Namaste! Mujhe SheetStore Pro ke bare me jaankari chahiye.")}`;
+      }
+    }
+
     function openPaymentModal() {
+      if (!currentOrder.id) {
+        currentOrder.id = generateOrderId();
+      }
+
+      document.getElementById('displayOrderId').innerText = currentOrder.id;
+      document.getElementById('displayUpiId').innerText = `UPI ID: ${storeConfig.upiId}`;
+
+      // Build UPI intent link: upi://pay?pa=...&pn=SheetStorePro&am=499&cu=INR&tn=ORD-XXXXX
+      const cleanOrderId = currentOrder.id.replace('#', '');
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=SheetStorePro&am=${currentOrder.amount}&cu=INR&tn=${cleanOrderId}`;
+      document.getElementById('mobileUpiIntentBtn').href = upiUrl;
+
+      // Build Dynamic QR code image
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+      document.getElementById('upiDynamicQr').src = qrUrl;
+
+      goToStep1();
       document.getElementById('payModal').classList.remove('hidden');
       lucide.createIcons();
     }
+
     function closePaymentModal() {
       document.getElementById('payModal').classList.add('hidden');
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
     }
+
+    function goToStep1() {
+      document.getElementById('checkoutStep1').classList.remove('hidden');
+      document.getElementById('checkoutStep2').classList.add('hidden');
+      document.getElementById('checkoutStep3').classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    function goToStep2() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+
+      if (!name) {
+        alert("Kripya apna Naam enter karein.");
+        document.getElementById('custName').focus();
+        return;
+      }
+      if (!phone || phone.length < 10) {
+        alert("Kripya 10-digit WhatsApp Mobile number enter karein.");
+        document.getElementById('custPhone').focus();
+        return;
+      }
+
+      currentOrder.name = name;
+      currentOrder.phone = phone;
+
+      document.getElementById('checkoutStep1').classList.add('hidden');
+      document.getElementById('checkoutStep2').classList.remove('hidden');
+      document.getElementById('checkoutStep3').classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    function toggleQrView() {
+      const box = document.getElementById('desktopQrBox');
+      const label = document.getElementById('qrToggleLabel');
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        label.innerText = "Desktop UPI QR Code Chhupayein";
+      } else {
+        box.classList.add('hidden');
+        label.innerText = "Ya Desktop UPI QR Code Scan Karein";
+      }
+    }
+
+    // Step 3: Submit Order to Google Sheet & Start 1-Tap Polling
+    async function submitOrderForVerification() {
+      const utr = document.getElementById('custUtr').value.trim();
+      if (!utr || utr.length < 6) {
+        alert("Kripya valid 12-digit UPI Reference / UTR Number enter karein.");
+        document.getElementById('custUtr').focus();
+        return;
+      }
+
+      currentOrder.utr = utr;
+
+      // Show Step 3 (Verification In Progress)
+      document.getElementById('checkoutStep2').classList.add('hidden');
+      document.getElementById('checkoutStep3').classList.remove('hidden');
+      document.getElementById('verifyingSpinner').classList.remove('hidden');
+      document.getElementById('verificationSuccessBox').classList.add('hidden');
+      lucide.createIcons();
+
+      // If Google Sheet Web App URL is configured, record the order
+      if (storeConfig.sheetUrl && storeConfig.sheetUrl.trim() !== "") {
+        try {
+          const createUrl = `${storeConfig.sheetUrl}?action=createOrder&order_id=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&phone=${encodeURIComponent(currentOrder.phone)}&product=${encodeURIComponent(currentOrder.product)}&amount=${currentOrder.amount}&utr=${encodeURIComponent(currentOrder.utr)}`;
+          fetch(createUrl, { mode: 'no-cors' }).catch(err => console.log("Logged:", err));
+        } catch (e) {
+          console.warn("Sheet order record call:", e);
+        }
+
+        // Start polling for 1-Tap check
+        startPollingOrderStatus();
+      } else {
+        // Sheet URL not configured yet: notify user & provide instant WhatsApp fallback
+        document.getElementById('pollCountdownText').innerText = "Google Sheet URL not configured. Redirecting to WhatsApp...";
+        setTimeout(() => {
+          sendOrderToWhatsAppFallback();
+        }, 1500);
+      }
+    }
+
+    function startPollingOrderStatus() {
+      pollAttempts = 0;
+      if (pollInterval) clearInterval(pollInterval);
+
+      pollInterval = setInterval(async () => {
+        pollAttempts++;
+        document.getElementById('pollCountdownText').innerText = `Checking for approval (${pollAttempts}/${MAX_POLL_ATTEMPTS})...`;
+
+        if (pollAttempts > MAX_POLL_ATTEMPTS) {
+          clearInterval(pollInterval);
+          document.getElementById('pollCountdownText').innerText = "Approval taking longer? WhatsApp par screenshot share karein.";
+          return;
+        }
+
+        try {
+          const checkUrl = `${storeConfig.sheetUrl}?action=checkOrderStatus&order_id=${encodeURIComponent(currentOrder.id)}&utr=${encodeURIComponent(currentOrder.utr)}`;
+          const res = await fetch(checkUrl);
+          const data = await res.json();
+
+          if (data && data.status === "PAID") {
+            clearInterval(pollInterval);
+            handleVerificationSuccess();
+          }
+        } catch (err) {
+          console.log("Polling check:", err);
+        }
+      }, 3000);
+    }
+
+    function handleVerificationSuccess() {
+      document.getElementById('verifyingSpinner').classList.add('hidden');
+      document.getElementById('verificationSuccessBox').classList.remove('hidden');
+      lucide.createIcons();
+
+      setTimeout(() => {
+        window.location.href = `success.html?order=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&status=PAID`;
+      }, 2000);
+    }
+
+    function sendOrderToWhatsAppFallback() {
+      const orderId = currentOrder.id || generateOrderId();
+      const name = currentOrder.name || document.getElementById('custName').value.trim() || "Customer";
+      const phone = currentOrder.phone || document.getElementById('custPhone').value.trim() || "";
+      const utr = currentOrder.utr || document.getElementById('custUtr').value.trim() || "Pending";
+
+      let msg = `*Namaste SheetStore Pro!* 🚀\n\nMaine payment complete kar di hai:\n`;
+      msg += `📦 *Order ID:* ${orderId}\n`;
+      msg += `👤 *Customer Name:* ${name}\n`;
+      if (phone) msg += `📱 *Mobile:* ${phone}\n`;
+      msg += `💰 *Amount:* ₹${currentOrder.amount}\n`;
+      msg += `🔢 *UTR / UPI Ref No:* ${utr}\n`;
+      msg += `\nKripya Google Sheet me approve karke mujhe template access link provide karein! 🙏`;
+
+      const targetUrl = `https://wa.me/${storeConfig.waNumber}?text=${encodeURIComponent(msg)}`;
+      window.open(targetUrl, '_blank');
+    }
+
+    // Config Modal logic
+    function openConfigModal() {
+      document.getElementById('configWaNumber').value = storeConfig.waNumber;
+      document.getElementById('configUpiId').value = storeConfig.upiId;
+      document.getElementById('configSheetUrl').value = storeConfig.sheetUrl;
+      document.getElementById('configModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeConfigModal() {
+      document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function saveStoreSettings() {
+      const wa = document.getElementById('configWaNumber').value.trim();
+      const upi = document.getElementById('configUpiId').value.trim();
+      const sheet = document.getElementById('configSheetUrl').value.trim();
+
+      if (wa) {
+        localStorage.setItem('store_wa_number', wa);
+        storeConfig.waNumber = wa;
+      }
+      if (upi) {
+        localStorage.setItem('store_upi_id', upi);
+        storeConfig.upiId = upi;
+      }
+      if (sheet !== undefined) {
+        localStorage.setItem('store_sheet_url', sheet);
+        storeConfig.sheetUrl = sheet;
+      }
+
+      syncConfigWithUI();
+      closeConfigModal();
+      alert("Settings saved successfully! Website ab aapke Google Sheet aur UPI ID se connect ho chuki hai.");
+    }
+
     function toggleFaq(card) {
       const p = card.querySelector('p');
       const icon = card.querySelector('i');
@@ -497,7 +880,9 @@
         icon.classList.remove('rotate-180');
       }
     }
+
     document.addEventListener('DOMContentLoaded', () => {
+      syncConfigWithUI();
       lucide.createIcons();
     });
   </script>

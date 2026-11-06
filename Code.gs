@@ -1,78 +1,665 @@
 /**
  * GOOGLE APPS SCRIPT CODE (Code.gs)
  * ----------------------------------------------------
- * Dynamic E-Commerce Backend: Products + Site Settings
+ * Dynamic E-Commerce Backend: Settings + Products + Orders & 1-Tap UPI Verification
  * 
- * 1. Google Sheet me 2 Tabs honge: 'Products' aur 'Settings'
- * 2. 'Settings' tab me: Brand Name, Logo, Hero Text, WhatsApp, UPI
- * 3. 'Products' tab me: Saare products ki list
+ * 1. 'Settings' Tab: Brand Name, Logo, Hero Text, WhatsApp Number, UPI ID
+ * 2. 'Products' Tab: Digital goods catalog, prices, features
+ * 3. 'Orders' Tab: Live Customer Orders, UTR Numbers, and 1-Tap Checkbox Verification!
  */
 
 function doGet(e) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    
-    // 1. Fetch Site Settings (Key-Value tab)
-    var settings = {};
-    var settingsSheet = ss.getSheetByName("Settings");
-    if (settingsSheet) {
-      var sRows = settingsSheet.getDataRange().getValues();
-      for (var s = 1; s < sRows.length; s++) {
-        var k = String(sRows[s][0]).trim().toLowerCase();
-        var v = sRows[s][1];
-        if (k) {
-          settings[k] = v;
-        }
-      }
+    var params = (e && e.parameter) ? e.parameter : {};
+    var action = params.action ? String(params.action).trim() : "";
+
+    // ----------------------------------------------------
+    // ACTION 0: Run setupAutoTabs remotely via URL
+    // ----------------------------------------------------
+    if (action === "setupTabs" || action === "setupAutoTabs" || action === "init") {
+      setupAutoTabs();
+      return returnJsonResponse({
+        success: true,
+        message: "Google Sheet successfully initialized with Settings, Products, and Orders tabs!",
+        settings: getSheetSettings(ss),
+        products: getSheetProducts(ss)
+      });
     }
-    
-    // 2. Fetch Products
-    var productsSheet = ss.getSheetByName("Products") || ss.getActiveSheet();
-    var values = productsSheet.getDataRange().getValues();
-    var products = [];
-    
-    if (values.length > 1) {
-      var headers = values[0];
-      for (var i = 1; i < values.length; i++) {
-        var row = values[i];
-        var item = {};
-        var hasData = false;
-        
-        for (var j = 0; j < headers.length; j++) {
-          var key = String(headers[j]).trim().toLowerCase();
-          var val = row[j];
-          if (val !== "") hasData = true;
-          item[key] = val;
-        }
-        
-        if (hasData) {
-          // Default to TRUE if is_active is omitted
-          if (!item.is_active || String(item.is_active).toUpperCase() === "TRUE") {
-            products.push(item);
-          }
-        }
-      }
+
+    // Auto-create tabs if blank spreadsheet
+    if (!ss.getSheetByName("Settings") || !ss.getSheetByName("Products") || !ss.getSheetByName("Orders")) {
+      setupAutoTabs();
     }
-    
+
+    // ----------------------------------------------------
+    // ACTION 1: Create New Order (Customer enters UTR on website)
+    // ----------------------------------------------------
+    if (action === "createOrder") {
+      return handleCreateOrder(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // ACTION 2: Check Order Status (Website polling for 1-Tap mobile approval)
+    // ----------------------------------------------------
+    if (action === "checkOrderStatus") {
+      return handleCheckOrderStatus(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // ACTION 3: Mark Order as Paid (Direct API override)
+    // ----------------------------------------------------
+    if (action === "markPaid") {
+      return handleMarkPaid(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // ACTION 4: Android Companion App (Auto-Listen SMS & Notifications)
+    // ----------------------------------------------------
+    if (action === "autoVerifyFromSms" || action === "bankNotification" || action === "webhook") {
+      return handleBankNotification(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // ACTION 5: Android Admin App - Full Dashboard Data
+    // ----------------------------------------------------
+    if (action === "getAdminDashboard" || action === "getOrders") {
+      return handleGetAdminDashboard(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // ACTION 6: Android Admin App - Update Site Settings
+    // ----------------------------------------------------
+    if (action === "updateSettings") {
+      return handleUpdateSettings(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // ACTION 7: Android Admin App - Manage Products
+    // ----------------------------------------------------
+    if (action === "updateProduct") {
+      return handleUpdateProduct(ss, params);
+    }
+    if (action === "addProduct") {
+      return handleAddProduct(ss, params);
+    }
+    if (action === "approveOrder") {
+      return handleMarkPaid(ss, params);
+    }
+
+    // ----------------------------------------------------
+    // DEFAULT: Fetch Site Settings + Products Catalog
+    // ----------------------------------------------------
+    var settings = getSheetSettings(ss);
+    var products = getSheetProducts(ss);
+
     var responseData = {
       settings: settings,
       products: products
     };
-    
+
     // Optional: Return HTML view if parameter view=html is present
-    if (e && e.parameter && e.parameter.view === "html") {
+    if (params.view === "html") {
       return HtmlService.createHtmlOutputFromFile("Index")
-        .setTitle(settings.brand_name || "VastuGeo Tools")
+        .setTitle(settings.brand_name || "VastuGeo Store")
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
         .addMetaTag('viewport', 'width=device-width, initial-scale=1');
     }
-    
-    // Default: Return JSON
+
     return returnJsonResponse(responseData);
 
   } catch (err) {
     return returnJsonResponse({ error: err.toString() });
   }
+}
+
+function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var params = {};
+
+    // Support JSON postData or standard form parameters
+    if (e && e.postData && e.postData.contents) {
+      try {
+        params = JSON.parse(e.postData.contents);
+      } catch (parseErr) {
+        params = e.parameter || {};
+      }
+    } else if (e && e.parameter) {
+      params = e.parameter;
+    }
+
+    var action = params.action ? String(params.action).trim() : "";
+
+    if (action === "createOrder") {
+      return handleCreateOrder(ss, params);
+    } else if (action === "checkOrderStatus") {
+      return handleCheckOrderStatus(ss, params);
+    } else if (action === "markPaid" || action === "approveOrder") {
+      return handleMarkPaid(ss, params);
+    } else if (action === "autoVerifyFromSms" || action === "bankNotification" || action === "webhook") {
+      return handleBankNotification(ss, params);
+    } else if (action === "getAdminDashboard" || action === "getOrders") {
+      return handleGetAdminDashboard(ss, params);
+    } else if (action === "updateSettings") {
+      return handleUpdateSettings(ss, params);
+    } else if (action === "updateProduct") {
+      return handleUpdateProduct(ss, params);
+    } else if (action === "addProduct") {
+      return handleAddProduct(ss, params);
+    }
+
+    return returnJsonResponse({ error: "Unknown action", received: action });
+  } catch (err) {
+    return returnJsonResponse({ error: err.toString() });
+  }
+}
+
+/**
+ * 1. Create a new Order in the 'Orders' Sheet
+ */
+function handleCreateOrder(ss, params) {
+  var ordersSheet = getOrCreateOrdersSheet(ss);
+  
+  var orderId = params.order_id || ("#ORD-" + Math.floor(100000 + Math.random() * 900000));
+  var dateStr = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy, hh:mm a");
+  var name = params.name || params.customer_name || "Guest Buyer";
+  var phone = params.phone || params.customer_phone || "";
+  var product = params.product || params.product_title || "SheetStore Pro Kit";
+  var amount = params.amount || 499;
+  var utr = params.utr || params.utr_number || "";
+  var status = "PENDING";
+  var isVerified = false; // Checkbox starts unchecked (FALSE)
+
+  // 1. Reconciliation: Check if Android Companion App already auto-captured this UTR from bank SMS!
+  var data = ordersSheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var rowUtr = String(row[6]).trim();
+    if (utr && rowUtr === utr && (row[7] === "PAID" || row[8] === true)) {
+      // Merge customer's actual name and details into pre-captured row
+      ordersSheet.getRange(i + 1, 1).setValue(orderId);
+      ordersSheet.getRange(i + 1, 3).setValue(name);
+      ordersSheet.getRange(i + 1, 4).setValue(phone);
+      ordersSheet.getRange(i + 1, 5).setValue(product);
+      SpreadsheetApp.flush();
+      return returnJsonResponse({
+        success: true,
+        order_id: orderId,
+        status: "PAID",
+        message: "Payment instantly verified via Android App pre-capture!"
+      });
+    }
+  }
+
+  // Append new order row:
+  // [Order ID, Date & Time, Customer Name, Phone, Product, Amount, UTR, Status, Quick Verify [✓]]
+  ordersSheet.appendRow([orderId, dateStr, name, phone, product, amount, utr, status, isVerified]);
+  
+  var lastRow = ordersSheet.getLastRow();
+  
+  // Format the 9th cell as a Checkbox
+  var checkboxCell = ordersSheet.getRange(lastRow, 9);
+  var rule = SpreadsheetApp.newDataValidation().requireCheckbox().build();
+  checkboxCell.setDataValidation(rule);
+  
+  // Style status cell as PENDING (Amber)
+  var statusCell = ordersSheet.getRange(lastRow, 8);
+  statusCell.setFontColor("#D97706").setFontWeight("bold");
+
+  SpreadsheetApp.flush();
+
+  return returnJsonResponse({
+    success: true,
+    order_id: orderId,
+    status: "PENDING",
+    message: "Order placed successfully. Waiting for admin 1-tap verification or Android auto-capture."
+  });
+}
+
+/**
+ * 2. Check Order Status (Website polls this every 3 seconds)
+ */
+function handleCheckOrderStatus(ss, params) {
+  var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
+  var utr = params.utr ? String(params.utr).trim() : "";
+  
+  if (!orderId && !utr) {
+    return returnJsonResponse({ error: "Missing order_id or utr parameter" });
+  }
+
+  var ordersSheet = ss.getSheetByName("Orders");
+  if (!ordersSheet) {
+    return returnJsonResponse({ status: "PENDING", message: "Orders tab not created yet" });
+  }
+
+  var data = ordersSheet.getDataRange().getValues();
+  // Headers: [0: Order ID, 1: Date, 2: Name, 3: Phone, 4: Product, 5: Amount, 6: UTR, 7: Status, 8: Verified]
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var rowOrderId = String(row[0]).trim().toUpperCase();
+    var rowUtr = String(row[6]).trim();
+    var rowStatus = String(row[7]).trim().toUpperCase();
+    var isVerified = (row[8] === true || String(row[8]).toUpperCase() === "TRUE");
+
+    var match = false;
+    if (orderId && rowOrderId === orderId) match = true;
+    if (utr && rowUtr === utr) match = true;
+
+    if (match) {
+      // If admin tapped the Checkbox in Google Sheets mobile app, update Status column to PAID (Green)
+      if (isVerified && rowStatus !== "PAID") {
+        ordersSheet.getRange(i + 1, 8).setValue("PAID");
+        ordersSheet.getRange(i + 1, 8).setFontColor("#10B981").setFontWeight("bold");
+        SpreadsheetApp.flush();
+        rowStatus = "PAID";
+      }
+
+      var isPaid = (rowStatus === "PAID" || isVerified);
+      return returnJsonResponse({
+        success: true,
+        order_id: row[0],
+        status: isPaid ? "PAID" : "PENDING",
+        customer_name: row[2],
+        product: row[4],
+        amount: row[5]
+      });
+    }
+  }
+
+  return returnJsonResponse({ success: false, status: "NOT_FOUND", message: "Order ID not found" });
+}
+
+/**
+ * 3. Mark Order as Paid (Direct API helper)
+ */
+function handleMarkPaid(ss, params) {
+  var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
+  if (!orderId) {
+    return returnJsonResponse({ error: "Missing order_id" });
+  }
+
+  var ordersSheet = ss.getSheetByName("Orders");
+  if (!ordersSheet) return returnJsonResponse({ error: "Orders sheet not found" });
+
+  var data = ordersSheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).trim().toUpperCase() === orderId) {
+      ordersSheet.getRange(i + 1, 8).setValue("PAID").setFontColor("#10B981").setFontWeight("bold");
+      ordersSheet.getRange(i + 1, 9).setValue(true);
+      SpreadsheetApp.flush();
+      return returnJsonResponse({ success: true, order_id: orderId, status: "PAID" });
+    }
+  }
+
+  return returnJsonResponse({ error: "Order not found" });
+}
+
+/**
+ * 4. Automated UPI Verification from Android Companion App (SMS / Notification Listener)
+ * ----------------------------------------------------
+ * When the Android app receives an SMS or Notification from Bank/PhonePe/GPay:
+ * e.g. "Credited with Rs. 499.00 on 05-Nov-26 by UPI Ref 412984920194"
+ * The Android app posts to: WebAppURL?action=bankNotification&raw_text=... OR utr=...&amount=...
+ */
+function handleBankNotification(ss, params) {
+  var ordersSheet = getOrCreateOrdersSheet(ss);
+  
+  var utr = params.utr ? String(params.utr).trim() : "";
+  var amount = params.amount ? String(params.amount).trim() : "";
+  var rawText = params.raw_text || params.message || params.text || "";
+
+  // If raw_text is supplied, auto-parse UTR and Amount via regex
+  if (rawText) {
+    // 12-digit UTR Regex (e.g. 412984920194 or UPI/412984920194)
+    if (!utr) {
+      var utrMatch = rawText.match(/\b\d{12}\b/);
+      if (utrMatch) utr = utrMatch[0];
+    }
+    // Amount Regex (e.g. Rs. 499, INR 499, ₹499)
+    if (!amount) {
+      var amountMatch = rawText.match(/(?:Rs\.?|INR|₹)\s*([\d,]+(?:\.\d{2})?)/i);
+      if (amountMatch) amount = amountMatch[1].replace(/,/g, '');
+    }
+  }
+
+  if (!utr) {
+    return returnJsonResponse({
+      success: false,
+      message: "No 12-digit UTR found in notification/SMS text",
+      received_text: rawText
+    });
+  }
+
+  var data = ordersSheet.getDataRange().getValues();
+  var orderFound = false;
+  var matchedOrderId = "";
+
+  // Search existing orders for this UTR
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var rowUtr = String(row[6]).trim();
+
+    if (rowUtr === utr) {
+      orderFound = true;
+      matchedOrderId = row[0];
+      // Mark as PAID (Green) and tick the Checkbox!
+      ordersSheet.getRange(i + 1, 8).setValue("PAID").setFontColor("#10B981").setFontWeight("bold");
+      ordersSheet.getRange(i + 1, 9).setValue(true);
+      SpreadsheetApp.flush();
+      break;
+    }
+  }
+
+  // Pre-Payment Buffer: If customer hasn't submitted website form yet, log verified incoming payment!
+  if (!orderFound) {
+    var tempId = "#AUTO-" + Math.floor(100000 + Math.random() * 900000);
+    var dateStr = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy, hh:mm a");
+    var rowAmount = amount ? Number(amount) : 499;
+    ordersSheet.appendRow([tempId, dateStr, "Auto-Captured (Android App)", "Via Bank SMS", "Direct UPI Payment", rowAmount, utr, "PAID", true]);
+    
+    var lastRow = ordersSheet.getLastRow();
+    ordersSheet.getRange(lastRow, 9).setDataValidation(SpreadsheetApp.newDataValidation().requireCheckbox().build());
+    ordersSheet.getRange(lastRow, 8).setFontColor("#10B981").setFontWeight("bold");
+    SpreadsheetApp.flush();
+    matchedOrderId = tempId;
+  }
+
+  return returnJsonResponse({
+    success: true,
+    message: "Payment automatically verified via Android Companion App!",
+    utr: utr,
+    amount: amount,
+    order_id: matchedOrderId,
+    status: "PAID"
+  });
+}
+
+/**
+ * 5. Android Admin App: Get Full Dashboard Data (Orders + Revenue Stats + Settings + Products)
+ */
+function handleGetAdminDashboard(ss, params) {
+  var ordersSheet = getOrCreateOrdersSheet(ss);
+  var data = ordersSheet.getDataRange().getValues();
+
+  var orders = [];
+  var totalRevenue = 0;
+  var totalOrders = 0;
+  var paidOrders = 0;
+  var pendingOrders = 0;
+  var todayRevenue = 0;
+  var todayOrders = 0;
+
+  var todayStr = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy");
+
+  // Headers: [0: Order ID, 1: Date, 2: Name, 3: Phone, 4: Product, 5: Amount, 6: UTR, 7: Status, 8: Verified]
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    if (!row[0] || String(row[0]).trim() === "") continue;
+
+    var amt = Number(row[5]) || 0;
+    var status = String(row[7]).trim().toUpperCase();
+    var isPaid = (status === "PAID" || row[8] === true || String(row[8]).toUpperCase() === "TRUE");
+    var dateStr = String(row[1]);
+
+    totalOrders++;
+    if (isPaid) {
+      paidOrders++;
+      totalRevenue += amt;
+    } else {
+      pendingOrders++;
+    }
+
+    if (dateStr.indexOf(todayStr) !== -1) {
+      todayOrders++;
+      if (isPaid) {
+        todayRevenue += amt;
+      }
+    }
+
+    orders.push({
+      order_id: String(row[0]),
+      date: dateStr,
+      customer_name: String(row[2]),
+      customer_phone: String(row[3]),
+      product: String(row[4]),
+      amount: amt,
+      utr: String(row[6]),
+      status: isPaid ? "PAID" : "PENDING",
+      verified: isPaid
+    });
+  }
+
+  // Reverse so latest orders are at the top
+  orders.reverse();
+
+  var stats = {
+    totalRevenue: totalRevenue,
+    totalOrders: totalOrders,
+    paidOrders: paidOrders,
+    pendingOrders: pendingOrders,
+    todayRevenue: todayRevenue,
+    todayOrders: todayOrders
+  };
+
+  return returnJsonResponse({
+    success: true,
+    stats: stats,
+    orders: orders,
+    settings: getSheetSettings(ss),
+    products: getSheetProducts(ss)
+  });
+}
+
+/**
+ * 6. Android Admin App: Update Website Settings (Store Name, WhatsApp, UPI, Headline, etc.)
+ */
+function handleUpdateSettings(ss, params) {
+  var settingsSheet = ss.getSheetByName("Settings");
+  if (!settingsSheet) {
+    settingsSheet = ss.insertSheet("Settings");
+    settingsSheet.appendRow(["key", "value", "description"]);
+  }
+
+  var data = settingsSheet.getDataRange().getValues();
+  var updatedKeys = [];
+
+  var allowedKeys = [
+    "brand_name",
+    "brand_tagline",
+    "logo_url",
+    "announcement_text",
+    "hero_badge",
+    "hero_title",
+    "hero_subtitle",
+    "whatsapp_number",
+    "upi_id"
+  ];
+
+  for (var k = 0; k < allowedKeys.length; k++) {
+    var key = allowedKeys[k];
+    if (params[key] !== undefined && params[key] !== null) {
+      var newVal = String(params[key]).trim();
+      var found = false;
+
+      for (var r = 1; r < data.length; r++) {
+        if (String(data[r][0]).trim().toLowerCase() === key.toLowerCase()) {
+          settingsSheet.getRange(r + 1, 2).setValue(newVal);
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        settingsSheet.appendRow([key, newVal, "Updated via Android Admin App"]);
+      }
+      updatedKeys.push(key);
+    }
+  }
+
+  SpreadsheetApp.flush();
+
+  return returnJsonResponse({
+    success: true,
+    message: "Settings updated successfully",
+    updated_keys: updatedKeys,
+    settings: getSheetSettings(ss)
+  });
+}
+
+/**
+ * 7. Android Admin App: Update Product (Price, Title, Active status)
+ */
+function handleUpdateProduct(ss, params) {
+  var pSheet = ss.getSheetByName("Products");
+  if (!pSheet) return returnJsonResponse({ error: "Products sheet not found" });
+
+  var prodId = params.id ? String(params.id).trim() : "";
+  if (!prodId) return returnJsonResponse({ error: "Missing product id" });
+
+  var data = pSheet.getDataRange().getValues();
+  var headers = data[0];
+  var found = false;
+
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).trim() === prodId) {
+      found = true;
+      for (var j = 0; j < headers.length; j++) {
+        var h = String(headers[j]).trim().toLowerCase();
+        if (params[h] !== undefined && params[h] !== null) {
+          pSheet.getRange(i + 1, j + 1).setValue(params[h]);
+        }
+      }
+      break;
+    }
+  }
+
+  SpreadsheetApp.flush();
+
+  if (found) {
+    return returnJsonResponse({ success: true, message: "Product updated successfully", id: prodId });
+  } else {
+    return returnJsonResponse({ success: false, message: "Product ID not found" });
+  }
+}
+
+/**
+ * 8. Android Admin App: Add New Product
+ */
+function handleAddProduct(ss, params) {
+  var pSheet = ss.getSheetByName("Products");
+  if (!pSheet) return returnJsonResponse({ error: "Products sheet not found" });
+
+  var id = params.id || ("prod-" + Math.floor(1000 + Math.random() * 9000));
+  var title = params.title || "New Product";
+  var category = params.category || "digital";
+  var badge = params.badge || "";
+  var priceOrig = Number(params.price_original) || 999;
+  var priceSell = Number(params.price_selling) || 299;
+  var thumbnail = params.thumbnail || "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=600&q=80";
+  var description = params.description || "";
+  var features = params.features || "";
+  var isActive = (params.is_active !== undefined) ? String(params.is_active).toUpperCase() : "TRUE";
+
+  pSheet.appendRow([id, title, category, badge, priceOrig, priceSell, thumbnail, description, features, isActive]);
+  SpreadsheetApp.flush();
+
+  return returnJsonResponse({
+    success: true,
+    message: "Product added successfully",
+    id: id
+  });
+}
+
+/**
+ * Helper: Read Site Settings from 'Settings' Sheet
+ */
+function getSheetSettings(ss) {
+  var settings = {};
+  var settingsSheet = ss.getSheetByName("Settings");
+  if (settingsSheet) {
+    var sRows = settingsSheet.getDataRange().getValues();
+    for (var s = 1; s < sRows.length; s++) {
+      var k = String(sRows[s][0]).trim().toLowerCase();
+      var v = sRows[s][1];
+      if (k) {
+        settings[k] = v;
+      }
+    }
+  }
+  return settings;
+}
+
+/**
+ * Helper: Read Products from 'Products' Sheet
+ */
+function getSheetProducts(ss) {
+  var productsSheet = ss.getSheetByName("Products") || ss.getActiveSheet();
+  var values = productsSheet.getDataRange().getValues();
+  var products = [];
+  
+  if (values.length > 1) {
+    var headers = values[0];
+    for (var i = 1; i < values.length; i++) {
+      var row = values[i];
+      var item = {};
+      var hasData = false;
+      
+      for (var j = 0; j < headers.length; j++) {
+        var key = String(headers[j]).trim().toLowerCase();
+        var val = row[j];
+        if (val !== "") hasData = true;
+        item[key] = val;
+      }
+      
+      if (hasData) {
+        if (!item.is_active || String(item.is_active).toUpperCase() === "TRUE") {
+          products.push(item);
+        }
+      }
+    }
+  }
+  return products;
+}
+
+/**
+ * Helper: Ensure 'Orders' sheet exists with headers, styling, and Checkbox validation
+ */
+function getOrCreateOrdersSheet(ss) {
+  var sheet = ss.getSheetByName("Orders");
+  if (!sheet) {
+    sheet = ss.insertSheet("Orders");
+    var headers = [
+      "Order ID",
+      "Date & Time",
+      "Customer Name",
+      "Phone / WhatsApp",
+      "Product",
+      "Amount (INR)",
+      "UTR / UPI Ref",
+      "Status",
+      "Quick Verify [✓]"
+    ];
+    sheet.appendRow(headers);
+    
+    // Header style: Dark slate with white bold text
+    sheet.getRange(1, 1, 1, headers.length)
+      .setFontWeight("bold")
+      .setBackground("#0F172A")
+      .setFontColor("#38BDF8");
+      
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 120); // Order ID
+    sheet.setColumnWidth(2, 170); // Date & Time
+    sheet.setColumnWidth(3, 150); // Customer Name
+    sheet.setColumnWidth(4, 140); // Phone
+    sheet.setColumnWidth(5, 220); // Product
+    sheet.setColumnWidth(6, 110); // Amount
+    sheet.setColumnWidth(7, 160); // UTR Number
+    sheet.setColumnWidth(8, 110); // Status (PENDING/PAID)
+    sheet.setColumnWidth(9, 140); // Quick Verify Checkbox
+  }
+  return sheet;
 }
 
 function returnJsonResponse(data) {
@@ -81,37 +668,51 @@ function returnJsonResponse(data) {
 }
 
 /**
- * Run this function once in Apps Script to automatically generate both 
- * 'Settings' and 'Products' tabs with full pre-filled templates!
+ * Run this function once in Apps Script to automatically generate all 3 tabs:
+ * 1. 'Settings'
+ * 2. 'Products'
+ * 3. 'Orders' (with 1-Tap Checkbox verification setup!)
  */
 function setupAutoTabs() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   
+  // ----------------------------------------------------
   // 1. Create or Reset 'Settings' Sheet
-  var sSheet = ss.getSheetByName("Settings") || ss.insertSheet("Settings");
+  // ----------------------------------------------------
+  var sSheet = ss.getSheetByName("Settings");
+  if (!sSheet) {
+    sSheet = ss.insertSheet("Settings");
+  }
   sSheet.clear();
   sSheet.appendRow(["key", "value", "description"]);
-  sSheet.getRange(1, 1, 1, 3).setFontWeight("bold").setBackground("#D4AF37").setFontColor("#000000");
+  sSheet.getRange(1, 1, 1, 3).setFontWeight("bold").setBackground("#1E293B").setFontColor("#38BDF8");
   
   var defaultSettings = [
-    ["brand_name", "VastuGeo", "Website ka main naam"],
-    ["brand_tagline", "Mathematical Vastu Tools", "Logo ke niche chota text"],
+    ["brand_name", "SheetStore Pro", "Website ka main naam"],
+    ["brand_tagline", "Zero Hosting & Domain E-Commerce", "Logo ke niche chota text"],
     ["logo_url", "", "Custom logo image URL (khali chhodne par default icon aayega)"],
-    ["announcement_text", "Special Launch Discount: 50% OFF on all GeoGebra Vastu Grids & Templates!", "Top notification bar ka text"],
-    ["hero_badge", "For Modern Vastu Consultants, Architects & Civil Engineers", "Hero section ka chota trust badge"],
-    ["hero_title", "Khatam Karein Manual Compass Ki Galatfehmi. 100% Accurate Vastu with GeoGebra", "Main Badi Headline"],
-    ["hero_subtitle", "Kisi bhi floor plan ko sirf 2 minute me 16 Zones, 32 Entrances aur 45 Devtas ke sath degree-to-degree map karein. Ready-to-use .ggb templates bina kisi AutoCAD ya heavy software ke!", "Hero section ka description"],
+    ["announcement_text", "Special Launch Discount: 80% OFF today! Sirf ₹499 me Lifetime Access!", "Top notification bar ka text"],
+    ["hero_badge", "Zero Hosting • Zero Domain • 100% Free Lifetime", "Hero section ka chota trust badge"],
+    ["hero_title", "Shopify aur WordPress ka Monthly Kharcha Band Karein.", "Main Badi Headline"],
+    ["hero_subtitle", "Google Sheet ko apna backend banayein aur direct UPI QR & WhatsApp orders ke sath apni super fast e-commerce website live karein.", "Hero section ka description"],
     ["whatsapp_number", "919999999999", "Customer WhatsApp order number (with country code e.g. 91)"],
-    ["upi_id", "vastuconsultant@upi", "UPI QR code payment address"]
+    ["upi_id", "payments@upi", "UPI QR code payment address (GPay/PhonePe/Paytm)"]
   ];
   
   for (var k = 0; k < defaultSettings.length; k++) {
     sSheet.appendRow(defaultSettings[k]);
   }
+  sSheet.setColumnWidth(1, 180);
+  sSheet.setColumnWidth(2, 350);
+  sSheet.setColumnWidth(3, 350);
   
+  // ----------------------------------------------------
   // 2. Create or Reset 'Products' Sheet
-  var pSheet = ss.getSheetByName("Products") || ss.getActiveSheet();
-  pSheet.setName("Products");
+  // ----------------------------------------------------
+  var pSheet = ss.getSheetByName("Products");
+  if (!pSheet) {
+    pSheet = ss.insertSheet("Products");
+  }
   pSheet.clear();
   
   var pHeaders = [
@@ -128,59 +729,111 @@ function setupAutoTabs() {
   ];
   
   pSheet.appendRow(pHeaders);
-  pSheet.getRange(1, 1, 1, pHeaders.length).setFontWeight("bold").setBackground("#D4AF37").setFontColor("#000000");
+  pSheet.getRange(1, 1, 1, pHeaders.length).setFontWeight("bold").setBackground("#1E293B").setFontColor("#38BDF8");
   
   pSheet.appendRow([
-    "ggb-16-zones",
-    "16 Zones GeoGebra Vastu Chakra Template",
-    "software",
-    "Most Popular",
-    1999,
-    799,
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
-    "Automatic North locking, 22.5 degree zone division and center-finding algorithm for any house plan.",
-    "16 Precise Vedic Zones, Auto Center Brahmasthan Finder, Works on PC & Mobile GeoGebra, Video Tutorial Included",
-    "TRUE"
-  ]);
-
-  pSheet.appendRow([
-    "ggb-32-entrances",
-    "32 Entrances (Padavinyas) Calculator File",
-    "software",
-    "High Accuracy",
-    2499,
+    "prod-portfolio-template",
+    "Modern 1-Page Portfolio Website Template (.ZIP)",
+    "website",
+    "Best Seller",
     999,
-    "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80",
-    "Calculate exact 11.25 degree energy entrance zones (N1 to N8, E1 to E8, S1 to S8, W1 to W8) effortlessly.",
-    "All 32 Door Entrances Marked, Exact Degree Projection on Outer Walls, Avoid Door Cut Errors, Lifetime Access",
+    299,
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
+    "Super fast, responsive portfolio template built with Tailwind CSS. Perfect for developers, designers & freelancers.",
+    "100% Responsive, Dark & Light Mode, 1-Click Deploy to GitHub, Lifetime Updates",
     "TRUE"
   ]);
 
   pSheet.appendRow([
-    "ggb-45-devta",
-    "45 Devta Energy Grid (.GGB Template)",
-    "template",
-    "Advanced Vastu",
-    2999,
-    1299,
-    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80",
-    "Vedic 45 Devtas (32 outer + 13 inner devtas) mapped mathematically on your floor plan for precision remedies.",
-    "45 Devta Boundaries, Color-coded Energy Fields, Elemental balance check, GeoGebra 5 & 6 Compatible",
+    "prod-finance-tracker",
+    "Automated Financial & Income Tracker (Google Sheet)",
+    "sheet",
+    "Essential",
+    599,
+    199,
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+    "Track monthly expenses, freelancing earnings, investments, and savings goals automatically with visual charts.",
+    "Automated Monthly Dashboards, Expense Categorizer, Savings Calculator, Mobile App Ready",
     "TRUE"
   ]);
 
   pSheet.appendRow([
-    "ggb-master-bundle",
-    "Complete Master Vastu GeoGebra Suite (All-In-One)",
+    "prod-canva-reels-bundle",
+    "500+ Viral Reels & Social Media Canva Templates Pack",
     "bundle",
-    "Mega Saver 65% OFF",
-    7499,
-    2499,
-    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
-    "Full suite containing 16 Zones + 32 Entrances + 45 Devtas + Ayadi Calculations + High-Res PNG Chakra Overlays.",
-    "All 5 Premium Files Included, Client Report Presentation Templates, Priority WhatsApp Support, Future Updates Included",
+    "Mega Saver",
+    1999,
+    399,
+    "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
+    "Ready-to-post aesthetic Instagram posts, carousel guides, and viral reel hooks in Canva. Drag-and-drop editable.",
+    "500+ Editable Canva Designs, Trending Business & Growth Niche, High Engagement Layouts, Commercial License",
     "TRUE"
   ]);
+
+  pSheet.appendRow([
+    "prod-sheetstore-master-kit",
+    "SheetStore Pro Ultimate E-Commerce Website Builder Kit",
+    "website",
+    "80% OFF",
+    2499,
+    499,
+    "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=600&q=80",
+    "Launch your own digital goods store with Google Sheet backend. Zero hosting and zero domain required.",
+    "Zero Monthly Fees, WhatsApp & UPI Checkout, Meta Ads Ready, 2-Minute Setup Video",
+    "TRUE"
+  ]);
+
+  // ----------------------------------------------------
+  // 3. Create or Reset 'Orders' Sheet (With Checkbox Column)
+  // ----------------------------------------------------
+  var oSheet = ss.getSheetByName("Orders");
+  if (!oSheet) {
+    oSheet = ss.insertSheet("Orders");
+  }
+  oSheet.clear();
+  
+  var oHeaders = [
+    "Order ID",
+    "Date & Time",
+    "Customer Name",
+    "Phone / WhatsApp",
+    "Product",
+    "Amount (INR)",
+    "UTR / UPI Ref",
+    "Status",
+    "Quick Verify [✓]"
+  ];
+  oSheet.appendRow(oHeaders);
+  oSheet.getRange(1, 1, 1, oHeaders.length).setFontWeight("bold").setBackground("#0F172A").setFontColor("#38BDF8");
+  oSheet.setFrozenRows(1);
+  
+  // Sample demonstration order row
+  oSheet.appendRow([
+    "#ORD-8821",
+    Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy, hh:mm a"),
+    "Rajesh Sharma (Sample)",
+    "919876543210",
+    "SheetStore Pro Lifetime Kit",
+    499,
+    "412984920194",
+    "PAID",
+    true
+  ]);
+  
+  // Set Checkbox validation on Row 2 column 9
+  var sampleCheckbox = oSheet.getRange(2, 9);
+  sampleCheckbox.setDataValidation(SpreadsheetApp.newDataValidation().requireCheckbox().build());
+  oSheet.getRange(2, 8).setFontColor("#10B981").setFontWeight("bold");
+
+  // Safely delete empty default "Sheet1" if other sheets exist
+  var defaultSheet = ss.getSheetByName("Sheet1");
+  if (defaultSheet && ss.getSheets().length > 1) {
+    try {
+      ss.deleteSheet(defaultSheet);
+    } catch (e) {
+      // Ignore if cannot delete
+    }
+  }
 
   SpreadsheetApp.flush();
 }

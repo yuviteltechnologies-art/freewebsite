@@ -347,66 +347,147 @@
     <span class="text-sm hidden sm:inline">WhatsApp Enquiry</span>
   </a>
 
-  <!-- ORDER MODAL (Direct WhatsApp + UPI QR) -->
-  <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#0B132B] border border-blue-500/30 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+  <!-- ORDER MODAL (1-Tap Google Sheet Verification + WhatsApp Fallback) -->
+  <div id="orderModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B132B] border border-blue-500/40 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl text-left">
       <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
 
-      <div class="text-center mb-5">
-        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto mb-2 border border-blue-500/20">
-          <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-800">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
         </div>
-        <h3 class="font-heading font-bold text-xl text-white" id="modalProductTitle">Product Title</h3>
-        <p class="text-xs text-blue-400 font-semibold" id="modalProductCategory">Digital Product File</p>
+        <div>
+          <h3 class="font-heading font-bold text-base text-white" id="modalProductTitle">Product Title</h3>
+          <p class="text-xs text-blue-400 font-semibold" id="modalProductCategory">Digital Product Asset</p>
+        </div>
       </div>
 
-      <!-- Price Box -->
-      <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 flex items-center justify-between mb-5">
+      <!-- Price Card -->
+      <div class="bg-slate-900/90 rounded-xl p-3.5 border border-slate-800 flex items-center justify-between mb-4">
         <div>
-          <span class="text-xs text-slate-400 block">Offer Price:</span>
+          <span class="text-[11px] text-slate-400 block font-mono" id="modalDisplayOrderId">#ORD-......</span>
           <div class="flex items-baseline gap-2">
-            <span class="text-2xl font-bold font-heading text-emerald-400" id="modalSellingPrice">₹299</span>
+            <span class="text-xl font-bold font-heading text-emerald-400" id="modalSellingPrice">₹299</span>
             <span class="text-xs text-slate-500 line-through" id="modalOriginalPrice">₹999</span>
           </div>
         </div>
-        <span class="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-lg">Instant Access</span>
+        <span class="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-lg flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>1-Tap Verification</span>
+        </span>
       </div>
 
-      <!-- Form Inputs -->
-      <div class="space-y-3 mb-5">
+      <!-- STAGE 1: ENTER NAME/PHONE & PAY -->
+      <div id="modalStep1" class="space-y-3.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka Naam <span class="text-rose-400">*</span></label>
+            <input type="text" id="custName" placeholder="Jaise: Rajesh Sharma" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Mobile No. <span class="text-rose-400">*</span></label>
+            <input type="tel" id="custPhone" placeholder="10-digit number" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-400 focus:outline-none" />
+          </div>
+        </div>
+
+        <!-- 1-Tap Mobile UPI Intent Button -->
+        <a id="demoMobileUpiBtn" href="#" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition">
+          <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+          <span id="demoMobilePayText">Pay via UPI App (GPay / PhonePe / Paytm)</span>
+        </a>
+
+        <!-- Toggle Desktop QR View -->
+        <div class="text-center">
+          <button type="button" onclick="toggleUpiView()" class="text-xs text-blue-400 hover:text-blue-300 underline font-medium inline-flex items-center gap-1">
+            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+            <span id="upiToggleText">Ya Desktop UPI QR Code Scan Karein</span>
+          </button>
+        </div>
+
+        <!-- Hidden UPI Details Section -->
+        <div id="upiDetailsSection" class="hidden text-center bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+          <p class="text-xs text-slate-300 mb-2 font-medium">Scan QR to Pay via Any UPI App (GPay/PhonePe/Paytm)</p>
+          <div class="bg-white p-2.5 rounded-xl inline-block shadow-lg mx-auto">
+            <img id="upiQrImage" src="" alt="UPI QR" class="w-32 h-32 mx-auto" />
+          </div>
+          <p class="text-[11px] text-emerald-400 font-mono mt-1.5" id="upiIdDisplay">UPI ID: payments@upi</p>
+        </div>
+
+        <!-- Next to Step 2 Button -->
+        <div class="pt-1">
+          <button onclick="goToDemoStep2()" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition">
+            <span>Payment Ho Gayi ➔ UTR Enter Karein</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- STAGE 2: ENTER UTR NUMBER -->
+      <div id="modalStep2" class="hidden space-y-3.5">
+        <div class="bg-blue-950/40 border border-blue-500/30 rounded-xl p-3 text-xs text-blue-200 leading-relaxed flex items-start gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+          <span>GPay/PhonePe me transaction history me <strong>12-digit UPI Ref / UTR</strong> number hota hai. Use yahan enter karein:</span>
+        </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka Naam (Optional)</label>
-          <input type="text" id="custName" placeholder="Jaise: Rajesh Sharma" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-400 focus:outline-none" />
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">12-Digit UPI Reference / UTR Number <span class="text-rose-400">*</span></label>
+          <input type="text" id="demoCustUtr" maxlength="12" placeholder="Jaise: 412984920194" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono text-base tracking-widest focus:border-emerald-500 focus:outline-none" />
+          <p class="text-[10px] text-slate-400 mt-1">Aapka order Google Sheet me automatically record hoga.</p>
         </div>
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka City / State</label>
-          <input type="text" id="custCity" placeholder="Jaise: Mumbai, Maharashtra" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-400 focus:outline-none" />
+
+        <div class="space-y-2 pt-1">
+          <button onclick="submitDemoOrderForVerification()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>Verify & Unlock Download (1-Tap Check)</span>
+          </button>
+
+          <button onclick="submitOrderToWhatsApp()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span>Jaldi Chahiye? Send UTR on WhatsApp</span>
+          </button>
+
+          <button onclick="goToDemoStep1()" type="button" class="w-full text-center text-xs text-slate-400 hover:text-white pt-1">
+            &larr; Wapas Step 1 Par Jayein
+          </button>
         </div>
       </div>
 
-      <!-- Quick Action Buttons -->
-      <div class="space-y-2.5">
-        <button onclick="submitOrderToWhatsApp()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition">
-          <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
-          <span>WhatsApp Par Order Bhejein</span>
-        </button>
-
-        <button onclick="toggleUpiView()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition">
-          <i data-lucide="qr-code" class="w-4 h-4 text-blue-400"></i>
-          <span id="upiToggleText">Direct UPI QR Code Se Pay Karein</span>
-        </button>
-      </div>
-
-      <!-- Hidden UPI Details Section -->
-      <div id="upiDetailsSection" class="hidden mt-4 pt-4 border-t border-slate-800 text-center">
-        <p class="text-xs text-slate-300 mb-2 font-medium">Scan QR to Pay via Any UPI App (GPay/PhonePe/Paytm)</p>
-        <div class="bg-white p-3 rounded-xl inline-block shadow-lg mx-auto">
-          <img id="upiQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi%3A%2F%2Fpay%3Fpa%3Dyourupi%40oksbi%26pn%3DDigitalHub%26cu%3DINR" alt="UPI QR" class="w-36 h-36 mx-auto" />
+      <!-- STAGE 3: LIVE VERIFICATION STATUS (POLLING GOOGLE SHEET) -->
+      <div id="modalStep3" class="hidden text-center py-4 space-y-4">
+        <div id="demoVerifyingSpinner" class="space-y-3">
+          <div class="relative w-14 h-14 mx-auto">
+            <div class="w-14 h-14 rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center text-blue-400">
+              <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <h4 class="text-sm font-bold text-white">Order Recorded in Google Sheet!</h4>
+          <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
+            Admin ke phone me <strong>Google Sheets App</strong> par Checkbox tick hote hi yahan download unlock ho jayega!
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/40 text-xs font-mono text-blue-300">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="demoPollStatusText">Checking status (Attempt 1)...</span>
+          </div>
         </div>
-        <p class="text-[11px] text-blue-400 font-mono mt-2" id="upiIdDisplay">UPI ID: payments@upi</p>
-        <p class="text-[10px] text-slate-400 mt-1">Payment ke baad WhatsApp par screenshot bhejte hi link mil jayega.</p>
+
+        <div id="demoSuccessBox" class="hidden space-y-3">
+          <div class="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-xl animate-bounce">
+            <i data-lucide="check" class="w-7 h-7"></i>
+          </div>
+          <h4 class="text-lg font-black text-emerald-400">Payment 100% Verified! 🎉</h4>
+          <p class="text-xs text-slate-300">Aapka product unlock ho chuka hai. Redirecting...</p>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800">
+          <button onclick="submitOrderToWhatsApp()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition">
+            <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+            <span>Wait Nahi Karna? Open WhatsApp with UTR Proof</span>
+          </button>
+        </div>
       </div>
 
     </div>
@@ -545,7 +626,7 @@
     const storeConfig = {
       whatsappNumber: localStorage.getItem('store_wa_num') || "919999999999",
       upiId: localStorage.getItem('store_upi_id') || "payments@upi",
-      sheetUrl: localStorage.getItem('store_sheet_url') || ""
+      sheetUrl: localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec"
     };
 
     function applySiteSettings(s) {
@@ -758,26 +839,76 @@
       renderProducts(currentProducts);
     }
 
+    let currentDemoOrder = {
+      id: "",
+      name: "",
+      phone: "",
+      utr: ""
+    };
+    let demoPollInterval = null;
+    let demoPollAttempts = 0;
+    const DEMO_MAX_POLL = 30;
+
     function openOrderModal(productId) {
       selectedProduct = currentProducts.find(p => p.id === productId);
       if (!selectedProduct) return;
 
+      currentDemoOrder.id = "#ORD-" + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('modalDisplayOrderId').innerText = currentDemoOrder.id;
       document.getElementById('modalProductTitle').innerText = selectedProduct.title;
       document.getElementById('modalProductCategory').innerText = (selectedProduct.category || "Digital").toUpperCase() + " • DIGITAL ASSET";
       document.getElementById('modalSellingPrice').innerText = "₹" + selectedProduct.price_selling;
       document.getElementById('modalOriginalPrice').innerText = selectedProduct.price_original ? "₹" + selectedProduct.price_original : "";
 
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=DigitalHub&am=${selectedProduct.price_selling}&cu=INR&tn=${encodeURIComponent(selectedProduct.title.substring(0, 20))}`;
+      const cleanOrderId = currentDemoOrder.id.replace('#', '');
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=DigitalStore&am=${selectedProduct.price_selling}&cu=INR&tn=${cleanOrderId}`;
+      document.getElementById('demoMobileUpiBtn').href = upiUrl;
+      document.getElementById('demoMobilePayText').innerText = `Pay ₹${selectedProduct.price_selling} via UPI App`;
       document.getElementById('upiQrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+      document.getElementById('upiIdDisplay').innerText = `UPI ID: ${storeConfig.upiId}`;
 
+      goToDemoStep1();
       document.getElementById('orderModal').classList.remove('hidden');
       lucide.createIcons();
     }
 
     function closeOrderModal() {
       document.getElementById('orderModal').classList.add('hidden');
-      document.getElementById('upiDetailsSection').classList.add('hidden');
-      document.getElementById('upiToggleText').innerText = "Direct UPI QR Code Se Pay Karein";
+      if (demoPollInterval) {
+        clearInterval(demoPollInterval);
+        demoPollInterval = null;
+      }
+    }
+
+    function goToDemoStep1() {
+      document.getElementById('modalStep1').classList.remove('hidden');
+      document.getElementById('modalStep2').classList.add('hidden');
+      document.getElementById('modalStep3').classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    function goToDemoStep2() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+
+      if (!name) {
+        alert("Kripya apna Naam enter karein.");
+        document.getElementById('custName').focus();
+        return;
+      }
+      if (!phone || phone.length < 10) {
+        alert("Kripya 10-digit WhatsApp Mobile number enter karein.");
+        document.getElementById('custPhone').focus();
+        return;
+      }
+
+      currentDemoOrder.name = name;
+      currentDemoOrder.phone = phone;
+
+      document.getElementById('modalStep1').classList.add('hidden');
+      document.getElementById('modalStep2').classList.remove('hidden');
+      document.getElementById('modalStep3').classList.add('hidden');
+      lucide.createIcons();
     }
 
     function toggleUpiView() {
@@ -785,29 +916,101 @@
       const toggleText = document.getElementById('upiToggleText');
       if (upiSec.classList.contains('hidden')) {
         upiSec.classList.remove('hidden');
-        toggleText.innerText = "UPI QR Chhupayein";
+        toggleText.innerText = "Desktop UPI QR Chhupayein";
       } else {
         upiSec.classList.add('hidden');
-        toggleText.innerText = "Direct UPI QR Code Se Pay Karein";
+        toggleText.innerText = "Ya Desktop UPI QR Code Scan Karein";
       }
+    }
+
+    // Step 3: Google Sheet Order Record & 1-Tap Polling
+    async function submitDemoOrderForVerification() {
+      const utr = document.getElementById('demoCustUtr').value.trim();
+      if (!utr || utr.length < 6) {
+        alert("Kripya valid 12-digit UPI Reference / UTR Number enter karein.");
+        document.getElementById('demoCustUtr').focus();
+        return;
+      }
+
+      currentDemoOrder.utr = utr;
+
+      document.getElementById('modalStep2').classList.add('hidden');
+      document.getElementById('modalStep3').classList.remove('hidden');
+      document.getElementById('demoVerifyingSpinner').classList.remove('hidden');
+      document.getElementById('demoSuccessBox').classList.add('hidden');
+      lucide.createIcons();
+
+      if (storeConfig.sheetUrl && storeConfig.sheetUrl.trim() !== "") {
+        try {
+          const createUrl = `${storeConfig.sheetUrl}?action=createOrder&order_id=${encodeURIComponent(currentDemoOrder.id)}&name=${encodeURIComponent(currentDemoOrder.name)}&phone=${encodeURIComponent(currentDemoOrder.phone)}&product=${encodeURIComponent(selectedProduct.title)}&amount=${selectedProduct.price_selling}&utr=${encodeURIComponent(currentDemoOrder.utr)}`;
+          fetch(createUrl, { mode: 'no-cors' }).catch(e => console.log(e));
+        } catch (e) {
+          console.warn("Sheet order record:", e);
+        }
+
+        startDemoPolling();
+      } else {
+        document.getElementById('demoPollStatusText').innerText = "Google Sheet not connected. Opening WhatsApp with UTR...";
+        setTimeout(() => {
+          submitOrderToWhatsApp();
+        }, 1500);
+      }
+    }
+
+    function startDemoPolling() {
+      demoPollAttempts = 0;
+      if (demoPollInterval) clearInterval(demoPollInterval);
+
+      demoPollInterval = setInterval(async () => {
+        demoPollAttempts++;
+        document.getElementById('demoPollStatusText').innerText = `Checking status (${demoPollAttempts}/${DEMO_MAX_POLL})...`;
+
+        if (demoPollAttempts > DEMO_MAX_POLL) {
+          clearInterval(demoPollInterval);
+          document.getElementById('demoPollStatusText').innerText = "Taking time? WhatsApp button dabakar instant confirm karein.";
+          return;
+        }
+
+        try {
+          const checkUrl = `${storeConfig.sheetUrl}?action=checkOrderStatus&order_id=${encodeURIComponent(currentDemoOrder.id)}&utr=${encodeURIComponent(currentDemoOrder.utr)}`;
+          const res = await fetch(checkUrl);
+          const data = await res.json();
+
+          if (data && data.status === "PAID") {
+            clearInterval(demoPollInterval);
+            document.getElementById('demoVerifyingSpinner').classList.add('hidden');
+            document.getElementById('demoSuccessBox').classList.remove('hidden');
+            lucide.createIcons();
+
+            setTimeout(() => {
+              window.location.href = `success.html?order=${encodeURIComponent(currentDemoOrder.id)}&product=${encodeURIComponent(selectedProduct.title)}&status=PAID`;
+            }, 2000);
+          }
+        } catch (err) {
+          console.log("Polling error:", err);
+        }
+      }, 3000);
     }
 
     function submitOrderToWhatsApp() {
       if (!selectedProduct) return;
 
-      const name = document.getElementById('custName').value.trim();
-      const city = document.getElementById('custCity').value.trim();
+      const orderId = currentDemoOrder.id || ("#ORD-" + Math.floor(100000 + Math.random() * 900000));
+      const name = currentDemoOrder.name || document.getElementById('custName').value.trim() || "Customer";
+      const phone = currentDemoOrder.phone || document.getElementById('custPhone').value.trim() || "";
+      const utr = currentDemoOrder.utr || document.getElementById('demoCustUtr').value.trim() || "Pending";
 
-      let msg = `*Namaste DigitalHub!* 🚀\n\nMujhe yeh Digital Product chahiye:\n`;
+      let msg = `*Namaste Digital Store!* 🚀\n\nMujhe yeh product purchase karna hai:\n`;
+      msg += `📦 *Order ID:* ${orderId}\n`;
       msg += `📌 *Product:* ${selectedProduct.title}\n`;
       msg += `💰 *Offer Price:* ₹${selectedProduct.price_selling}\n`;
       if (name) msg += `👤 *Customer Name:* ${name}\n`;
-      if (city) msg += `📍 *City:* ${city}\n`;
-      msg += `\nKripya mujhe UPI payment details & QR code bhej dijiye taaki payment karke main turant download link receive kar saku.`;
+      if (phone) msg += `📱 *Phone:* ${phone}\n`;
+      if (utr && utr !== "Pending") msg += `🔢 *UTR / UPI Ref No:* ${utr}\n`;
+      msg += `\nKripya Google Sheet me verify karke download access link share karein! 🙏`;
 
       const targetUrl = `https://wa.me/${storeConfig.whatsappNumber}?text=${encodeURIComponent(msg)}`;
       window.open(targetUrl, '_blank');
-      closeOrderModal();
     }
 
     function toggleFaq(card) {
@@ -841,6 +1044,7 @@
 
       if (waNum) {
         localStorage.setItem('store_wa_num', waNum);
+        localStorage.setItem('store_wa_number', waNum);
         storeConfig.whatsappNumber = waNum;
       }
       if (upiId) {

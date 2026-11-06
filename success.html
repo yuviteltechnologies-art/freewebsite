@@ -64,10 +64,13 @@
       <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 animate-bounce">
         <i data-lucide="check-circle-2" class="w-9 h-9"></i>
       </div>
-      <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs uppercase font-extrabold tracking-wider">Payment Confirmed</span>
-      <h1 class="font-heading font-black text-2xl sm:text-4xl text-white mt-3 mb-3">
+      <span id="orderStatusBadge" class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs uppercase font-extrabold tracking-wider">Payment Confirmed</span>
+      <h1 class="font-heading font-black text-2xl sm:text-4xl text-white mt-3 mb-2" id="welcomeHeading">
         Badhai Ho! Aapka Store Setup Ready Hai 🎉
       </h1>
+      <p class="text-xs sm:text-sm font-mono text-emerald-400 mb-3" id="orderMetaInfo">
+        Order: #ORD-CONFIRMED • Status: 100% Verified
+      </p>
       <p class="text-slate-400 text-sm sm:text-base">
         Aapko koi coding ya server setup nahi karna hai. Niche diye gaye <strong class="text-white">sirf 2 buttons</strong> par click karein aur aapki website internet par LIVE ho jayegi!
       </p>
@@ -141,6 +144,45 @@
         </div>
       </div>
 
+      <!-- STEP 3: ANDROID AUTO-VERIFIER COMPANION APP -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 transition rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group shadow-xl md:col-span-2">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">3</span>
+              <div>
+                <h3 class="font-heading font-bold text-xl text-white">Android Auto-Verifier App (100% Zero-Touch)</h3>
+                <p class="text-xs text-purple-400 font-semibold">Bank SMS & Notification Listener Step</p>
+              </div>
+            </div>
+            <span class="text-[11px] font-semibold text-purple-400 flex items-center gap-1 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20 w-fit">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Zero Human Touch
+            </span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+            Aapke phone me aane wale <strong class="text-white">Bank SMS & UPI Notifications</strong> (PhonePe, GPay, Paytm, SBI, HDFC) ko yeh companion app automatically read karke Google Sheet me 5 second me order unlock kar deti hai — bina haath lagaye!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <a href="https://github.com/yuviteltechnologies-art/freewebsite/tree/main/android-companion" 
+             target="_blank"
+             class="py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-purple-600/25 transition">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Open Android App & MacroDroid Guide</span>
+          </a>
+          <a href="android-companion/test_simulator.html" 
+             target="_blank"
+             class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition">
+            <i data-lucide="play" class="w-4 h-4 text-purple-400"></i>
+            <span>Test In Live Web Simulator</span>
+          </a>
+        </div>
+      </div>
+
     </div>
 
     <!-- QUICK 3-MINUTE VIDEO / GUIDE CARD -->
@@ -196,7 +238,29 @@
   </footer>
 
   <script>
-    lucide.createIcons();
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get('order');
+      const name = urlParams.get('name');
+      const product = urlParams.get('product');
+
+      if (orderId) {
+        document.getElementById('orderMetaInfo').innerText = `Order: ${orderId} • Status: 100% Verified`;
+      }
+      if (name) {
+        document.getElementById('welcomeHeading').innerText = `Badhai Ho, ${name}! Aapka Store Ready Hai 🎉`;
+      }
+
+      const wa = localStorage.getItem('store_wa_number') || localStorage.getItem('store_wa_num');
+      if (wa) {
+        const waLinks = document.querySelectorAll('a[href*="wa.me"]');
+        waLinks.forEach(link => {
+          link.href = `https://wa.me/${wa}?text=${encodeURIComponent("Namaste! Mujhe SheetStore Pro setup me help chahiye.")}`;
+        });
+      }
+
+      lucide.createIcons();
+    });
   </script>
 </body>
 </html>

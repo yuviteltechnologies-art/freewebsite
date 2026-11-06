@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Android UPI Companion - Web Simulator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-6 font-sans">
+  <div class="max-w-xl mx-auto space-y-6">
+
+    <div class="flex items-center gap-3 pb-4 border-b border-slate-800">
+      <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold">
+        <i data-lucide="smartphone" class="w-5 h-5"></i>
+      </div>
+      <div>
+        <h1 class="text-xl font-bold text-white">Android UPI Reader - Live Simulator</h1>
+        <p class="text-xs text-slate-400">Test how the Android app parses bank SMS & notifies Google Sheet</p>
+      </div>
+    </div>
+
+    <!-- Configuration -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+      <label class="block text-xs font-semibold text-slate-300">Google Sheet Apps Script Web App URL</label>
+      <input type="text" id="simSheetUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white focus:outline-none focus:border-blue-500" />
+      <p class="text-[11px] text-slate-500">Aapki Google Sheet ka deployed Web App URL.</p>
+    </div>
+
+    <!-- Sample SMS Presets -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <label class="block text-xs font-semibold text-slate-300">Bank SMS / UPI Notification Text</label>
+        <span class="text-[10px] text-blue-400 font-medium">Click preset to test:</span>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button onclick="setSample('hdfc')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">HDFC Bank</button>
+        <button onclick="setSample('sbi')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">SBI UPI</button>
+        <button onclick="setSample('phonepe')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">PhonePe</button>
+        <button onclick="setSample('paytm')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">Paytm</button>
+      </div>
+
+      <textarea id="simSmsText" rows="3" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white focus:outline-none focus:border-blue-500">Dear Customer, your A/c *4920 is credited with Rs 499.00 on 05-Nov-26 by UPI Ref 412984920194. Bal: Rs 14,820.00 - HDFC Bank</textarea>
+
+      <!-- Parser Preview -->
+      <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs font-mono">
+        <div>
+          <span class="text-slate-400 block text-[10px]">EXTRACTED UTR:</span>
+          <span id="previewUtr" class="text-emerald-400 font-bold">412984920194</span>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-[10px]">AMOUNT:</span>
+          <span id="previewAmount" class="text-blue-400 font-bold">₹499.00</span>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-[10px]">TYPE:</span>
+          <span id="previewType" class="text-emerald-400 font-bold">CREDIT ✓</span>
+        </div>
+      </div>
+
+      <button onclick="sendSimulatedWebhook()" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition">
+        <i data-lucide="send" class="w-4 h-4"></i>
+        <span>Simulate Android Webhook to Google Sheet</span>
+      </button>
+    </div>
+
+    <!-- Response Log -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-2">
+      <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Live Response Log</h3>
+      <pre id="responseLog" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-400 overflow-x-auto min-h-[60px]">Waiting for test trigger...</pre>
+    </div>
+
+  </div>
+
+  <script>
+    const samples = {
+      hdfc: "Dear Customer, your A/c *4920 is credited with Rs 499.00 on 05-Nov-26 by UPI Ref 412984920194. Bal: Rs 14,820.00 - HDFC Bank",
+      sbi: "Your A/C 9812 Credited by INR 499.00 on 05Nov26 by UPI/412984920194/Rahul - State Bank of India",
+      phonepe: "Payment of Rs. 499 received from Rahul Sharma. Transaction ID: T261105120042194 UTR: 412984920194",
+      paytm: "Received Rs 499 in Paytm Payments Bank from UPI Ref 412984920194"
+    };
+
+    function setSample(key) {
+      document.getElementById('simSmsText').value = samples[key];
+      parseLiveText();
+    }
+
+    function parseLiveText() {
+      const text = document.getElementById('simSmsText').value;
+      const utrMatch = text.match(/\b\d{12}\b/);
+      const amountMatch = text.match(/(?:Rs\.?|INR|₹)\s*([\d,]+(?:\.\d{2})?)/i);
+
+      document.getElementById('previewUtr').innerText = utrMatch ? utrMatch[0] : "Not found";
+      document.getElementById('previewAmount').innerText = amountMatch ? `₹${amountMatch[1]}` : "Not found";
+    }
+
+    document.getElementById('simSmsText').addEventListener('input', parseLiveText);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec";
+      if (saved) document.getElementById('simSheetUrl').value = saved;
+      parseLiveText();
+      lucide.createIcons();
+    });
+
+    async function sendSimulatedWebhook() {
+      const sheetUrl = document.getElementById('simSheetUrl').value.trim();
+      const rawText = document.getElementById('simSmsText').value.trim();
+      const log = document.getElementById('responseLog');
+
+      if (!sheetUrl) {
+        alert("Kripya apna Google Sheet Web App URL enter karein.");
+        return;
+      }
+
+      log.innerText = "Sending HTTP request to Google Apps Script...";
+
+      try {
+        const target = `${sheetUrl}?action=bankNotification&raw_text=${encodeURIComponent(rawText)}`;
+        const res = await fetch(target);
+        const data = await res.json();
+        log.innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        log.innerText = "Error: " + err.toString() + "\n(Note: Google Apps Script Web App should be deployed with 'Who has access: Anyone')";
+      }
+    }
+  </script>
+</body>
+</html>
+
