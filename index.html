@@ -67,7 +67,7 @@
   <!-- TOP OFFER BANNER -->
   <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-700 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 text-center flex items-center justify-center gap-2 shadow-lg">
     <span class="px-2 py-0.5 bg-amber-400 text-slate-950 rounded text-xs font-black uppercase tracking-wider">80% OFF</span>
-    <span>Special Launch Price: Sirf ₹499 me Lifetime Free E-Commerce Website System!</span>
+    <span id="announcementText">Special Launch Price: Sirf ₹499 me Lifetime Free E-Commerce Website System!</span>
     <a href="#pricing" class="underline font-bold hover:text-amber-300 ml-1">Offer Claim Karein &rarr;</a>
   </div>
 
@@ -80,10 +80,10 @@
           <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
         </div>
         <div>
-          <span class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white flex items-center gap-1">
+          <span id="brandNameText" class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white flex items-center gap-1">
             SheetStore<span class="text-blue-500">Pro</span>
           </span>
-          <p class="text-[10px] text-blue-300 tracking-widest uppercase font-semibold">Zero Hosting • Zero Domain</p>
+          <p id="brandTaglineText" class="text-[10px] text-blue-300 tracking-widest uppercase font-semibold">Zero Hosting • Zero Domain</p>
         </div>
       </a>
 
@@ -122,17 +122,17 @@
         <!-- Trust Tag -->
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-blue-500/30 text-blue-300 text-xs sm:text-sm font-semibold mb-6">
           <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
-          <span>For Digital Creators, Coaches, Authors & Vastu/Astrology Experts</span>
+          <span id="heroBadgeText">For Digital Creators, Coaches, Authors & Vastu/Astrology Experts</span>
         </div>
 
         <!-- Headline -->
-        <h1 class="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-6 text-white">
+        <h1 id="heroTitleText" class="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-6 text-white">
           Bina Kisi Domain Aur Hosting Ke Banayein 
           <span class="text-gradient block mt-2">Apni E-Commerce Website</span>
         </h1>
 
         <!-- Subheadline -->
-        <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+        <p id="heroSubtitleText" class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
           Shopify ka <strong class="text-rose-400 line-through">₹2,000/month</strong> aur WordPress ka jhanjhat band karein! 
           Apne phone se <strong class="text-emerald-400">Google Sheet</strong> me price aur product badaliye, website par instantly update hoga. Direct WhatsApp & UPI payments with 0% fee!
         </p>
@@ -410,8 +410,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div>
-          <span class="font-heading font-bold text-lg text-white">SheetStore<span class="text-blue-500">Pro</span></span>
-          <p class="text-slate-500 text-xs mt-1">Zero hosting, zero domain e-commerce system powered by Google Sheet.</p>
+          <span id="footerBrandName" class="font-heading font-bold text-lg text-white">SheetStore<span class="text-blue-500">Pro</span></span>
+          <p id="footerBrandTagline" class="text-slate-500 text-xs mt-1">Zero hosting, zero domain e-commerce system powered by Google Sheet.</p>
         </div>
         <div class="flex items-center gap-6">
           <a href="#features" class="hover:text-blue-400">Features</a>
@@ -881,8 +881,84 @@
       }
     }
 
+    function applySiteSettings(s) {
+      if (!s) return;
+
+      // 1. Brand Name
+      if (s.brand_name && String(s.brand_name).trim()) {
+        const brandEls = [document.getElementById('brandNameText'), document.getElementById('footerBrandName')];
+        brandEls.forEach(el => { if (el) el.innerText = s.brand_name; });
+        document.title = s.brand_name + " | E-Commerce Store";
+      }
+
+      // 2. Tagline
+      if (s.brand_tagline && String(s.brand_tagline).trim()) {
+        const tagEls = [document.getElementById('brandTaglineText'), document.getElementById('footerBrandTagline')];
+        tagEls.forEach(el => { if (el) el.innerText = s.brand_tagline; });
+      }
+
+      // 3. Announcement Text
+      if (s.announcement_text && String(s.announcement_text).trim()) {
+        const bannerText = document.getElementById('announcementText');
+        if (bannerText) bannerText.innerText = s.announcement_text;
+      }
+
+      // 4. Hero Badge
+      if (s.hero_badge && String(s.hero_badge).trim()) {
+        const badgeEl = document.getElementById('heroBadgeText');
+        if (badgeEl) badgeEl.innerText = s.hero_badge;
+      }
+
+      // 5. Hero Title
+      if (s.hero_title && String(s.hero_title).trim()) {
+        const titleEl = document.getElementById('heroTitleText');
+        if (titleEl) titleEl.innerText = s.hero_title;
+      }
+
+      // 6. Hero Subtitle
+      if (s.hero_subtitle && String(s.hero_subtitle).trim()) {
+        const subEl = document.getElementById('heroSubtitleText');
+        if (subEl) subEl.innerText = s.hero_subtitle;
+      }
+
+      // 7. WhatsApp Number
+      if (s.whatsapp_number && String(s.whatsapp_number).trim()) {
+        storeConfig.waNumber = String(s.whatsapp_number).trim();
+        localStorage.setItem('store_wa_number', storeConfig.waNumber);
+        syncConfigWithUI();
+      }
+
+      // 8. UPI ID
+      if (s.upi_id && String(s.upi_id).trim()) {
+        storeConfig.upiId = String(s.upi_id).trim();
+        localStorage.setItem('store_upi_id', storeConfig.upiId);
+        const upiDisplay = document.getElementById('displayUpiId');
+        if (upiDisplay) upiDisplay.innerText = `UPI ID: ${storeConfig.upiId}`;
+      }
+    }
+
+    async function fetchSettingsFromSheet() {
+      if (!storeConfig.sheetUrl) return;
+      try {
+        const res = await fetch(storeConfig.sheetUrl);
+        const data = await res.json();
+        if (data && data.settings) {
+          applySiteSettings(data.settings);
+          localStorage.setItem('store_cached_settings', JSON.stringify(data.settings));
+        }
+      } catch (err) {
+        console.warn("Error fetching settings from sheet:", err);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const cached = localStorage.getItem('store_cached_settings');
+        if (cached) applySiteSettings(JSON.parse(cached));
+      } catch (e) {}
+
       syncConfigWithUI();
+      fetchSettingsFromSheet();
       lucide.createIcons();
     });
   </script>
