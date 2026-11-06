@@ -1,264 +1,162 @@
-# 🚀 SheetStore Pro: Complete Master Workflow & Step-by-Step Architecture Guide
+# 🛒 Zero-Knowledge Guide: Apni Website, Google Sheet Aur Mobile App Chalane Ka Asaan Tareeka
 
-Yeh guide aapke poore system ka **Master Roadmap** hai. Isme shuru se aakhiri tak har step detail me likha hai taaki aapko baar-baar kuch dhoondhna na pade. Is file me aap aage chalke apne naye steps bhi asaani se add kar sakte hain.
-
----
-
-## 📌 Quick Reference Details (Ek Nazar Me Sabhi Links)
-
-| Chiz | Detail / Link |
-|---|---|
-| **Live Website (Sales Landing Page)** | [https://yuviteltechnologies-art.github.io/freewebsite/](https://yuviteltechnologies-art.github.io/freewebsite/) |
-| **Live Demo Store (Digital Products)** | [https://yuviteltechnologies-art.github.io/freewebsite/demo.html](https://yuviteltechnologies-art.github.io/freewebsite/demo.html) |
-| **Success / Download Unlock Page** | [https://yuviteltechnologies-art.github.io/freewebsite/success.html](https://yuviteltechnologies-art.github.io/freewebsite/success.html) |
-| **GitHub Repository** | `https://github.com/yuviteltechnologies-art/freewebsite.git` (Branch: `main`) |
-| **Active Google Sheet Web App URL** | `https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec` |
-| **Android Admin Studio Project** | `g:\Vastu_website\android-admin-app` |
-| **Browser SMS/UPI Test Simulator** | `g:\Vastu_website\android-companion\test_simulator.html` |
+> **Namaste!** Agar aapko coding ya technical baaton ka bilkul bhi idea nahi hai (0% knowledge), toh bhi koi chinta nahi!  
+> Yeh guide bilkul aam bolchaal ki **Hinglish** me likhi gayi hai. Bas jaise-jaise yahan likha hai, waisa-waisa click karte jayein.
 
 ---
 
-## 🏗️ Poore System Ka 5-Tier Architecture
+## 💡 Sabse Pehle Samajhte Hain: Yeh Pura System Hai Kya?
 
-```
-[ Tier 1: Customer Facing ]
-      │
-      ▼
-Website (GitHub Pages - Free Hosting)
-   ├── index.html (Main Sales Page + 5 Themes)
-   ├── demo.html (E-Commerce Product Catalog)
-   └── success.html (Download Delivery Page)
-      │
-      │  (JSON API - GET / POST)
-      ▼
-[ Tier 2: Cloud Backend & Database ]
-Google Apps Script (Code.gs) + Google Sheet
-   ├── Tab 1: 'Settings' (Theme, Brand Name, UPI, WhatsApp, Badges)
-   ├── Tab 2: 'Products' (Pricing, Titles, Active/Inactive)
-   └── Tab 3: 'Orders' (Live Orders, UTR Numbers, PAID / PENDING)
-      ▲
-      │  (Retrofit REST API)
-      ▼
-[ Tier 3: Mobile Admin Control ]
-Android Admin App (Kotlin - Android Studio)
-   ├── Tab 1: 🛒 Orders & Live Revenue (1-Tap Approve)
-   ├── Tab 2: 🎨 5 Ready-made Website Themes (1-Click Switch)
-   ├── Tab 3: 🌐 Website Branding & Settings (Name, Phone, UPI)
-   └── Tab 4: 📦 Product Catalog & Price Manager
-      ▲
-      │  (Background BroadcastReceiver & NotificationListener)
-      ▼
-[ Tier 4: Zero-Touch Payment Reconciliation ]
-Android Background SMS & UPI Listener
-   ├── Reads incoming SMS from Bank (SBI, HDFC, ICICI, Axis, etc.)
-   ├── Reads Push Notifications from PhonePe, GPay, Paytm Business
-   └── Extracts 12-digit UTR & Amount -> Posts directly to Google Sheet
-```
+Aap is poore system ko ek aam dukaan ki tarah samjhein:
+
+1. **Website ([index.html](file:///g:/Vastu_website/index.html)):**  
+   Yeh aapki **Dukaan ka Counter** hai jo internet par sabhi logon ko dikhta hai. Customer yahan aakar product dekhta hai aur khareedta hai. Iska koi monthly kharcha nahi hai (0% hosting, 0% domain fee).
+
+2. **Google Sheet ([Code.gs](file:///g:/Vastu_website/Code.gs)):**  
+   Yeh aapka **Hisaab-Kitaab ka Register** hai. Jab bhi koi customer order karega ya paise dega, uska naam, mobile number aur paise is sheet me automatic likh jayenge.
+
+3. **Android Mobile App ([MainActivity.kt](file:///g:/Vastu_website/android-admin-app/app/src/main/java/com/sheetstore/admin/ui/MainActivity.kt)):**  
+   Yeh aapke haath me **Dukaan ka Remote Control** hai. Is app se aap apne bistar par baith kar 1-click me website ka design, naam, phone number aur product ke daam badal sakte hain.
+
+4. **Auto-Payment Verifier:**  
+   Yeh aapka **Digital Munim** hai. Jaise hi customer UPI se paise bhejega aur bank ka SMS aayega, yeh system apne aap check karke customer ko download link de dega. Aapko haath se kuch nahi karna!
 
 ---
 
-## 📋 STEP-BY-STEP IMPLEMENTATION & WORKFLOW
+## 📌 Aapki Zaroori Links (Inhe Kahin Dhoondhna Nahi Padega)
+
+In links ko apne paas bookmark karke rakh lein:
+
+* **Aapki Live Website:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/](https://yuviteltechnologies-art.github.io/freewebsite/)
+* **Aapka Live Demo Store:** 👉 [https://yuviteltechnologies-art.github.io/freewebsite/demo.html](https://yuviteltechnologies-art.github.io/freewebsite/demo.html)
+* **Aapka Google Sheet Web App Link:**  
+  `https://script.google.com/macros/s/AKfycby78HzLm4c9qH9Yq5WG9-qtqX0WN3huUsLMZwAHATZysy59KWwU5YYDxf3pGMcGbV98/exec`
+* **Mobile App Ka Folder:** `g:\Vastu_website\android-admin-app`
 
 ---
 
-### Phase 1: Website Layer (Frontend & GitHub Pages)
-**Uddeshya:** Bina domain aur hosting ke 100% free lifetime website run karna.
-
-- **Files:**
-  - `index.html`: Main landing page jo services/products present karta hai.
-  - `demo.html`: Product catalog jisme instant UPI modal aur checkout flow hai.
-  - `success.html`: Order complete hone par download links ya courses unlock karne ka page.
-- **Kaise Kaam Karta Hai:**
-  1. Tailwind CSS aur Google Fonts CDN se load hote hain (koi external build system nahi chahiye).
-  2. Website open hote hi Google Sheet ke Web App URL se settings (`brand_name`, `template_id`, `whatsapp_number`, `upi_id`) fetch karti hai.
-  3. Agar customer offline ho ya pehli baar visit kare, toh `localStorage` me stored cache se instant render hoti hai bina kisi flicker ke.
-- **Deployment:**
-  - Code GitHub repository me push hota hai:
-    ```bash
-    git add .
-    git commit -m "update website"
-    git push origin main
-    ```
-  - GitHub Pages automatic 30 second me live site update kar deta hai.
+## 🧭 Sirf 5 Aasan Steps Me Pura System Samajhein
 
 ---
 
-### Phase 2: Database & Backend Layer (Google Sheet + Apps Script)
-**Uddeshya:** Kisi paid database ya server ke bina Google Sheet ko database aur API server banana.
+### Step 1: Website Kahan Hai Aur Kaise Kaam Karti Hai?
 
-- **File:** `Code.gs`
-- **Setup Steps (One-Time):**
-  1. Ek nayi Google Sheet banayein: [sheets.new](https://sheets.new)
-  2. Upar menu me **Extensions** ➔ **Apps Script** par jayein.
-  3. `Code.gs` ka pura code Apps Script editor me paste karein.
-  4. Top bar me function dropdown se **`setupAutoTabs`** select karke **Run** dabayein:
-     - Google Sheet me 3 tabs automatically ban jayenge:
-       - **`Settings`**: Keys like `brand_name`, `template_id`, `whatsapp_number`, `upi_id`, etc.
-       - **`Products`**: 4 sample products (Title, Category, Price Original, Price Selling, Active).
-       - **`Orders`**: Columns for Order ID, Date, Name, Phone, Product, Amount, UTR, Status, Quick Verify `[✓]`.
-  5. Top right me **Deploy** ➔ **New deployment** ➔ **Web app** select karein:
-     - **Execute as:** `Me`
-     - **Who has access:** `Anyone`
-     - Click **Deploy** aur jo **Web App URL** mile use copy kar lein.
+Aapki website internet par bilkul free chal rahi hai (GitHub Pages par).
+* Jab bhi customer website kholega, usko sundar design, rate aur products dikhenge.
+* Is website me **5 Ready-made Designs (Themes)** pehle se dale hue hain:
+  1. ⚡ **Modern Blue:** Tech aur digital goods ke liye.
+  2. 🕉️ **Royal Vedic Gold:** Vastu, Jyotish, Kundli aur puja ke samaan ke liye.
+  3. 🛍️ **Clean Minimal Light:** Safed saaf-suthra store, kapde ya physical samaan ke liye.
+  4. 👾 **Neon Violet:** Creators, AI tools aur gaming ke liye.
+  5. 🌿 **Emerald Pro:** Business, finance aur agency ke liye.
+* Website ke right side me niche ek chota floating button bhi laga hai, jisse aap browser me bhi click karke designs check kar sakte hain.
 
 ---
 
-### Phase 3: Website Ko Google Sheet Se Connect Karna
-**Uddeshya:** Website ka sara data (store name, products, orders) live Google Sheet se connect karna.
+### Step 2: Google Sheet Setup (Sirf Copy & Paste)
 
-1. Website ke code me `storeConfig.sheetUrl` me apna Web App URL set hota hai.
-2. Demo store open karke footer me **"Sheet Settings"** par click karein aur apna Web App URL paste karke save karein.
-3. Ab website open hone par:
-   - Saare products `Products` sheet se dynamic load honge.
-   - Logo, Brand Name, UPI ID aur Theme `Settings` sheet se live aayenge.
+Google Sheet aapka register hai. Agar aapko kabhi naye sire se nayi sheet banani ho toh bas ye 4 baatein karein:
 
----
-
-### Phase 4: Mobile Admin App (Android Studio)
-**Uddeshya:** Mobile phone se website ko manage karna bina computer khole.
-
-- **Project Location:** `g:\Vastu_website\android-admin-app`
-- **Android Studio Me Run Kaise Karein:**
-  1. Android Studio kholein ➔ **Open** ➔ `g:\Vastu_website\android-admin-app` folder select karein.
-  2. Gradle Sync complete hone dein.
-  3. Top bar me **Run (Green Play Button)** dabakar apne phone ya emulator me install karein.
-  4. App khulne par top right me **⚙️ Sheet URL** button dabayein aur apna Web App URL paste karein.
-- **App Ke 4 Main Sections:**
-  1. **🛒 Orders Tab:**
-     - Aaj ki total sales aur revenue dikhata hai.
-     - Live incoming orders aate hain.
-     - Har order ke aage **"Approve [✓]"** button hota hai.
-  2. **🎨 Themes Tab (1-Click Switcher):**
-     - 5 ready-made themes ke cards (Cyber Blue, Vedic Gold, Minimal Light, Neon Violet, Emerald Pro).
-     - Kisi bhi template par **"Apply This Template ⚡"** dabate hi website ka look poori duniya me turant change ho jata hai!
-  3. **🌐 Settings Tab:**
-     - Brand Name, Tagline, WhatsApp Number, UPI ID aur Announcement Text live update karein.
-  4. **📦 Products Tab:**
-     - Har product ka Selling Price aur Original Price badlein.
-     - Active / Inactive switch karein.
+1. Browser me **[sheets.new](https://sheets.new)** kholein (Ek nayi blank Google Sheet khul jayegi).
+2. Upar menu me **Extensions** par click karein aur **Apps Script** chunein.
+3. Hamare project ki file [`Code.gs`](file:///g:/Vastu_website/Code.gs) ko pura copy karke wahan paste kar dein.
+4. Upar ek dropdown dikhega jisme `doGet` likha hoga, us dropdown par click karke **`setupAutoTabs`** chunein aur **Run** dabayein.
+   * *Jaise hi aap Run dabayenge, Google Sheet me 3 tabs apne aap ban jayenge:*
+     - **Settings:** Dukaan ka naam, UPI ID, WhatsApp number.
+     - **Products:** Saare bikne wale products aur unke daam.
+     - **Orders:** Jo bhi customer khareedega uska live hisaab.
+5. Upar blue button **Deploy** dabayein ➔ **New deployment** chunein:
+   - "Select type" me **Web app** chunein.
+   - "Who has access" me **Anyone** chunein.
+   - **Deploy** dabayein aur jo **Web app URL** mile, use copy kar lein!
 
 ---
 
-### Phase 5: Payment & Verification Ka Pura Flow (Zero-Touch)
-**Uddeshya:** Customer payment kare aur bina kisi human delay ke order instant verify ho jaye.
+### Step 3: Website Ko Google Sheet Se Jodna (1 Minute Ka Kaam)
 
-```
-Customer Website Par Aata Hai
-          │
-          ▼
-Product Select Karta Hai (₹499)
-          │
-          ▼
-Checkout Modal Me Name & WhatsApp Number Dikhata Hai
-          │
-          ▼
-UPI QR Code Scan Karke Apne GPay / PhonePe / Paytm Se Pay Karta Hai
-          │
-          ▼
-Payment Ke Baad 12-Digit UTR / UPI Ref Number Website Par Enter Karta Hai
-          │
-          ▼
-Website Turant Google Sheet Me Order Entry Bhejti Hai (Status = PENDING)
-          │
-          ├──────────────────────────────────────────────────────┐
-          │                                                      │
-          ▼ (Method 1: Automatic Android Verifier)               ▼ (Method 2: Manual)
-Bank Ka SMS Ya PhonePe/GPay Notification Aata Hai         Aap Android Admin App Me
-Android App Background Me UTR & Amount Read Karti Hai      "Approve [✓]" Button Dabate Hain
-Aur Google Sheet Ko Webhook Post Karti Hai                 Ya Google Sheet Me Checkbox Tick Karte Hain
-          │                                                      │
-          ├──────────────────────────────────────────────────────┘
-          │
-          ▼
-Google Sheet Me Order Status ho jata hai: PAID (Green)
-          │
-          ▼
-Website Har 3 Second Me Poll Kar Rahi Hai
-Jaise Hi Status "PAID" Milta Hai:
-🎉 Screen Par Confetti Phoot-ti Hai Aur Instant success.html Par Redirect Hoti Hai!
-```
+Ab website aur Google Sheet ko aapas me connect karna hai taaki sheet ka data website par dikhe:
+
+1. Apni website ka Demo Store kholein: [demo.html](https://yuviteltechnologies-art.github.io/freewebsite/demo.html)
+2. Sabse niche footer me jayein, wahan ek chota button dikhega: **"⚙️ Sheet Settings"**.
+3. Us button par click karein:
+   - Apna **WhatsApp Mobile Number** daalein.
+   - Apni **UPI ID** daalein (jaise: `yourname@okaxis` ya `paytm`).
+   - Apna **Google Sheet Web App URL** paste karein.
+4. **Save Settings** button daba dein!
+5. *Bas kaam khatam!* Ab website seedha aapki Google Sheet se jud chuki hai.
 
 ---
 
-## 🎨 5 Ready-Made Templates Ki Details
+### Step 4: Mobile App Se Poori Website Ko Control Karna
 
-| Template ID | Name & Style | Best For | Key Visuals |
-|---|---|---|---|
-| `modern-blue` | **⚡ Modern Cyber Blue** | Software, SaaS, Tech, Digital Goods | Dark Slate (`#080C1A`), Electric Blue (`#2563EB`), Cyan Glow |
-| `vedic-gold` | **🕉️ Royal Vedic Gold** | Vastu, Astrology, Kundli, Mandir & Spiritual Luxury | Deep Plum Navy (`#090510`), Radiant Gold (`#F59E0B`), Cinzel Serif Heading |
-| `minimal-light` | **🛍️ Clean Minimal Light** | D2C Clean Store, Physical Retail, Fashion | Crisp White (`#FFFFFF`), Charcoal Slate (`#0F172A`), Emerald Green (`#059669`) |
-| `neon-violet` | **👾 Cyberpunk Neon Violet** | AI Prompts, Notion Kits, Video LUTs, Gaming | Pitch Black (`#030107`), Electric Violet (`#8B5CF6`), Neon Pink (`#EC4899`) |
-| `emerald-pro` | **🌿 Emerald Business Pro** | Financial Consulting, eBooks, High-Ticket B2B | Dark Pine Slate (`#03140F`), Vibrant Mint (`#10B981`), Corporate Trust Badges |
+Aapko website badalne ke liye computer kholne ki zaroorat nahi hai. Sab kuch aapke mobile app se hoga:
 
----
+1. **Android Studio** kholein.
+2. **Open** dabakar yeh folder chunein: `g:\Vastu_website\android-admin-app`.
+3. Upar green color ka **Play (Run)** button dabakar app ko apne phone me install karein.
+4. App khulte hi top-right me **⚙️ Sheet URL** par click karke apna Web App URL save kar lein.
 
-## 🔌 API Actions Quick Cheatsheet (Code.gs Reference)
+#### App Me Yeh 4 Tabs Milte Hain:
 
-Aap kisi bhi client (App, Postman, curl, website) se in endpoints ko call kar sakte hain:
-
-### 1. Dashboard Data Lena (Orders + Settings + Products)
-- **URL:** `WebAppURL?action=getAdminDashboard`
-- **Method:** `GET` or `POST`
-- **Output:** `{ success: true, stats: {...}, orders: [...], settings: {...}, products: [...] }`
-
-### 2. Website Settings Update Karna (Theme, Name, UPI, etc.)
-- **URL:** `WebAppURL`
-- **Method:** `POST`
-- **JSON Body:**
-  ```json
-  {
-    "action": "updateSettings",
-    "template_id": "vedic-gold",
-    "brand_name": "My Store",
-    "whatsapp_number": "919999999999",
-    "upi_id": "merchant@upi"
-  }
-  ```
-
-### 3. Customer Order Create Karna
-- **URL:** `WebAppURL?action=createOrder&order_id=#ORD-1234&name=Rahul&phone=9876543210&product=Kit&amount=499&utr=412984920194`
-- **Method:** `GET` or `POST`
-
-### 4. Order Status Check Karna (Website 3-Second Polling)
-- **URL:** `WebAppURL?action=checkOrderStatus&order_id=#ORD-1234&utr=412984920194`
-- **Method:** `GET`
-- **Output:** `{ success: true, status: "PAID" }` ya `{ status: "PENDING" }`
-
-### 5. Bank SMS / Push Notification Se Auto-Verification
-- **URL:** `WebAppURL`
-- **Method:** `POST`
-- **JSON Body:**
-  ```json
-  {
-    "action": "bankNotification",
-    "raw_text": "Credited with Rs. 499.00 on 06-Nov-26 by UPI Ref 412984920194"
-  }
-  ```
-
-### 6. Order Ko Direct Approve Karna (Admin App Button)
-- **URL:** `WebAppURL?action=approveOrder&order_id=#ORD-1234`
-- **Method:** `GET` or `POST`
+* 🛒 **Tab 1: Orders (Hisaab-Kitaab)**
+  - Aaj kitni kamai hui, kitne order aaye.
+  - Sabhi orders ki list. Har order ke aage **"Approve [✓]"** button hota hai.
+* 🎨 **Tab 2: Themes (1-Click Me Look Badlo)**
+  - Yahan 5 sundar ready-made designs ke card bane hain (Vedic Gold, Modern Blue, etc.).
+  - Aap bas kisi bhi design ke niche **"Apply This Template ⚡"** dabayein.
+  - 1 second me poori duniya me website ka rang-roop badal jayega!
+* 🌐 **Tab 3: Settings (Dukaan Ki Jaankari)**
+  - Dukaan ka naam badlein (Brand Name).
+  - Logo badlein, WhatsApp number badlein, UPI ID badlein.
+  - "Update Website Live" button dabate hi website par naya naam dikhne lagega.
+* 📦 **Tab 4: Products (Rate List)**
+  - Kisi bhi product ka Selling Price badlein.
+  - Agar koi product khatam ho gaya ho, toh use Inactive kar dein taaki customer use na khareed sake.
 
 ---
 
-## 🔮 Future Expansion (Aage Naye Features Kaise Add Karein)
+### Step 5: Customer Khareedta Kaise Hai? (Pura Payment Flow)
 
-Aap is template me aage naye steps aur features asaani se add kar sakte hain. Niche kuch planned extensions hain jise aap checklist ki tarah use kar sakte hain:
+Dekhiye customer ke order se lekar paise aane tak kya-kya hota hai:
 
-- [ ] **Feature 1: Naya 6th Template Add Karna**
-  - `index.html` aur `demo.html` me `[data-theme="new-theme-id"]` ke CSS variables define karein.
-  - `MainActivity.kt` me `availableTemplates` list me 1 naya `WebTheme` entry add karein.
-- [ ] **Feature 2: Dynamic Banner Image Changer**
-  - Settings sheet me `banner_url` key add karein.
-  - Android App me image URL input box lagayein jo live banner badal de.
-- [ ] **Feature 3: Custom Domain Connect Karna**
-  - GitHub Pages settings me jaakar apna custom `.com` ya `.in` domain point karein (CNAME record).
-- [ ] **Feature 4: Automatic Invoice / PDF Generation**
-  - Apps Script me `handleMarkPaid` ke andar Google Docs template se automated PDF receipt banakar customer ke WhatsApp / Email par trigger karna.
-- [ ] **Feature 5: WhatsApp Cloud API Integration**
-  - Order verify hote hi WhatsApp Business official API se download link automatic message bhejna.
+1. **Customer website par aata hai:**
+   - Wo product pasand karta hai aur "Buy Now" dabata hai.
+2. **Customer details daalta hai:**
+   - Apna naam aur WhatsApp number likhta hai.
+3. **UPI QR Code aata hai:**
+   - Screen par Google Pay / PhonePe / Paytm se scan karne ke liye QR code dikhta hai.
+   - Customer ₹499 pay kar deta hai.
+4. **Customer UTR Number daalta hai:**
+   - Payment hote hi har UPI app ek 12-digit ka UTR / Ref Number deti hai (jaise: `412984920194`).
+   - Customer ye number website par daal kar "Verify Payment" dabata hai.
+5. **Jadu (Automatic Verification):**
+   - Website par likha aata hai: *"Verifying your payment with bank..."*
+   - Jaise hi aapke phone par Bank ka SMS aata hai ("Rs 499 credited..."):
+     - **Option A (Automatic):** Android app background me SMS padh kar sheet me status `PAID` kar deti hai.
+     - **Option B (Manual):** Aap Android app me bas **"Approve [✓]"** dabate hain ya Google Sheet me tick kar dete hain.
+   - 3 second ke andar website par confetti phoot-ti hai aur customer ka **success page** khul jata hai jahan se wo product download kar leta hai!
 
 ---
 
-> **Note:** Is file ko aap project me hamesha reference ke liye use kar sakte hain:  
-> 📁 File Path: `g:\Vastu_website\MASTER_WORKFLOW_GUIDE.md`
+## ❓ Agar Kabhi Koi Dikkat Aaye Toh Kya Karein? (Simple Solutions)
+
+| Dikkat | Kyo Hoti Hai? | Kaise Theek Karein? |
+|---|---|---|
+| **Website par content update nahi hua** | Browser purani memory (cache) dikha raha hai | Keyboard par `Ctrl + Shift + R` dabayein, ya phone me page refresh karein. |
+| **Android App me "Failed to connect" aa raha hai** | Sheet URL galat paste ho gaya hai | App ke top-right me `⚙️ Sheet URL` par click karein aur apna Web App link dobara paste karein. |
+| **Google Sheet me naye options save nahi ho rahe** | Apps Script purana version chala raha hai | Apps Script me jayein ➔ `Deploy` ➔ `Manage deployments` ➔ Pencil icon ➔ Version ko `New version` karke `Deploy` dabayein. |
+| **Customer ko download link nahi mila** | UTR number galat daal diya hoga | Android app ke `Orders` tab me jakar customer ka phone number dekhein aur WhatsApp par link bhej dein. |
+
+---
+
+## 📝 Aap Aage Apne Naye Steps Kaise Add Kar Sakte Hain?
+
+Agar aapko aage koi naya feature sochna ho ya is guide me add karna ho, toh aap yahan simple checklist me likh sakte hain:
+
+- [ ] **Mera Step 1:** Website par naya banner photo lagana.
+- [ ] **Mera Step 2:** WhatsApp par automatic bill (invoice) bhejna.
+- [ ] **Mera Step 3:** Ek naya product add karna.
+
+---
+
+> 💡 **Tip:** Is file ko hamesha kholne ke liye VS Code ya Android Studio me bas [`MASTER_WORKFLOW_GUIDE.md`](file:///g:/Vastu_website/MASTER_WORKFLOW_GUIDE.md) par click karein!
