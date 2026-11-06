@@ -44,13 +44,66 @@ In links ko apne paas bookmark karke rakh lein:
 
 ---
 
-### Step 1: Website Ka Dynamic Setup & Design (App Se 1-Click Me Look Badlo)
+### Step 1: Website Ka Setup, GitHub Pages Live URL & Theme Control
 
-Aapki website internet par bilkul free chal rahi hai (GitHub Pages par).
-* Jab bhi customer website kholega, usko sundar modern design, dynamic rate aur products dikhenge.
-* **Website Ka Theme/Design Kahan Se Badlega?**  
-  👉 **Aapke Mobile App Se!**  
-  Android App kholkar jab aap **"🎨 Themes"** tab me kisi bhi template par **"Apply This Template ⚡"** dabate hain, toh poori duniya me live website ka theme, colors aur vibe 1-second me badal jata hai!
+Aapki website internet par bilkul free chal rahi hai (GitHub Pages par). 
+
+---
+
+#### 💡 GitHub Par Nayi Repository Banne Ke Baad Live Website URL Kahan Milegi?
+
+Jab customer ya aap Dashboard me **"1-Click Copy on GitHub 🚀"** par click karte hain, toh GitHub aapke account me ek nayi repository bana deta hai (jaise: `https://github.com/aapka-username/freewebsite`).
+
+Lekin **GitHub Pages automatically on nahi hota** — isko ON karne ke liye sirf **30 seconds me yeh 3 clicks** karne hote hain:
+
+```mermaid
+flowchart LR
+    A["1. Nayi Repo Khulegi"] --> B["2. Upar '⚙️ Settings' Dabayein"]
+    B --> C["3. Left Menu me 'Pages' Chunein"]
+    C --> D["4. Branch: 'main' Select ➔ Save"]
+    D --> E["5. 30s me Green Box me Live URL Ready! 🎉"]
+```
+
+##### 📌 Sirf 3 Aasan Clicks (Step-by-Step):
+1. **Click 1:** Apne repository ke page par sabse upar right side me **"⚙️ Settings"** tab par click karein.
+   *(Direct link shortcut: `https://github.com/<aapka-username>/freewebsite/settings/pages`)*
+2. **Click 2:** Baayein (Left) sidebar me **"Pages"** option par click karein.
+3. **Click 3:** Screen par **"Build and deployment"** dikhega:
+   - "Branch" ke dropdown me jo `None` likha hai, us par click karke **`main`** select karein.
+   - Saath me **`/(root)`** hi rehne dein.
+   - Right side me **"Save"** button par click karein!
+
+⏱️ **Bas 30 Se 45 Seconds Intezar Karein:**  
+Page ko refresh (`F5`) karein. Screen par sabse upar ek green color ka notification box aayega:  
+> **"Your site is live at `https://<aapka-username>.github.io/freewebsite/`"**
+
+Yeh jo link green box me mili hai, **wahi aapki live testing aur customer ke liye website URL hai!**
+
+---
+
+#### 🌐 Live Website URL Ka Universal Formula:
+Agar aapko GitHub par dhoondhne me aalas aaye, toh formula bilkul fix hai:
+$$\text{URL} = \text{https://} + \langle\text{aapka-github-username}\rangle + \text{.github.io/} + \langle\text{repo-ka-naam}\rangle + \text{/}$$
+
+* **Udaharan (Example):**
+  - Agar aapka GitHub username **`rajeshkumar`** hai aur repo ka naam **`freewebsite`** hai:
+  - Toh aapki website link hogi: 👉 `https://rajeshkumar.github.io/freewebsite/`
+
+---
+
+#### ⚡ Dashboard Ka "Smart URL Helper & Auto-Finder" Tool:
+Aapko lambi link yaad rakhne ya bananey ki bhi zaroorat nahi hai:
+1. Apne Dashboard ([dashboard.html](file:///g:/Vastu_website/dashboard.html)) me **Step 1** par jayein.
+2. Wahan **"GitHub Username"** box me bas apna username (jaise `rajeshkumar`) likhein.
+3. System turant 2 magic buttons dikhayega:
+   - **`Direct Pages Settings ↗`**: Is par click karte hi seedha wahi Settings > Pages ka page khul jayega jahan `main` aur `Save` dabana hai.
+   - **`Auto-Fill & Verify ⚡`**: Is par click karte hi link verification box me bhari jayegi aur test ho jayegi!
+
+---
+
+#### 🎨 Website Ka Theme/Design Kahan Se Badlega?
+👉 **Aapke Mobile App Se!**  
+Android App kholkar jab aap **"🎨 Themes"** tab me kisi bhi template par **"Apply This Template ⚡"** dabate hain, toh poori duniya me live website ka theme, colors aur vibe 1-second me badal jata hai!
 * **App Me Yeh 5 Ready-made Designs Hain:**
   1. ⚡ **Modern Blue:** Tech aur digital goods ke liye (Sleek slate + electric blue).
   2. 🕉️ **Royal Vedic Gold:** Vastu Shastra, Jyotish, Kundli aur puja ke samaan ke liye (Royal maroon + glowing gold).
