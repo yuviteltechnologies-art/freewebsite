@@ -127,13 +127,52 @@
         </div>
       </div>
 
-      <!-- Linear Progress Bar -->
-      <div class="mt-6">
-        <div class="w-full bg-slate-950 rounded-full h-3 overflow-hidden border border-slate-800">
-          <div id="progressBarFill" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out" style="width: 33%;"></div>
+      <!-- TOP HORIZONTAL STEPPER (Matching Mockup UX) -->
+      <div class="mt-8 pt-6 border-t border-slate-800/80">
+        <div class="relative flex items-center justify-between max-w-2xl mx-auto px-4">
+          <!-- Connecting Line Behind Steps -->
+          <div class="absolute left-10 right-10 top-5 h-1 bg-slate-800 rounded-full z-0">
+            <div id="horizontalProgressLine" class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-700" style="width: 15%;"></div>
+          </div>
+
+          <!-- Step 1 Circle & Label -->
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="scrollToCard('cardStep1')">
+            <div id="topStepCircle1" class="w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105">
+              <span>1</span>
+            </div>
+            <div class="text-center mt-2">
+              <p id="topStepTitle1" class="text-xs font-bold text-white">Step 1</p>
+              <p class="text-[10px] text-blue-400 font-medium hidden sm:block">Website Setup</p>
+            </div>
+          </div>
+
+          <!-- Step 2 Circle & Label -->
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="scrollToCard('cardStep2')">
+            <div id="topStepCircle2" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
+              <span>2</span>
+            </div>
+            <div class="text-center mt-2">
+              <p id="topStepTitle2" class="text-xs font-bold text-slate-400">Step 2</p>
+              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Google Sheet</p>
+            </div>
+          </div>
+
+          <!-- Step 3 Circle & Label -->
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="scrollToCard('cardStep3')">
+            <div id="topStepCircle3" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
+              <span>3</span>
+            </div>
+            <div class="text-center mt-2">
+              <p id="topStepTitle3" class="text-xs font-bold text-slate-400">Step 3</p>
+              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Android App</p>
+            </div>
+          </div>
         </div>
-        <div class="flex justify-between text-[11px] font-semibold text-slate-400 mt-2">
-          <span id="stepLabel1" class="text-blue-400">1. GitHub Code Copy</span>
+
+        <!-- Linear Progress Bar & Labels (Hidden fallback for JS compatibility) -->
+        <div class="hidden">
+          <div id="progressBarFill" style="width: 33%;"></div>
+          <span id="stepLabel1">1. GitHub Code Copy</span>
           <span id="stepLabel2">2. Google Sheet Connect</span>
           <span id="stepLabel3">3. Android Admin App</span>
         </div>
@@ -143,210 +182,265 @@
     <!-- 3 STEP ONBOARDING ACCORDION / CARDS -->
     <div class="space-y-6">
 
-      <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY -->
-      <div id="cardStep1" class="glass-card glass-card-active rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+      <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (SUB-STEP WIZARD LAYOUT MATCHING USER MOCKUP UX) -->
+      <div id="cardStep1" class="glass-card glass-card-active rounded-3xl p-5 sm:p-7 transition-all relative overflow-hidden">
+        
+        <!-- TOP CARD HEADER -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-6">
           <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-2xl bg-blue-500/20 border border-blue-500/40 text-blue-400 font-heading font-black text-lg flex items-center justify-center">1</span>
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10">
+              <i data-lucide="globe" class="w-5 h-5"></i>
+            </div>
             <div>
-              <h3 class="font-heading font-bold text-xl text-white">Step 1: Website Code GitHub Par Copy Karein & Live Link Paayein</h3>
-              <p class="text-xs text-slate-400">Lifetime free hosting ke liye code apne GitHub account me fork karein aur GitHub Pages on karein.</p>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Website Setup (GitHub Pages)</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Apne store ke liye lifetime free hosting activate karein (4 chote sub-steps).</p>
             </div>
           </div>
-          <span id="badgeStep1" class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+          <span id="badgeStep1" class="px-3.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
             <i data-lucide="clock" class="w-3.5 h-3.5"></i>
             <span>Action Required</span>
           </span>
         </div>
 
-        <!-- 4-STEP NON-TECHNICAL ROADMAP BANNER -->
-        <div class="mt-4 mb-6 bg-gradient-to-r from-blue-950/40 via-indigo-950/40 to-slate-950/60 border border-blue-500/25 rounded-2xl p-4 sm:p-5">
-          <div class="flex items-center justify-between mb-3.5">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <h4 class="text-xs sm:text-sm font-bold text-white">4 Aasan Steps Me Website Live Karein (Non-Technical Friendly)</h4>
-                <p class="text-[11px] text-slate-400">Kisi coding ya technical knowledge ki zaroorat nahi hai:</p>
-              </div>
-            </div>
-            <span class="hidden sm:inline-block text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold">100% Guaranteed Setup</span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            <!-- Step A -->
-            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-emerald-500/30 flex items-start gap-2.5">
-              <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-[11px]">A</span>
-              <div>
-                <p class="font-bold text-slate-100 flex items-center gap-1">Repo Banayein</p>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
-                  Step A button dabayein. GitHub par Public pehle se select rahega, bas green <strong>Create repository</strong> dabayein!
-                </p>
-              </div>
-            </div>
-
-            <!-- Step B -->
-            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-blue-500/30 flex items-start gap-2.5">
-              <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center shrink-0 text-[11px]">B</span>
-              <div>
-                <p class="font-bold text-slate-100 flex items-center gap-1">Link Paste Karein</p>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
-                  Banne ke baad browser me jo link aayi use Step B box me paste karein. Live link turant generate ho jayegi!
-                </p>
-              </div>
-            </div>
-
-            <!-- Step C -->
-            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-indigo-500/30 flex items-start gap-2.5">
-              <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center shrink-0 text-[11px]">C</span>
-              <div>
-                <p class="font-bold text-slate-100 flex items-center gap-1">1-Click Me Publish</p>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
-                  Direct blue button dabakar Branch me <strong>main</strong> chunein aur <strong>Save</strong> dabayein (sirf 5 second).
-                </p>
-              </div>
-            </div>
-
-            <!-- Step D -->
-            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-amber-500/30 flex items-start gap-2.5">
-              <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0 text-[11px]">D</span>
-              <div>
-                <p class="font-bold text-slate-100 flex items-center gap-1">Bypass & Unlock</p>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
-                  Green button dabakar Google Sheet me save karein aur bina ruke seedhe <strong>Step 2</strong> par chalein!
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <!-- STEP A: GitHub Par Repository Banayein -->
-          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+        <!-- 2-COLUMN WIZARD CONTAINER (MATCHING MOCKUP LAYOUT) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- LEFT SIDEBAR (MOCKUP SUB-STEP TIMELINE) -->
+          <div class="lg:col-span-4 bg-slate-950/70 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between mb-2">
-                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                  <span class="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px]">A</span>
-                  <span>Step A: GitHub Par Repository Banayein</span>
-                </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Public By Default ✓</span>
-              </div>
-              
-              <p class="text-xs text-slate-400 mb-2.5">
-                Apni website repository ka naam chunein (ya pasand ka naya naam daalein):
-              </p>
-
-              <!-- Custom Repo Name Field with Quick Pills -->
-              <div class="mb-3">
-                <label class="block text-[11px] font-bold text-slate-300 mb-1 flex items-center justify-between">
-                  <span>Repository Ka Naam:</span>
-                  <span class="text-[10px] text-slate-500">Pasand ka naam daal sakte hain</span>
-                </label>
-                <input type="text" id="customRepoNameInput" value="mystore" oninput="updateCustomRepoForkUrl()"
-                       placeholder="jaise: mystore, shop, dukaan, vastustore"
-                       class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
-                
-                <!-- Quick Suggestion Pills -->
-                <div class="flex flex-wrap items-center gap-1.5 mt-2">
-                  <span class="text-[10px] text-slate-500 font-semibold">Pills:</span>
-                  <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
-                  <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
-                  <button type="button" onclick="setQuickRepoName('dukaan')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">dukaan</button>
-                  <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
+              <!-- Sidebar Blue Tab / Header -->
+              <div class="p-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white flex items-center gap-3 shadow-lg shadow-blue-500/25 mb-5">
+                <div class="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                  <i data-lucide="layers" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-[10px] uppercase font-bold tracking-wider text-blue-200">Step 1</p>
+                  <h4 class="text-xs sm:text-sm font-bold leading-tight">Website Setup</h4>
                 </div>
               </div>
 
-              <!-- Reassuring info if GitHub says already exists -->
-              <div class="bg-slate-900/95 border border-slate-800 p-3 rounded-xl mb-4 text-[11px] space-y-1.5">
-                <p class="text-amber-400 font-bold flex items-center gap-1.5">
-                  <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
-                  <span>Agar GitHub par "Already Exists" bole toh?</span>
-                </p>
-                <p class="text-slate-300 text-[10px] leading-relaxed">
-                  Toh bilkul ghabrayein nahi! Wahan GitHub par bas koi bhi naya naam (jaise <code class="text-emerald-400 font-bold">shop-1</code>, <code class="text-emerald-400 font-bold">dukaan</code>, ya apna naam) likh dein.
-                </p>
-                <p class="text-slate-400 text-[10px] leading-relaxed">
-                  ⚡ <strong>Banne ke baad bas browser ka link copy karke daayein (Step B) box me paste kar dein!</strong>
-                </p>
-              </div>
-            </div>
-            
-            <a id="btnForkTemplate" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" 
-               target="_blank"
-               class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
-              <i data-lucide="git-fork" class="w-4 h-4"></i>
-              <span>Step A: GitHub Par Copy Karein (Public) 🚀</span>
-            </a>
-          </div>
+              <!-- Vertical Timeline List -->
+              <div class="relative space-y-2.5">
+                <!-- Vertical Track Line -->
+                <div class="absolute left-6 top-5 bottom-5 w-0.5 bg-slate-800/80 -z-0"></div>
 
-          <!-- STEP B, C, D: Paste Repo Link, 1-Click Publish & Save to Google Sheet -->
-          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                  <span class="w-5 h-5 rounded-md bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px]">B</span>
-                  <span>Step B: Repo Ka Link Paste Karein</span>
-                </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">Universal Formula</span>
-              </div>
-              <p class="text-xs text-slate-400 mb-2.5">
-                GitHub par repo banne ke baad browser me jo link aayi hai, use yahan paste karein:
-              </p>
-
-              <!-- Main Repo Paste Input -->
-              <div class="relative mb-3">
-                <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/yuviteltechnologies-art/dukaan"
-                       oninput="handleGhRepoPaste()"
-                       class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-              </div>
-
-              <!-- Computed Result Card (Universal Formula) -->
-              <div id="ghFormulaResultCard" class="bg-slate-900/95 border border-emerald-500/30 p-3.5 rounded-xl mb-3">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-[10px] text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1">
-                    <i data-lucide="sparkles" class="w-3 h-3"></i>
-                    <span>Aapki Live Website Link Hogi:</span>
+                <!-- Sub-step 1.1 Item -->
+                <div id="subStepNavItem1" onclick="goToSubStep(1)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-blue-600/20 border border-blue-500/40 text-white font-bold transition shadow-sm cursor-pointer group">
+                  <span class="substep-indicator w-7 h-7 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center text-xs ring-4 ring-blue-500/20 shrink-0 shadow">
+                    1.1
                   </span>
-                  <button type="button" onclick="copyHelperUrl()" class="text-[10px] text-blue-400 hover:text-white font-bold flex items-center gap-1">
-                    <i data-lucide="copy" class="w-3 h-3"></i> Copy Link
-                  </button>
-                </div>
-                <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1.5 px-2.5 rounded-lg bg-slate-950/80 border border-slate-800 mb-3">
-                  https://yourusername.github.io/mystore/
+                  <div class="min-w-0">
+                    <p class="text-xs font-bold truncate group-hover:text-blue-300 transition">1.1 Repo Banayein</p>
+                    <p class="text-[10px] text-slate-400 font-normal">1-Click Fork Template</p>
+                  </div>
                 </div>
 
-                <!-- Highlighted STEP C: 1-Click GitHub Publish CTA -->
-                <div id="ghPublishCtaBox" class="p-4 bg-gradient-to-r from-blue-950/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl">
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-2">
-                      <span class="w-6 h-6 rounded-md bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs">C</span>
-                      <p class="text-xs font-bold text-white">Step C: 1-Click Me Website Publish Karein</p>
+                <!-- Sub-step 1.2 Item -->
+                <div id="subStepNavItem2" onclick="goToSubStep(2)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/60 border border-transparent text-slate-400 font-medium transition cursor-pointer group">
+                  <span class="substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">
+                    1.2
+                  </span>
+                  <div class="min-w-0">
+                    <p class="text-xs font-bold truncate group-hover:text-slate-200 transition">1.2 Link Paste Karein</p>
+                    <p class="text-[10px] text-slate-500 font-normal">Formula Link Generator</p>
+                  </div>
+                </div>
+
+                <!-- Sub-step 1.3 Item -->
+                <div id="subStepNavItem3" onclick="goToSubStep(3)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/60 border border-transparent text-slate-400 font-medium transition cursor-pointer group">
+                  <span class="substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">
+                    1.3
+                  </span>
+                  <div class="min-w-0">
+                    <p class="text-xs font-bold truncate group-hover:text-slate-200 transition">1.3 Pages Settings</p>
+                    <p class="text-[10px] text-slate-500 font-normal">Branch: main âž” Save</p>
+                  </div>
+                </div>
+
+                <!-- Sub-step 1.4 Item -->
+                <div id="subStepNavItem4" onclick="goToSubStep(4)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/60 border border-transparent text-slate-400 font-medium transition cursor-pointer group">
+                  <span class="substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">
+                    1.4
+                  </span>
+                  <div class="min-w-0">
+                    <p class="text-xs font-bold truncate group-hover:text-slate-200 transition">1.4 Save & Unlock âš¡</p>
+                    <p class="text-[10px] text-slate-500 font-normal">Google Sheet Connect</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Graphic / Feature Card -->
+            <div class="mt-6 pt-4 border-t border-slate-800/80">
+              <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-3.5 rounded-xl">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <span class="text-xs font-bold text-slate-200">Free Lifetime Hosting</span>
+                </div>
+                <div class="space-y-1 text-[10px] text-slate-400">
+                  <p class="flex items-center gap-1.5 text-slate-300">
+                    <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Zero Server Maintenance
+                  </p>
+                  <p class="flex items-center gap-1.5 text-slate-300">
+                    <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Free SSL (HTTPS) Security
+                  </p>
+                  <p class="flex items-center gap-1.5 text-slate-300">
+                    <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> 99.9% Global CDN Uptime
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT ACTIVE CONTENT PANEL -->
+          <div class="lg:col-span-8 bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[460px]">
+            <div>
+              <!-- SUB-STEP 1.1 CONTENT VIEW -->
+              <div id="subStepView1" class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                    Sub Step 1.1
+                  </span>
+                  <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                    Public By Default âœ“
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Par Repository Banayein</h3>
+                  <p class="text-xs text-slate-400 mt-1">Apni website repository ka naam chunein aur GitHub par 1-click me copy karein.</p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-200 mb-1 flex items-center justify-between">
+                      <span>Repository Ka Naam (Store Name):</span>
+                      <span class="text-[10px] text-slate-500">Pasand ka naam daal sakte hain</span>
+                    </label>
+                    <input type="text" id="customRepoNameInput" value="mystore" oninput="updateCustomRepoForkUrl()"
+                           placeholder="jaise: mystore, shop, dukaan, vastustore"
+                           class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
+                    
+                    <!-- Quick Suggestion Pills -->
+                    <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                      <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>
+                      <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
+                      <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
+                      <button type="button" onclick="setQuickRepoName('dukaan')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">dukaan</button>
+                      <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
                     </div>
-                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">Sirf 5 Seconds Ka Kaam</span>
                   </div>
 
-                  <p class="text-[11px] text-slate-300 mb-2.5 leading-relaxed">
-                    Neeche blue button dabayein ➔ GitHub par Pages settings khulegi. Wahan bas <strong>main</strong> chunein aur <strong>Save</strong> dabayein:
-                  </p>
-                  
+                  <!-- Reassuring tip box -->
+                  <div class="bg-slate-950/90 border border-amber-500/20 p-3 rounded-xl text-[11px] space-y-1">
+                    <p class="text-amber-400 font-bold flex items-center gap-1.5">
+                      <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                      <span>Agar GitHub par "Already Exists" bole toh?</span>
+                    </p>
+                    <p class="text-slate-300 text-[10px] leading-relaxed">
+                      Bilkul chinta na karein! Wahan GitHub par bas koi bhi naya naam (jaise <code class="text-emerald-400 font-bold">mystore-1</code>, <code class="text-emerald-400 font-bold">shop</code> ya apna naam) likh dein.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Primary CTA Button -->
+                <a id="btnForkTemplate" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" 
+                   target="_blank"
+                   class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
+                  <i data-lucide="git-fork" class="w-4 h-4"></i>
+                  <span>1-Click Fork / Create Repo (Public) ðŸš€</span>
+                </a>
+                <p class="text-[10px] text-slate-400 text-center">
+                  GitHub par Public pehle se chuna hoga, bas green <strong>Create repository</strong> button dabayein! Uske baad Agla Step dabayein.
+                </p>
+              </div>
+
+              <!-- SUB-STEP 1.2 CONTENT VIEW -->
+              <div id="subStepView2" class="space-y-4 hidden">
+                <div class="flex items-center justify-between">
+                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                    Sub Step 1.2
+                  </span>
+                  <span class="text-[10px] text-blue-400 font-bold px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
+                    Universal Link Formula
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Repository Ka Link Paste Karein</h3>
+                  <p class="text-xs text-slate-400 mt-1">Repo banne ke baad browser me jo link aayi hai, use yahan paste karein:</p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-200 mb-1">
+                      Repository URL:
+                    </label>
+                    <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/yourusername/mystore"
+                           oninput="handleGhRepoPaste()"
+                           class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
+                  </div>
+
+                  <!-- Live Formula Result Card -->
+                  <div id="ghFormulaResultCard" class="bg-slate-950 border border-emerald-500/30 p-3.5 rounded-xl">
+                    <div class="flex items-center justify-between mb-1.5">
+                      <span class="text-[10px] text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i>
+                        <span>Aapki Live Website Link Ban Gayi Hai:</span>
+                      </span>
+                      <button type="button" onclick="copyHelperUrl()" class="text-[10px] text-blue-400 hover:text-white font-bold flex items-center gap-1 transition">
+                        <i data-lucide="copy" class="w-3 h-3"></i> Copy Link
+                      </button>
+                    </div>
+                    <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1.5 px-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                      https://yourusername.github.io/mystore/
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-3 bg-blue-950/40 border border-blue-500/25 rounded-xl text-xs text-slate-300 flex items-start gap-2">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                  <span>Link paste karne ke baad ab seedhe <strong>Agla Step (1.3)</strong> dabayein aur GitHub Pages on karein!</span>
+                </div>
+              </div>
+
+              <!-- SUB-STEP 1.3 CONTENT VIEW -->
+              <div id="subStepView3" class="space-y-4 hidden">
+                <div class="flex items-center justify-between">
+                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                    Sub Step 1.3
+                  </span>
+                  <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                    Sirf 5 Seconds Ka Kaam
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Pages Settings Save Karein</h3>
+                  <p class="text-xs text-slate-400 mt-1">Direct button par click karke Branch me <strong>main</strong> chunein aur <strong>Save</strong> dabayein.</p>
+                </div>
+
+                <div id="ghPublishCtaBox" class="p-4 bg-gradient-to-r from-blue-950/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl space-y-3">
+                  <!-- Direct 1-Click Button -->
                   <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
-                     class="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25 text-center mb-3">
-                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                    <span>Step C: Pages Settings Kholein (Branch: main ➔ Save) ↗</span>
+                     class="w-full py-3 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-md shadow-blue-500/25 text-center">
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                    <span>1-Click Me Pages Settings Kholein (Branch: main âž” Save) â†—</span>
                   </a>
 
                   <!-- Screenshot Visual Guide -->
-                  <div class="bg-slate-950/90 rounded-xl border border-blue-500/40 p-2.5 text-left">
-                    <div class="flex items-center justify-between mb-1.5">
+                  <div class="bg-slate-950/90 rounded-xl border border-blue-500/40 p-3 text-left">
+                    <div class="flex items-center justify-between mb-2">
                       <span class="text-[10px] font-bold text-white flex items-center gap-1">
                         <i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-400"></i>
                         <span>GitHub Par Yeh Screen Aayegi (Dekh Kar Karein):</span>
                       </span>
-                      <span class="text-[9px] text-slate-400 font-mono">Screenshot</span>
+                      <span class="text-[9px] text-slate-400 font-mono">Screenshot Reference</span>
                     </div>
 
-                    <!-- Focused Screenshot Image -->
+                    <!-- Screenshot Image with Zoom -->
                     <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 relative group cursor-pointer"
                          onclick="openImageModal('assets/images/github-pages-step2-main-save.jpg', 'GitHub Pages Settings: Branch dropdown me main chunein, aage /(root) rahega, fir Save par click karein.')">
                       <img src="assets/images/github-pages-step2-main-save.jpg" 
@@ -354,73 +448,130 @@
                            class="w-full h-auto max-h-48 object-contain mx-auto rounded-lg group-hover:scale-[1.02] transition duration-300" />
                       <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition flex items-center justify-center pointer-events-none">
                         <span class="text-[10px] px-2.5 py-1 rounded-md bg-black/80 text-white font-semibold opacity-0 group-hover:opacity-100 transition shadow">
-                          Bada Karke Dekhein 🔍
+                          Bada Karke Dekhein ðŸ”
                         </span>
                       </div>
                     </div>
 
-                    <!-- 3 Clear Instructions in Hindi/Hinglish -->
-                    <div class="mt-2.5 space-y-1 text-[11px] text-slate-300">
+                    <!-- 3 Simple Instructions -->
+                    <div class="mt-3 space-y-1.5 text-xs text-slate-300">
                       <p class="flex items-start gap-1.5">
                         <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
                         <span>Branch section me jahan <strong class="text-amber-400 font-mono">None</strong> likha hai, use click karke <strong class="text-emerald-400 font-mono">main</strong> select karein.</span>
                       </p>
                       <p class="flex items-start gap-1.5">
                         <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
-                        <span>Jaise hi <strong class="text-emerald-400 font-mono">main</strong> chuneinge, aage <strong class="text-blue-400 font-mono">/(root)</strong> apne aap aa jayega.</span>
+                        <span>Folder <strong class="text-blue-400 font-mono">/(root)</strong> apne aap select rahega.</span>
                       </p>
                       <p class="flex items-start gap-1.5">
                         <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
-                        <span>Ab <strong class="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Save</strong> button par click karein aur 30-60 second wait karein!</span>
+                        <span>Ab <strong class="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Save</strong> button par click karein aur seedhe <strong>Agla Step (1.4)</strong> dabayein!</span>
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <!-- SUB-STEP 1.4 CONTENT VIEW -->
+              <div id="subStepView4" class="space-y-4 hidden">
+                <div class="flex items-center justify-between">
+                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                    Sub Step 1.4
+                  </span>
+                  <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                    Final Step 1 Action
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Google Sheet Me Save Karein & Step 2 Unlock Karein</h3>
+                  <p class="text-xs text-slate-400 mt-1">Aapka GitHub setup complete ho chuka hai! Ise database me save karke aage badhein.</p>
+                </div>
+
+                <!-- Summary Overview Box -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-2.5">
+                  <p class="text-xs font-bold text-slate-200">Aapka Store Setup Summary:</p>
+                  <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs font-mono space-y-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-slate-400 shrink-0 font-sans text-[11px]">Live URL:</span>
+                      <span id="summaryLiveUrl" class="text-emerald-400 font-bold break-all">https://yourusername.github.io/mystore/</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-slate-400 shrink-0 font-sans text-[11px]">Repository:</span>
+                      <span id="summaryRepoUrl" class="text-blue-400 break-all">https://github.com/yourusername/mystore</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Save to Google Sheet Button -->
+                <div>
+                  <button type="button" onclick="saveRepoAndLiveSiteToGoogleSheet()" id="saveToSheetBtn"
+                          class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-lg shadow-emerald-500/25">
+                    <i data-lucide="database" class="w-4 h-4"></i>
+                    <span>Google Sheet Me Save Karein & Step 2 Unlock Karein âš¡</span>
+                  </button>
+                  <p class="text-[10px] text-slate-400 text-center mt-1.5">
+                    âš¡ GitHub background me 30-40s me site build karega, aap bina ruke Step 2 par chal sakte hain!
+                  </p>
+                </div>
+
+                <!-- Live Verification Tool -->
+                <div class="mt-4 pt-4 border-t border-slate-800/80">
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1.5">
+                      <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                      <span>Live Website URL Test & Verify:</span>
+                    </label>
+                    <a id="previewDirectLink" href="#" target="_blank" class="hidden text-xs text-blue-400 hover:text-white font-semibold flex items-center gap-1">
+                      <span>Browser Me Kholein</span> <i data-lucide="external-link" class="w-3 h-3"></i>
+                    </a>
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/mystore/"
+                           class="flex-1 px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
+                    
+                    <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
+                            class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/20 transition active:scale-95 shrink-0">
+                      <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                      <span>Verify Live âš¡</span>
+                    </button>
+                  </div>
+
+                  <div id="siteVerifyNotice" class="hidden mt-3 p-3.5 rounded-xl text-xs font-medium border flex items-start gap-2.5"></div>
+                </div>
+              </div>
             </div>
 
-            <!-- STEP D: Google Sheet Save & Bypass Button -->
-            <div>
-              <button type="button" onclick="saveRepoAndLiveSiteToGoogleSheet()" id="saveToSheetBtn"
-                      class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-md shadow-emerald-500/20">
-                <i data-lucide="database" class="w-4 h-4"></i>
-                <span>Step D: Google Sheet Me Save Karein & Step 2 Unlock Karein ⚡</span>
+            <!-- BOTTOM NAVIGATION BAR (MATCHING MOCKUP: BACK | DOTS | NEXT) -->
+            <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+              <!-- Back Button -->
+              <button type="button" id="btnPrevSubStep" onclick="prevSubStep()" disabled
+                      class="px-4 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-900 text-slate-300 font-bold text-xs flex items-center gap-1.5 transition active:scale-95 opacity-40 cursor-not-allowed">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>Back</span>
               </button>
-              <p class="text-[10px] text-slate-400 text-center mt-1.5">
-                ⚡ GitHub background me 30-40s me site build karega, aap bina ruke Step 2 par chal sakte hain!
-              </p>
+
+              <!-- Pagination Indicator Dots (Interactive) -->
+              <div class="flex items-center gap-2">
+                <button type="button" id="subStepDot1" onclick="goToSubStep(1)" class="w-7 h-2.5 rounded-full bg-blue-500 transition-all duration-300" title="Sub Step 1.1"></button>
+                <button type="button" id="subStepDot2" onclick="goToSubStep(2)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.2"></button>
+                <button type="button" id="subStepDot3" onclick="goToSubStep(3)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.3"></button>
+                <button type="button" id="subStepDot4" onclick="goToSubStep(4)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.4"></button>
+              </div>
+
+              <!-- Next Button -->
+              <button type="button" id="btnNextSubStep" onclick="nextSubStep()"
+                      class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition active:scale-95">
+                <span id="btnNextSubStepText">Next Step â†’</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
             </div>
+
           </div>
+
         </div>
 
-        <!-- 3. Live Verification Input & Action -->
-        <div class="mt-4 bg-slate-950/70 p-5 rounded-2xl border border-slate-800">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-            <div>
-              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-                <span>3. Live Website URL Verify & Test Karein</span>
-              </h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Yeh link aapki Google Sheet me save ho kar auto-test ho jayegi:</p>
-            </div>
-            <a id="previewDirectLink" href="#" target="_blank" class="hidden text-xs text-blue-400 hover:text-white font-semibold flex items-center gap-1">
-              <span>Browser Me Kholein</span> <i data-lucide="external-link" class="w-3 h-3"></i>
-            </a>
-          </div>
-
-          <div class="flex flex-col sm:flex-row gap-2.5 mt-2">
-            <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/home/"
-                   class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-            
-            <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
-                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition active:scale-95 shrink-0">
-              <i data-lucide="search" class="w-4 h-4"></i>
-              <span>Verify Website Live ⚡</span>
-            </button>
-          </div>
-
-          <div id="siteVerifyNotice" class="hidden mt-3 p-3.5 rounded-xl text-xs font-medium border flex items-start gap-2.5"></div>
-        </div>
       </div>
 
       <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
@@ -741,6 +892,9 @@
       // Refresh UI steps
       updateStepUI(currentUser.onboarding_step || 1);
 
+      // Initialize Sub-Step 1
+      goToSubStep(1);
+
       lucide.createIcons();
     });
 
@@ -774,6 +928,132 @@
       }
     }
 
+    // SUB-STEP WIZARD CONTROLLER (Matching user mockup UX)
+    let currentSubStep = 1;
+
+    function goToSubStep(stepNum) {
+      if (stepNum < 1 || stepNum > 4) return;
+      currentSubStep = stepNum;
+
+      // 1. Toggle SubStep Views
+      for (let i = 1; i <= 4; i++) {
+        const view = document.getElementById(`subStepView${i}`);
+        const navItem = document.getElementById(`subStepNavItem${i}`);
+        const dot = document.getElementById(`subStepDot${i}`);
+
+        if (view) {
+          if (i === stepNum) {
+            view.classList.remove('hidden');
+          } else {
+            view.classList.add('hidden');
+          }
+        }
+
+        if (navItem) {
+          const indicator = navItem.querySelector('.substep-indicator');
+          if (i === stepNum) {
+            navItem.className = "relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-blue-600/20 border border-blue-500/40 text-white font-bold transition shadow-sm cursor-pointer group";
+            if (indicator) {
+              indicator.className = "substep-indicator w-7 h-7 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center text-xs ring-4 ring-blue-500/20 shrink-0 shadow";
+              indicator.innerHTML = `<span>1.${i}</span>`;
+            }
+          } else if (i < stepNum) {
+            navItem.className = "relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 text-emerald-400 font-semibold transition cursor-pointer group";
+            if (indicator) {
+              indicator.className = "substep-indicator w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs shrink-0";
+              indicator.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i>`;
+            }
+          } else {
+            navItem.className = "relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/50 border border-transparent text-slate-400 font-medium transition cursor-pointer group";
+            if (indicator) {
+              indicator.className = "substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0";
+              indicator.innerHTML = `<span>1.${i}</span>`;
+            }
+          }
+        }
+
+        if (dot) {
+          if (i === stepNum) {
+            dot.className = "w-7 h-2.5 rounded-full bg-blue-500 transition-all duration-300";
+          } else if (i < stepNum) {
+            dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400/80 hover:bg-emerald-400 transition-all cursor-pointer";
+          } else {
+            dot.className = "w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all cursor-pointer";
+          }
+        }
+      }
+
+      // 2. Bottom Nav Buttons
+      const btnPrev = document.getElementById('btnPrevSubStep');
+      const btnNextText = document.getElementById('btnNextSubStepText');
+
+      if (btnPrev) {
+        if (stepNum === 1) {
+          btnPrev.disabled = true;
+          btnPrev.classList.add('opacity-40', 'cursor-not-allowed');
+        } else {
+          btnPrev.disabled = false;
+          btnPrev.classList.remove('opacity-40', 'cursor-not-allowed');
+        }
+      }
+
+      if (btnNextText) {
+        if (stepNum === 1) {
+          btnNextText.innerText = "Agla Step: Link Paste Karein â†’";
+        } else if (stepNum === 2) {
+          btnNextText.innerText = "Agla Step: Pages On Karein â†’";
+        } else if (stepNum === 3) {
+          btnNextText.innerText = "Agla Step: Sheet Me Save âš¡ â†’";
+        } else if (stepNum === 4) {
+          btnNextText.innerText = "Step 2: Google Sheet Connect Karein â†’";
+        }
+      }
+
+      if (stepNum === 4) {
+        updateStep4Summary();
+      }
+
+      lucide.createIcons();
+    }
+
+    function nextSubStep() {
+      if (currentSubStep < 4) {
+        goToSubStep(currentSubStep + 1);
+      } else {
+        const card2 = document.getElementById('cardStep2');
+        if (card2) card2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function prevSubStep() {
+      if (currentSubStep > 1) {
+        goToSubStep(currentSubStep - 1);
+      }
+    }
+
+    function updateStep4Summary() {
+      const repoInput = document.getElementById('ghRepoUrlInput');
+      const livePreview = document.getElementById('ghPreviewLiveUrl');
+      const summaryRepo = document.getElementById('summaryRepoUrl');
+      const summaryLive = document.getElementById('summaryLiveUrl');
+      const siteUrlInput = document.getElementById('siteUrlInput');
+
+      const repoVal = repoInput ? repoInput.value.trim() : '';
+      const liveVal = (livePreview ? livePreview.innerText.trim() : '') || (siteUrlInput ? siteUrlInput.value.trim() : '');
+
+      if (summaryRepo) {
+        summaryRepo.innerText = repoVal || 'Abhi paste nahi kiya gaya';
+      }
+      if (summaryLive) {
+        summaryLive.innerText = (liveVal && !liveVal.includes('yourusername')) ? liveVal : 'https://yourusername.github.io/mystore/';
+      }
+    }
+
+    function scrollToCard(id) {
+      const elem = document.getElementById(id);
+      if (elem) elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function updateStepUI(step) {
       const pPercent = document.getElementById('progressPercentText');
       const pStatus = document.getElementById('progressStatusText');
@@ -790,20 +1070,45 @@
       const lock2 = document.getElementById('lockOverlayStep2');
       const lock3 = document.getElementById('lockOverlayStep3');
 
+      const topCirc1 = document.getElementById('topStepCircle1');
+      const topCirc2 = document.getElementById('topStepCircle2');
+      const topCirc3 = document.getElementById('topStepCircle3');
+      const topProgressLine = document.getElementById('horizontalProgressLine');
+
       if (step === 1) {
-        pPercent.innerText = "33%";
-        pStatus.innerText = "Step 1 of 3: GitHub Setup Baki Hai";
-        pBar.style.width = "33%";
-        pBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out";
+        if (pPercent) pPercent.innerText = "33%";
+        if (pStatus) pStatus.innerText = "Step 1 of 3: GitHub Setup Baki Hai";
+        if (pBar) {
+          pBar.style.width = "33%";
+          pBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out";
+        }
+        if (topProgressLine) topProgressLine.style.width = "15%";
 
-        badge1.className = "px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge1.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Action Required</span>`;
+        if (topCirc1) {
+          topCirc1.className = "w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105";
+          topCirc1.innerHTML = `<span>1</span>`;
+        }
+        if (topCirc2) {
+          topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500";
+          topCirc2.innerHTML = `<span>2</span>`;
+        }
+        if (topCirc3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500";
+          topCirc3.innerHTML = `<span>3</span>`;
+        }
 
-        badge2.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge2.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 1)</span>`;
-
-        badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+        if (badge1) {
+          badge1.className = "px-3.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge1.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Action Required</span>`;
+        }
+        if (badge2) {
+          badge2.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge2.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 1)</span>`;
+        }
+        if (badge3) {
+          badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+        }
 
         if (card1) card1.classList.add('glass-card-active');
         if (card2) card2.classList.remove('glass-card-active');
@@ -813,19 +1118,39 @@
         if (lock3) lock3.classList.remove('hidden');
 
       } else if (step === 2) {
-        pPercent.innerText = "66%";
-        pStatus.innerText = "Step 2 of 3: Connect Google Sheet";
-        pBar.style.width = "66%";
-        pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
+        if (pPercent) pPercent.innerText = "66%";
+        if (pStatus) pStatus.innerText = "Step 2 of 3: Connect Google Sheet";
+        if (pBar) {
+          pBar.style.width = "66%";
+          pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
+        }
+        if (topProgressLine) topProgressLine.style.width = "55%";
 
-        badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified ✓</span>`;
+        if (topCirc1) {
+          topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc1.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        }
+        if (topCirc2) {
+          topCirc2.className = "w-11 h-11 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/30 ring-4 ring-indigo-500/20 transition group-hover:scale-105";
+          topCirc2.innerHTML = `<span>2</span>`;
+        }
+        if (topCirc3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500";
+          topCirc3.innerHTML = `<span>3</span>`;
+        }
 
-        badge2.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge2.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>`;
-
-        badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+        if (badge1) {
+          badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified âœ“</span>`;
+        }
+        if (badge2) {
+          badge2.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge2.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>`;
+        }
+        if (badge3) {
+          badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+        }
 
         if (card1) card1.classList.remove('glass-card-active');
         if (card2) card2.classList.add('glass-card-active');
@@ -835,19 +1160,39 @@
         if (lock3) lock3.classList.remove('hidden'); // STILL LOCKED
 
       } else if (step >= 3) {
-        pPercent.innerText = "100%";
-        pStatus.innerText = "Store 100% Ready & Live! 🎉";
-        pBar.style.width = "100%";
-        pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
+        if (pPercent) pPercent.innerText = "100%";
+        if (pStatus) pStatus.innerText = "Store 100% Ready & Live! ðŸŽ‰";
+        if (pBar) {
+          pBar.style.width = "100%";
+          pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
+        }
+        if (topProgressLine) topProgressLine.style.width = "100%";
 
-        badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified ✓</span>`;
+        if (topCirc1) {
+          topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc1.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        }
+        if (topCirc2) {
+          topCirc2.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc2.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        }
+        if (topCirc3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-500/20 transition group-hover:scale-105";
+          topCirc3.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        }
 
-        badge2.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge2.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>`;
-
-        badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge3.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>`;
+        if (badge1) {
+          badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified âœ“</span>`;
+        }
+        if (badge2) {
+          badge2.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge2.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected âœ“</span>`;
+        }
+        if (badge3) {
+          badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge3.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready âœ“</span>`;
+        }
 
         if (card1) card1.classList.remove('glass-card-active');
         if (card2) card2.classList.remove('glass-card-active');
@@ -906,6 +1251,11 @@
         if (preview) preview.innerText = liveWebsiteUrl;
         if (directBtn) directBtn.href = settingsPagesUrl;
         if (siteUrlInput) siteUrlInput.value = liveWebsiteUrl;
+
+        const summaryRepo = document.getElementById('summaryRepoUrl');
+        const summaryLive = document.getElementById('summaryLiveUrl');
+        if (summaryRepo) summaryRepo.innerText = repoUrl;
+        if (summaryLive) summaryLive.innerText = liveWebsiteUrl;
 
         const ctaBox = document.getElementById('ghPublishCtaBox');
         if (ctaBox) {
