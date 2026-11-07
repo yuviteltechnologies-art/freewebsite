@@ -182,11 +182,11 @@
     <!-- 3 STEP ONBOARDING ACCORDION / CARDS -->
     <div class="space-y-6">
 
-      <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (SUB-STEP WIZARD LAYOUT MATCHING USER MOCKUP UX) -->
-      <div id="cardStep1" class="glass-card glass-card-active rounded-3xl p-5 sm:p-7 transition-all relative overflow-hidden">
+      <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
+      <div id="cardStep1" class="glass-card glass-card-active rounded-3xl p-5 sm:p-8 transition-all relative overflow-hidden">
         
         <!-- TOP CARD HEADER -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10">
               <i data-lucide="globe" class="w-5 h-5"></i>
@@ -202,463 +202,415 @@
           </span>
         </div>
 
-        <!-- 2-COLUMN WIZARD CONTAINER (MATCHING MOCKUP LAYOUT) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          
-          <!-- LEFT SIDEBAR (MOCKUP SUB-STEP TIMELINE) -->
-          <div class="lg:col-span-4 bg-slate-950/70 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
-            <div>
-              <!-- Sidebar Blue Tab / Header -->
-              <div class="p-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white flex items-center gap-3 shadow-lg shadow-blue-500/25 mb-5">
-                <div class="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
-                  <i data-lucide="layers" class="w-5 h-5"></i>
-                </div>
+        <!-- HORIZONTAL SUB-STEP WIZARD TABS (FULL-WIDTH 1.1 âž” 1.2 âž” 1.3 âž” 1.4) -->
+        <div class="mb-5 p-2 rounded-2xl bg-slate-950/70 border border-slate-800">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            
+            <!-- Tab 1.1 -->
+            <button type="button" id="subStepNavItem1" onclick="goToSubStep(1)"
+                    class="p-3 rounded-xl bg-blue-600/20 border border-blue-500/40 text-white font-bold transition flex items-center gap-2.5 text-left shadow-sm">
+              <span class="substep-indicator w-6 h-6 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center text-xs shrink-0 ring-2 ring-blue-500/30">1.1</span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate">1.1 Repo Banayein</p>
+                <p class="text-[10px] text-slate-400 font-normal truncate hidden sm:block">1-Click Fork Template</p>
+              </div>
+            </button>
+
+            <!-- Tab 1.2 -->
+            <button type="button" id="subStepNavItem2" onclick="goToSubStep(2)"
+                    class="p-3 rounded-xl bg-transparent hover:bg-slate-900 border border-transparent text-slate-400 font-medium transition flex items-center gap-2.5 text-left">
+              <span class="substep-indicator w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">1.2</span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate">1.2 Link Paste Karein</p>
+                <p class="text-[10px] text-slate-500 font-normal truncate hidden sm:block">Formula Link Generator</p>
+              </div>
+            </button>
+
+            <!-- Tab 1.3 -->
+            <button type="button" id="subStepNavItem3" onclick="goToSubStep(3)"
+                    class="p-3 rounded-xl bg-transparent hover:bg-slate-900 border border-transparent text-slate-400 font-medium transition flex items-center gap-2.5 text-left">
+              <span class="substep-indicator w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">1.3</span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate">1.3 Pages Settings</p>
+                <p class="text-[10px] text-slate-500 font-normal truncate hidden sm:block">Branch: main âž” Save</p>
+              </div>
+            </button>
+
+            <!-- Tab 1.4 -->
+            <button type="button" id="subStepNavItem4" onclick="goToSubStep(4)"
+                    class="p-3 rounded-xl bg-transparent hover:bg-slate-900 border border-transparent text-slate-400 font-medium transition flex items-center gap-2.5 text-left">
+              <span class="substep-indicator w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">1.4</span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate">1.4 Save & Unlock âš¡</p>
+                <p class="text-[10px] text-slate-500 font-normal truncate hidden sm:block">Google Sheet Connect</p>
+              </div>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- FULL-WIDTH EXPANDED PROCESS CONTENT SCREEN -->
+        <div class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-7 flex flex-col justify-between min-h-[460px]">
+          <div>
+            <!-- SUB-STEP 1.1 CONTENT VIEW -->
+            <div id="subStepView1" class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                  Sub Step 1.1
+                </span>
+                <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                  Public By Default âœ“
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Par Repository Banayein</h3>
+                <p class="text-xs text-slate-400 mt-1">Apni website repository ka naam chunein aur GitHub par 1-click me copy karein.</p>
+              </div>
+
+              <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-3">
                 <div>
-                  <p class="text-[10px] uppercase font-bold tracking-wider text-blue-200">Step 1</p>
-                  <h4 class="text-xs sm:text-sm font-bold leading-tight">Website Setup</h4>
+                  <label class="block text-xs font-bold text-slate-200 mb-1 flex items-center justify-between">
+                    <span>Repository Ka Naam (Store Name):</span>
+                    <span class="text-[10px] text-slate-500">Pasand ka naam daal sakte hain</span>
+                  </label>
+                  <input type="text" id="customRepoNameInput" value="mystore" oninput="updateCustomRepoForkUrl()"
+                         placeholder="jaise: mystore, shop, dukaan, vastustore"
+                         class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:border-blue-500 focus:outline-none font-mono" />
+                  
+                  <!-- Quick Suggestion Pills -->
+                  <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                    <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>
+                    <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
+                    <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
+                    <button type="button" onclick="setQuickRepoName('dukaan')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">dukaan</button>
+                    <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
+                  </div>
+                </div>
+
+                <!-- Reassuring tip box -->
+                <div class="bg-slate-950/90 border border-amber-500/20 p-3 rounded-xl text-[11px] space-y-1">
+                  <p class="text-amber-400 font-bold flex items-center gap-1.5">
+                    <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                    <span>Agar GitHub par "Already Exists" bole toh?</span>
+                  </p>
+                  <p class="text-slate-300 text-[10px] leading-relaxed">
+                    Bilkul chinta na karein! Wahan GitHub par bas koi bhi naya naam (jaise <code class="text-emerald-400 font-bold">mystore-1</code>, <code class="text-emerald-400 font-bold">shop</code> ya apna naam) likh dein.
+                  </p>
                 </div>
               </div>
 
-              <!-- Vertical Timeline List -->
-              <div class="relative space-y-2.5">
-                <!-- Vertical Track Line -->
-                <div class="absolute left-6 top-5 bottom-5 w-0.5 bg-slate-800/80 -z-0"></div>
+              <!-- Primary CTA Button -->
+              <a id="btnForkTemplate" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" 
+                 target="_blank"
+                 class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
+                <i data-lucide="git-fork" class="w-4 h-4"></i>
+                <span>1-Click Fork / Create Repo (Public) ðŸš€</span>
+              </a>
+              <p class="text-[10px] text-slate-400 text-center">
+                GitHub par Public pehle se chuna hoga, bas green <strong>Create repository</strong> button dabayein! Uske baad Agla Step (1.2) dabayein.
+              </p>
 
-                <!-- Sub-step 1.1 Item -->
-                <div id="subStepNavItem1" onclick="goToSubStep(1)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-blue-600/20 border border-blue-500/40 text-white font-bold transition shadow-sm cursor-pointer group">
-                  <span class="substep-indicator w-7 h-7 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center text-xs ring-4 ring-blue-500/20 shrink-0 shadow">
-                    1.1
-                  </span>
-                  <div class="min-w-0">
-                    <p class="text-xs font-bold truncate group-hover:text-blue-300 transition">1.1 Repo Banayein</p>
-                    <p class="text-[10px] text-slate-400 font-normal">1-Click Fork Template</p>
+              <!-- 3-STEP VISUAL SCREENSHOT GUIDE (FULL WIDTH EXPANDED) -->
+              <div class="mt-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3.5">
+                  <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                      <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">GitHub Par 3 Aasan Steps (Live Screenshot Guide):</h4>
                   </div>
+                  <span class="text-[10px] text-slate-400 font-medium">Click karke bada dekhein ðŸ”</span>
                 </div>
 
-                <!-- Sub-step 1.2 Item -->
-                <div id="subStepNavItem2" onclick="goToSubStep(2)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/60 border border-transparent text-slate-400 font-medium transition cursor-pointer group">
-                  <span class="substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">
-                    1.2
-                  </span>
-                  <div class="min-w-0">
-                    <p class="text-xs font-bold truncate group-hover:text-slate-200 transition">1.2 Link Paste Karein</p>
-                    <p class="text-[10px] text-slate-500 font-normal">Formula Link Generator</p>
+                <!-- 3 Visual Step Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                  
+                  <!-- Card 1: Google Sign In -->
+                  <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-blue-500/40 transition group">
+                    <div>
+                      <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                          <span class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px]">1</span>
+                          <span>Gmail Se Login</span>
+                        </span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Sign in</span>
+                      </div>
+                      <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                        <strong class="text-white">Continue with Google</strong> dabakar seedhe apne Gmail se login karein.
+                      </p>
+                    </div>
+
+                    <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-blue-500/50 transition"
+                         onclick="openImageModal('assets/images/github-step1-google-signin.png', 'Step 1: Sign in to GitHub - Continue with Google dabakar seedhe Gmail se sign-in karein')">
+                      <img src="assets/images/github-step1-google-signin.png" alt="GitHub Google Sign In" class="w-full h-36 object-contain bg-slate-950 p-1.5 rounded group-hover:scale-105 transition duration-300" />
+                      <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                        <span class="text-[10px] px-2.5 py-1 rounded bg-black/80 text-white font-semibold">ðŸ” Bada Dekhein</span>
+                      </div>
+                    </div>
                   </div>
+
+                  <!-- Card 2: Email Device Verification Code -->
+                  <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-indigo-500/40 transition group">
+                    <div>
+                      <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
+                          <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">2</span>
+                          <span>Email Code Verify</span>
+                        </span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">Security</span>
+                      </div>
+                      <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                        Gmail par aaya 6-digit code daal kar <strong class="text-white">Verify</strong> button dabayein.
+                      </p>
+                    </div>
+
+                    <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-indigo-500/50 transition"
+                         onclick="openImageModal('assets/images/github-step2-device-verification.png', 'Step 2: Device Verification - Gmail par aaya hua 6-digit authentication code enter karein')">
+                      <img src="assets/images/github-step2-device-verification.png" alt="GitHub Device Verification Code" class="w-full h-36 object-contain bg-slate-950 p-1.5 rounded group-hover:scale-105 transition duration-300" />
+                      <div class="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                        <span class="text-[10px] px-2.5 py-1 rounded bg-black/80 text-white font-semibold">ðŸ” Bada Dekhein</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 3: Green Create Repository Button -->
+                  <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-emerald-500/40 transition group">
+                    <div>
+                      <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                          <span class="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">3</span>
+                          <span>Create Repository</span>
+                        </span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">1-Click</span>
+                      </div>
+                      <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                        Public pehle se rahega, bas green <strong class="text-white">Create repository</strong> dabayein!
+                      </p>
+                    </div>
+
+                    <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-emerald-500/50 transition"
+                         onclick="openImageModal('assets/images/github-step3-create-repo.png', 'Step 3: Create Repository - Public pehle se select hoga, green Create repository dabayein')">
+                      <img src="assets/images/github-step3-create-repo.png" alt="GitHub Create Repository" class="w-full h-36 object-contain bg-slate-950 p-1.5 rounded group-hover:scale-105 transition duration-300" />
+                      <div class="absolute inset-0 bg-emerald-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                        <span class="text-[10px] px-2.5 py-1 rounded bg-black/80 text-white font-semibold">ðŸ” Bada Dekhein</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-STEP 1.2 CONTENT VIEW -->
+            <div id="subStepView2" class="space-y-4 hidden">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                  Sub Step 1.2
+                </span>
+                <span class="text-[10px] text-blue-400 font-bold px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
+                  Universal Link Formula
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Repository Ka Link Paste Karein</h3>
+                <p class="text-xs text-slate-400 mt-1">Repo banne ke baad browser me jo link aayi hai, use yahan paste karein:</p>
+              </div>
+
+              <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-200 mb-1">
+                    Repository URL:
+                  </label>
+                  <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/yourusername/mystore"
+                         oninput="handleGhRepoPaste()"
+                         class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:border-blue-500 focus:outline-none font-mono" />
                 </div>
 
-                <!-- Sub-step 1.3 Item -->
-                <div id="subStepNavItem3" onclick="goToSubStep(3)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/60 border border-transparent text-slate-400 font-medium transition cursor-pointer group">
-                  <span class="substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">
-                    1.3
-                  </span>
-                  <div class="min-w-0">
-                    <p class="text-xs font-bold truncate group-hover:text-slate-200 transition">1.3 Pages Settings</p>
-                    <p class="text-[10px] text-slate-500 font-normal">Branch: main âž” Save</p>
+                <!-- Live Formula Result Card -->
+                <div id="ghFormulaResultCard" class="bg-slate-950 border border-emerald-500/30 p-4 rounded-xl">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[10px] sm:text-xs text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1">
+                      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                      <span>Aapki Live Website Link Ban Gayi Hai:</span>
+                    </span>
+                    <button type="button" onclick="copyHelperUrl()" class="text-xs text-blue-400 hover:text-white font-bold flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Link
+                    </button>
+                  </div>
+                  <div id="ghPreviewLiveUrl" class="text-xs sm:text-sm font-mono font-bold text-emerald-400 break-all select-all py-2 px-3 rounded-lg bg-slate-900 border border-slate-800">
+                    https://yourusername.github.io/mystore/
                   </div>
                 </div>
+              </div>
 
-                <!-- Sub-step 1.4 Item -->
-                <div id="subStepNavItem4" onclick="goToSubStep(4)" class="relative z-10 flex items-center gap-3 p-3 rounded-2xl bg-transparent hover:bg-slate-900/60 border border-transparent text-slate-400 font-medium transition cursor-pointer group">
-                  <span class="substep-indicator w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs shrink-0">
-                    1.4
-                  </span>
-                  <div class="min-w-0">
-                    <p class="text-xs font-bold truncate group-hover:text-slate-200 transition">1.4 Save & Unlock âš¡</p>
-                    <p class="text-[10px] text-slate-500 font-normal">Google Sheet Connect</p>
+              <div class="p-3.5 bg-blue-950/40 border border-blue-500/25 rounded-xl text-xs text-slate-300 flex items-start gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                <span>Link paste karne ke baad ab seedhe <strong>Agla Step (1.3)</strong> dabayein aur GitHub Pages on karein!</span>
+              </div>
+            </div>
+
+            <!-- SUB-STEP 1.3 CONTENT VIEW -->
+            <div id="subStepView3" class="space-y-4 hidden">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                  Sub Step 1.3
+                </span>
+                <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                  Sirf 5 Seconds Ka Kaam
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Pages Settings Save Karein</h3>
+                <p class="text-xs text-slate-400 mt-1">Direct button par click karke Branch me <strong>main</strong> chunein aur <strong>Save</strong> dabayein.</p>
+              </div>
+
+              <div id="ghPublishCtaBox" class="p-4 sm:p-5 bg-gradient-to-r from-blue-950/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl space-y-3.5">
+                <!-- Direct 1-Click Button -->
+                <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
+                   class="w-full py-3 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-md shadow-blue-500/25 text-center">
+                  <i data-lucide="external-link" class="w-4 h-4"></i>
+                  <span>1-Click Me Pages Settings Kholein (Branch: main âž” Save) â†—</span>
+                </a>
+
+                <!-- Screenshot Visual Guide -->
+                <div class="bg-slate-950/90 rounded-xl border border-blue-500/40 p-3.5 text-left">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                      <i data-lucide="camera" class="w-4 h-4 text-emerald-400"></i>
+                      <span>GitHub Par Yeh Screen Aayegi (Dekh Kar Karein):</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">Screenshot Reference</span>
+                  </div>
+
+                  <!-- Screenshot Image with Zoom -->
+                  <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 relative group cursor-pointer"
+                       onclick="openImageModal('assets/images/github-pages-step2-main-save.jpg', 'GitHub Pages Settings: Branch dropdown me main chunein, aage /(root) rahega, fir Save par click karein.')">
+                    <img src="assets/images/github-pages-step2-main-save.jpg" 
+                         alt="GitHub Pages Branch main Save Screenshot" 
+                         class="w-full h-auto max-h-56 object-contain mx-auto rounded-lg group-hover:scale-[1.02] transition duration-300" />
+                    <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition flex items-center justify-center pointer-events-none">
+                      <span class="text-[10px] px-2.5 py-1 rounded-md bg-black/80 text-white font-semibold opacity-0 group-hover:opacity-100 transition shadow">
+                        Bada Karke Dekhein ðŸ”
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- 3 Simple Instructions -->
+                  <div class="mt-3.5 space-y-1.5 text-xs text-slate-300">
+                    <p class="flex items-start gap-2">
+                      <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                      <span>Branch section me jahan <strong class="text-amber-400 font-mono">None</strong> likha hai, use click karke <strong class="text-emerald-400 font-mono">main</strong> select karein.</span>
+                    </p>
+                    <p class="flex items-start gap-2">
+                      <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                      <span>Folder <strong class="text-blue-400 font-mono">/(root)</strong> apne aap select rahega.</span>
+                    </p>
+                    <p class="flex items-start gap-2">
+                      <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                      <span>Ab <strong class="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Save</strong> button par click karein aur seedhe <strong>Agla Step (1.4)</strong> dabayein!</span>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Bottom Graphic / Feature Card -->
-            <div class="mt-6 pt-4 border-t border-slate-800/80">
-              <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-3.5 rounded-xl">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <!-- SUB-STEP 1.4 CONTENT VIEW -->
+            <div id="subStepView4" class="space-y-4 hidden">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
+                  Sub Step 1.4
+                </span>
+                <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                  Final Step 1 Action
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Google Sheet Me Save Karein & Step 2 Unlock Karein</h3>
+                <p class="text-xs text-slate-400 mt-1">Aapka GitHub setup complete ho chuka hai! Ise database me save karke aage badhein.</p>
+              </div>
+
+              <!-- Summary Overview Box -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-2.5">
+                <p class="text-xs font-bold text-slate-200">Aapka Store Setup Summary:</p>
+                <div class="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-xs font-mono space-y-1.5">
+                  <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                    <span class="text-slate-400 shrink-0 font-sans text-xs">Live URL:</span>
+                    <span id="summaryLiveUrl" class="text-emerald-400 font-bold break-all">https://yourusername.github.io/mystore/</span>
                   </div>
-                  <span class="text-xs font-bold text-slate-200">Free Lifetime Hosting</span>
+                  <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                    <span class="text-slate-400 shrink-0 font-sans text-xs">Repository:</span>
+                    <span id="summaryRepoUrl" class="text-blue-400 break-all">https://github.com/yourusername/mystore</span>
+                  </div>
                 </div>
-                <div class="space-y-1 text-[10px] text-slate-400">
-                  <p class="flex items-center gap-1.5 text-slate-300">
-                    <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Zero Server Maintenance
-                  </p>
-                  <p class="flex items-center gap-1.5 text-slate-300">
-                    <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Free SSL (HTTPS) Security
-                  </p>
-                  <p class="flex items-center gap-1.5 text-slate-300">
-                    <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> 99.9% Global CDN Uptime
-                  </p>
+              </div>
+
+              <!-- Save to Google Sheet Button -->
+              <div>
+                <button type="button" onclick="saveRepoAndLiveSiteToGoogleSheet()" id="saveToSheetBtn"
+                        class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-lg shadow-emerald-500/25">
+                  <i data-lucide="database" class="w-4 h-4"></i>
+                  <span>Google Sheet Me Save Karein & Step 2 Unlock Karein âš¡</span>
+                </button>
+                <p class="text-[10px] text-slate-400 text-center mt-1.5">
+                  âš¡ GitHub background me 30-40s me site build karega, aap bina ruke Step 2 par chal sakte hain!
+                </p>
+              </div>
+
+              <!-- Live Verification Tool -->
+              <div class="mt-4 pt-4 border-t border-slate-800/80">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Live Website URL Test & Verify:</span>
+                  </label>
+                  <a id="previewDirectLink" href="#" target="_blank" class="hidden text-xs text-blue-400 hover:text-white font-semibold flex items-center gap-1">
+                    <span>Browser Me Kholein</span> <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
                 </div>
+
+                <div class="flex flex-col sm:flex-row gap-2">
+                  <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/mystore/"
+                         class="flex-1 px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
+                  
+                  <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
+                          class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/20 transition active:scale-95 shrink-0">
+                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    <span>Verify Live âš¡</span>
+                  </button>
+                </div>
+
+                <div id="siteVerifyNotice" class="hidden mt-3 p-3.5 rounded-xl text-xs font-medium border flex items-start gap-2.5"></div>
               </div>
             </div>
           </div>
 
-          <!-- RIGHT ACTIVE CONTENT PANEL -->
-          <div class="lg:col-span-8 bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[460px]">
-            <div>
-              <!-- SUB-STEP 1.1 CONTENT VIEW -->
-                            <!-- SUB-STEP 1.1 CONTENT VIEW -->
-              <div id="subStepView1" class="space-y-4">
-                <div class="flex items-center justify-between">
-                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
-                    Sub Step 1.1
-                  </span>
-                  <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                    Public By Default âœ“
-                  </span>
-                </div>
+          <!-- BOTTOM NAVIGATION BAR (MATCHING MOCKUP: BACK | DOTS | NEXT) -->
+          <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+            <!-- Back Button -->
+            <button type="button" id="btnPrevSubStep" onclick="prevSubStep()" disabled
+                    class="px-4 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-900 text-slate-300 font-bold text-xs flex items-center gap-1.5 transition active:scale-95 opacity-40 cursor-not-allowed">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back</span>
+            </button>
 
-                <div>
-                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Par Repository Banayein</h3>
-                  <p class="text-xs text-slate-400 mt-1">Apni website repository ka naam chunein aur GitHub par 1-click me copy karein.</p>
-                </div>
-
-                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
-                  <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1 flex items-center justify-between">
-                      <span>Repository Ka Naam (Store Name):</span>
-                      <span class="text-[10px] text-slate-500">Pasand ka naam daal sakte hain</span>
-                    </label>
-                    <input type="text" id="customRepoNameInput" value="mystore" oninput="updateCustomRepoForkUrl()"
-                           placeholder="jaise: mystore, shop, dukaan, vastustore"
-                           class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-                    
-                    <!-- Quick Suggestion Pills -->
-                    <div class="flex flex-wrap items-center gap-1.5 mt-2">
-                      <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>
-                      <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
-                      <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
-                      <button type="button" onclick="setQuickRepoName('dukaan')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">dukaan</button>
-                      <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
-                    </div>
-                  </div>
-
-                  <!-- Reassuring tip box -->
-                  <div class="bg-slate-950/90 border border-amber-500/20 p-3 rounded-xl text-[11px] space-y-1">
-                    <p class="text-amber-400 font-bold flex items-center gap-1.5">
-                      <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
-                      <span>Agar GitHub par "Already Exists" bole toh?</span>
-                    </p>
-                    <p class="text-slate-300 text-[10px] leading-relaxed">
-                      Bilkul chinta na karein! Wahan GitHub par bas koi bhi naya naam (jaise <code class="text-emerald-400 font-bold">mystore-1</code>, <code class="text-emerald-400 font-bold">shop</code> ya apna naam) likh dein.
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Primary CTA Button -->
-                <a id="btnForkTemplate" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" 
-                   target="_blank"
-                   class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
-                  <i data-lucide="git-fork" class="w-4 h-4"></i>
-                  <span>1-Click Fork / Create Repo (Public) ðŸš€</span>
-                </a>
-                <p class="text-[10px] text-slate-400 text-center">
-                  GitHub par Public pehle se chuna hoga, bas green <strong>Create repository</strong> button dabayein! Uske baad Agla Step (1.2) dabayein.
-                </p>
-
-                <!-- 3-STEP VISUAL SCREENSHOT GUIDE (User Real GitHub Screens) -->
-                <div class="mt-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-4">
-                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
-                    <div class="flex items-center gap-2">
-                      <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                        <i data-lucide="camera" class="w-3.5 h-3.5"></i>
-                      </div>
-                      <h4 class="text-xs font-bold text-white uppercase tracking-wider">GitHub Par 3 Aasan Steps (Live Screenshot Guide):</h4>
-                    </div>
-                    <span class="text-[10px] text-slate-400 font-medium">Click karke bada dekhein ðŸ”</span>
-                  </div>
-
-                  <!-- 3 Visual Step Cards Grid -->
-                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    
-                    <!-- Card 1: Google Sign In -->
-                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-2.5 flex flex-col justify-between hover:border-blue-500/40 transition group">
-                      <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                          <span class="text-[10px] font-bold text-blue-400 flex items-center gap-1">
-                            <span class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px]">1</span>
-                            <span>Gmail Se Login</span>
-                          </span>
-                          <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Sign in</span>
-                        </div>
-                        <p class="text-[10px] text-slate-300 leading-tight mb-2">
-                          <strong class="text-white">Continue with Google</strong> dabakar seedhe apne Gmail se login karein.
-                        </p>
-                      </div>
-
-                      <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-blue-500/50 transition"
-                           onclick="openImageModal('assets/images/github-step1-google-signin.png', 'Step 1: Sign in to GitHub - Continue with Google dabakar seedhe Gmail se sign-in karein')">
-                        <img src="assets/images/github-step1-google-signin.png" alt="GitHub Google Sign In" class="w-full h-28 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
-                        <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
-                          <span class="text-[9px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">ðŸ” Zoom</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Card 2: Email Device Verification Code -->
-                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-2.5 flex flex-col justify-between hover:border-indigo-500/40 transition group">
-                      <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                          <span class="text-[10px] font-bold text-indigo-400 flex items-center gap-1">
-                            <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">2</span>
-                            <span>Email Code Verify</span>
-                          </span>
-                          <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">Security</span>
-                        </div>
-                        <p class="text-[10px] text-slate-300 leading-tight mb-2">
-                          Gmail par aaya 6-digit code daal kar <strong class="text-white">Verify</strong> button dabayein.
-                        </p>
-                      </div>
-
-                      <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-indigo-500/50 transition"
-                           onclick="openImageModal('assets/images/github-step2-device-verification.png', 'Step 2: Device Verification - Gmail par aaya hua 6-digit authentication code enter karein')">
-                        <img src="assets/images/github-step2-device-verification.png" alt="GitHub Device Verification Code" class="w-full h-28 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
-                        <div class="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
-                          <span class="text-[9px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">ðŸ” Zoom</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Card 3: Green Create Repository Button -->
-                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-2.5 flex flex-col justify-between hover:border-emerald-500/40 transition group">
-                      <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                          <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
-                            <span class="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">3</span>
-                            <span>Create Repository</span>
-                          </span>
-                          <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">1-Click</span>
-                        </div>
-                        <p class="text-[10px] text-slate-300 leading-tight mb-2">
-                          Public pehle se rahega, bas green <strong class="text-white">Create repository</strong> dabayein!
-                        </p>
-                      </div>
-
-                      <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-emerald-500/50 transition"
-                           onclick="openImageModal('assets/images/github-step3-create-repo.png', 'Step 3: Create Repository - Public pehle se select hoga, green Create repository dabayein')">
-                        <img src="assets/images/github-step3-create-repo.png" alt="GitHub Create Repository" class="w-full h-28 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
-                        <div class="absolute inset-0 bg-emerald-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
-                          <span class="text-[9px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">ðŸ” Zoom</span>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <!-- SUB-STEP 1.2 CONTENT VIEW -->
-              <div id="subStepView2" class="space-y-4 hidden">
-                <div class="flex items-center justify-between">
-                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
-                    Sub Step 1.2
-                  </span>
-                  <span class="text-[10px] text-blue-400 font-bold px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
-                    Universal Link Formula
-                  </span>
-                </div>
-
-                <div>
-                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Repository Ka Link Paste Karein</h3>
-                  <p class="text-xs text-slate-400 mt-1">Repo banne ke baad browser me jo link aayi hai, use yahan paste karein:</p>
-                </div>
-
-                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
-                  <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">
-                      Repository URL:
-                    </label>
-                    <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/yourusername/mystore"
-                           oninput="handleGhRepoPaste()"
-                           class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-                  </div>
-
-                  <!-- Live Formula Result Card -->
-                  <div id="ghFormulaResultCard" class="bg-slate-950 border border-emerald-500/30 p-3.5 rounded-xl">
-                    <div class="flex items-center justify-between mb-1.5">
-                      <span class="text-[10px] text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1">
-                        <i data-lucide="sparkles" class="w-3 h-3"></i>
-                        <span>Aapki Live Website Link Ban Gayi Hai:</span>
-                      </span>
-                      <button type="button" onclick="copyHelperUrl()" class="text-[10px] text-blue-400 hover:text-white font-bold flex items-center gap-1 transition">
-                        <i data-lucide="copy" class="w-3 h-3"></i> Copy Link
-                      </button>
-                    </div>
-                    <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1.5 px-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                      https://yourusername.github.io/mystore/
-                    </div>
-                  </div>
-                </div>
-
-                <div class="p-3 bg-blue-950/40 border border-blue-500/25 rounded-xl text-xs text-slate-300 flex items-start gap-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
-                  <span>Link paste karne ke baad ab seedhe <strong>Agla Step (1.3)</strong> dabayein aur GitHub Pages on karein!</span>
-                </div>
-              </div>
-
-              <!-- SUB-STEP 1.3 CONTENT VIEW -->
-              <div id="subStepView3" class="space-y-4 hidden">
-                <div class="flex items-center justify-between">
-                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
-                    Sub Step 1.3
-                  </span>
-                  <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                    Sirf 5 Seconds Ka Kaam
-                  </span>
-                </div>
-
-                <div>
-                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">GitHub Pages Settings Save Karein</h3>
-                  <p class="text-xs text-slate-400 mt-1">Direct button par click karke Branch me <strong>main</strong> chunein aur <strong>Save</strong> dabayein.</p>
-                </div>
-
-                <div id="ghPublishCtaBox" class="p-4 bg-gradient-to-r from-blue-950/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl space-y-3">
-                  <!-- Direct 1-Click Button -->
-                  <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
-                     class="w-full py-3 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-md shadow-blue-500/25 text-center">
-                    <i data-lucide="external-link" class="w-4 h-4"></i>
-                    <span>1-Click Me Pages Settings Kholein (Branch: main âž” Save) â†—</span>
-                  </a>
-
-                  <!-- Screenshot Visual Guide -->
-                  <div class="bg-slate-950/90 rounded-xl border border-blue-500/40 p-3 text-left">
-                    <div class="flex items-center justify-between mb-2">
-                      <span class="text-[10px] font-bold text-white flex items-center gap-1">
-                        <i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-400"></i>
-                        <span>GitHub Par Yeh Screen Aayegi (Dekh Kar Karein):</span>
-                      </span>
-                      <span class="text-[9px] text-slate-400 font-mono">Screenshot Reference</span>
-                    </div>
-
-                    <!-- Screenshot Image with Zoom -->
-                    <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 relative group cursor-pointer"
-                         onclick="openImageModal('assets/images/github-pages-step2-main-save.jpg', 'GitHub Pages Settings: Branch dropdown me main chunein, aage /(root) rahega, fir Save par click karein.')">
-                      <img src="assets/images/github-pages-step2-main-save.jpg" 
-                           alt="GitHub Pages Branch main Save Screenshot" 
-                           class="w-full h-auto max-h-48 object-contain mx-auto rounded-lg group-hover:scale-[1.02] transition duration-300" />
-                      <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition flex items-center justify-center pointer-events-none">
-                        <span class="text-[10px] px-2.5 py-1 rounded-md bg-black/80 text-white font-semibold opacity-0 group-hover:opacity-100 transition shadow">
-                          Bada Karke Dekhein ðŸ”
-                        </span>
-                      </div>
-                    </div>
-
-                    <!-- 3 Simple Instructions -->
-                    <div class="mt-3 space-y-1.5 text-xs text-slate-300">
-                      <p class="flex items-start gap-1.5">
-                        <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
-                        <span>Branch section me jahan <strong class="text-amber-400 font-mono">None</strong> likha hai, use click karke <strong class="text-emerald-400 font-mono">main</strong> select karein.</span>
-                      </p>
-                      <p class="flex items-start gap-1.5">
-                        <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
-                        <span>Folder <strong class="text-blue-400 font-mono">/(root)</strong> apne aap select rahega.</span>
-                      </p>
-                      <p class="flex items-start gap-1.5">
-                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
-                        <span>Ab <strong class="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Save</strong> button par click karein aur seedhe <strong>Agla Step (1.4)</strong> dabayein!</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- SUB-STEP 1.4 CONTENT VIEW -->
-              <div id="subStepView4" class="space-y-4 hidden">
-                <div class="flex items-center justify-between">
-                  <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
-                    Sub Step 1.4
-                  </span>
-                  <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                    Final Step 1 Action
-                  </span>
-                </div>
-
-                <div>
-                  <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Google Sheet Me Save Karein & Step 2 Unlock Karein</h3>
-                  <p class="text-xs text-slate-400 mt-1">Aapka GitHub setup complete ho chuka hai! Ise database me save karke aage badhein.</p>
-                </div>
-
-                <!-- Summary Overview Box -->
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-2.5">
-                  <p class="text-xs font-bold text-slate-200">Aapka Store Setup Summary:</p>
-                  <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs font-mono space-y-1">
-                    <div class="flex items-baseline gap-2">
-                      <span class="text-slate-400 shrink-0 font-sans text-[11px]">Live URL:</span>
-                      <span id="summaryLiveUrl" class="text-emerald-400 font-bold break-all">https://yourusername.github.io/mystore/</span>
-                    </div>
-                    <div class="flex items-baseline gap-2">
-                      <span class="text-slate-400 shrink-0 font-sans text-[11px]">Repository:</span>
-                      <span id="summaryRepoUrl" class="text-blue-400 break-all">https://github.com/yourusername/mystore</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Save to Google Sheet Button -->
-                <div>
-                  <button type="button" onclick="saveRepoAndLiveSiteToGoogleSheet()" id="saveToSheetBtn"
-                          class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-lg shadow-emerald-500/25">
-                    <i data-lucide="database" class="w-4 h-4"></i>
-                    <span>Google Sheet Me Save Karein & Step 2 Unlock Karein âš¡</span>
-                  </button>
-                  <p class="text-[10px] text-slate-400 text-center mt-1.5">
-                    âš¡ GitHub background me 30-40s me site build karega, aap bina ruke Step 2 par chal sakte hain!
-                  </p>
-                </div>
-
-                <!-- Live Verification Tool -->
-                <div class="mt-4 pt-4 border-t border-slate-800/80">
-                  <div class="flex items-center justify-between mb-2">
-                    <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1.5">
-                      <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
-                      <span>Live Website URL Test & Verify:</span>
-                    </label>
-                    <a id="previewDirectLink" href="#" target="_blank" class="hidden text-xs text-blue-400 hover:text-white font-semibold flex items-center gap-1">
-                      <span>Browser Me Kholein</span> <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                  </div>
-
-                  <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/mystore/"
-                           class="flex-1 px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
-                    
-                    <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
-                            class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/20 transition active:scale-95 shrink-0">
-                      <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                      <span>Verify Live âš¡</span>
-                    </button>
-                  </div>
-
-                  <div id="siteVerifyNotice" class="hidden mt-3 p-3.5 rounded-xl text-xs font-medium border flex items-start gap-2.5"></div>
-                </div>
-              </div>
+            <!-- Pagination Indicator Dots (Interactive) -->
+            <div class="flex items-center gap-2">
+              <button type="button" id="subStepDot1" onclick="goToSubStep(1)" class="w-7 h-2.5 rounded-full bg-blue-500 transition-all duration-300" title="Sub Step 1.1"></button>
+              <button type="button" id="subStepDot2" onclick="goToSubStep(2)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.2"></button>
+              <button type="button" id="subStepDot3" onclick="goToSubStep(3)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.3"></button>
+              <button type="button" id="subStepDot4" onclick="goToSubStep(4)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.4"></button>
             </div>
 
-            <!-- BOTTOM NAVIGATION BAR (MATCHING MOCKUP: BACK | DOTS | NEXT) -->
-            <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-              <!-- Back Button -->
-              <button type="button" id="btnPrevSubStep" onclick="prevSubStep()" disabled
-                      class="px-4 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-900 text-slate-300 font-bold text-xs flex items-center gap-1.5 transition active:scale-95 opacity-40 cursor-not-allowed">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>Back</span>
-              </button>
-
-              <!-- Pagination Indicator Dots (Interactive) -->
-              <div class="flex items-center gap-2">
-                <button type="button" id="subStepDot1" onclick="goToSubStep(1)" class="w-7 h-2.5 rounded-full bg-blue-500 transition-all duration-300" title="Sub Step 1.1"></button>
-                <button type="button" id="subStepDot2" onclick="goToSubStep(2)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.2"></button>
-                <button type="button" id="subStepDot3" onclick="goToSubStep(3)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.3"></button>
-                <button type="button" id="subStepDot4" onclick="goToSubStep(4)" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" title="Sub Step 1.4"></button>
-              </div>
-
-              <!-- Next Button -->
-              <button type="button" id="btnNextSubStep" onclick="nextSubStep()"
-                      class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition active:scale-95">
-                <span id="btnNextSubStepText">Next Step â†’</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-            </div>
-
+            <!-- Next Button -->
+            <button type="button" id="btnNextSubStep" onclick="nextSubStep()"
+                    class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition active:scale-95">
+              <span id="btnNextSubStepText">Next Step â†’</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
           </div>
 
         </div>
@@ -674,7 +626,7 @@
             <span>Pichhla: Step 1 (Website Setup)</span>
           </button>
           <span class="text-[11px] text-slate-400 font-medium">Master Step 2 of 3</span>
-        </div>">
+        </div>
         <!-- LOCK OVERLAY FOR STEP 2 (Shown when Step 1 is not complete) -->
         <div id="lockOverlayStep2" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
