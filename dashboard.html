@@ -677,24 +677,30 @@
           </div>
 
           <!-- Enter Apps Script Web App URL -->
-          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+          <div class="bg-slate-950/60 p-5 rounded-2xl border border-indigo-500/30 flex flex-col justify-between">
             <div>
-              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                <i data-lucide="link" class="w-4 h-4 text-blue-400"></i>
-                <span>Google Sheet Web App URL</span>
-              </h4>
-              <p class="text-xs text-slate-400 mb-3">
-                Apps Script Deploy karke mila hua Web App URL yahan paste karein:
+              <div class="flex items-center justify-between mb-1">
+                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="link" class="w-4 h-4 text-blue-400"></i>
+                  <span>Google Sheet Web App URL</span>
+                </h4>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                  ⚡ Pre-configured API Ready
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2">
+                Aapka ready-made Google Sheet API backend pehle se configured aur connected hai:
               </p>
               <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
+                     value="https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
                      placeholder="https://script.google.com/macros/s/.../exec"
                      class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-indigo-500 focus:outline-none mb-3 font-mono" />
             </div>
 
             <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
-                    class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 transition active:scale-95">
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 transition active:scale-95">
               <i data-lucide="zap" class="w-4 h-4"></i>
-              <span>Test & Connect Sheet 🔗</span>
+              <span>1-Click Test & Connect Sheet (Ready API) 🔗</span>
             </button>
           </div>
         </div>
@@ -1040,6 +1046,8 @@
       if (currentUser.sheet_url) {
         document.getElementById('sheetUrlInput').value = currentUser.sheet_url;
         document.getElementById('hubSheetLink').href = currentUser.sheet_url;
+      } else {
+        document.getElementById('sheetUrlInput').value = DEFAULT_SHEET_URL;
       }
 
       // Generate dynamic QR code for app sync
