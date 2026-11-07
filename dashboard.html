@@ -686,7 +686,8 @@
               <p class="text-xs text-slate-400 mb-3">
                 Apps Script Deploy karke mila hua Web App URL yahan paste karein:
               </p>
-              <input type="url" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec"
+              <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
+                     placeholder="https://script.google.com/macros/s/.../exec"
                      class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-indigo-500 focus:outline-none mb-3 font-mono" />
             </div>
 
@@ -699,6 +700,68 @@
         </div>
 
         <div id="sheetConnectNotice" class="hidden mt-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
+
+        <!-- VISUAL DEPLOYMENT GUIDE BOX FOR STEP 2 (CODE KAHAN HAI & DEPLOY KAISE KAREIN) -->
+        <div class="mt-6 bg-slate-950/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Web App URL Kaise Banega? (Code Kahan Hai?):</h4>
+                <p class="text-[11px] text-slate-400">Aapko koi code likhne ki zaroorat nahi hai — template sheet me code pehle se built-in hai!</p>
+              </div>
+            </div>
+            <a href="https://github.com/yuviteltechnologies-art/freewebsite/blob/main/Code.gs" target="_blank"
+               class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-blue-400 text-xs font-semibold inline-flex items-center gap-1.5 border border-slate-700 self-start sm:self-auto transition">
+              <i data-lucide="code" class="w-3.5 h-3.5"></i>
+              <span>Code.gs Dekhein ↗</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <!-- Step A -->
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">1</span>
+                <span>Apps Script Kholein</span>
+              </span>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                Google Sheet kholne ke baad upar menu me <strong class="text-white">Extensions</strong> &rarr; <strong class="text-white">Apps Script</strong> par click karein. Code pehle se wahan maujood milega.
+              </p>
+            </div>
+
+            <!-- Step B -->
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px]">2</span>
+                <span>New Deployment Karein</span>
+              </span>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                Blue <strong class="text-white">Deploy</strong> button &rarr; <strong class="text-white">New deployment</strong> &rarr; Web app chunein. <strong class="text-amber-400">Who has access: Anyone</strong> zaroor select karein.
+              </p>
+            </div>
+
+            <!-- Step C -->
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">3</span>
+                <span>Web App URL Paste Karein</span>
+              </span>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                Deploy hone ke baad mila hua <strong class="text-emerald-400 font-mono text-[10px]">.../exec</strong> URL copy karein aur yahan input me paste karke <strong class="text-white">Connect</strong> dabayein!
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-[11px] text-amber-300 flex items-start gap-2">
+            <i data-lucide="info" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+            <div>
+              <strong>Kripya Dhyan Dein:</strong> Direct Google Sheet ka link (<code class="bg-slate-900 px-1 py-0.5 rounded text-amber-200">docs.google.com/spreadsheets/d/...</code>) sirf sheet dekhne ke liye hota hai. Website se live orders auto-save karne aur UPI verification ke liye Google ki security policy ke tahat <strong>Web App URL</strong> zaroori hota hai (jo sirf 1 baar 20 second me banta hai).
+            </div>
+          </div>
+        </div>
 
         <!-- Bottom Navigation Bar for Step 2 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
@@ -1733,6 +1796,37 @@
         btn.disabled = false;
         btn.innerHTML = `<i data-lucide="search" class="w-4 h-4"></i> <span>Verify Website Live ⚡</span>`;
         lucide.createIcons();
+      }
+    }
+
+    // Step 2: Real-time Sheet URL helper
+    function handleSheetUrlInput() {
+      const input = document.getElementById('sheetUrlInput');
+      const notice = document.getElementById('sheetConnectNotice');
+      if (!input || !notice) return;
+      const val = input.value.trim();
+
+      if (!val) {
+        notice.classList.add('hidden');
+        return;
+      }
+
+      if (val.includes('docs.google.com/spreadsheets/d/')) {
+        notice.className = "mt-4 p-3.5 rounded-xl text-xs font-medium border flex items-start gap-2.5 bg-amber-500/10 border-amber-500/30 text-amber-300";
+        notice.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+          <div>
+            <strong>Aapne Google Sheet ka regular link paste kiya hai!</strong><br/>
+            Website se live orders auto-save hone ke liye is sheet ka <strong>Apps Script Web App URL</strong> chahiye. Upar diya gaya 3-step guide dekhein (Sheet me <strong>Extensions &rarr; Apps Script &rarr; Deploy &rarr; New deployment &rarr; Anyone</strong> karke mila hua link paste karein).
+          </div>`;
+        notice.classList.remove('hidden');
+        lucide.createIcons();
+      } else if (val.startsWith('https://script.google.com/macros/s/')) {
+        notice.className = "mt-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2 bg-emerald-500/10 border-emerald-500/30 text-emerald-400";
+        notice.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i> <span>Valid Web App URL format! Ab 'Test & Connect Sheet' button par click karein.</span>`;
+        notice.classList.remove('hidden');
+        lucide.createIcons();
+      } else {
+        notice.classList.add('hidden');
       }
     }
 
