@@ -242,15 +242,48 @@ class MainActivity : Activity() {
         return if (name.isNotEmpty()) name.split(" ").firstOrNull() ?: name else "Account"
     }
 
-    private fun saveAuthSession(name: String, email: String, sheetUrl: String?) {
+    private fun saveAuthSession(user: com.sheetstore.admin.models.AuthUser, sheetUrl: String?) {
         val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
         val edit = prefs.edit()
-            .putString("logged_in_name", name)
-            .putString("logged_in_email", email)
+            .putString("logged_in_name", user.name ?: "Store Owner")
+            .putString("logged_in_email", user.email ?: "")
+            .putString("logged_in_phone", user.phone ?: "")
+            .putString("user_id", user.id ?: "")
+            .putString("website_live_url", user.websiteLiveUrl ?: "")
+            .putString("github_repo_url", user.githubRepoUrl ?: "")
         if (!sheetUrl.isNullOrEmpty()) {
             edit.putString("sheet_web_app_url", sheetUrl)
         }
         edit.apply()
+    }
+
+    private fun getWebsiteLiveUrl(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        val url = prefs.getString("website_live_url", "") ?: ""
+        if (url.isNotEmpty()) return url
+        return dashboardData?.settings?.get("website_live_url") ?: "https://yuviteltechnologies-art.github.io/freewebsite/"
+    }
+
+    private fun getGoogleSpreadsheetUrl(): String {
+        val direct = dashboardData?.spreadsheetUrl ?: dashboardData?.settings?.get("spreadsheet_url")
+        if (!direct.isNullOrEmpty()) return direct
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        return prefs.getString("google_spreadsheet_url", "") ?: getSheetUrl()
+    }
+
+    private fun getLoggedInPhone(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        return prefs.getString("logged_in_phone", "") ?: ""
+    }
+
+    private fun getUserId(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        return prefs.getString("user_id", "") ?: ""
+    }
+
+    private fun getGithubRepoUrl(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        return prefs.getString("github_repo_url", "") ?: ""
     }
 
     private fun clearAuthSession() {
@@ -258,6 +291,11 @@ class MainActivity : Activity() {
         prefs.edit()
             .remove("logged_in_name")
             .remove("logged_in_email")
+            .remove("logged_in_phone")
+            .remove("user_id")
+            .remove("website_live_url")
+            .remove("github_repo_url")
+            .remove("google_spreadsheet_url")
             .apply()
     }
 
@@ -266,14 +304,89 @@ class MainActivity : Activity() {
         if (currentEmail.isNotEmpty()) {
             val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
             val name = prefs.getString("logged_in_name", "User") ?: "User"
-            val sheetUrl = getSheetUrl()
+            val phone = getLoggedInPhone()
+            val userId = getUserId()
+            val webUrl = getWebsiteLiveUrl()
+            val sheetUrl = getGoogleSpreadsheetUrl()
+            val ghUrl = getGithubRepoUrl()
 
-            val msg = "👤 Logged in as: $name\n✉️ Email: $currentEmail\n\n📊 Connected Sheet:\n${sheetUrl.take(45)}..."
+            val infoLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(40, 32, 40, 20)
+            }
+
+            val ownerText = TextView(this).apply {
+                text = "👤 Store Owner: $name\n📞 WhatsApp: $phone\n✉️ Email: $currentEmail\n🆔 User ID: $userId"
+                textSize = 13f
+                setTextColor(Color.WHITE)
+                setLineSpacing(12f, 1f)
+                setPadding(0, 0, 0, 20)
+            }
+            infoLayout.addView(ownerText)
+
+            // Button 1: Open Website
+            val openSiteBtn = Button(this).apply {
+                text = "🌐 Open Live Website ↗"
+                textSize = 12f
+                setTextColor(Color.WHITE)
+                setBackgroundColor(Color.parseColor("#2563EB"))
+                setOnClickListener {
+                    if (webUrl.isNotEmpty()) {
+                        try {
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(webUrl)))
+                        } catch (e: Exception) {
+                            Toast.makeText(this@MainActivity, "Could not open browser", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            infoLayout.addView(openSiteBtn)
+
+            // Button 2: WhatsApp Share Store
+            val shareWaBtn = Button(this).apply {
+                text = "📢 Share Store on WhatsApp 📲"
+                textSize = 12f
+                setTextColor(Color.WHITE)
+                setBackgroundColor(Color.parseColor("#059669"))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    setMargins(0, 12, 0, 12)
+                }
+                setOnClickListener {
+                    val shareText = "Namaste! Hamari dukaan live hai. Products dekhne aur order karne ke liye click karein:\n👉 $webUrl"
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, shareText)
+                    }
+                    startActivity(Intent.createChooser(intent, "Share Store via"))
+                }
+            }
+            infoLayout.addView(shareWaBtn)
+
+            // Button 3: Open Google Sheet
+            val openSheetBtn = Button(this).apply {
+                text = "📊 Open Google Sheet ↗"
+                textSize = 12f
+                setTextColor(Color.WHITE)
+                setBackgroundColor(Color.parseColor("#0F766E"))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    setMargins(0, 0, 0, 12)
+                }
+                setOnClickListener {
+                    if (sheetUrl.isNotEmpty()) {
+                        try {
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sheetUrl)))
+                        } catch (e: Exception) {
+                            Toast.makeText(this@MainActivity, "Could not open sheet", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            infoLayout.addView(openSheetBtn)
 
             AlertDialog.Builder(this)
-                .setTitle("Account Info")
-                .setMessage(msg)
-                .setPositiveButton("OK", null)
+                .setTitle("⚡ Store Account Hub")
+                .setView(infoLayout)
+                .setPositiveButton("Close", null)
                 .setNegativeButton("🚪 Log Out") { _, _ ->
                     clearAuthSession()
                     authBtn.text = "👤 Login"
@@ -326,7 +439,7 @@ class MainActivity : Activity() {
                                 if (body != null && body.success && body.user != null) {
                                     val u = body.user
                                     val resolvedSheetUrl = if (!u.sheetUrl.isNullOrEmpty()) u.sheetUrl else getSheetUrl()
-                                    saveAuthSession(u.name ?: "User", u.email ?: email, resolvedSheetUrl)
+                                    saveAuthSession(u, resolvedSheetUrl)
                                     authBtn.text = "👤 ${getLoggedInName()}"
                                     Toast.makeText(this@MainActivity, "Welcome ${u.name}! Store Connected 🚀", Toast.LENGTH_LONG).show()
                                     fetchDashboard()
@@ -360,6 +473,11 @@ class MainActivity : Activity() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful && response.body() != null) {
                         dashboardData = response.body()
+                        val sUrl = dashboardData?.spreadsheetUrl ?: dashboardData?.settings?.get("spreadsheet_url")
+                        if (!sUrl.isNullOrEmpty()) {
+                            getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).edit()
+                                .putString("google_spreadsheet_url", sUrl).apply()
+                        }
                         refreshCurrentTab()
                     } else {
                         Toast.makeText(this@MainActivity, "Failed to connect to Google Sheet", Toast.LENGTH_SHORT).show()
@@ -411,12 +529,153 @@ class MainActivity : Activity() {
     private var statsRevenueView: TextView? = null
     private var statsOrdersView: TextView? = null
 
+    private fun createStoreHubCard(): View {
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor("#1E293B"))
+            setPadding(36, 32, 36, 32)
+            layoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 0, 0, 24)
+            }
+        }
+
+        // Header: Store Name + Status Badge
+        val headerRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, 0, 0, 14)
+        }
+        val storeBrand = dashboardData?.settings?.get("brand_name") ?: "SheetStore Pro"
+        val title = TextView(this).apply {
+            text = "⚡ $storeBrand"
+            textSize = 15f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val badge = TextView(this).apply {
+            text = "● Store 100% Live"
+            textSize = 10f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#10B981"))
+            setBackgroundColor(Color.parseColor("#064E3B"))
+            setPadding(16, 6, 16, 6)
+        }
+        headerRow.addView(title)
+        headerRow.addView(badge)
+        card.addView(headerRow)
+
+        // Website Link Row
+        val webUrl = getWebsiteLiveUrl()
+        val webLabel = TextView(this).apply {
+            text = "🌐 Store Website: ${if (webUrl.isNotEmpty()) webUrl else "https://yourstore.github.io/"}"
+            textSize = 11f
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, 0, 0, 12)
+        }
+        card.addView(webLabel)
+
+        // Buttons Row 1: Open Website & Share on WhatsApp
+        val btnRow1 = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 0, 0, 10)
+        }
+        val openWebBtn = Button(this).apply {
+            text = "🌐 Open Website ↗"
+            textSize = 11f
+            setTextColor(Color.WHITE)
+            setBackgroundColor(Color.parseColor("#2563EB"))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                setMargins(0, 0, 10, 0)
+            }
+            setOnClickListener {
+                val url = getWebsiteLiveUrl()
+                if (url.isNotEmpty()) {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    } catch (e: Exception) {
+                        Toast.makeText(this@MainActivity, "Could not open browser", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+        val shareWaBtn = Button(this).apply {
+            text = "📢 WhatsApp Share 📲"
+            textSize = 11f
+            setTextColor(Color.WHITE)
+            setBackgroundColor(Color.parseColor("#059669"))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            setOnClickListener {
+                val url = getWebsiteLiveUrl()
+                val brand = dashboardData?.settings?.get("brand_name") ?: "SheetStore"
+                val shareText = "Namaste! Hamari dukaan '$brand' live hai! Products dekhne aur order karne ke liye click karein:\n👉 $url"
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, shareText)
+                }
+                startActivity(Intent.createChooser(intent, "Share Store via"))
+            }
+        }
+        btnRow1.addView(openWebBtn)
+        btnRow1.addView(shareWaBtn)
+        card.addView(btnRow1)
+
+        // Buttons Row 2: Open Google Sheet & Copy Link
+        val btnRow2 = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+        val openSheetBtn = Button(this).apply {
+            text = "📊 Open Google Sheet ↗"
+            textSize = 11f
+            setTextColor(Color.WHITE)
+            setBackgroundColor(Color.parseColor("#0F766E"))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                setMargins(0, 0, 10, 0)
+            }
+            setOnClickListener {
+                val sUrl = getGoogleSpreadsheetUrl()
+                if (sUrl.isNotEmpty()) {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sUrl)))
+                    } catch (e: Exception) {
+                        Toast.makeText(this@MainActivity, "Could not open sheet", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+        val copyWebBtn = Button(this).apply {
+            text = "📋 Copy Store Link"
+            textSize = 11f
+            setTextColor(Color.parseColor("#E2E8F0"))
+            setBackgroundColor(Color.parseColor("#334155"))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            setOnClickListener {
+                val url = getWebsiteLiveUrl()
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText("Store Website URL", url)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(this@MainActivity, "Website link copied! ✓", Toast.LENGTH_SHORT).show()
+            }
+        }
+        btnRow2.addView(openSheetBtn)
+        btnRow2.addView(copyWebBtn)
+        card.addView(btnRow2)
+
+        return card
+    }
+
     private fun createOrdersTab(): View {
         val swipeLayout = SwipeRefreshLayout(this)
         val scrollContent = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(32, 32, 32, 32)
         }
+
+        // Store Links & Quick Hub Card
+        scrollContent.addView(createStoreHubCard())
 
         // Stats Card
         val statsCard = LinearLayout(this).apply {

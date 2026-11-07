@@ -493,6 +493,7 @@ function handleGetAdminDashboard(ss, params) {
 
   return returnJsonResponse({
     success: true,
+    spreadsheet_url: ss.getUrl(),
     stats: stats,
     orders: orders,
     settings: getSheetSettings(ss),
@@ -1052,6 +1053,9 @@ function getSheetSettings(ss) {
       }
     }
   }
+  try {
+    settings["spreadsheet_url"] = ss.getUrl();
+  } catch (e) {}
   return settings;
 }
 

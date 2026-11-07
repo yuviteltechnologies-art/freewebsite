@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DashboardResponse(
     @SerializedName("success") val success: Boolean,
+    @SerializedName("spreadsheet_url") val spreadsheetUrl: String?,
     @SerializedName("stats") val stats: DashboardStats?,
     @SerializedName("orders") val orders: List<Order>?,
     @SerializedName("settings") val settings: Map<String, String>?,
