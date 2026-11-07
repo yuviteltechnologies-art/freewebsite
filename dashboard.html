@@ -136,7 +136,7 @@
           </div>
 
           <!-- Step 1 Circle & Label -->
-          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="scrollToCard('cardStep1')">
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(1)">
             <div id="topStepCircle1" class="w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105">
               <span>1</span>
             </div>
@@ -147,7 +147,7 @@
           </div>
 
           <!-- Step 2 Circle & Label -->
-          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="scrollToCard('cardStep2')">
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(2)">
             <div id="topStepCircle2" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>2</span>
             </div>
@@ -158,7 +158,7 @@
           </div>
 
           <!-- Step 3 Circle & Label -->
-          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="scrollToCard('cardStep3')">
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(3)">
             <div id="topStepCircle3" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>3</span>
             </div>
@@ -298,6 +298,7 @@
           <div class="lg:col-span-8 bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[460px]">
             <div>
               <!-- SUB-STEP 1.1 CONTENT VIEW -->
+                            <!-- SUB-STEP 1.1 CONTENT VIEW -->
               <div id="subStepView1" class="space-y-4">
                 <div class="flex items-center justify-between">
                   <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block">
@@ -353,8 +354,98 @@
                   <span>1-Click Fork / Create Repo (Public) ðŸš€</span>
                 </a>
                 <p class="text-[10px] text-slate-400 text-center">
-                  GitHub par Public pehle se chuna hoga, bas green <strong>Create repository</strong> button dabayein! Uske baad Agla Step dabayein.
+                  GitHub par Public pehle se chuna hoga, bas green <strong>Create repository</strong> button dabayein! Uske baad Agla Step (1.2) dabayein.
                 </p>
+
+                <!-- 3-STEP VISUAL SCREENSHOT GUIDE (User Real GitHub Screens) -->
+                <div class="mt-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-4">
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
+                    <div class="flex items-center gap-2">
+                      <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                        <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                      </div>
+                      <h4 class="text-xs font-bold text-white uppercase tracking-wider">GitHub Par 3 Aasan Steps (Live Screenshot Guide):</h4>
+                    </div>
+                    <span class="text-[10px] text-slate-400 font-medium">Click karke bada dekhein ðŸ”</span>
+                  </div>
+
+                  <!-- 3 Visual Step Cards Grid -->
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    
+                    <!-- Card 1: Google Sign In -->
+                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-2.5 flex flex-col justify-between hover:border-blue-500/40 transition group">
+                      <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                          <span class="text-[10px] font-bold text-blue-400 flex items-center gap-1">
+                            <span class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px]">1</span>
+                            <span>Gmail Se Login</span>
+                          </span>
+                          <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Sign in</span>
+                        </div>
+                        <p class="text-[10px] text-slate-300 leading-tight mb-2">
+                          <strong class="text-white">Continue with Google</strong> dabakar seedhe apne Gmail se login karein.
+                        </p>
+                      </div>
+
+                      <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-blue-500/50 transition"
+                           onclick="openImageModal('assets/images/github-step1-google-signin.png', 'Step 1: Sign in to GitHub - Continue with Google dabakar seedhe Gmail se sign-in karein')">
+                        <img src="assets/images/github-step1-google-signin.png" alt="GitHub Google Sign In" class="w-full h-28 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                        <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                          <span class="text-[9px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">ðŸ” Zoom</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card 2: Email Device Verification Code -->
+                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-2.5 flex flex-col justify-between hover:border-indigo-500/40 transition group">
+                      <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                          <span class="text-[10px] font-bold text-indigo-400 flex items-center gap-1">
+                            <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">2</span>
+                            <span>Email Code Verify</span>
+                          </span>
+                          <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">Security</span>
+                        </div>
+                        <p class="text-[10px] text-slate-300 leading-tight mb-2">
+                          Gmail par aaya 6-digit code daal kar <strong class="text-white">Verify</strong> button dabayein.
+                        </p>
+                      </div>
+
+                      <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-indigo-500/50 transition"
+                           onclick="openImageModal('assets/images/github-step2-device-verification.png', 'Step 2: Device Verification - Gmail par aaya hua 6-digit authentication code enter karein')">
+                        <img src="assets/images/github-step2-device-verification.png" alt="GitHub Device Verification Code" class="w-full h-28 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                        <div class="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                          <span class="text-[9px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">ðŸ” Zoom</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card 3: Green Create Repository Button -->
+                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-2.5 flex flex-col justify-between hover:border-emerald-500/40 transition group">
+                      <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                          <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                            <span class="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">3</span>
+                            <span>Create Repository</span>
+                          </span>
+                          <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">1-Click</span>
+                        </div>
+                        <p class="text-[10px] text-slate-300 leading-tight mb-2">
+                          Public pehle se rahega, bas green <strong class="text-white">Create repository</strong> dabayein!
+                        </p>
+                      </div>
+
+                      <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group-hover:border-emerald-500/50 transition"
+                           onclick="openImageModal('assets/images/github-step3-create-repo.png', 'Step 3: Create Repository - Public pehle se select hoga, green Create repository dabayein')">
+                        <img src="assets/images/github-step3-create-repo.png" alt="GitHub Create Repository" class="w-full h-28 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                        <div class="absolute inset-0 bg-emerald-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                          <span class="text-[9px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">ðŸ” Zoom</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
               </div>
 
               <!-- SUB-STEP 1.2 CONTENT VIEW -->
@@ -575,7 +666,15 @@
       </div>
 
       <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
-      <div id="cardStep2" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+      <div id="cardStep2" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden hidden">
+        <!-- Top Back Navigation -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
+          <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Pichhla: Step 1 (Website Setup)</span>
+          </button>
+          <span class="text-[11px] text-slate-400 font-medium">Master Step 2 of 3</span>
+        </div>">
         <!-- LOCK OVERLAY FOR STEP 2 (Shown when Step 1 is not complete) -->
         <div id="lockOverlayStep2" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
@@ -648,10 +747,31 @@
         </div>
 
         <div id="sheetConnectNotice" class="hidden mt-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
+
+        <!-- Bottom Navigation Bar for Step 2 -->
+        <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+          <button type="button" onclick="switchMasterStep(1)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Pichhla: Step 1</span>
+          </button>
+
+          <button type="button" onclick="switchMasterStep(3)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95">
+            <span>Agla: Step 3 (Android App)</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- STEP 3: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
-      <div id="cardStep3" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+      <div id="cardStep3" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden hidden">
+        <!-- Top Back Navigation -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
+          <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-indigo-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Pichhla: Step 2 (Google Sheet)</span>
+          </button>
+          <span class="text-[11px] text-slate-400 font-medium">Master Step 3 of 3</span>
+        </div>">
         <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
         <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
@@ -661,7 +781,7 @@
           <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
             Android Mobile App download karne se pehle <strong class="text-indigo-400">Step 2</strong> me apni Google Sheet connect karein.
           </p>
-          <a href="#cardStep2" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
+          <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
             <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
             <span>Pehle Step 2 Connect Karein</span>
           </a>
@@ -716,6 +836,19 @@
             </div>
             <p class="text-[11px] text-slate-400">Android app se is QR ko scan karke direct login karein.</p>
           </div>
+        </div>
+
+        <!-- Bottom Navigation Bar for Step 3 -->
+        <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+          <button type="button" onclick="switchMasterStep(2)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Pichhla: Step 2</span>
+          </button>
+
+          <a id="hubBottomLiveLink" href="index.html" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-500/25 active:scale-95">
+            <span>Aapki Store Website Kholein â†—</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
         </div>
       </div>
 
@@ -892,8 +1025,9 @@
       // Refresh UI steps
       updateStepUI(currentUser.onboarding_step || 1);
 
-      // Initialize Sub-Step 1
+      // Initialize Sub-Step 1 & Master Step
       goToSubStep(1);
+      switchMasterStep(currentUser.onboarding_step || 1);
 
       lucide.createIcons();
     });
@@ -1020,8 +1154,7 @@
       if (currentSubStep < 4) {
         goToSubStep(currentSubStep + 1);
       } else {
-        const card2 = document.getElementById('cardStep2');
-        if (card2) card2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        switchMasterStep(2);
       }
     }
 
@@ -1052,6 +1185,131 @@
     function scrollToCard(id) {
       const elem = document.getElementById(id);
       if (elem) elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // MASTER STEP HORIZONTAL WIZARD (Show one process at a time)
+    let currentMasterStep = 1;
+
+    function switchMasterStep(stepNum) {
+      if (stepNum < 1 || stepNum > 3) return;
+
+      const userStep = currentUser ? (currentUser.onboarding_step || 1) : 1;
+      
+      // Validation: Prevent skipping if previous step not complete
+      if (stepNum > userStep && stepNum === 2 && (!currentUser || !currentUser.github_repo_url)) {
+        alert("Pehle Step 1 poora karein aur apni repository link Google Sheet me save karein!");
+        return;
+      }
+      if (stepNum > userStep && stepNum === 3 && (!currentUser || !currentUser.sheet_url)) {
+        alert("Pehle Step 2 me Google Sheet connect karein!");
+        return;
+      }
+
+      currentMasterStep = stepNum;
+
+      const card1 = document.getElementById('cardStep1');
+      const card2 = document.getElementById('cardStep2');
+      const card3 = document.getElementById('cardStep3');
+
+      if (card1) {
+        if (stepNum === 1) {
+          card1.classList.remove('hidden');
+          card1.classList.add('glass-card-active');
+        } else {
+          card1.classList.add('hidden');
+          card1.classList.remove('glass-card-active');
+        }
+      }
+
+      if (card2) {
+        if (stepNum === 2) {
+          card2.classList.remove('hidden');
+          card2.classList.add('glass-card-active');
+        } else {
+          card2.classList.add('hidden');
+          card2.classList.remove('glass-card-active');
+        }
+      }
+
+      if (card3) {
+        if (stepNum === 3) {
+          card3.classList.remove('hidden');
+          card3.classList.add('glass-card-active');
+        } else {
+          card3.classList.add('hidden');
+          card3.classList.remove('glass-card-active');
+        }
+      }
+
+      updateMasterStepperUI(stepNum);
+
+      // Scroll smoothly to active card
+      const targetCard = stepNum === 1 ? card1 : (stepNum === 2 ? card2 : card3);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      lucide.createIcons();
+    }
+
+    function updateMasterStepperUI(activeStep) {
+      const topCirc1 = document.getElementById('topStepCircle1');
+      const topCirc2 = document.getElementById('topStepCircle2');
+      const topCirc3 = document.getElementById('topStepCircle3');
+      const topProgressLine = document.getElementById('horizontalProgressLine');
+
+      const userStep = currentUser ? (currentUser.onboarding_step || 1) : 1;
+
+      if (topProgressLine) {
+        if (activeStep === 1) topProgressLine.style.width = "15%";
+        else if (activeStep === 2) topProgressLine.style.width = "55%";
+        else if (activeStep === 3) topProgressLine.style.width = "100%";
+      }
+
+      // Circle 1
+      if (topCirc1) {
+        if (activeStep === 1) {
+          topCirc1.className = "w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/25 transition group-hover:scale-105";
+          topCirc1.innerHTML = userStep > 1 ? `<i data-lucide="check" class="w-5 h-5"></i>` : `<span>1</span>`;
+        } else if (userStep >= 2 || (currentUser && currentUser.github_repo_url)) {
+          topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc1.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        } else {
+          topCirc1.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
+          topCirc1.innerHTML = `<span>1</span>`;
+        }
+      }
+
+      // Circle 2
+      if (topCirc2) {
+        if (activeStep === 2) {
+          topCirc2.className = "w-11 h-11 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/30 ring-4 ring-indigo-500/25 transition group-hover:scale-105";
+          topCirc2.innerHTML = userStep >= 3 ? `<i data-lucide="check" class="w-5 h-5"></i>` : `<span>2</span>`;
+        } else if (userStep >= 3 || (currentUser && currentUser.sheet_url)) {
+          topCirc2.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc2.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        } else if (userStep >= 2) {
+          topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-indigo-500 text-indigo-400 font-bold flex items-center justify-center text-sm transition group-hover:scale-105";
+          topCirc2.innerHTML = `<span>2</span>`;
+        } else {
+          topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
+          topCirc2.innerHTML = `<span>2</span>`;
+        }
+      }
+
+      // Circle 3
+      if (topCirc3) {
+        if (activeStep === 3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-500/25 transition group-hover:scale-105";
+          topCirc3.innerHTML = userStep >= 3 ? `<i data-lucide="check" class="w-5 h-5"></i>` : `<span>3</span>`;
+        } else if (userStep >= 3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc3.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+        } else {
+          topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
+          topCirc3.innerHTML = `<span>3</span>`;
+        }
+      }
     }
 
     function updateStepUI(step) {
@@ -1358,8 +1616,7 @@
 
         confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
         setTimeout(() => {
-          const card2 = document.getElementById('cardStep2');
-          if (card2) card2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          switchMasterStep(2);
         }, 1000);
         showStepNotice(
           'siteVerifyNotice',
@@ -1373,7 +1630,7 @@
               👉 Agar aapne abhi tak GitHub Pages on nahi kiya hai, toh upar <strong>'Step C: 1-Click Pages Settings'</strong> par click karke Branch <strong>main</strong> karke <strong>Save</strong> dabana na bhoolein!
             </p>
             <div class="mt-2.5 flex items-center gap-2">
-              <a href="#cardStep2" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
+              <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
                 Step 2: Google Sheet Connect Karein ➔
               </a>
               <a href="${liveUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 font-bold text-xs border border-slate-700 transition">
@@ -1389,7 +1646,7 @@
           `<div>
             <p class="font-bold text-emerald-400">✅ Live Website link save ho gaya hai! Step 2 par aage badhein.</p>
             <div class="mt-2">
-              <a href="#cardStep2" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
+              <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
                 Step 2: Google Sheet Connect Karein ➔
               </a>
             </div>
@@ -1556,8 +1813,7 @@
           updateStepUI(currentUser.onboarding_step);
           document.getElementById('hubSheetLink').href = url;
           setTimeout(() => {
-            const card3 = document.getElementById('cardStep3');
-            if (card3) card3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            switchMasterStep(3);
           }, 1000);
 
           // Sync with Sheet backend
