@@ -196,7 +196,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <!-- 1. Fork/Create Repo Box (PUBLIC BY DEFAULT) -->
+          <!-- 1. Fork/Create Repo Box (CUSTOMIZABLE REPO NAME) -->
           <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
@@ -204,24 +204,49 @@
                   <i data-lucide="github" class="w-4 h-4 text-white"></i>
                   <span>1. GitHub Repository Banayein</span>
                 </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Default Public ✓</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Customizable Name ✓</span>
               </div>
-              <p class="text-xs text-slate-400 mb-3">
-                Niche button par click karein. Yeh repository automatically <strong class="text-emerald-400">"Public"</strong> aur naam <strong class="text-white">"freewebsite"</strong> ke sath open hogi.
-              </p>
               
-              <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl mb-4 text-[11px] space-y-1">
-                <p class="text-emerald-400 font-bold flex items-center gap-1.5">
-                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                  <span>Pre-Configured: 100% Free Public Visibility</span>
+              <p class="text-xs text-slate-400 mb-2.5">
+                Apni website repository ka naam chunein (ya pasand ka naya naam daalein):
+              </p>
+
+              <!-- Custom Repo Name Field with Quick Pills -->
+              <div class="mb-3">
+                <label class="block text-[11px] font-bold text-slate-300 mb-1 flex items-center justify-between">
+                  <span>Repository Ka Naam:</span>
+                  <span class="text-[10px] text-slate-500">Pasand ka naam daal sakte hain</span>
+                </label>
+                <input type="text" id="customRepoNameInput" value="mystore" oninput="updateCustomRepoForkUrl()"
+                       placeholder="jaise: mystore, shop, dukaan, vastustore"
+                       class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
+                
+                <!-- Quick Suggestion Pills -->
+                <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                  <span class="text-[10px] text-slate-500 font-semibold">Pills:</span>
+                  <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
+                  <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
+                  <button type="button" onclick="setQuickRepoName('dukaan')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">dukaan</button>
+                  <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-850 hover:bg-slate-750 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
+                </div>
+              </div>
+
+              <!-- Reassuring info if GitHub says already exists -->
+              <div class="bg-slate-900/95 border border-slate-800 p-3 rounded-xl mb-4 text-[11px] space-y-1.5">
+                <p class="text-amber-400 font-bold flex items-center gap-1.5">
+                  <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                  <span>Agar GitHub par "Already Exists" bole toh?</span>
                 </p>
-                <p class="text-slate-400 text-[10px]">
-                  GitHub khulte hi bas green color ka <strong>"Create repository from template"</strong> button daba dein!
+                <p class="text-slate-300 text-[10px] leading-relaxed">
+                  Toh bilkul ghabrayein nahi! Wahan GitHub par bas koi bhi naya naam (jaise <code class="text-emerald-400 font-bold">shop-1</code>, <code class="text-emerald-400 font-bold">dukaan</code>, ya apna naam) likh dein.
+                </p>
+                <p class="text-slate-400 text-[10px] leading-relaxed">
+                  ⚡ <strong>Aap repo ka naam chahe kuch bhi rakhein</strong> — banne ke baad bas browser ka link copy karke daayein box me paste kar dein, Universal Formula apne aap sahi live URL nikaal lega!
                 </p>
               </div>
             </div>
             
-            <a href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=freewebsite&visibility=public" 
+            <a id="btnForkTemplate" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" 
                target="_blank"
                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
               <i data-lucide="git-fork" class="w-4 h-4"></i>
@@ -245,7 +270,7 @@
 
               <!-- Main Repo Paste Input -->
               <div class="relative mb-3">
-                <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/your-username/freewebsite"
+                <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/your-username/mystore"
                        oninput="handleGhRepoPaste()"
                        class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
               </div>
@@ -262,7 +287,7 @@
                   </button>
                 </div>
                 <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1 px-2 rounded-lg bg-slate-950/80 border border-slate-800">
-                  https://yourusername.github.io/freewebsite/
+                  https://yourusername.github.io/mystore/
                 </div>
               </div>
             </div>
@@ -299,7 +324,7 @@
           </div>
 
           <div class="flex flex-col sm:flex-row gap-2.5 mt-2">
-            <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/freewebsite/"
+            <input type="url" id="siteUrlInput" placeholder="https://yourusername.github.io/home/"
                    class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
             
             <button type="button" onclick="verifyWebsiteLink()" id="verifySiteBtn"
@@ -315,6 +340,21 @@
 
       <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
       <div id="cardStep2" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+        <!-- LOCK OVERLAY FOR STEP 2 (Shown when Step 1 is not complete) -->
+        <div id="lockOverlayStep2" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
+            <i data-lucide="lock" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-heading font-bold text-lg text-white">Step 2 Abhi Locked Hai 🔒</h4>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
+            Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 1</strong> me apni GitHub repository ka link paste karke save karein.
+          </p>
+          <a href="#cardStep1" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25">
+            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+            <span>Pehle Step 1 Poora Karein</span>
+          </a>
+        </div>
+
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div class="flex items-center gap-3">
             <span class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-heading font-black text-lg flex items-center justify-center">2</span>
@@ -376,6 +416,21 @@
 
       <!-- STEP 3: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
       <div id="cardStep3" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden">
+        <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
+        <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
+            <i data-lucide="lock" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-heading font-bold text-lg text-white">Step 3 Abhi Locked Hai 🔒</h4>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
+            Android Mobile App download karne se pehle <strong class="text-indigo-400">Step 2</strong> me apni Google Sheet connect karein.
+          </p>
+          <a href="#cardStep2" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
+            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+            <span>Pehle Step 2 Connect Karein</span>
+          </a>
+        </div>
+
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div class="flex items-center gap-3">
             <span class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">3</span>
@@ -595,6 +650,9 @@
       // Generate dynamic QR code for app sync
       generateSyncQr();
 
+      // Initialize custom fork button
+      updateCustomRepoForkUrl();
+
       // Refresh UI steps
       updateStepUI(currentUser.onboarding_step || 1);
 
@@ -613,6 +671,24 @@
       document.getElementById('appSyncQrCode').src = qrUrl;
     }
 
+    // Dynamic Fork URL Updater for Custom Repo Name
+    function updateCustomRepoForkUrl() {
+      const input = document.getElementById('customRepoNameInput');
+      const btn = document.getElementById('btnForkTemplate');
+      const name = (input ? input.value.trim() : '') || 'mystore';
+      if (btn) {
+        btn.href = `https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=${encodeURIComponent(name)}&visibility=public`;
+      }
+    }
+
+    function setQuickRepoName(name) {
+      const input = document.getElementById('customRepoNameInput');
+      if (input) {
+        input.value = name;
+        updateCustomRepoForkUrl();
+      }
+    }
+
     function updateStepUI(step) {
       const pPercent = document.getElementById('progressPercentText');
       const pStatus = document.getElementById('progressStatusText');
@@ -622,9 +698,16 @@
       const badge2 = document.getElementById('badgeStep2');
       const badge3 = document.getElementById('badgeStep3');
 
+      const card1 = document.getElementById('cardStep1');
+      const card2 = document.getElementById('cardStep2');
+      const card3 = document.getElementById('cardStep3');
+
+      const lock2 = document.getElementById('lockOverlayStep2');
+      const lock3 = document.getElementById('lockOverlayStep3');
+
       if (step === 1) {
         pPercent.innerText = "33%";
-        pStatus.innerText = "Step 1: Website Code Ready";
+        pStatus.innerText = "Step 1 of 3: GitHub Setup Baki Hai";
         pBar.style.width = "33%";
         pBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out";
 
@@ -632,24 +715,40 @@
         badge1.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Action Required</span>`;
 
         badge2.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge2.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Pending Step 1</span>`;
+        badge2.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 1)</span>`;
 
         badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Pending Step 2</span>`;
+        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+
+        if (card1) card1.classList.add('glass-card-active');
+        if (card2) card2.classList.remove('glass-card-active');
+        if (card3) card3.classList.remove('glass-card-active');
+
+        if (lock2) lock2.classList.remove('hidden');
+        if (lock3) lock3.classList.remove('hidden');
+
       } else if (step === 2) {
         pPercent.innerText = "66%";
-        pStatus.innerText = "Step 2: Connect Google Sheet";
+        pStatus.innerText = "Step 2 of 3: Connect Google Sheet";
         pBar.style.width = "66%";
         pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
 
         badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Verified & Live ✓</span>`;
+        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified ✓</span>`;
 
         badge2.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge2.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect</span>`;
+        badge2.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>`;
 
         badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Pending Step 2</span>`;
+        badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+
+        if (card1) card1.classList.remove('glass-card-active');
+        if (card2) card2.classList.add('glass-card-active');
+        if (card3) card3.classList.remove('glass-card-active');
+
+        if (lock2) lock2.classList.add('hidden'); // UNLOCKED!
+        if (lock3) lock3.classList.remove('hidden'); // STILL LOCKED
+
       } else if (step >= 3) {
         pPercent.innerText = "100%";
         pStatus.innerText = "Store 100% Ready & Live! 🎉";
@@ -657,13 +756,20 @@
         pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
 
         badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Verified & Live ✓</span>`;
+        badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified ✓</span>`;
 
         badge2.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
         badge2.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>`;
 
         badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
         badge3.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>`;
+
+        if (card1) card1.classList.remove('glass-card-active');
+        if (card2) card2.classList.remove('glass-card-active');
+        if (card3) card3.classList.add('glass-card-active');
+
+        if (lock2) lock2.classList.add('hidden'); // UNLOCKED
+        if (lock3) lock3.classList.add('hidden'); // UNLOCKED!
       }
       lucide.createIcons();
     }
@@ -677,7 +783,7 @@
       const siteUrlInput = document.getElementById('siteUrlInput');
 
       if (!val) {
-        if (preview) preview.innerText = "https://yourusername.github.io/freewebsite/";
+        if (preview) preview.innerText = "https://yourusername.github.io/home/";
         if (directBtn) directBtn.href = "https://github.com/settings";
         return;
       }
@@ -735,7 +841,7 @@
       }
 
       if (liveUrl.includes('yourusername')) {
-        alert("Kripya sahi GitHub repository URL paste karein (jaise: https://github.com/username/freewebsite)");
+        alert("Kripya sahi GitHub repository URL paste karein (jaise: https://github.com/username/home)");
         if (repoInput) repoInput.focus();
         return;
       }
@@ -769,6 +875,10 @@
         await fetch(saveEndpoint);
 
         confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+        setTimeout(() => {
+          const card2 = document.getElementById('cardStep2');
+          if (card2) card2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1000);
         showStepNotice(
           'siteVerifyNotice',
           `<div>
@@ -954,6 +1064,10 @@
           generateSyncQr();
           updateStepUI(currentUser.onboarding_step);
           document.getElementById('hubSheetLink').href = url;
+          setTimeout(() => {
+            const card3 = document.getElementById('cardStep3');
+            if (card3) card3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 1000);
 
           // Sync with Sheet backend
           const identifier = currentUser.phone || currentUser.email || currentUser.id || "";

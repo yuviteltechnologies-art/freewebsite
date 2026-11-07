@@ -82,36 +82,42 @@ Yeh jo link green box me mili hai, **wahi aapki live testing aur customer ke liy
 ---
 
 #### 🌐 Live Website URL Ka Universal Formula:
-Agar aapko GitHub par dhoondhne me aalas aaye, toh formula bilkul fix hai:
+Chahe aap apni repository ka naam kuch bhi rakhein (`mystore`, `shop`, `dukaan`, `vastustore`), GitHub Pages ka live URL formula hamesha fix rehta hai:
 $$\text{URL} = \text{https://} + \langle\text{aapka-github-username}\rangle + \text{.github.io/} + \langle\text{repo-ka-naam}\rangle + \text{/}$$
 
 * **Udaharan (Example):**
-  - Agar aapka GitHub username **`rajeshkumar`** hai aur repo ka naam **`freewebsite`** hai:
-  - Toh aapki website link hogi: 👉 `https://rajeshkumar.github.io/freewebsite/`
+  - Agar aapka GitHub username **`rajeshkumar`** hai aur repo ka naam **`mystore`** hai:
+  - Toh aapki website link hogi: 👉 `https://rajeshkumar.github.io/mystore/`
 
 ---
 
-#### ⚡ Dashboard Ka "Repo Link Paste ➔ Universal Formula ➔ Google Sheet Save" System:
+#### ⚡ Dashboard Ka "Custom Repo ➔ Paste Link ➔ Universal Formula ➔ Step Gating" System:
 
-Aapko lambi link yaad rakhne ya bananey ki bhi bilkul zaroorat nahi hai:
-
-1. **Repo Public By Default Khulegi:**  
-   Dashboard me **"1-Click Copy on GitHub (Public) 🚀"** par click karein. Yeh link GitHub par automatically repository ka naam **`freewebsite`** aur visibility **`Public`** set karke kholta hai. Customer ko bas green button dabana hai!
+1. **Custom Repo Name & Public By Default:**  
+   - Dashboard me aap apni pasand ka repository naam (jaise: `mystore`, `shop`, `dukaan`) chun sakte hain.
+   - Button dabate hi GitHub automatically **Public** option aur aapke chune huye naam ke sath khulega.
+   - 💡 **Agar GitHub Par "Already Exists" Ya "Not Available" Bole:**  
+     Toh bilkul ghabrayein nahi! Wahan GitHub par bas koi bhi naya naam (jaise: `shop-1`, `dukaan`, `apna-store`) likh dein!
 
 2. **Browser Ka Repo Link Paste Karein:**  
-   Jaise hi GitHub par repo ban jaye, browser ke address bar me jo link dikhe (jaise: `https://github.com/rajeshkumar/freewebsite`), use Dashboard me **"Repo Ka Link Paste Karein"** box me paste kar dein.
+   Repo ka naam chahe kuch bhi ho, bas GitHub par repo banne ke baad browser ka address bar link copy karein (jaise: `https://github.com/rajeshkumar/mystore`) aur Dashboard me paste kar dein.
 
 3. **Universal Formula Se Live Link Automatic Banegi:**  
-   Dashboard bina kisi deri ke **Universal Formula** se live link bana dega:  
-   👉 `https://rajeshkumar.github.io/freewebsite/`
+   Dashboard bina kisi deri ke **Universal Formula** se exact live website link bana dega:  
+   👉 `https://rajeshkumar.github.io/mystore/`
 
 4. **1-Click Pages Settings Kholein:**  
    **`[ ⚙️ 1-Click Pages Settings ↗ ]`** par click karein aur GitHub par Branch ko **`main`** karke **Save** daba dein.
 
-5. **Google Sheet Me Automatic Save:**  
+5. **Google Sheet Me Automatic Save & Step 2 Unlock:**  
    **`[ 💾 Google Sheet Me Save Karein ⚡ ]`** button dabate hi:
-   - Customer ka GitHub Repo link (`github_repo_url`) aur Live Website link (`website_live_url`) **Google Sheet ke `Users` aur `Settings` register me permanent save** ho jata hai!
-   - Website link verify hokar customer turant Step 2 par aage badh jata hai!
+   - Repo link aur Live Website URL **Google Sheet ke `Users` aur `Settings` register me permanent save** ho jate hain!
+   - 🔒 **Gated Process Bar:** Step 1 complete hote hi **Step 2 (Google Sheet) ka lock automatically khul jata hai** aur dashboard smoothly Step 2 par scroll ho jata hai!
+
+6. **Locked Steps Flow (Process Bar System):**  
+   - **Step 1:** Action Required (GitHub setup). Iske complete hone tak Step 2 locked rehta hai.
+   - **Step 2:** Step 1 complete hote hi unlock hota hai. Isme Google Sheet connect hone tak Step 3 locked rehta hai.
+   - **Step 3:** Step 2 complete hote hi Android Admin APK download aur 1-Tap QR sync unlock ho jata hai!
 
 ---
 
