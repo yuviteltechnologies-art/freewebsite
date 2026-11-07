@@ -1013,41 +1013,139 @@
           </span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 items-center">
-          <!-- Download APK Button -->
-          <div class="space-y-4">
-            <div class="bg-purple-950/30 border border-purple-500/20 p-4 rounded-2xl">
-              <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                <span>Zero Typing Automatic Sync</span>
-              </h4>
-              <p class="text-xs text-slate-300 leading-relaxed">
-                App install karne ke baad aapko phone me URL paste karne ki zaroorat nahi hai. Bas apna <strong class="text-white">Email aur Password</strong> daalein (ya daayein taraf ka QR code scan karein) — Sheet apne aap jud jayegi!
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 items-start">
+          
+          <!-- Column 1: Direct APK Download & Sharing -->
+          <div class="space-y-3.5 bg-slate-950/70 border border-slate-800 p-4 sm:p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="smartphone" class="w-4 h-4 text-purple-400"></i>
+                  <span>1. Direct Android App (.APK) Download</span>
+                </h4>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 font-bold border border-purple-500/20">
+                  Direct File 📲
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                Live customer orders dekhne, 1-tap UTR verify karne aur prices update karne ke liye official <strong class="text-white">SheetStore Admin App</strong> download karein.
               </p>
+
+              <!-- Direct APK Download Button -->
+              <a href="downloads/SheetStore-Admin.apk" download="SheetStore-Admin.apk" id="directApkDownloadBtn"
+                 class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-600/25 transition hover:scale-[1.01] active:scale-95 text-center mb-3">
+                <i data-lucide="download" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                <span>Download SheetStore-Admin.apk (Direct File) 📲</span>
+              </a>
+
+              <!-- Direct APK Link Sharing Box -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
+                    <i data-lucide="share-2" class="w-3.5 h-3.5 text-purple-400"></i>
+                    <span>Direct APK Link (WhatsApp ya Mobile pe bhejein):</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono">Direct .apk</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <input type="text" id="directApkUrlInput" readonly
+                         value="https://yuviteltechnologies-art.github.io/freewebsite/downloads/SheetStore-Admin.apk"
+                         class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-purple-300 font-mono select-all focus:outline-none" />
+                  <button type="button" onclick="copyDirectApkLink()" id="btnCopyApkLink"
+                          class="px-3.5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-purple-600/20">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span id="btnCopyApkText">Copy Link</span>
+                  </button>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1.5">
+                  Is link par click karte hi seedhe APK download hogi — koi GitHub folder ya code nahi dikhega.
+                </p>
+              </div>
             </div>
 
-            <a href="https://github.com/yuviteltechnologies-art/freewebsite/tree/main/android-admin-app" 
-               target="_blank"
-               class="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-600/30 transition hover:scale-[1.01] active:scale-95 text-center">
-              <i data-lucide="download" class="w-5 h-5"></i>
-              <span>Download SheetStore-Admin.apk 📲</span>
-            </a>
-
+            <!-- Complete Confirmation Button -->
             <button type="button" onclick="markAppCompleted()" id="markAppBtn"
-                    class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition">
-              <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+                    class="w-full mt-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition active:scale-95">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
               <span>Maine App Install Kar Liya Hai ✓</span>
             </button>
           </div>
 
-          <!-- Dynamic 1-Tap QR Code Box -->
-          <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 text-center">
-            <p class="text-xs font-bold text-slate-200 mb-2">1-Tap Mobile Sync QR Code</p>
-            <div class="bg-white p-2.5 rounded-2xl inline-block shadow-xl mx-auto mb-2 border border-slate-700">
-              <img id="appSyncQrCode" src="" alt="App Sync QR" class="w-36 h-36 mx-auto" />
+          <!-- Column 2: How App Runs with Step 2 Google Sheet Macros URL -->
+          <div class="space-y-3.5 bg-slate-950/70 border border-emerald-500/30 p-4 sm:p-5 rounded-2xl flex flex-col justify-between shadow-lg shadow-emerald-500/5">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="zap" class="w-4 h-4 text-emerald-400"></i>
+                  <span>2. App ko Step 2 Sheet URL se Kaise Chalayein?</span>
+                </h4>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                  Live Sync ⚡
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                Step 2 me deploy kiya hua Google Sheet Web App URL yahan taiyar hai, ise mobile app me paste karein:
+              </p>
+
+              <!-- Step 2 Connected URL Display & 1-Click Copy -->
+              <div class="bg-slate-900/90 border border-emerald-500/30 rounded-xl p-3 mb-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
+                    <i data-lucide="link" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Aapka Connected Web App URL (for Android App):</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Connected API</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <input type="text" id="appStep2UrlDisplay" readonly
+                         value="https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
+                         class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-emerald-300 font-mono select-all focus:outline-none" />
+                  <button type="button" onclick="copyConnectedSheetUrlForApp()" id="btnCopySheetForApp"
+                          class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-emerald-600/20">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span id="btnCopySheetForAppText">Copy URL</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 3 Simple In-App Setup Steps -->
+              <div class="space-y-2.5 text-xs text-slate-300 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">1</span>
+                  <div>
+                    <strong class="text-white">App Kholein:</strong> Phone me install hone ke baad <span class="text-indigo-300 font-medium">SheetStore Admin</span> app open karein.
+                  </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">2</span>
+                  <div>
+                    <strong class="text-white">⚙️ Sheet URL Dabayein:</strong> App me upar right corner me <span class="text-cyan-300 font-semibold">⚙️ Sheet URL</span> button par tap karein.
+                  </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">3</span>
+                  <div>
+                    <strong class="text-white">Paste &amp; Connect:</strong> Upar se copy kiya hua URL paste karke <strong class="text-emerald-400">Save &amp; Connect</strong> dabayein — aapki Google Sheet app se live jud jayegi!
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="text-[11px] text-slate-400">Android app se is QR ko scan karke direct login karein.</p>
+
+            <!-- Alternative QR Scan Option -->
+            <div class="mt-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800/80 flex items-center justify-between gap-3">
+              <div class="text-left">
+                <p class="text-[11px] font-bold text-slate-200 flex items-center gap-1">
+                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-purple-400"></i>
+                  <span>Mobile QR Scan Option:</span>
+                </p>
+                <p class="text-[10px] text-slate-400">Google Lens ya Camera se scan karke direct Sheet URL copy karein.</p>
+              </div>
+              <div class="bg-white p-1 rounded-lg shadow shrink-0">
+                <img id="appSyncQrCode" src="" alt="App Sync QR" class="w-14 h-14" />
+              </div>
+            </div>
           </div>
+
         </div>
 
         <!-- Bottom Navigation Bar for Step 3 -->
@@ -1236,6 +1334,7 @@
 
       // Generate dynamic QR code for app sync
       generateSyncQr();
+      syncAppStepUrlDisplay();
 
       // Initialize custom fork button
       updateCustomRepoForkUrl();
@@ -1453,6 +1552,7 @@
         if (stepNum === 3) {
           card3.classList.remove('hidden');
           card3.classList.add('glass-card-active');
+          syncAppStepUrlDisplay();
         } else {
           card3.classList.add('hidden');
           card3.classList.remove('glass-card-active');
@@ -2084,6 +2184,7 @@
           }
           saveUserLocally();
           generateSyncQr();
+          syncAppStepUrlDisplay(url);
           updateStepUI(currentUser.onboarding_step);
           document.getElementById('hubSheetLink').href = url;
           setTimeout(() => {
@@ -2102,6 +2203,7 @@
         if ((currentUser.onboarding_step || 1) < 3) currentUser.onboarding_step = 3;
         saveUserLocally();
         generateSyncQr();
+        syncAppStepUrlDisplay(url);
         updateStepUI(currentUser.onboarding_step);
       } finally {
         btn.disabled = false;
@@ -2117,6 +2219,45 @@
       updateStepUI(3);
       confetti({ particleCount: 100, spread: 90, origin: { y: 0.5 } });
       alert("Badhai ho! Aapka poora store setup 100% complete ho gaya hai! Ab aap apni website se orders receive karna shuru kar sakte hain.");
+    }
+
+    // Step 3 Helper: Copy Direct APK Link for WhatsApp / Mobile Sharing
+    function copyDirectApkLink() {
+      const input = document.getElementById('directApkUrlInput');
+      const url = (input && input.value) ? input.value : 'https://yuviteltechnologies-art.github.io/freewebsite/downloads/SheetStore-Admin.apk';
+      navigator.clipboard.writeText(url).then(() => {
+        const textSpan = document.getElementById('btnCopyApkText');
+        if (textSpan) textSpan.innerText = "Link Copied! ✓";
+        confetti({ particleCount: 40, spread: 50, origin: { y: 0.7 } });
+        setTimeout(() => {
+          if (textSpan) textSpan.innerText = "Copy Link";
+        }, 2500);
+      }).catch(() => {
+        alert("Direct APK Link:\n" + url);
+      });
+    }
+
+    // Step 3 Helper: Copy Connected Sheet URL for in-app configuration
+    function copyConnectedSheetUrlForApp() {
+      const input = document.getElementById('appStep2UrlDisplay');
+      const url = (input && input.value) ? input.value : ((currentUser && currentUser.sheet_url) || localStorage.getItem('store_sheet_url') || DEFAULT_SHEET_URL);
+      navigator.clipboard.writeText(url).then(() => {
+        const textSpan = document.getElementById('btnCopySheetForAppText');
+        if (textSpan) textSpan.innerText = "Copied! ✓";
+        confetti({ particleCount: 40, spread: 50, origin: { y: 0.7 } });
+        setTimeout(() => {
+          if (textSpan) textSpan.innerText = "Copy URL";
+        }, 2500);
+      }).catch(() => {
+        alert("Aapka Sheet URL:\n" + url);
+      });
+    }
+
+    // Step 3 Helper: Keep App Step 2 URL Display strictly in sync
+    function syncAppStepUrlDisplay(customUrl) {
+      const targetUrl = customUrl || (currentUser && currentUser.sheet_url) || localStorage.getItem('store_sheet_url') || DEFAULT_SHEET_URL;
+      const display = document.getElementById('appStep2UrlDisplay');
+      if (display) display.value = targetUrl;
     }
 
     function showStepNotice(containerId, msg, isSuccess) {
