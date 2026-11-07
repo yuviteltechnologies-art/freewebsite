@@ -286,23 +286,37 @@
                     <i data-lucide="copy" class="w-3 h-3"></i> Copy Link
                   </button>
                 </div>
-                <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1 px-2 rounded-lg bg-slate-950/80 border border-slate-800">
+                <div id="ghPreviewLiveUrl" class="text-xs font-mono font-bold text-emerald-400 break-all select-all py-1 px-2 rounded-lg bg-slate-950/80 border border-slate-800 mb-3">
                   https://yourusername.github.io/mystore/
+                </div>
+
+                <!-- Highlighted 1-Click GitHub Publish CTA -->
+                <div class="p-3 bg-gradient-to-r from-blue-950/80 to-indigo-950/80 border border-blue-500/30 rounded-xl">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px]">!</span>
+                    <p class="text-xs font-bold text-white">Zaroori Step: GitHub Par Website Ko Publish Karein</p>
+                  </div>
+                  <p class="text-[11px] text-slate-300 mb-2 leading-relaxed">
+                    GitHub security rule ke mutabik website live karne ke liye 1 baar 'Save' dabana zaroori hai:
+                  </p>
+                  <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
+                     class="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25 text-center">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    <span>1-Click Me Pages Settings Kholein (Branch: main ➔ Save) ↗</span>
+                  </a>
+                  <p class="text-[10px] text-slate-400 text-center mt-1.5">
+                    1️⃣ Button dabayein ➔ 2️⃣ Branch me 'main' chunein ➔ 3️⃣ 'Save' dabayein!
+                  </p>
                 </div>
               </div>
             </div>
 
-            <!-- Two Powerful Action Buttons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
-                 class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 border border-blue-500/30 font-bold text-xs flex items-center justify-center gap-1.5 transition text-center">
-                <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-                <span>1-Click Pages Settings ↗</span>
-              </a>
+            <!-- Google Sheet Save Button -->
+            <div>
               <button type="button" onclick="saveRepoAndLiveSiteToGoogleSheet()" id="saveToSheetBtn"
-                      class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-emerald-500/20">
-                <i data-lucide="database" class="w-3.5 h-3.5"></i>
-                <span>Google Sheet Me Save Karein ⚡</span>
+                      class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-md shadow-emerald-500/20">
+                <i data-lucide="database" class="w-4 h-4"></i>
+                <span>Google Sheet Me Save Karein & Step 2 Unlock Karein ⚡</span>
               </button>
             </div>
           </div>
