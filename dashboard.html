@@ -703,21 +703,28 @@
 
         <!-- VISUAL DEPLOYMENT GUIDE BOX FOR STEP 2 (CODE KAHAN HAI & DEPLOY KAISE KAREIN) -->
         <div class="mt-6 bg-slate-950/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
-                <i data-lucide="help-circle" class="w-4 h-4"></i>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+                <i data-lucide="code-2" class="w-4 h-4"></i>
               </div>
               <div>
-                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Web App URL Kaise Banega? (Code Kahan Hai?):</h4>
-                <p class="text-[11px] text-slate-400">Aapko koi code likhne ki zaroorat nahi hai — template sheet me code pehle se built-in hai!</p>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Web App URL Kaise Banega? (Code.gs Setup):</h4>
+                <p class="text-[11px] text-slate-400">Apps Script khali dikhe toh 1-click me pura code copy karke paste karein.</p>
               </div>
             </div>
-            <a href="https://github.com/yuviteltechnologies-art/freewebsite/blob/main/Code.gs" target="_blank"
-               class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-blue-400 text-xs font-semibold inline-flex items-center gap-1.5 border border-slate-700 self-start sm:self-auto transition">
-              <i data-lucide="code" class="w-3.5 h-3.5"></i>
-              <span>Code.gs Dekhein ↗</span>
-            </a>
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <button type="button" onclick="copyAppsScriptCode()" id="copyCodeBtn"
+                      class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition active:scale-95">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span id="copyCodeBtnText">1-Click Code.gs Copy Karein 📋</span>
+              </button>
+              <a href="https://raw.githubusercontent.com/yuviteltechnologies-art/freewebsite/main/Code.gs" target="_blank"
+                 class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-semibold inline-flex items-center gap-1 border border-slate-700 transition" title="Raw Code dekhne ke liye">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                <span>Raw</span>
+              </a>
+            </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
@@ -725,10 +732,10 @@
             <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
               <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
                 <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">1</span>
-                <span>Apps Script Kholein</span>
+                <span>Code Paste Karein</span>
               </span>
               <p class="text-[11px] text-slate-300 leading-relaxed">
-                Google Sheet kholne ke baad upar menu me <strong class="text-white">Extensions</strong> &rarr; <strong class="text-white">Apps Script</strong> par click karein. Code pehle se wahan maujood milega.
+                Upar blue <strong class="text-blue-400">1-Click Code Copy</strong> dabayein. Apps Script editor me jaakar <code class="bg-slate-950 px-1 py-0.5 rounded text-white font-mono">Ctrl + A</code> (select all) karein aur <code class="bg-slate-950 px-1 py-0.5 rounded text-emerald-400 font-mono">Ctrl + V</code> (paste) karke <code class="bg-slate-950 px-1 py-0.5 rounded text-white font-mono">Ctrl + S</code> (save) dabayein.
               </p>
             </div>
 
@@ -1827,6 +1834,31 @@
         lucide.createIcons();
       } else {
         notice.classList.add('hidden');
+      }
+    }
+
+    // Step 2: 1-Click Copy Code.gs to Clipboard
+    async function copyAppsScriptCode() {
+      const btn = document.getElementById('copyCodeBtn');
+      const textSpan = document.getElementById('copyCodeBtnText');
+      if (!btn) return;
+      const originalText = textSpan ? textSpan.innerText : "1-Click Code.gs Copy Karein 📋";
+      if (textSpan) textSpan.innerText = "Copying Code...";
+
+      try {
+        const res = await fetch('Code.gs');
+        const code = await res.text();
+        await navigator.clipboard.writeText(code);
+        btn.className = "px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/25 transition active:scale-95";
+        if (textSpan) textSpan.innerText = "Code Copied! (Apps Script me Paste Karein) ✓";
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+        setTimeout(() => {
+          btn.className = "px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition active:scale-95";
+          if (textSpan) textSpan.innerText = originalText;
+        }, 4000);
+      } catch (err) {
+        window.open('https://raw.githubusercontent.com/yuviteltechnologies-art/freewebsite/main/Code.gs', '_blank');
+        if (textSpan) textSpan.innerText = "Code Tab Me Khula Hai ↗";
       }
     }
 
