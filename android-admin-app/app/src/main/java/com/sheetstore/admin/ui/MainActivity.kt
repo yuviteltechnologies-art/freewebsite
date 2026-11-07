@@ -40,6 +40,7 @@ class MainActivity : Activity() {
 
     private lateinit var ordersAdapter: OrdersAdapter
     private lateinit var productsAdapter: ProductsAdapter
+    private lateinit var authBtn: Button
 
     // 5 Ready-made Website Templates
     data class WebTheme(
@@ -143,7 +144,7 @@ class MainActivity : Activity() {
         topBar.addView(appTitle)
 
         // User Auth Login Button
-        val authBtn = Button(this).apply {
+        authBtn = Button(this).apply {
             val email = getLoggedInEmail()
             text = if (email.isNotEmpty()) "👤 ${getLoggedInName()}" else "👤 Login"
             textSize = 11f
@@ -185,16 +186,195 @@ class MainActivity : Activity() {
         // Check Permissions on first start
         checkPermissions()
 
-        // Load Tab 0 (Orders)
-        switchTab(0)
-
-        // On first start: if not logged in, prompt user to log in with Mobile Number & Password for 100% automatic Sheet URL sync!
-        val loggedInEmail = getLoggedInEmail()
-        if (loggedInEmail.isEmpty()) {
+        // Strict Restriction: If Google Sheet is NOT verified with user's mobile/email, show Restricted Lock Screen!
+        if (!isSheetVerified()) {
+            contentContainer.addView(createRestrictedLockScreen())
+            updateNavSelection()
             showAuthDialog(authBtn)
         } else {
+            switchTab(0)
             fetchDashboard()
         }
+    }
+
+    private fun isSheetVerified(): Boolean {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        val verified = prefs.getBoolean("is_sheet_verified", false)
+        val email = getLoggedInEmail()
+        val sheetUrl = getSheetUrl()
+        return verified && email.isNotEmpty() && sheetUrl.isNotEmpty()
+    }
+
+    private fun unlockAppAndLoadDashboard() {
+        authBtn.text = "👤 ${getLoggedInName()}"
+        switchTab(0)
+        fetchDashboard()
+    }
+
+    private fun showSheetPendingDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("⚠️ Google Sheet Verification Pending")
+            .setMessage("Aapka Mobile Number verify ho gaya hai, lekin aapki Google Sheet abhi tak connect nahi hui hai.\n\nAapki dukaan tabhi activate hogi jab aap Dashboard me Step 2 (Google Sheet Connect) poora karenge.")
+            .setPositiveButton("🌐 Open Store Dashboard") { _, _ ->
+                val dashUrl = "https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html"
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(dashUrl)))
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Could not open browser", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Manual URL Daalein") { _, _ ->
+                showSheetUrlDialog()
+            }
+            .setNeutralButton("Cancel", null)
+            .show()
+    }
+
+    private fun createRestrictedLockScreen(): View {
+        val scroll = ScrollView(this).apply {
+            setBackgroundColor(Color.parseColor("#0F172A"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
+
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER_HORIZONTAL
+            setPadding(48, 60, 48, 60)
+        }
+
+        // Lock Graphic Icon
+        val lockBadge = TextView(this).apply {
+            text = "🔒"
+            textSize = 36f
+            gravity = Gravity.CENTER
+            setBackgroundColor(Color.parseColor("#451A03"))
+            setPadding(32, 28, 32, 28)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = 32
+            }
+        }
+        container.addView(lockBadge)
+
+        // Title
+        val lockTitle = TextView(this).apply {
+            text = "Google Sheet Verification Zaroori Hai"
+            textSize = 19f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            setPadding(0, 0, 0, 16)
+        }
+        container.addView(lockTitle)
+
+        // Subtitle / Restriction Message
+        val lockDesc = TextView(this).apply {
+            text = "Aapki dukaan tabhi access hogi jab aapki Google Sheet aapke registered WhatsApp Mobile Number ya Email se verify aur connect ho jayegi."
+            textSize = 13f
+            setTextColor(Color.parseColor("#94A3B8"))
+            gravity = Gravity.CENTER
+            setLineSpacing(10f, 1.2f)
+            setPadding(0, 0, 0, 36)
+        }
+        container.addView(lockDesc)
+
+        // Verification Status Step Box
+        val statusBox = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor("#1E293B"))
+            setPadding(36, 28, 36, 28)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = 36
+            }
+        }
+
+        val isLoggedIn = getLoggedInEmail().isNotEmpty()
+        val step1Text = TextView(this).apply {
+            text = if (isLoggedIn) "✓ 1. Mobile Number: ${getLoggedInPhone().ifEmpty { getLoggedInEmail() }} (Verified)" else "⚠️ 1. Mobile Login: Pending"
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(if (isLoggedIn) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"))
+            setPadding(0, 0, 0, 12)
+        }
+        statusBox.addView(step1Text)
+
+        val isVerified = isSheetVerified()
+        val step2Text = TextView(this).apply {
+            text = if (isVerified) "✓ 2. Google Sheet: Connected & Live" else "❌ 2. Google Sheet: Not Connected"
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(if (isVerified) Color.parseColor("#10B981") else Color.parseColor("#EF4444"))
+        }
+        statusBox.addView(step2Text)
+        container.addView(statusBox)
+
+        // Button 1: Verify via Mobile Number (Login)
+        val loginBtn = Button(this).apply {
+            text = "🔐 Mobile Number Se Verify Karein 🚀"
+            textSize = 13f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            setBackgroundColor(Color.parseColor("#2563EB"))
+            setPadding(32, 28, 32, 28)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = 16
+            }
+            setOnClickListener { showAuthDialog(authBtn) }
+        }
+        container.addView(loginBtn)
+
+        // Button 2: Open Dashboard to Complete Step 2
+        val dashBtn = Button(this).apply {
+            text = "🌐 Dashboard me Step 2 Connect Karein ↗"
+            textSize = 12f
+            setTextColor(Color.WHITE)
+            setBackgroundColor(Color.parseColor("#059669"))
+            setPadding(32, 24, 32, 24)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = 16
+            }
+            setOnClickListener {
+                try {
+                    val url = "https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html"
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                } catch (e: Exception) {
+                    Toast.makeText(this@MainActivity, "Could not open browser", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        container.addView(dashBtn)
+
+        // Button 3: Manual Sheet URL Paste
+        val manualBtn = Button(this).apply {
+            text = "⚙️ Manual Web App URL Daalein"
+            textSize = 11f
+            setTextColor(Color.parseColor("#CBD5E1"))
+            setBackgroundColor(Color.parseColor("#334155"))
+            setPadding(24, 20, 24, 20)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            setOnClickListener { showSheetUrlDialog() }
+        }
+        container.addView(manualBtn)
+
+        scroll.addView(container)
+        return scroll
     }
 
     private fun getSheetUrl(): String {
@@ -223,8 +403,10 @@ class MainActivity : Activity() {
                 val url = input.text.toString().trim()
                 if (url.isNotEmpty()) {
                     saveSheetUrl(url)
-                    Toast.makeText(this, "URL Saved! Fetching data...", Toast.LENGTH_SHORT).show()
-                    fetchDashboard()
+                    getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).edit()
+                        .putBoolean("is_sheet_verified", true).apply()
+                    Toast.makeText(this, "URL Saved & Verified! Fetching data...", Toast.LENGTH_SHORT).show()
+                    unlockAppAndLoadDashboard()
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -296,6 +478,7 @@ class MainActivity : Activity() {
             .remove("website_live_url")
             .remove("github_repo_url")
             .remove("google_spreadsheet_url")
+            .putBoolean("is_sheet_verified", false)
             .apply()
     }
 
@@ -391,6 +574,9 @@ class MainActivity : Activity() {
                     clearAuthSession()
                     authBtn.text = "👤 Login"
                     Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+                    contentContainer.removeAllViews()
+                    contentContainer.addView(createRestrictedLockScreen())
+                    updateNavSelection()
                 }
                 .show()
         } else {
@@ -438,11 +624,21 @@ class MainActivity : Activity() {
                             withContext(Dispatchers.Main) {
                                 if (body != null && body.success && body.user != null) {
                                     val u = body.user
-                                    val resolvedSheetUrl = if (!u.sheetUrl.isNullOrEmpty()) u.sheetUrl else getSheetUrl()
-                                    saveAuthSession(u, resolvedSheetUrl)
-                                    authBtn.text = "👤 ${getLoggedInName()}"
-                                    Toast.makeText(this@MainActivity, "Welcome ${u.name}! Store Connected 🚀", Toast.LENGTH_LONG).show()
-                                    fetchDashboard()
+                                    if (!u.sheetUrl.isNullOrEmpty()) {
+                                        // GOOGLE SHEET IS CONNECTED IN STEP 2: VERIFIED!
+                                        saveAuthSession(u, u.sheetUrl)
+                                        getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).edit()
+                                            .putBoolean("is_sheet_verified", true).apply()
+                                        Toast.makeText(this@MainActivity, "🎉 Google Sheet Verified! Welcome ${u.name} 🚀", Toast.LENGTH_LONG).show()
+                                        unlockAppAndLoadDashboard()
+                                    } else {
+                                        // Mobile is verified, but Step 2 Google Sheet is NOT connected yet: KEEP RESTRICTED!
+                                        saveAuthSession(u, "")
+                                        getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).edit()
+                                            .putBoolean("is_sheet_verified", false).apply()
+                                        showSheetPendingDialog()
+                                        switchTab(0)
+                                    }
                                 } else {
                                     val errMsg = body?.message ?: "Login failed! Kripya details check karein."
                                     Toast.makeText(this@MainActivity, errMsg, Toast.LENGTH_LONG).show()
@@ -492,6 +688,12 @@ class MainActivity : Activity() {
     }
 
     private fun switchTab(tabIndex: Int) {
+        if (!isSheetVerified()) {
+            contentContainer.removeAllViews()
+            contentContainer.addView(createRestrictedLockScreen())
+            updateNavSelection()
+            return
+        }
         currentTab = tabIndex
         contentContainer.removeAllViews()
 
@@ -1395,7 +1597,14 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.TRANSPARENT)
             setTextColor(if (currentTab == index) Color.parseColor("#38BDF8") else Color.parseColor("#94A3B8"))
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            setOnClickListener { switchTab(index) }
+            setOnClickListener {
+                if (!isSheetVerified()) {
+                    Toast.makeText(this@MainActivity, "Pehle Google Sheet verify karein! 🔒", Toast.LENGTH_SHORT).show()
+                    switchTab(index)
+                } else {
+                    switchTab(index)
+                }
+            }
         }
     }
 
