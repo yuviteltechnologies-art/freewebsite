@@ -1076,58 +1076,61 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                  <i data-lucide="zap" class="w-4 h-4 text-emerald-400"></i>
-                  <span>2. App ko Step 2 Sheet URL se Kaise Chalayein?</span>
+                  <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+                  <span>2. App me Zero-Typing Automatic Login</span>
                 </h4>
                 <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                  Live Sync ⚡
+                  Zero Typing ⚡
                 </span>
               </div>
               <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                Step 2 me deploy kiya hua Google Sheet Web App URL yahan taiyar hai, ise mobile app me paste karein:
+                App me <strong class="text-emerald-400">koi bhi lamba URL paste karne ki zaroorat nahi hai!</strong> Step 2 me connect kiya hua Sheet URL aapke Mobile Number se automatically link ho chuka hai.
               </p>
 
-              <!-- Step 2 Connected URL Display & 1-Click Copy -->
-              <div class="bg-slate-900/90 border border-emerald-500/30 rounded-xl p-3 mb-3">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
-                    <i data-lucide="link" class="w-3.5 h-3.5 text-emerald-400"></i>
-                    <span>Aapka Connected Web App URL (for Android App):</span>
-                  </span>
-                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Connected API</span>
+              <!-- Super Easy Automatic Flow Banner -->
+              <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-indigo-950/40 border border-emerald-500/30 rounded-xl p-3.5 mb-3">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</div>
+                  <h5 class="text-xs font-bold text-white">Mobile Number &amp; Password se Direct Login:</h5>
                 </div>
-                <div class="flex items-center gap-2">
-                  <input type="text" id="appStep2UrlDisplay" readonly
-                         value="https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
-                         class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-emerald-300 font-mono select-all focus:outline-none" />
-                  <button type="button" onclick="copyConnectedSheetUrlForApp()" id="btnCopySheetForApp"
-                          class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-emerald-600/20">
-                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                    <span id="btnCopySheetForAppText">Copy URL</span>
-                  </button>
+                <div class="space-y-2 text-xs text-slate-200">
+                  <div class="flex items-start gap-2">
+                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">1</span>
+                    <span>Phone me <strong class="text-white">SheetStore Admin App</strong> open karein.</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">2</span>
+                    <span>Apna <strong class="text-emerald-300">Mobile Number</strong> aur Password (<strong class="text-white font-mono">123456</strong>) daal kar <strong>Log In 🚀</strong> dabayein.</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">3</span>
+                    <span>Central Database se aapki <strong class="text-emerald-400">Google Sheet apne aap connect</strong> ho jayegi aur saare orders live load ho jayenge!</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- 3 Simple In-App Setup Steps -->
-              <div class="space-y-2.5 text-xs text-slate-300 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                <div class="flex items-start gap-2.5">
-                  <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">1</span>
-                  <div>
-                    <strong class="text-white">App Kholein:</strong> Phone me install hone ke baad <span class="text-indigo-300 font-medium">SheetStore Admin</span> app open karein.
-                  </div>
+              <!-- Backup: Step 2 Connected URL Display & 1-Click Copy -->
+              <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
+                    <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i>
+                    <span>Backup Option: Direct Sheet URL Copy</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Optional</span>
                 </div>
-                <div class="flex items-start gap-2.5">
-                  <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">2</span>
-                  <div>
-                    <strong class="text-white">⚙️ Sheet URL Dabayein:</strong> App me upar right corner me <span class="text-cyan-300 font-semibold">⚙️ Sheet URL</span> button par tap karein.
-                  </div>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <input type="text" id="appStep2UrlDisplay" readonly
+                         value="https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
+                         class="w-full px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-[11px] text-emerald-300 font-mono select-all focus:outline-none" />
+                  <button type="button" onclick="copyConnectedSheetUrlForApp()" id="btnCopySheetForApp"
+                          class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1 transition active:scale-95 shadow-md shadow-indigo-600/20">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span id="btnCopySheetForAppText">Copy</span>
+                  </button>
                 </div>
-                <div class="flex items-start gap-2.5">
-                  <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">3</span>
-                  <div>
-                    <strong class="text-white">Paste &amp; Connect:</strong> Upar se copy kiya hua URL paste karke <strong class="text-emerald-400">Save &amp; Connect</strong> dabayein — aapki Google Sheet app se live jud jayegi!
-                  </div>
-                </div>
+                <p class="text-[10px] text-slate-400">
+                  (Agar manual paste karna chahein toh app me upar <strong class="text-slate-300">⚙️ Sheet URL</strong> par tap karke ye link paste kar sakte hain).
+                </p>
               </div>
             </div>
 

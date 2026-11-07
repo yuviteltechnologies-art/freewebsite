@@ -97,6 +97,7 @@ class MainActivity : Activity() {
     companion object {
         private const val REQUEST_PICK_LOGO = 2001
         private const val REQUEST_PICK_BANNER = 2002
+        private const val MASTER_AUTH_URL = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
     }
 
     // Views in Website Customizer
@@ -187,10 +188,10 @@ class MainActivity : Activity() {
         // Load Tab 0 (Orders)
         switchTab(0)
 
-        // Check if Sheet URL is configured, else prompt user
-        val sheetUrl = getSheetUrl()
-        if (sheetUrl.isEmpty()) {
-            showSheetUrlDialog()
+        // On first start: if not logged in, prompt user to log in with Mobile Number & Password for 100% automatic Sheet URL sync!
+        val loggedInEmail = getLoggedInEmail()
+        if (loggedInEmail.isEmpty()) {
+            showAuthDialog(authBtn)
         } else {
             fetchDashboard()
         }
@@ -314,19 +315,20 @@ class MainActivity : Activity() {
                         return@setPositiveButton
                     }
 
-                    val url = getSheetUrl()
                     CoroutineScope(Dispatchers.IO).launch {
                         try {
-                            val call = ApiClient.service.login(url, "login", email, pass)
+                            // Always authenticate against Central Master Users Database (which stores the user's Step 2 Sheet URL)
+                            val call = ApiClient.service.login(MASTER_AUTH_URL, "login", email, pass)
                             val res = call.execute()
                             val body = res.body()
 
                             withContext(Dispatchers.Main) {
                                 if (body != null && body.success && body.user != null) {
                                     val u = body.user
-                                    saveAuthSession(u.name ?: "User", u.email ?: email, u.sheetUrl)
+                                    val resolvedSheetUrl = if (!u.sheetUrl.isNullOrEmpty()) u.sheetUrl else getSheetUrl()
+                                    saveAuthSession(u.name ?: "User", u.email ?: email, resolvedSheetUrl)
                                     authBtn.text = "👤 ${getLoggedInName()}"
-                                    Toast.makeText(this@MainActivity, "Welcome ${u.name}! Connected to Sheet 🚀", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this@MainActivity, "Welcome ${u.name}! Store Connected 🚀", Toast.LENGTH_LONG).show()
                                     fetchDashboard()
                                 } else {
                                     val errMsg = body?.message ?: "Login failed! Kripya details check karein."
