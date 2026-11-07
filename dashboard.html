@@ -707,72 +707,131 @@
 
         <div id="sheetConnectNotice" class="hidden mt-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
 
-        <!-- VISUAL DEPLOYMENT GUIDE BOX FOR STEP 2 (CODE KAHAN HAI & DEPLOY KAISE KAREIN) -->
+        <!-- VISUAL DEPLOYMENT GUIDE BOX FOR STEP 2 (LIVE SCREENSHOT GUIDE) -->
         <div class="mt-6 bg-slate-950/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
-                <i data-lucide="code-2" class="w-4 h-4"></i>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                <i data-lucide="camera" class="w-4 h-4"></i>
               </div>
               <div>
-                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Web App URL Kaise Banega? (Code.gs Setup):</h4>
-                <p class="text-[11px] text-slate-400">Apps Script khali dikhe toh 1-click me pura code copy karke paste karein.</p>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Google Sheet Deployment Guide (Live Screenshots):</h4>
+                <p class="text-[11px] text-slate-400">Sheet copy karne ke baad in 4 aasan steps me Web App deploy karein.</p>
               </div>
             </div>
-            <div class="flex items-center gap-2 self-start sm:self-auto">
-              <button type="button" onclick="copyAppsScriptCode()" id="copyCodeBtn"
-                      class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition active:scale-95">
-                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                <span id="copyCodeBtnText">1-Click Code.gs Copy Karein 📋</span>
-              </button>
-              <a href="https://raw.githubusercontent.com/yuviteltechnologies-art/freewebsite/main/Code.gs" target="_blank"
-                 class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-semibold inline-flex items-center gap-1 border border-slate-700 transition" title="Raw Code dekhne ke liye">
-                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                <span>Raw</span>
-              </a>
-            </div>
+            <span class="text-[10px] text-slate-400 font-medium">Click karke bada dekhein 🔍</span>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <!-- Step A -->
-            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
-              <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
-                <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">1</span>
-                <span>Code Paste Karein</span>
-              </span>
-              <p class="text-[11px] text-slate-300 leading-relaxed">
-                Upar blue <strong class="text-blue-400">1-Click Code Copy</strong> dabayein. Apps Script editor me jaakar <code class="bg-slate-950 px-1 py-0.5 rounded text-white font-mono">Ctrl + A</code> (select all) karein aur <code class="bg-slate-950 px-1 py-0.5 rounded text-emerald-400 font-mono">Ctrl + V</code> (paste) karke <code class="bg-slate-950 px-1 py-0.5 rounded text-white font-mono">Ctrl + S</code> (save) dabayein.
-              </p>
+          <!-- 4 Visual Step Cards Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            
+            <!-- Card 1: Extensions -> Apps Script -->
+            <div class="bg-slate-900/90 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-blue-500/40 transition group">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px]">1</span>
+                    <span>Extensions Click</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Menu</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                  Sheet me upar <strong class="text-white">Extensions</strong> par click karke <strong class="text-white">Apps Script</strong> chunein.
+                </p>
+              </div>
+
+              <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer relative group-hover:border-blue-500/50 transition"
+                   onclick="openImageModal('assets/images/appscript-step2-click-apps-script.jpg', 'Step 1: Sheet me upar Extensions menu par click karein aur Apps Script select karein.')">
+                <img src="assets/images/appscript-step2-click-apps-script.jpg" alt="Extensions Apps Script" class="w-full h-32 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">🔍 Bada Dekhein</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Step B -->
-            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
-              <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
-                <span class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px]">2</span>
-                <span>New Deployment Karein</span>
-              </span>
-              <p class="text-[11px] text-slate-300 leading-relaxed">
-                Blue <strong class="text-white">Deploy</strong> button &rarr; <strong class="text-white">New deployment</strong> &rarr; Web app chunein. <strong class="text-amber-400">Who has access: Anyone</strong> zaroor select karein.
-              </p>
+            <!-- Card 2: Code Ready -> New Deployment -->
+            <div class="bg-slate-900/90 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-indigo-500/40 transition group">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center text-[10px]">2</span>
+                    <span>New Deployment</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">Deploy</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                  Code <strong class="text-emerald-400">pehle se paste hoga!</strong> Upar blue <strong class="text-white">Deploy &rarr; New deployment</strong> dabayein.
+                </p>
+              </div>
+
+              <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer relative group-hover:border-indigo-500/50 transition"
+                   onclick="openImageModal('assets/images/appscript-step3-new-deployment.jpg', 'Step 2: Aisi window khulegi jisme Code.gs pehle se paste hoga! Upar blue Deploy button par click karke New deployment chunein.')">
+                <img src="assets/images/appscript-step3-new-deployment.jpg" alt="Deploy New deployment" class="w-full h-32 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                <div class="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">🔍 Bada Dekhein</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Step C -->
-            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
-              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                <span class="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">3</span>
-                <span>Web App URL Paste Karein</span>
-              </span>
-              <p class="text-[11px] text-slate-300 leading-relaxed">
-                Deploy hone ke baad mila hua <strong class="text-emerald-400 font-mono text-[10px]">.../exec</strong> URL copy karein aur yahan input me paste karke <strong class="text-white">Connect</strong> dabayein!
-              </p>
+            <!-- Card 3: Select Web App -->
+            <div class="bg-slate-900/90 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-purple-500/40 transition group">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-purple-400 flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-purple-500/20 flex items-center justify-center text-[10px]">3</span>
+                    <span>Web App Select</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono">Gear ⚙️</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                  Left me gear icon ⚙️ par click karke <strong class="text-white">Web app</strong> select karein.
+                </p>
+              </div>
+
+              <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer relative group-hover:border-purple-500/50 transition"
+                   onclick="openImageModal('assets/images/appscript-step4-select-webapp.jpg', 'Step 3: Gear icon par click karke Web app option select karein.')">
+                <img src="assets/images/appscript-step4-select-webapp.jpg" alt="Select Web app" class="w-full h-32 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                <div class="absolute inset-0 bg-purple-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">🔍 Bada Dekhein</span>
+                </div>
+              </div>
             </div>
+
+            <!-- Card 4: Access: Anyone & Deploy -->
+            <div class="bg-slate-900/90 rounded-xl border border-slate-800 p-3 flex flex-col justify-between hover:border-emerald-500/40 transition group">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">4</span>
+                    <span>Anyone &amp; Deploy</span>
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Crucial</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-tight mb-2.5">
+                  <strong class="text-amber-400">Sabse Zaroori:</strong> 'Who has access' me <strong class="text-emerald-400">Anyone</strong> chunein aur blue <strong class="text-white">Deploy</strong> dabayein!
+                </p>
+              </div>
+
+              <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer relative group-hover:border-emerald-500/50 transition"
+                   onclick="openImageModal('assets/images/appscript-step5-configure-anyone.jpg', 'Step 4: Sabse zaroori: Who has access me Anyone chunein aur blue Deploy button par click karein.')">
+                <img src="assets/images/appscript-step5-configure-anyone.jpg" alt="Configure Web App Anyone" class="w-full h-32 object-contain bg-slate-950 p-1 rounded group-hover:scale-105 transition duration-300" />
+                <div class="absolute inset-0 bg-emerald-600/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-black/80 text-white font-semibold">🔍 Bada Dekhein</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-[11px] text-amber-300 flex items-start gap-2">
-            <i data-lucide="info" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
-            <div>
-              <strong>Kripya Dhyan Dein:</strong> Direct Google Sheet ka link (<code class="bg-slate-900 px-1 py-0.5 rounded text-amber-200">docs.google.com/spreadsheets/d/...</code>) sirf sheet dekhne ke liye hota hai. Website se live orders auto-save karne aur UPI verification ke liye Google ki security policy ke tahat <strong>Web App URL</strong> zaroori hota hai (jo sirf 1 baar 20 second me banta hai).
+          <!-- Helpful footer note -->
+          <div class="p-3 bg-blue-950/40 border border-blue-500/30 rounded-xl text-xs text-slate-300 flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0"></i>
+              <span>Deploy dabane ke baad Google permissions mangega aur aapko <strong>Web App URL</strong> mil jayega jise upar paste karna hai.</span>
             </div>
+            <button type="button" onclick="copyAppsScriptCode()" class="text-xs text-blue-400 hover:text-white font-bold flex items-center gap-1 transition">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Backup: Code.gs Copy</span>
+            </button>
           </div>
         </div>
 
