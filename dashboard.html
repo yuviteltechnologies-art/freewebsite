@@ -177,13 +177,12 @@
           <span id="stepLabel3">3. Android Admin App</span>
         </div>
       </div>
-    </div>
 
-    <!-- 3 STEP ONBOARDING ACCORDION / CARDS -->
-    <div class="space-y-6">
+      <!-- ACTIVE MASTER STEP PROCESS CONTAINER (INSIDE SAME SINGLE UNIFIED CARD) -->
+      <div id="masterStepContainer" class="mt-8 pt-8 border-t border-slate-800/80">
 
-      <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
-      <div id="cardStep1" class="glass-card glass-card-active rounded-3xl p-5 sm:p-8 transition-all relative overflow-hidden">
+        <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
+        <div id="cardStep1" class="transition-all relative">
         
         <!-- TOP CARD HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
@@ -619,7 +618,7 @@
       </div>
 
       <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
-      <div id="cardStep2" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden hidden">
+      <div id="cardStep2" class="transition-all relative hidden">
         <!-- Top Back Navigation -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
           <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
@@ -716,7 +715,7 @@
       </div>
 
       <!-- STEP 3: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
-      <div id="cardStep3" class="glass-card rounded-3xl p-6 sm:p-8 transition-all relative overflow-hidden hidden">
+      <div id="cardStep3" class="transition-all relative hidden">
         <!-- Top Back Navigation -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
           <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-indigo-400 text-xs font-bold transition active:scale-95 border border-slate-700">
@@ -724,7 +723,7 @@
             <span>Pichhla: Step 2 (Google Sheet)</span>
           </button>
           <span class="text-[11px] text-slate-400 font-medium">Master Step 3 of 3</span>
-        </div>">
+        </div>
         <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
         <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
@@ -805,6 +804,10 @@
         </div>
       </div>
 
+      <!-- END OF ACTIVE MASTER STEP CONTAINER -->
+      </div>
+
+    <!-- END OF UNIFIED 3-STEP STORE SETUP WIZARD CARD -->
     </div>
 
     <!-- STORE QUICK HUB / MANAGEMENT PREVIEW -->
