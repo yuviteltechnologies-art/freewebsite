@@ -317,22 +317,64 @@
                 </div>
 
                 <!-- Highlighted STEP C: 1-Click GitHub Publish CTA -->
-                <div id="ghPublishCtaBox" class="p-3.5 bg-gradient-to-r from-blue-950/90 to-indigo-950/90 border border-blue-500/30 rounded-xl">
-                  <div class="flex items-center gap-2 mb-1">
-                    <span class="w-5 h-5 rounded-md bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px]">C</span>
-                    <p class="text-xs font-bold text-white">Step C: 1-Click Me Website Publish Karein</p>
+                <div id="ghPublishCtaBox" class="p-4 bg-gradient-to-r from-blue-950/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl">
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-md bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs">C</span>
+                      <p class="text-xs font-bold text-white">Step C: 1-Click Me Website Publish Karein</p>
+                    </div>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">Sirf 5 Seconds Ka Kaam</span>
                   </div>
+
                   <p class="text-[11px] text-slate-300 mb-2.5 leading-relaxed">
-                    GitHub security rule ke mutabik website live karne ke liye 1 baar 'Save' dabana zaroori hai:
+                    Neeche blue button dabayein ➔ GitHub par Pages settings khulegi. Wahan bas <strong>main</strong> chunein aur <strong>Save</strong> dabayein:
                   </p>
+                  
                   <a id="ghDirectSettingsBtn" href="https://github.com/settings" target="_blank"
-                     class="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25 text-center">
+                     class="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25 text-center mb-3">
                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                     <span>Step C: Pages Settings Kholein (Branch: main ➔ Save) ↗</span>
                   </a>
-                  <p class="text-[10px] text-slate-400 text-center mt-1.5">
-                    1️⃣ Button dabayein ➔ 2️⃣ Branch me 'main' chunein ➔ 3️⃣ 'Save' dabayein! (5 second)
-                  </p>
+
+                  <!-- Screenshot Visual Guide -->
+                  <div class="bg-slate-950/90 rounded-xl border border-blue-500/40 p-2.5 text-left">
+                    <div class="flex items-center justify-between mb-1.5">
+                      <span class="text-[10px] font-bold text-white flex items-center gap-1">
+                        <i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-400"></i>
+                        <span>GitHub Par Yeh Screen Aayegi (Dekh Kar Karein):</span>
+                      </span>
+                      <span class="text-[9px] text-slate-400 font-mono">Screenshot</span>
+                    </div>
+
+                    <!-- Focused Screenshot Image -->
+                    <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 relative group cursor-pointer"
+                         onclick="openImageModal('assets/images/github-pages-step2-main-save.jpg', 'GitHub Pages Settings: Branch dropdown me main chunein, aage /(root) rahega, fir Save par click karein.')">
+                      <img src="assets/images/github-pages-step2-main-save.jpg" 
+                           alt="GitHub Pages Branch main Save Screenshot" 
+                           class="w-full h-auto max-h-48 object-contain mx-auto rounded-lg group-hover:scale-[1.02] transition duration-300" />
+                      <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition flex items-center justify-center pointer-events-none">
+                        <span class="text-[10px] px-2.5 py-1 rounded-md bg-black/80 text-white font-semibold opacity-0 group-hover:opacity-100 transition shadow">
+                          Bada Karke Dekhein 🔍
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- 3 Clear Instructions in Hindi/Hinglish -->
+                    <div class="mt-2.5 space-y-1 text-[11px] text-slate-300">
+                      <p class="flex items-start gap-1.5">
+                        <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                        <span>Branch section me jahan <strong class="text-amber-400 font-mono">None</strong> likha hai, use click karke <strong class="text-emerald-400 font-mono">main</strong> select karein.</span>
+                      </p>
+                      <p class="flex items-start gap-1.5">
+                        <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                        <span>Jaise hi <strong class="text-emerald-400 font-mono">main</strong> chuneinge, aage <strong class="text-blue-400 font-mono">/(root)</strong> apne aap aa jayega.</span>
+                      </p>
+                      <p class="flex items-start gap-1.5">
+                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                        <span>Ab <strong class="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Save</strong> button par click karein aur 30-60 second wait karein!</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1283,7 +1325,40 @@
       localStorage.removeItem('sheetstore_auth_user');
       window.location.href = "auth.html";
     }
+
+    // Lightbox modal helpers for screenshots
+    function openImageModal(src, caption) {
+      const modal = document.getElementById('imageLightboxModal');
+      const img = document.getElementById('lightboxImage');
+      const cap = document.getElementById('lightboxCaption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || 'Click anywhere to close';
+        modal.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageLightboxModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeImageModal();
+    });
   </script>
+
+  <!-- Lightbox Modal for Screenshots -->
+  <div id="imageLightboxModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+    <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <button type="button" onclick="closeImageModal()" class="absolute -top-10 right-0 p-1.5 px-3 text-white hover:text-red-400 font-bold text-xs flex items-center gap-1 bg-slate-900 rounded-lg border border-slate-700">
+        <i data-lucide="x" class="w-3.5 h-3.5"></i> Band Karein [ESC]
+      </button>
+      <img id="lightboxImage" src="" alt="Screenshot" class="max-w-full max-h-[80vh] rounded-xl border border-slate-700 shadow-2xl object-contain bg-slate-950" />
+      <p id="lightboxCaption" class="text-xs text-slate-300 mt-2.5 text-center font-medium max-w-lg"></p>
+    </div>
+  </div>
 </body>
 </html>
 
