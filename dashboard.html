@@ -270,7 +270,7 @@
 
               <!-- Main Repo Paste Input -->
               <div class="relative mb-3">
-                <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/your-username/mystore"
+                <input type="url" id="ghRepoUrlInput" placeholder="https://github.com/your-username/mystore ya .github.io link"
                        oninput="handleGhRepoPaste()"
                        class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono" />
               </div>
@@ -783,22 +783,38 @@
       const siteUrlInput = document.getElementById('siteUrlInput');
 
       if (!val) {
-        if (preview) preview.innerText = "https://yourusername.github.io/home/";
+        if (preview) preview.innerText = "https://yourusername.github.io/mystore/";
         if (directBtn) directBtn.href = "https://github.com/settings";
         return;
       }
 
-      // Regex to extract owner and repo from standard github URLs (e.g. https://github.com/owner/repo)
-      let match = val.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^\/\s#?]+)\/([^\/\s#?]+)/i);
-      if (!match) {
-        match = val.match(/^([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)$/);
+      let owner = '';
+      let repo = '';
+
+      // 1. Match github.io format: https://owner.github.io/repo/
+      const ioMatch = val.match(/(?:https?:\/\/)?([a-zA-Z0-9-_]+)\.github\.io\/([^\/\s#?]+)/i);
+      if (ioMatch && ioMatch[1] && ioMatch[2]) {
+        owner = ioMatch[1].trim();
+        repo = ioMatch[2].trim().replace(/\.git$/i, '');
+      } else {
+        // 2. Match github.com format: https://github.com/owner/repo
+        const comMatch = val.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^\/\s#?]+)\/([^\/\s#?]+)/i);
+        if (comMatch && comMatch[1] && comMatch[2]) {
+          owner = comMatch[1].trim();
+          repo = comMatch[2].trim().replace(/\.git$/i, '');
+        } else {
+          // 3. Match owner/repo format
+          const slashMatch = val.match(/^([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)$/);
+          if (slashMatch && slashMatch[1] && slashMatch[2]) {
+            owner = slashMatch[1].trim();
+            repo = slashMatch[2].trim().replace(/\.git$/i, '');
+          }
+        }
       }
 
-      if (match && match[1] && match[2]) {
-        const owner = match[1].trim();
-        let repo = match[2].trim().replace(/\.git$/i, '');
-        
+      if (owner && repo) {
         // Universal Formula: https://<owner>.github.io/<repo>/
+        const repoUrl = `https://github.com/${owner}/${repo}`;
         const liveWebsiteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`;
         const settingsPagesUrl = `https://github.com/${owner}/${repo}/settings/pages`;
 
@@ -806,7 +822,7 @@
         if (directBtn) directBtn.href = settingsPagesUrl;
         if (siteUrlInput) siteUrlInput.value = liveWebsiteUrl;
 
-        currentUser.github_repo_url = val;
+        currentUser.github_repo_url = repoUrl;
         currentUser.website_live_url = liveWebsiteUrl;
       }
     }
@@ -990,22 +1006,33 @@
           const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
           fetch(`${getBackendUrl()}?action=updateUserProfile&identifier=${encodeURIComponent(identifier)}&website_live_url=${encodeURIComponent(url)}&onboarding_step=${currentUser.onboarding_step}`);
         } else {
+          // Extract owner and repo from url to give exact Settings > Pages direct link
+          let directPagesUrl = 'https://github.com/settings';
+          const match = url.match(/https?:\/\/([^.]+)\.github\.io\/([^/]+)/i);
+          if (match && match[1] && match[2]) {
+            directPagesUrl = `https://github.com/${match[1]}/${match[2]}/settings/pages`;
+          }
+
           showStepNotice(
             'siteVerifyNotice',
             `<div>
-              <p class="font-bold text-amber-300">Website abhi respond nahi kar rahi (Status: ${data && data.status_code ? data.status_code : 'Compiling'}).</p>
-              <p class="text-[11px] text-slate-300 mt-1">
-                ⏱️ <strong>GitHub ko pehli baar website build karne me 30 se 60 seconds lagte hain.</strong><br>
-                1. Kripya check karein ki Settings ➔ Pages me branch <strong>main</strong> select karke <strong>Save</strong> dabaya hai ya nahi.<br>
-                2. Agar Save kar diya hai, toh 30 second baad dobara Verify dabayein, ya direct continue karein:
+              <p class="font-bold text-amber-300">⚠️ Website Status 404: GitHub Pages Abhi ON Nahi Hua Hai</p>
+              <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                Aapki repository create ho chuki hai, lekin GitHub par Pages deployment abhi enable nahi hua hai.<br>
+                <strong>Sirf 30 Seconds Ka 1 Chhota Kaam Baki Hai:</strong><br>
+                1. Niche blue button dabayein (seedha Pages settings khul jayegi).<br>
+                2. <strong>Branch</strong> dropdown me <strong>main</strong> chunein aur <strong>Save</strong> dabayein!<br>
+                3. Save karne ke 30-40 second baad website live ho jayegi.
               </p>
-              <div class="mt-2.5 flex items-center gap-2">
-                <button type="button" onclick="forceSaveWebsiteUrl('${url}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition">
-                  Maine Settings Kar Di Hai, Save & Step 2 Par Chalein ✓
-                </button>
-                <a href="${url}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 font-bold text-xs border border-slate-700 transition">
-                  Browser Me Check Karein ↗
+              <div class="mt-3 flex flex-wrap items-center gap-2">
+                <a href="${directPagesUrl}" target="_blank" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md shadow-blue-500/25 transition">
+                  <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                  <span>1-Click Pages Settings Kholein (Branch: main ➔ Save) ↗</span>
                 </a>
+                <button type="button" onclick="forceSaveWebsiteUrl('${url}')" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/20 transition">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                  <span>Maine Save Kar Diya Hai ➔ Step 2 Par Chalein ✓</span>
+                </button>
               </div>
             </div>`,
             false
