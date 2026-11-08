@@ -669,7 +669,12 @@ class MainActivity : Activity() {
                 Toast.makeText(this@MainActivity, "Could not open browser", Toast.LENGTH_SHORT).show()
             }
         }
-        (dashBtn.layoutParams as LinearLayout.LayoutParams).topMargin = UiKit.dp(this, 12)
+        dashBtn.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            topMargin = UiKit.dp(this@MainActivity, 12)
+        }
         container.addView(dashBtn)
 
         // Button 3: Manual Sheet URL Paste
@@ -679,7 +684,12 @@ class MainActivity : Activity() {
         ) {
             showSheetUrlDialog()
         }
-        (manualBtn.layoutParams as LinearLayout.LayoutParams).topMargin = UiKit.dp(this, 12)
+        manualBtn.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            topMargin = UiKit.dp(this@MainActivity, 12)
+        }
         container.addView(manualBtn)
 
         scroll.addView(container)
@@ -945,13 +955,14 @@ class MainActivity : Activity() {
             }
         }
 
-        val btnAutoSyncInfo = UiKit.createSecondaryButton(this, "🤖 Auto-Sync (SMS)", "#CBD5E1") {
-            showAutoSyncSettingsDialog()
+        val btnRefreshOrders = UiKit.createSecondaryButton(this, "🔄 Sync Sheet", "#38BDF8") {
+            fetchDashboard()
+            Toast.makeText(this@MainActivity, "Refreshing orders from Google Sheet...", Toast.LENGTH_SHORT).show()
         }
-        btnAutoSyncInfo.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 42), 1f)
+        btnRefreshOrders.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 42), 1f)
 
         manualBtnRow.addView(btnApproveUtr)
-        manualBtnRow.addView(btnAutoSyncInfo)
+        manualBtnRow.addView(btnRefreshOrders)
         manualCard.addView(manualBtnRow)
         scrollContent.addView(manualCard)
 
@@ -1191,131 +1202,6 @@ class MainActivity : Activity() {
         dialog.show()
     }
 
-    private fun showAutoSyncSettingsDialog() {
-        val hasSms = ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
-        val listeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-        val hasNotification = listeners != null && listeners.contains(packageName)
-
-        val dialogView = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#0F172A"),
-                strokeColor = Color.parseColor("#38BDF8"),
-                strokeWidthDp = 1,
-                radiusDp = 20f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20))
-        }
-
-        val title = TextView(this).apply {
-            text = "🤖 Auto-Sync Bank Payments (Optional)"
-            textSize = 15f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-        }
-        dialogView.addView(title)
-
-        val desc = TextView(this).apply {
-            text = "Yeh feature OPTIONAL hai. Agar aap enable karte hain, toh PhonePe/GPay SMS aate hi app background me order ko khud ba khud Google Sheet me verify kar dega.\n\nAgar aap permissions nahi dena chahte, toh manual 1-Tap approval bina kisi permission ke hamesha kaam karta hai."
-            textSize = 11.5f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
-        }
-        dialogView.addView(desc)
-
-        // Status 1: SMS Permission
-        val smsRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
-        }
-        val smsLabel = TextView(this).apply {
-            text = "📩 Bank SMS Permission:"
-            textSize = 12f
-            setTextColor(Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-        }
-        val smsBadge = UiKit.createPillBadge(
-            this,
-            if (hasSms) "Granted ✓" else "Not Granted",
-            if (hasSms) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"),
-            if (hasSms) Color.parseColor("#064E3B") else Color.parseColor("#451A03"),
-            if (hasSms) Color.parseColor("#10B981") else Color.parseColor("#D97706")
-        )
-        smsRow.addView(smsLabel)
-        smsRow.addView(smsBadge)
-        dialogView.addView(smsRow)
-
-        // Status 2: Notification Listener
-        val notifRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 14))
-        }
-        val notifLabel = TextView(this).apply {
-            text = "🔔 PhonePe/GPay Notification:"
-            textSize = 12f
-            setTextColor(Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-        }
-        val notifBadge = UiKit.createPillBadge(
-            this,
-            if (hasNotification) "Active ✓" else "Inactive",
-            if (hasNotification) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"),
-            if (hasNotification) Color.parseColor("#064E3B") else Color.parseColor("#451A03"),
-            if (hasNotification) Color.parseColor("#10B981") else Color.parseColor("#D97706")
-        )
-        notifRow.addView(notifLabel)
-        notifRow.addView(notifBadge)
-        dialogView.addView(notifRow)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .create()
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        val btnSms = Button(this).apply {
-            text = if (hasSms) "SMS Permission Enabled ✓" else "Grant Bank SMS Permission"
-            textSize = 11f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            background = UiKit.gradientButtonDrawable(
-                startColor = Color.parseColor("#2563EB"),
-                endColor = Color.parseColor("#1D4ED8"),
-                radiusDp = 12f,
-                context = this@MainActivity
-            )
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 40)).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 8)
-            }
-            isEnabled = !hasSms
-            setOnClickListener {
-                dialog.dismiss()
-                ActivityCompat.requestPermissions(
-                    this@MainActivity,
-                    arrayOf(android.Manifest.permission.RECEIVE_SMS, android.Manifest.permission.READ_SMS),
-                    101
-                )
-            }
-        }
-        dialogView.addView(btnSms)
-
-        val btnNotif = UiKit.createSecondaryButton(this, if (hasNotification) "Notification Access Active ✓" else "Open Notification Settings", "#38BDF8") {
-            dialog.dismiss()
-            try {
-                startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
-            } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "Could not open settings", Toast.LENGTH_SHORT).show()
-            }
-        }
-        btnNotif.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38))
-        dialogView.addView(btnNotif)
-
-        dialog.show()
-    }
-
     // ==========================================
     // TAB 1: NICHE & 6 READY-MADE THEMES
     // ==========================================
@@ -1384,7 +1270,12 @@ class MainActivity : Activity() {
             contentContainer.removeAllViews()
             contentContainer.addView(createOnboardingView())
         }
-        (switchNicheBtn.layoutParams as LinearLayout.LayoutParams).topMargin = UiKit.dp(this, 12)
+        switchNicheBtn.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            topMargin = UiKit.dp(this@MainActivity, 12)
+        }
         nicheBanner.addView(switchNicheBtn)
         container.addView(nicheBanner)
 
@@ -2499,7 +2390,12 @@ class MainActivity : Activity() {
                 }
             }
         }
-        (testWaBtn.layoutParams as LinearLayout.LayoutParams).bottomMargin = UiKit.dp(this, 16)
+        testWaBtn.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            UiKit.dp(this@MainActivity, 38)
+        ).apply {
+            bottomMargin = UiKit.dp(this@MainActivity, 16)
+        }
         layout.addView(testWaBtn)
 
         // 6. GOOGLE SHEET BACKEND
@@ -2737,7 +2633,12 @@ class MainActivity : Activity() {
                     } catch (e: Exception) {}
                 }
             }
-            (openSheetBtn.layoutParams as LinearLayout.LayoutParams).topMargin = UiKit.dp(this@MainActivity, 10)
+            openSheetBtn.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                topMargin = UiKit.dp(this@MainActivity, 10)
+            }
             infoLayout.addView(openSheetBtn)
 
             AlertDialog.Builder(this)

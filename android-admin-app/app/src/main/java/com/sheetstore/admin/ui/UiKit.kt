@@ -173,6 +173,10 @@ object UiKit {
                 context = context
             )
             setPadding(dp(context, 16), dp(context, 10), dp(context, 16), dp(context, 10))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             setOnClickListener { onClick() }
         }
     }
