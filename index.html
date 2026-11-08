@@ -1108,43 +1108,148 @@
        12. PAYMENT MODAL (₹499 UPI QR Checkout)
        ======================================================== -->
   <div id="paymentModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-6 sm:p-7 relative shadow-2xl">
-      <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full p-6 sm:p-7 relative shadow-2xl overflow-hidden">
+      <!-- Glow effect -->
+      <div class="absolute -top-20 -left-20 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition z-10">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
-      <div class="text-center mb-4">
-        <span class="w-10 h-10 rounded-xl bg-blue-gradient inline-flex items-center justify-center text-primary font-bold text-lg mb-2">⚡</span>
-        <h3 class="font-poppins font-bold text-lg text-white">Instant UPI Checkout</h3>
-        <p class="text-xs text-dimWhite">PhonePe, Google Pay, Paytm ya BHIM se QR scan karein</p>
+      <!-- VIEW 1: PAYMENT & UTR SUBMISSION FORM -->
+      <div id="paymentFormView">
+        <div class="text-center mb-4">
+          <span class="w-10 h-10 rounded-xl bg-blue-gradient inline-flex items-center justify-center text-primary font-bold text-lg mb-2 shadow-md shadow-cyan-500/20">⚡</span>
+          <h3 class="font-poppins font-bold text-lg text-white">Instant UPI Checkout</h3>
+          <p class="text-xs text-dimWhite">PhonePe, Google Pay, Paytm ya BHIM se QR scan karke pay karein</p>
+        </div>
+
+        <!-- QR Code Card -->
+        <div class="bg-white p-3 rounded-2xl text-center mb-4 max-w-[210px] mx-auto shadow-inner relative group">
+          <img id="paymentQrCodeImg" 
+               src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore%20Pro&am=499&cu=INR" 
+               alt="UPI QR Code" class="w-40 h-40 mx-auto rounded-lg" />
+          <p class="text-xs font-bold text-slate-900 font-poppins mt-1">Amount: ₹499 (Lifetime)</p>
+          <div class="flex items-center justify-center gap-1.5 mt-0.5">
+            <span class="text-[10px] text-slate-600 font-mono font-bold">UPI: yuvitel@upi</span>
+            <button type="button" onclick="copyUpiId()" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold" title="Copy UPI ID">Copy</button>
+          </div>
+        </div>
+
+        <!-- Validation Alert -->
+        <div id="paymentErrorMsg" class="hidden mb-3 p-2.5 rounded-xl bg-red-500/15 border border-red-500/40 text-red-300 text-xs text-left flex items-start gap-2">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400 shrink-0 mt-0.5"></i>
+          <span id="paymentErrorText">Error message</span>
+        </div>
+
+        <!-- Customer Details Form -->
+        <div class="space-y-2.5 text-left mb-4">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Aapka Naam *</label>
+            <input type="text" id="buyerName" placeholder="e.g. Rahul Sharma" 
+                   class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">WhatsApp Mobile Number *</label>
+            <input type="tel" id="buyerPhone" placeholder="10-digit WhatsApp number (e.g. 9876543210)" maxlength="10"
+                   class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Email Address *</label>
+            <input type="email" id="buyerEmail" placeholder="e.g. rahul@gmail.com" 
+                   class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[11px] font-semibold text-amber-300">12-Digit UPI UTR / Ref No. *</label>
+              <span class="text-[9px] text-slate-400">Payment hone ke baad milta hai</span>
+            </div>
+            <input type="text" id="buyerUtr" placeholder="12-digit UTR (e.g. 412984920194)" maxlength="12"
+                   class="w-full px-3.5 py-2.5 bg-slate-950 border border-amber-500/60 focus:border-cyan-400 rounded-xl text-xs text-white font-mono tracking-wider focus:outline-none" />
+            <p class="text-[10px] text-slate-400 mt-1 leading-tight">
+              🔒 <span class="text-amber-400 font-medium">Bina verified payment aur 12-digit UTR ke dashboard unlock nahi hoga.</span> PhonePe/GPay par transaction receipt se 12-digit UTR dekhein.
+            </p>
+          </div>
+        </div>
+
+        <button onclick="submitOrderForVerification()" id="btnSubmitPayment"
+                class="w-full py-3.5 rounded-xl bg-blue-gradient text-primary font-poppins font-black text-xs uppercase tracking-wide transition shadow-lg shadow-cyan-500/20 active:scale-95 flex items-center justify-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 stroke-[2.5]"></i>
+          <span>Payment Confirm Karein &amp; UTR Verify Karein 🔒</span>
+        </button>
       </div>
 
-      <!-- QR Code -->
-      <div class="bg-white p-3 rounded-2xl text-center mb-4 max-w-[220px] mx-auto shadow-inner">
-        <img id="paymentQrCodeImg" 
-             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore%20Pro&am=499&cu=INR" 
-             alt="UPI QR Code" class="w-44 h-44 mx-auto rounded-lg" />
-        <p class="text-xs font-bold text-slate-900 font-poppins mt-1">Amount: ₹499</p>
-        <p class="text-[10px] text-slate-500 font-mono">UPI: yuvitel@upi</p>
+      <!-- VIEW 2: REAL-TIME VERIFICATION & POLLING SCREEN -->
+      <div id="paymentVerificationView" class="hidden text-center py-2">
+        <div class="relative w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-25"></span>
+          <div class="relative inline-flex rounded-full h-14 w-14 bg-cyan-500/20 border-2 border-cyan-400 items-center justify-center text-cyan-300">
+            <i data-lucide="loader-2" class="w-7 h-7 animate-spin"></i>
+          </div>
+        </div>
+
+        <h3 class="font-poppins font-bold text-lg text-white mb-1">Payment Verification In Progress...</h3>
+        <p class="text-xs text-dimWhite mb-4">Aapka 12-digit UTR Google Sheet aur Banking system se match ho raha hai.</p>
+
+        <!-- Summary Card -->
+        <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 text-left space-y-2 mb-4 font-mono text-xs">
+          <div class="flex justify-between items-center text-slate-300">
+            <span class="text-slate-400">Order ID:</span>
+            <span id="verifOrderId" class="font-bold text-white">#ORD-000000</span>
+          </div>
+          <div class="flex justify-between items-center text-slate-300">
+            <span class="text-slate-400">Customer:</span>
+            <span id="verifCustomerName" class="font-semibold text-slate-200">Rahul</span>
+          </div>
+          <div class="flex justify-between items-center text-slate-300">
+            <span class="text-slate-400">Amount:</span>
+            <span class="font-bold text-emerald-400">₹499.00</span>
+          </div>
+          <div class="flex justify-between items-center text-slate-300">
+            <span class="text-slate-400">Submitted UTR:</span>
+            <span id="verifUtr" class="font-bold text-cyan-300 tracking-wider">412984920194</span>
+          </div>
+          <div class="pt-1 border-t border-slate-800 flex justify-between items-center">
+            <span class="text-slate-400 font-sans">Verification Status:</span>
+            <span id="verifStatusBadge" class="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-sans font-bold animate-pulse">
+              ⏳ PENDING APPROVAL
+            </span>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">
+          Admin jaise hi Sheet / Admin App me approve karega ya bank confirmation aayega, <span class="text-cyan-300 font-semibold">dashboard khud ba khud unlock ho jayega!</span>
+          <br><span class="text-[10px] text-slate-500">(Auto-checking Google Sheet every 3 seconds • Attempt <span id="pollAttemptCount">1</span>)</span>
+        </p>
+
+        <!-- Instant WhatsApp Approval Button -->
+        <a id="btnWhatsappProof" href="#" target="_blank"
+           class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition mb-3">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>💬 WhatsApp Par Screenshot Bhejein (1-Min Fast Unlock)</span>
+        </a>
+
+        <button type="button" onclick="backToPaymentForm()" class="text-xs text-slate-400 hover:text-white transition">
+          ← Galat UTR daala hai? Dobara check karein
+        </button>
       </div>
 
-      <!-- Customer Details Form -->
-      <div class="space-y-2.5 text-left mb-4">
-        <input type="text" id="buyerName" placeholder="Aapka Naam *" 
-               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
-        <input type="tel" id="buyerPhone" placeholder="WhatsApp Number *" 
-               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
-        <input type="email" id="buyerEmail" placeholder="Email Address *" 
-               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
-        <input type="text" id="buyerUtr" placeholder="Payment UTR / Ref No. (Payment ke baad) *" 
-               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white font-mono focus:outline-none focus:border-cyan-400" />
+      <!-- VIEW 3: SUCCESS CELEBRATION VIEW -->
+      <div id="paymentSuccessView" class="hidden text-center py-4">
+        <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-emerald-500/20">
+          <i data-lucide="check" class="w-8 h-8 stroke-[3]"></i>
+        </div>
+        <h3 class="font-poppins font-black text-xl text-white mb-1">🎉 Payment Verified Successfully!</h3>
+        <p class="text-xs text-emerald-300 mb-4 font-medium" id="successWelcomeMsg">Aapka account activate ho gaya hai!</p>
+        <div class="p-3 bg-slate-950/80 rounded-2xl border border-emerald-500/30 text-xs text-slate-300 mb-4">
+          <p>Aapko Launchpad Dashboard par redirect kiya ja raha hai...</p>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+          <div class="bg-emerald-400 h-1.5 rounded-full animate-[progress_1.5s_ease-in-out_infinite]" style="width: 100%;"></div>
+        </div>
       </div>
 
-      <button onclick="submitOrderForVerification()" id="btnSubmitPayment"
-              class="w-full py-3.5 rounded-xl bg-blue-gradient text-primary font-poppins font-black text-xs uppercase tracking-wide transition shadow-lg active:scale-95 flex items-center justify-center gap-2">
-        <i data-lucide="check-circle" class="w-4 h-4 stroke-[2.5]"></i>
-        <span>Confirm Order &amp; Unlock Dashboard 🚀</span>
-      </button>
     </div>
   </div>
 
@@ -1339,46 +1444,177 @@
       }
     }
 
+    let activePollTimer = null;
+
+    function copyUpiId() {
+      navigator.clipboard.writeText('yuvitel@upi').then(() => {
+        alert('UPI ID copied: yuvitel@upi\nPhonePe/GPay me UPI ID daalkar ₹499 pay karein.');
+      }).catch(() => {
+        prompt('UPI ID copy karein:', 'yuvitel@upi');
+      });
+    }
+
+    function showPaymentError(msg) {
+      const box = document.getElementById('paymentErrorMsg');
+      const text = document.getElementById('paymentErrorText');
+      if (box && text) {
+        text.innerText = msg;
+        box.classList.remove('hidden');
+      }
+    }
+
+    function hidePaymentError() {
+      const box = document.getElementById('paymentErrorMsg');
+      if (box) box.classList.add('hidden');
+    }
+
+    function backToPaymentForm() {
+      if (activePollTimer) {
+        clearInterval(activePollTimer);
+        activePollTimer = null;
+      }
+      document.getElementById('paymentVerificationView').classList.add('hidden');
+      document.getElementById('paymentSuccessView').classList.add('hidden');
+      document.getElementById('paymentFormView').classList.remove('hidden');
+      const btn = document.getElementById('btnSubmitPayment');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4 stroke-[2.5]"></i> <span>Payment Confirm Karein &amp; UTR Verify Karein 🔒</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    // Override closePaymentModal to stop polling safely
+    const originalClosePaymentModal = closePaymentModal;
+    closePaymentModal = function() {
+      if (activePollTimer) {
+        clearInterval(activePollTimer);
+        activePollTimer = null;
+      }
+      document.getElementById('paymentModal').classList.add('hidden');
+      backToPaymentForm();
+    };
+
     function submitOrderForVerification() {
+      hidePaymentError();
       const name = document.getElementById('buyerName').value.trim();
-      const phone = document.getElementById('buyerPhone').value.trim();
+      const rawPhone = document.getElementById('buyerPhone').value.trim();
       const email = document.getElementById('buyerEmail').value.trim();
       const utr = document.getElementById('buyerUtr').value.trim();
 
-      if (!name || !phone || !email) {
-        alert('Kripya apna Naam, Phone aur Email zaroor bharein!');
+      if (!name) {
+        showPaymentError('Kripya apna poora Naam daalein.');
+        return;
+      }
+
+      const cleanPhone = rawPhone.replace(/\D/g, '');
+      if (cleanPhone.length < 10) {
+        showPaymentError('Kripya 10-digit ka valid WhatsApp Mobile Number daalein.');
+        return;
+      }
+
+      if (!email || email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+        showPaymentError('Kripya valid Email Address daalein.');
+        return;
+      }
+
+      // STRICT 12-DIGIT UTR VALIDATION (Prevents direct bypass without payment)
+      const cleanUtr = utr.replace(/\s+/g, '');
+      if (!/^\d{12}$/.test(cleanUtr)) {
+        showPaymentError('❌ Kripya UPI payment ke baad mila 12-digit numeric UTR / Reference No. darj karein. Bina payment & valid UTR ke dashboard unlock nahi hoga!');
+        document.getElementById('buyerUtr').focus();
         return;
       }
 
       const btn = document.getElementById('btnSubmitPayment');
       btn.disabled = true;
-      btn.innerHTML = `Verifying & Saving Order...`;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Submitting Order...`;
+      lucide.createIcons();
 
       const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
       const masterApi = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec";
 
+      // Populate Verification Screen
+      document.getElementById('verifOrderId').innerText = '#' + orderId;
+      document.getElementById('verifCustomerName').innerText = name;
+      document.getElementById('verifUtr').innerText = cleanUtr;
+      
+      const waMsg = `Namaste! Maine SheetStore Pro ke liye ₹499 pay kiya hai.%0A%0A*Order ID:* ${orderId}%0A*UTR No:* ${cleanUtr}%0A*Customer Name:* ${encodeURIComponent(name)}%0A*WhatsApp:* ${cleanPhone}%0A*Email:* ${encodeURIComponent(email)}%0A%0AKripya mera dashboard unlock karein.`;
+      const waBtn = document.getElementById('btnWhatsappProof');
+      if (waBtn) {
+        waBtn.href = `https://wa.me/917987823521?text=${waMsg}`;
+      }
+
+      // Switch to Verification View
+      document.getElementById('paymentFormView').classList.add('hidden');
+      document.getElementById('paymentVerificationView').classList.remove('hidden');
+      lucide.createIcons();
+
+      // Step 1: Create Order in Google Sheet with PENDING status
       const params = new URLSearchParams({
         action: 'createOrder',
         order_id: orderId,
         customer_name: name,
-        customer_phone: phone,
+        customer_phone: cleanPhone,
         customer_email: email,
         amount: '499',
-        utr: utr || 'PRE-VERIFIED'
+        utr: cleanUtr
       });
 
-      fetch(`${masterApi}?${params.toString()}`, { method: 'GET', mode: 'no-cors' })
-        .then(() => {
-          confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
-          alert(`🎉 Payment Successful!\n\nOrder ID: ${orderId}\nWelcome to SheetStore Pro, ${name}!\n\nAapko abhi Store Launchpad Dashboard par le jaya ja raha hai.`);
-          closePaymentModal();
-          window.location.href = `dashboard.html?order_id=${orderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
-        })
-        .catch(err => {
-          alert('Order saved! Redirecting to setup...');
-          closePaymentModal();
-          window.location.href = `dashboard.html?order_id=${orderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
-        });
+      // Send order registration to Google Sheet
+      fetch(`${masterApi}?${params.toString()}`)
+        .catch(e => console.log('Order push logged:', e));
+
+      // Step 2: Start Polling for Approval
+      let attempts = 0;
+      const pollAttemptDisplay = document.getElementById('pollAttemptCount');
+
+      if (activePollTimer) clearInterval(activePollTimer);
+
+      activePollTimer = setInterval(async () => {
+        attempts++;
+        if (pollAttemptDisplay) pollAttemptDisplay.innerText = attempts;
+
+        try {
+          const checkUrl = `${masterApi}?action=checkOrderStatus&order_id=${encodeURIComponent(orderId)}&utr=${encodeURIComponent(cleanUtr)}&phone=${cleanPhone}`;
+          const res = await fetch(checkUrl);
+          const data = await res.json();
+
+          if (data && (data.status === "PAID" || data.is_paid === true)) {
+            // STOP POLLING - PAYMENT VERIFIED!
+            clearInterval(activePollTimer);
+            activePollTimer = null;
+
+            // Show celebratory success
+            document.getElementById('paymentVerificationView').classList.add('hidden');
+            document.getElementById('paymentSuccessView').classList.remove('hidden');
+            document.getElementById('successWelcomeMsg').innerText = `Welcome, ${name}! Aapka ₹499 payment verify ho gaya hai.`;
+            lucide.createIcons();
+
+            if (typeof confetti === 'function') {
+              confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
+            }
+
+            // Save verified paid user session
+            const authUser = {
+              id: orderId,
+              name: name,
+              phone: cleanPhone,
+              email: email,
+              is_paid: true,
+              status: "ACTIVE",
+              onboarding_step: 1
+            };
+            localStorage.setItem('sheetstore_auth_user', JSON.stringify(authUser));
+
+            setTimeout(() => {
+              window.location.href = `dashboard.html?order_id=${orderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+            }, 1400);
+          }
+        } catch (err) {
+          console.warn('Polling check error:', err);
+        }
+      }, 3000);
     }
   </script>
 

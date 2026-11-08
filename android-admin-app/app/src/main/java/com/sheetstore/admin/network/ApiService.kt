@@ -34,7 +34,15 @@ interface ApiService {
     fun approveOrder(
         @Url fullUrl: String,
         @Query("action") action: String = "approveOrder",
-        @Query("order_id") orderId: String
+        @Query("order_id") orderId: String = "",
+        @Query("utr") utr: String = ""
+    ): Call<ApiResponse>
+
+    @GET
+    fun approveOrderByUtr(
+        @Url fullUrl: String,
+        @Query("action") action: String = "approveOrder",
+        @Query("utr") utr: String
     ): Call<ApiResponse>
 
     @GET

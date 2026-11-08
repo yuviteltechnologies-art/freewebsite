@@ -14,12 +14,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sheetstore.admin.models.Order
 
 class OrdersAdapter(
-    private var orders: List<Order>,
+    initialOrders: List<Order>,
     private val onApproveClicked: (Order) -> Unit
 ) : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
 
+    private var fullOrdersList: List<Order> = initialOrders
+    private var displayedOrders: MutableList<Order> = initialOrders.toMutableList()
+
     fun updateData(newOrders: List<Order>) {
-        this.orders = newOrders
+        this.fullOrdersList = newOrders
+        this.displayedOrders.clear()
+        this.displayedOrders.addAll(newOrders)
+        notifyDataSetChanged()
+    }
+
+    fun filter(query: String) {
+        val q = query.trim().lowercase()
+        displayedOrders.clear()
+        if (q.isEmpty()) {
+            displayedOrders.addAll(fullOrdersList)
+        } else {
+            displayedOrders.addAll(fullOrdersList.filter { order ->
+                order.orderId.lowercase().contains(q) ||
+                order.utr.lowercase().contains(q) ||
+                order.customerName.lowercase().contains(q) ||
+                order.customerPhone.lowercase().contains(q) ||
+                order.product.lowercase().contains(q)
+            })
+        }
         notifyDataSetChanged()
     }
 
@@ -51,10 +73,10 @@ class OrdersAdapter(
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.bind(orders[position], onApproveClicked)
+        holder.bind(displayedOrders[position], onApproveClicked)
     }
 
-    override fun getItemCount(): Int = orders.size
+    override fun getItemCount(): Int = displayedOrders.size
 
     class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(order: Order, onApproveClicked: (Order) -> Unit) {

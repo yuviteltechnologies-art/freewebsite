@@ -97,8 +97,70 @@
     </div>
   </header>
 
+  <!-- PAYMENT GUARD & ACCESS LOCK OVERLAY -->
+  <div id="paymentGuardOverlay" class="fixed inset-0 z-50 bg-[#080C1A]/95 backdrop-blur-2xl hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-red-500/30 text-center relative shadow-2xl my-auto">
+      <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-500/10">
+        <i data-lucide="lock" class="w-8 h-8"></i>
+      </div>
+
+      <span class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider inline-block mb-2">
+        🔒 Access Locked • ₹499 Required
+      </span>
+      <h2 class="font-heading font-black text-xl sm:text-2xl text-white mb-2">
+        Dashboard Unlock Karein
+      </h2>
+      <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+        Yeh launchpad dashboard sirf paid members ke liye hai. Agar aapne payment kiya hai toh 12-digit UTR verify karein, ya QR scan karke pay karein.
+      </p>
+
+      <!-- QR Code -->
+      <div class="bg-white p-3 rounded-2xl text-center mb-4 max-w-[190px] mx-auto shadow-inner">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore%20Pro&am=499&cu=INR" 
+             alt="UPI QR Code" class="w-36 h-36 mx-auto rounded-lg" />
+        <p class="text-xs font-bold text-slate-900 font-sans mt-1">Amount: ₹499</p>
+        <p class="text-[10px] text-slate-600 font-mono">UPI: yuvitel@upi</p>
+      </div>
+
+      <!-- Verification Form -->
+      <div class="space-y-2.5 text-left mb-4">
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">WhatsApp Mobile Number *</label>
+          <input type="tel" id="guardPhoneInput" placeholder="Aapka 10-digit WhatsApp number" maxlength="10"
+                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-blue-500" />
+        </div>
+        <div>
+          <label class="block text-[11px] font-semibold text-amber-300 mb-1">12-Digit UPI UTR / Ref No. *</label>
+          <input type="text" id="guardUtrInput" placeholder="e.g. 412984920194" maxlength="12"
+                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-amber-500/50 rounded-xl text-xs text-white font-mono focus:outline-none focus:border-blue-500" />
+        </div>
+      </div>
+
+      <div id="guardAlertBox" class="hidden mb-3 p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 text-left">
+        <i id="guardAlertIcon" data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+        <span id="guardAlertMsg"></span>
+      </div>
+
+      <button onclick="handleGuardVerify()" id="btnGuardVerify"
+              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-blue-500/25 transition active:scale-95 flex items-center justify-center gap-2 mb-2.5">
+        <i data-lucide="shield-check" class="w-4 h-4"></i>
+        <span>Verify Payment &amp; Unlock Dashboard 🚀</span>
+      </button>
+
+      <a id="guardWhatsappBtn" href="https://wa.me/917987823521?text=Namaste!%20Maine%20SheetStore%20Pro%20ke%20liye%20Rs.499%20pay%20kiya%20hai.%20Kripya%20mera%20dashboard%20unlock%20karein." target="_blank"
+         class="w-full py-2.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-semibold text-xs flex items-center justify-center gap-2 transition mb-3">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        <span>WhatsApp Par Screenshot Bhejein</span>
+      </a>
+
+      <button onclick="handleLogout()" class="text-xs text-slate-500 hover:text-slate-300 transition underline">
+        Logout karke doosre number se login karein
+      </button>
+    </div>
+  </div>
+
   <!-- MAIN DASHBOARD CONTENT -->
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-8">
+  <main id="mainDashboardContent" class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-8">
 
     <!-- WELCOME HERO & PROGRESS BAR -->
     <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
@@ -1287,17 +1349,41 @@
     }
 
     // Initialize Dashboard
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlOrderId = urlParams.get('order_id');
+      const urlEmail = urlParams.get('email');
+      const urlName = urlParams.get('name');
+
       const stored = localStorage.getItem('sheetstore_auth_user');
-      if (!stored) {
-        // Not logged in -> redirect to auth
+      
+      if (!stored && !urlOrderId) {
+        // Not logged in and no order in URL -> redirect to auth
         window.location.href = "auth.html";
         return;
       }
 
-      try {
-        currentUser = JSON.parse(stored);
-      } catch (e) {
+      if (stored) {
+        try {
+          currentUser = JSON.parse(stored);
+        } catch (e) {
+          currentUser = null;
+        }
+      }
+
+      // If user arrived from order completion in URL but no session yet, verify with backend
+      if (!currentUser && urlOrderId) {
+        currentUser = {
+          id: urlOrderId,
+          name: urlName ? decodeURIComponent(urlName) : "Store Owner",
+          email: urlEmail ? decodeURIComponent(urlEmail) : "",
+          is_paid: false,
+          status: "PENDING",
+          onboarding_step: 1
+        };
+      }
+
+      if (!currentUser) {
         window.location.href = "auth.html";
         return;
       }
@@ -1349,8 +1435,148 @@
       goToSubStep(1);
       switchMasterStep(currentUser.onboarding_step || 1);
 
+      // STRICT PAYMENT VERIFICATION GUARD:
+      // Ensure only paying customers can access and use dashboard steps
+      checkPaymentLockStatus();
+
       lucide.createIcons();
     });
+
+    function checkPaymentLockStatus() {
+      const isPaid = currentUser && (currentUser.is_paid === true || currentUser.status === "ACTIVE");
+      if (!isPaid) {
+        lockDashboard();
+        // Check backend silently in case Admin approved in Google Sheet recently
+        verifyPaymentWithBackendSilently();
+      } else {
+        unlockDashboard();
+      }
+    }
+
+    function lockDashboard() {
+      const overlay = document.getElementById('paymentGuardOverlay');
+      const content = document.getElementById('mainDashboardContent');
+      if (overlay) overlay.classList.remove('hidden');
+      if (content) {
+        content.style.filter = 'blur(16px)';
+        content.style.pointerEvents = 'none';
+        content.style.userSelect = 'none';
+      }
+      if (currentUser) {
+        const pInput = document.getElementById('guardPhoneInput');
+        if (pInput && currentUser.phone) pInput.value = currentUser.phone;
+        const waBtn = document.getElementById('guardWhatsappBtn');
+        if (waBtn) {
+          const msg = `Namaste! Maine SheetStore Pro ke liye ₹499 pay kiya hai.%0AUser/Order: ${currentUser.id || currentUser.email}%0AMobile: ${currentUser.phone || ''}%0AKripya mera dashboard unlock karein.`;
+          waBtn.href = `https://wa.me/917987823521?text=${msg}`;
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function unlockDashboard() {
+      const overlay = document.getElementById('paymentGuardOverlay');
+      const content = document.getElementById('mainDashboardContent');
+      if (overlay) overlay.classList.add('hidden');
+      if (content) {
+        content.style.filter = '';
+        content.style.pointerEvents = '';
+        content.style.userSelect = '';
+      }
+    }
+
+    async function verifyPaymentWithBackendSilently() {
+      if (!currentUser) return;
+      try {
+        const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
+        const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&phone=${encodeURIComponent(currentUser.phone || '')}&email=${encodeURIComponent(currentUser.email || '')}&order_id=${encodeURIComponent(currentUser.id || '')}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data && (data.status === "PAID" || data.is_paid === true)) {
+          currentUser.is_paid = true;
+          currentUser.status = "ACTIVE";
+          localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
+          unlockDashboard();
+        }
+      } catch (e) {
+        console.warn('Silent payment check:', e);
+      }
+    }
+
+    async function handleGuardVerify() {
+      const phoneInput = document.getElementById('guardPhoneInput');
+      const utrInput = document.getElementById('guardUtrInput');
+      const btn = document.getElementById('btnGuardVerify');
+      const alertBox = document.getElementById('guardAlertBox');
+      const alertMsg = document.getElementById('guardAlertMsg');
+      const alertIcon = document.getElementById('guardAlertIcon');
+
+      function showGuardAlert(msg, isSuccess = false) {
+        alertBox.className = `mb-3 p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 text-left ${isSuccess ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300' : 'bg-red-500/15 border-red-500/40 text-red-300'}`;
+        alertMsg.innerText = msg;
+        alertIcon.setAttribute('data-lucide', isSuccess ? 'check-circle' : 'alert-circle');
+        alertBox.classList.remove('hidden');
+        lucide.createIcons();
+      }
+
+      const phone = phoneInput ? phoneInput.value.trim().replace(/\D/g, '') : '';
+      const utr = utrInput ? utrInput.value.trim().replace(/\s+/g, '') : '';
+
+      if (!phone && !utr) {
+        showGuardAlert('Kripya apna WhatsApp number ya 12-digit UTR darj karein.');
+        return;
+      }
+
+      if (utr && !/^\d{12}$/.test(utr)) {
+        showGuardAlert('❌ UTR strictly 12-digit numeric hona chahiye. PhonePe/GPay receipt check karein.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Checking Google Sheet...`;
+      lucide.createIcons();
+
+      try {
+        const orderId = (currentUser && currentUser.id) || '';
+        const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&utr=${encodeURIComponent(utr)}&phone=${encodeURIComponent(phone)}&order_id=${encodeURIComponent(orderId)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data && (data.status === 'PAID' || data.is_paid === true)) {
+          showGuardAlert('🎉 Payment Verified! Dashboard unlock ho raha hai...', true);
+          if (!currentUser) currentUser = {};
+          currentUser.is_paid = true;
+          currentUser.status = 'ACTIVE';
+          if (data.customer_name && !currentUser.name) currentUser.name = data.customer_name;
+          if (phone && !currentUser.phone) currentUser.phone = phone;
+          localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
+
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
+          }
+
+          setTimeout(() => {
+            unlockDashboard();
+          }, 1000);
+        } else if (data && data.status === 'PENDING') {
+          showGuardAlert('⏳ Aapka payment abhi PENDING hai. Admin ne abhi approve nahi kiya hai. WhatsApp par screenshot bhej kar turant activate karwayein.');
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4"></i> <span>Verify Payment &amp; Unlock Dashboard 🚀</span>`;
+          lucide.createIcons();
+        } else {
+          showGuardAlert('❌ Is UTR ya Number ka koi verified record nahi mila. Kripya pehle ₹499 pay karein ya WhatsApp support se baat karein.');
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4"></i> <span>Verify Payment &amp; Unlock Dashboard 🚀</span>`;
+          lucide.createIcons();
+        }
+      } catch (err) {
+        console.error(err);
+        showGuardAlert('Network error! Kripya thodi der baad koshish karein.');
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4"></i> <span>Verify Payment &amp; Unlock Dashboard 🚀</span>`;
+        lucide.createIcons();
+      }
+    }
 
     function generateSyncQr() {
       if (!currentUser) return;

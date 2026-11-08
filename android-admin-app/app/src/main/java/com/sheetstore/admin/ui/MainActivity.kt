@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -17,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -158,8 +160,8 @@ class MainActivity : Activity() {
 
         setContentView(root)
 
-        // Check Permissions on first start
-        checkPermissions()
+        // Note: Sensitive SMS / notification permissions are strictly optional.
+        // Users can voluntarily enable Auto-Sync in Orders Tab or use 1-Tap Manual Approval without any permissions!
 
         // Flow check: If user hasn't completed multi-niche onboarding, show Onboarding Wizard!
         if (!isOnboardingCompleted()) {
@@ -843,6 +845,126 @@ class MainActivity : Activity() {
         statsCard.addView(statsOrdersView)
         scrollContent.addView(statsCard)
 
+        // Manual Payment Approval & Quick UTR Verification Card
+        val manualCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#121826"),
+                strokeColor = Color.parseColor("#2563EB"),
+                strokeWidthDp = 1,
+                radiusDp = 18f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 16)
+            }
+        }
+
+        val manualHeader = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        val manualTitle = TextView(this).apply {
+            text = "🖐️ MANUAL PAYMENT APPROVAL"
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val manualBadge = UiKit.createPillBadge(this, "0 Permissions Needed", Color.parseColor("#38BDF8"), Color.parseColor("#0C4A6E"), Color.parseColor("#0284C7"))
+        manualHeader.addView(manualTitle)
+        manualHeader.addView(manualBadge)
+        manualCard.addView(manualHeader)
+
+        val manualDesc = TextView(this).apply {
+            text = "Sensitive SMS permission optional hai! Aap customer ka 12-digit UTR daal kar direct verify kar sakte hain ya neeche order par 'Approve' click karein."
+            textSize = 11f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
+        }
+        manualCard.addView(manualDesc)
+
+        val manualBtnRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+        val btnApproveUtr = Button(this).apply {
+            text = "🔍 12-Digit UTR Approve"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = UiKit.gradientButtonDrawable(
+                startColor = Color.parseColor("#2563EB"),
+                endColor = Color.parseColor("#1D4ED8"),
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 42), 1.2f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 8)
+            }
+            setOnClickListener {
+                showManualUtrApprovalDialog()
+            }
+        }
+
+        val btnAutoSyncInfo = UiKit.createSecondaryButton(this, "🤖 Auto-Sync (SMS)", "#CBD5E1") {
+            showAutoSyncSettingsDialog()
+        }
+        btnAutoSyncInfo.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 42), 1f)
+
+        manualBtnRow.addView(btnApproveUtr)
+        manualBtnRow.addView(btnAutoSyncInfo)
+        manualCard.addView(manualBtnRow)
+        scrollContent.addView(manualCard)
+
+        // Live Search Input for Orders
+        val searchCard = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0F172A"),
+                strokeColor = Color.parseColor("#1E293B"),
+                strokeWidthDp = 1,
+                radiusDp = 14f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 4))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 14)
+            }
+        }
+        val searchIcon = TextView(this).apply {
+            text = "🔍"
+            textSize = 14f
+            setPadding(0, 0, UiKit.dp(this@MainActivity, 8), 0)
+        }
+        val searchInput = EditText(this).apply {
+            hint = "Search by UTR, Order ID, Phone or Name..."
+            setHintTextColor(Color.parseColor("#64748B"))
+            setTextColor(Color.WHITE)
+            textSize = 12f
+            background = null
+            isSingleLine = true
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            addTextChangedListener(object : android.text.TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    ordersAdapter.filter(s?.toString() ?: "")
+                }
+                override fun afterTextChanged(s: android.text.Editable?) {}
+            })
+        }
+        searchCard.addView(searchIcon)
+        searchCard.addView(searchInput)
+        scrollContent.addView(searchCard)
+
         // Section Title: Live Incoming Orders
         val sectionTitle = TextView(this).apply {
             text = "Live Incoming Orders"
@@ -898,6 +1020,7 @@ class MainActivity : Activity() {
                         order.status = "PAID"
                         order.verified = true
                         ordersAdapter.notifyDataSetChanged()
+                        fetchDashboard()
                         Toast.makeText(this@MainActivity, "Order ${order.orderId} Approved! ✓", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@MainActivity, "Approval failed", Toast.LENGTH_SHORT).show()
@@ -909,6 +1032,254 @@ class MainActivity : Activity() {
                 }
             }
         }
+    }
+
+    private fun approveOrderByUtr(utr: String) {
+        val url = getSheetUrl()
+        if (url.isEmpty()) return
+
+        Toast.makeText(this, "Approving UTR $utr in Google Sheet...", Toast.LENGTH_SHORT).show()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val call = ApiClient.service.approveOrderByUtr(
+                    fullUrl = url,
+                    utr = utr
+                )
+                val response = call.execute()
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        dashboardData?.orders?.find { it.utr == utr }?.let { order ->
+                            order.status = "PAID"
+                            order.verified = true
+                        }
+                        ordersAdapter.notifyDataSetChanged()
+                        fetchDashboard()
+                        Toast.makeText(this@MainActivity, "🎉 UTR $utr Marked as PAID! ✓", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Approval failed or UTR not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun showManualUtrApprovalDialog() {
+        val dialogView = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0F172A"),
+                strokeColor = Color.parseColor("#2563EB"),
+                strokeWidthDp = 1,
+                radiusDp = 20f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 22), UiKit.dp(this@MainActivity, 22), UiKit.dp(this@MainActivity, 22), UiKit.dp(this@MainActivity, 22))
+        }
+
+        val title = TextView(this).apply {
+            text = "🖐️ Manual Payment / UTR Approval"
+            textSize = 16f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        dialogView.addView(title)
+
+        val desc = TextView(this).apply {
+            text = "PhonePe, Google Pay ya Paytm se prapt 12-digit UPI UTR / Ref No. yahan enter karein. Google Sheet me order turant 'PAID' mark ho jayega."
+            textSize = 11.5f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+        dialogView.addView(desc)
+
+        val utrInput = EditText(this).apply {
+            hint = "12-Digit UTR (e.g. 412984920194)"
+            setHintTextColor(Color.parseColor("#64748B"))
+            setTextColor(Color.parseColor("#00F0FF"))
+            textSize = 14f
+            typeface = Typeface.MONOSPACE
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            filters = arrayOf(android.text.InputFilter.LengthFilter(12))
+            background = UiKit.inputDrawable(this@MainActivity)
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 12))
+        }
+        dialogView.addView(utrInput)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val btnRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, UiKit.dp(this@MainActivity, 16), 0, 0)
+        }
+        val cancelBtn = UiKit.createSecondaryButton(this, "Cancel", "#94A3B8") {
+            dialog.dismiss()
+        }
+        cancelBtn.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this, 40), 1f).apply {
+            rightMargin = UiKit.dp(this@MainActivity, 8)
+        }
+
+        val approveBtn = Button(this).apply {
+            text = "Confirm & Mark PAID ✓"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = UiKit.gradientButtonDrawable(
+                startColor = Color.parseColor("#059669"),
+                endColor = Color.parseColor("#047857"),
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 40), 1.4f)
+            setOnClickListener {
+                val enteredUtr = utrInput.text.toString().trim()
+                if (enteredUtr.length != 12) {
+                    Toast.makeText(this@MainActivity, "Kripya valid 12-digit UTR enter karein!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                dialog.dismiss()
+                approveOrderByUtr(enteredUtr)
+            }
+        }
+        btnRow.addView(cancelBtn)
+        btnRow.addView(approveBtn)
+        dialogView.addView(btnRow)
+
+        dialog.show()
+    }
+
+    private fun showAutoSyncSettingsDialog() {
+        val hasSms = ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
+        val listeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
+        val hasNotification = listeners != null && listeners.contains(packageName)
+
+        val dialogView = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0F172A"),
+                strokeColor = Color.parseColor("#38BDF8"),
+                strokeWidthDp = 1,
+                radiusDp = 20f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20))
+        }
+
+        val title = TextView(this).apply {
+            text = "🤖 Auto-Sync Bank Payments (Optional)"
+            textSize = 15f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        dialogView.addView(title)
+
+        val desc = TextView(this).apply {
+            text = "Yeh feature OPTIONAL hai. Agar aap enable karte hain, toh PhonePe/GPay SMS aate hi app background me order ko khud ba khud Google Sheet me verify kar dega.\n\nAgar aap permissions nahi dena chahte, toh manual 1-Tap approval bina kisi permission ke hamesha kaam karta hai."
+            textSize = 11.5f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+        dialogView.addView(desc)
+
+        // Status 1: SMS Permission
+        val smsRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
+        }
+        val smsLabel = TextView(this).apply {
+            text = "📩 Bank SMS Permission:"
+            textSize = 12f
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val smsBadge = UiKit.createPillBadge(
+            this,
+            if (hasSms) "Granted ✓" else "Not Granted",
+            if (hasSms) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"),
+            if (hasSms) Color.parseColor("#064E3B") else Color.parseColor("#451A03"),
+            if (hasSms) Color.parseColor("#10B981") else Color.parseColor("#D97706")
+        )
+        smsRow.addView(smsLabel)
+        smsRow.addView(smsBadge)
+        dialogView.addView(smsRow)
+
+        // Status 2: Notification Listener
+        val notifRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 14))
+        }
+        val notifLabel = TextView(this).apply {
+            text = "🔔 PhonePe/GPay Notification:"
+            textSize = 12f
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val notifBadge = UiKit.createPillBadge(
+            this,
+            if (hasNotification) "Active ✓" else "Inactive",
+            if (hasNotification) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"),
+            if (hasNotification) Color.parseColor("#064E3B") else Color.parseColor("#451A03"),
+            if (hasNotification) Color.parseColor("#10B981") else Color.parseColor("#D97706")
+        )
+        notifRow.addView(notifLabel)
+        notifRow.addView(notifBadge)
+        dialogView.addView(notifRow)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val btnSms = Button(this).apply {
+            text = if (hasSms) "SMS Permission Enabled ✓" else "Grant Bank SMS Permission"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = UiKit.gradientButtonDrawable(
+                startColor = Color.parseColor("#2563EB"),
+                endColor = Color.parseColor("#1D4ED8"),
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 40)).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+            }
+            isEnabled = !hasSms
+            setOnClickListener {
+                dialog.dismiss()
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(android.Manifest.permission.RECEIVE_SMS, android.Manifest.permission.READ_SMS),
+                    101
+                )
+            }
+        }
+        dialogView.addView(btnSms)
+
+        val btnNotif = UiKit.createSecondaryButton(this, if (hasNotification) "Notification Access Active ✓" else "Open Notification Settings", "#38BDF8") {
+            dialog.dismiss()
+            try {
+                startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, "Could not open settings", Toast.LENGTH_SHORT).show()
+            }
+        }
+        btnNotif.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38))
+        dialogView.addView(btnNotif)
+
+        dialog.show()
     }
 
     // ==========================================
@@ -2116,18 +2487,6 @@ class MainActivity : Activity() {
     }
 
     private fun checkPermissions() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                android.Manifest.permission.RECEIVE_SMS,
-                android.Manifest.permission.READ_SMS
-            ),
-            101
-        )
-
-        val listeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-        if (listeners == null || !listeners.contains(packageName)) {
-            Toast.makeText(this, "Enable Notification Access to auto-verify PhonePe/GPay", Toast.LENGTH_LONG).show()
-        }
+        // Sensitive permissions are voluntary and requested via showAutoSyncSettingsDialog()
     }
 }

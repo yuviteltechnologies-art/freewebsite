@@ -83,8 +83,11 @@ function doGet(e) {
     if (action === "addProduct") {
       return handleAddProduct(ss, params);
     }
-    if (action === "approveOrder") {
+    if (action === "approveOrder" || action === "markPaid") {
       return handleMarkPaid(ss, params);
+    }
+    if (action === "checkUserPayment") {
+      return handleCheckUserPayment(ss, params);
     }
     if (action === "signup") {
       return handleSignup(ss, params);
@@ -150,6 +153,8 @@ function doPost(e) {
       return handleCreateOrder(ss, params);
     } else if (action === "checkOrderStatus") {
       return handleCheckOrderStatus(ss, params);
+    } else if (action === "checkUserPayment") {
+      return handleCheckUserPayment(ss, params);
     } else if (action === "markPaid" || action === "approveOrder") {
       return handleMarkPaid(ss, params);
     } else if (action === "autoVerifyFromSms" || action === "bankNotification" || action === "webhook") {
@@ -248,21 +253,28 @@ function handleCreateOrder(ss, params) {
 function handleCheckOrderStatus(ss, params) {
   var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
   var utr = params.utr ? String(params.utr).trim() : "";
+  var rawPhone = params.phone || params.customer_phone || "";
+  var cleanPhone = String(rawPhone).trim().replace(/\D/g, '');
+  if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
+  var email = params.email ? String(params.email).trim().toLowerCase() : "";
   
-  if (!orderId && !utr) {
-    return returnJsonResponse({ error: "Missing order_id or utr parameter" });
+  if (!orderId && !utr && !cleanPhone && !email) {
+    return returnJsonResponse({ error: "Missing order_id, utr, phone or email parameter" });
   }
 
   var ordersSheet = ss.getSheetByName("Orders");
   if (!ordersSheet) {
-    return returnJsonResponse({ status: "PENDING", message: "Orders tab not created yet" });
+    return returnJsonResponse({ status: "PENDING", is_paid: false, message: "Orders tab not created yet" });
   }
 
   var data = ordersSheet.getDataRange().getValues();
   // Headers: [0: Order ID, 1: Date, 2: Name, 3: Phone, 4: Product, 5: Amount, 6: UTR, 7: Status, 8: Verified]
-  for (var i = 1; i < data.length; i++) {
+  // Iterate newest orders first
+  for (var i = data.length - 1; i >= 1; i--) {
     var row = data[i];
     var rowOrderId = String(row[0]).trim().toUpperCase();
+    var rowPhone = String(row[3]).trim().replace(/\D/g, '');
+    if (rowPhone.length > 10) rowPhone = rowPhone.slice(-10);
     var rowUtr = String(row[6]).trim();
     var rowStatus = String(row[7]).trim().toUpperCase();
     var isVerified = (row[8] === true || String(row[8]).toUpperCase() === "TRUE");
@@ -270,6 +282,7 @@ function handleCheckOrderStatus(ss, params) {
     var match = false;
     if (orderId && rowOrderId === orderId) match = true;
     if (utr && rowUtr === utr) match = true;
+    if (cleanPhone && rowPhone && rowPhone === cleanPhone) match = true;
 
     if (match) {
       // If admin tapped the Checkbox in Google Sheets mobile app, update Status column to PAID (Green)
@@ -287,6 +300,7 @@ function handleCheckOrderStatus(ss, params) {
           success: true,
           order_id: row[0],
           status: "PAID",
+          is_paid: true,
           customer_name: row[2],
           customer_phone: row[3],
           product: row[4],
@@ -299,6 +313,7 @@ function handleCheckOrderStatus(ss, params) {
           success: true,
           order_id: row[0],
           status: "PENDING",
+          is_paid: false,
           customer_name: row[2],
           product: row[4],
           amount: row[5]
@@ -307,32 +322,36 @@ function handleCheckOrderStatus(ss, params) {
     }
   }
 
-  return returnJsonResponse({ success: false, status: "NOT_FOUND", message: "Order ID not found" });
+  return returnJsonResponse({ success: false, status: "NOT_FOUND", is_paid: false, message: "Order not found" });
 }
 
 /**
- * 3. Mark Order as Paid (Direct API helper)
+ * 3. Mark Order as Paid (Manual Approval from Admin App or Web)
  */
 function handleMarkPaid(ss, params) {
   var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
-  if (!orderId) {
-    return returnJsonResponse({ error: "Missing order_id" });
+  var utr = params.utr ? String(params.utr).trim() : "";
+  if (!orderId && !utr) {
+    return returnJsonResponse({ error: "Missing order_id or utr" });
   }
 
   var ordersSheet = ss.getSheetByName("Orders");
   if (!ordersSheet) return returnJsonResponse({ error: "Orders sheet not found" });
 
   var data = ordersSheet.getDataRange().getValues();
-  for (var i = 1; i < data.length; i++) {
-    if (String(data[i][0]).trim().toUpperCase() === orderId) {
+  for (var i = data.length - 1; i >= 1; i--) {
+    var rOrderId = String(data[i][0]).trim().toUpperCase();
+    var rUtr = String(data[i][6]).trim();
+    if ((orderId && rOrderId === orderId) || (utr && rUtr === utr)) {
       ordersSheet.getRange(i + 1, 8).setValue("PAID").setFontColor("#10B981").setFontWeight("bold");
       ordersSheet.getRange(i + 1, 9).setValue(true);
       SpreadsheetApp.flush();
       var userAcc = autoProvisionUserOnPaymentSuccess(ss, data[i][2], data[i][3], params.email || "");
       return returnJsonResponse({
         success: true,
-        order_id: orderId,
+        order_id: data[i][0],
         status: "PAID",
+        is_paid: true,
         customer_name: data[i][2],
         login_identifier: userAcc.login_id,
         default_password: "123456"
@@ -340,7 +359,85 @@ function handleMarkPaid(ss, params) {
     }
   }
 
-  return returnJsonResponse({ error: "Order not found" });
+  return returnJsonResponse({ error: "Order not found with given ID or UTR" });
+}
+
+/**
+ * Check User Payment Guard (Protects Dashboard Access)
+ */
+function handleCheckUserPayment(ss, params) {
+  var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
+  var utr = params.utr ? String(params.utr).trim() : "";
+  var rawPhone = params.phone || "";
+  var cleanPhone = String(rawPhone).trim().replace(/\D/g, '');
+  if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
+  var email = params.email ? String(params.email).trim().toLowerCase() : "";
+
+  // 1. Check Orders Sheet first
+  var ordersSheet = ss.getSheetByName("Orders");
+  if (ordersSheet) {
+    var oData = ordersSheet.getDataRange().getValues();
+    for (var i = oData.length - 1; i >= 1; i--) {
+      var row = oData[i];
+      var rOrderId = String(row[0]).trim().toUpperCase();
+      var rPhone = String(row[3]).trim().replace(/\D/g, '');
+      if (rPhone.length > 10) rPhone = rPhone.slice(-10);
+      var rUtr = String(row[6]).trim();
+      var rStatus = String(row[7]).trim().toUpperCase();
+      var rVerified = (row[8] === true || String(row[8]).toUpperCase() === "TRUE");
+
+      var match = false;
+      if (orderId && rOrderId === orderId) match = true;
+      if (utr && rUtr === utr) match = true;
+      if (cleanPhone && rPhone && rPhone === cleanPhone) match = true;
+
+      if (match) {
+        var isPaid = (rStatus === "PAID" || rVerified);
+        return returnJsonResponse({
+          success: true,
+          is_paid: isPaid,
+          status: isPaid ? "PAID" : "PENDING",
+          order_id: row[0],
+          customer_name: row[2],
+          customer_phone: row[3],
+          amount: row[5],
+          utr: row[6]
+        });
+      }
+    }
+  }
+
+  // 2. Check Users Sheet (If already registered and active)
+  var usersSheet = ss.getSheetByName("Users");
+  if (usersSheet) {
+    var uData = usersSheet.getDataRange().getValues();
+    for (var j = 1; j < uData.length; j++) {
+      var uRow = uData[j];
+      var uEmail = String(uRow[3]).trim().toLowerCase();
+      var uPhone = String(uRow[5]).trim().replace(/\D/g, '');
+      if (uPhone.length > 10) uPhone = uPhone.slice(-10);
+      var uStatus = String(uRow[10]).trim().toUpperCase();
+
+      if ((cleanPhone && uPhone === cleanPhone) || (email && uEmail === email)) {
+        var isActive = (uStatus === "ACTIVE");
+        return returnJsonResponse({
+          success: true,
+          is_paid: isActive,
+          status: isActive ? "PAID" : "PENDING",
+          customer_name: uRow[2],
+          customer_phone: uRow[5],
+          email: uRow[3]
+        });
+      }
+    }
+  }
+
+  return returnJsonResponse({
+    success: false,
+    is_paid: false,
+    status: "UNPAID",
+    message: "No verified paid record found"
+  });
 }
 
 /**
