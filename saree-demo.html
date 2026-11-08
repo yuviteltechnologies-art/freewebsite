@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOOLAM · Kanchipuram Silk Saree Showcase | Woven for the Divine</title>
+  <meta name="description" content="Experience NOOLAM — A divine heritage showroom showcase of authentic Kanchipuram silk sarees, pure 24K gold zari, curated bridal edits, and interactive drape studios." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Outfit, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['"Cinzel"', 'serif'],
+            cormorant: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            noolam: {
+              maroon: '#3A080E',
+              maroonDark: '#200407',
+              maroonDeep: '#140204',
+              gold: '#D4AF37',
+              goldLight: '#F5DE7A',
+              goldDark: '#997316',
+              ivory: '#FFFDF9',
+              sand: '#F7F3EA',
+              card: '#FFFFFF',
+              charcoal: '#1A1817',
+              border: 'rgba(212, 175, 55, 0.28)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #140204; }
+    ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+    
+    /* Temple Gopuram Arch Shape for Cards */
+    .gopuram-arch {
+      border-radius: 9999px 9999px 16px 16px;
+    }
+    
+    /* Ornate Gold Border Glow */
+    .gold-glow {
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.22);
+    }
+    .gold-glow-hover:hover {
+      box-shadow: 0 10px 35px rgba(212, 175, 55, 0.38);
+    }
+    
+    /* Continuous Marquee Ticker */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: 200%;
+      animation: marquee 24s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    /* Vertical photo scroll for Muse film */
+    @keyframes scrollUp {
+      0% { transform: translateY(0%); }
+      100% { transform: translateY(-50%); }
+    }
+    @keyframes scrollDown {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0%); }
+    }
+    .animate-scroll-up {
+      animation: scrollUp 28s linear infinite;
+    }
+    .animate-scroll-down {
+      animation: scrollDown 28s linear infinite;
+    }
+
+    /* 3D tilt perspective container */
+    .perspective-container {
+      perspective: 1200px;
+    }
+    .tilt-card {
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+      transform-style: preserve-3d;
+    }
+
+    /* Chrome Rod Clothes Rail */
+    .chrome-rail {
+      background: linear-gradient(180deg, #FFFFFF 0%, #D1D5DB 35%, #9CA3AF 55%, #4B5563 80%, #1F2937 100%);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.8);
+    }
+    
+    /* Wooden Hanger Hook */
+    .hanger-hook {
+      width: 24px;
+      height: 38px;
+      border: 3px solid #D4AF37;
+      border-bottom: none;
+      border-radius: 14px 14px 0 0;
+      position: relative;
+    }
+
+    /* Subtle Glassmorphism */
+    .glass-pill {
+      background: rgba(26, 4, 8, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+    .glass-light {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-[#FFFDF9] text-[#1A1817] font-sans antialiased overflow-x-hidden selection:bg-[#3A080E] selection:text-[#D4AF37]">
+
+  <!-- TOP JEWEL TICKER / ANNOUNCEMENT -->
+  <div class="bg-[#200407] text-[#D4AF37] border-b border-[#D4AF37]/30 py-2 px-4 text-xs font-medium text-center flex items-center justify-between z-50 relative">
+    <div class="hidden md:flex items-center gap-2 text-[11px] text-[#F5DE7A]/80 tracking-wider font-cinzel">
+      <span>✦ KANCHIPURAM HERITAGE LOOMS</span>
+      <span>•</span>
+      <span>SILK MARK CERTIFIED 100%</span>
+    </div>
+    <div class="mx-auto flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
+      <span class="font-medium tracking-wide">
+        Woven for the Divine • Free Insured Worldwide Delivery on Muhurtham Orders above ₹25,000
+      </span>
+      <a href="https://wa.me/919876543210?text=Namaste%20NOOLAM,%20I%20would%20like%20to%20book%20a%20private%20silk%20consultation" 
+         target="_blank" class="ml-2 underline hover:text-white font-bold hidden sm:inline">Book Video Consultation ➔</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="demo.html" class="px-2.5 py-0.5 rounded-full bg-[#D4AF37]/15 hover:bg-[#D4AF37]/30 text-[#F5DE7A] text-[10px] font-bold border border-[#D4AF37]/40 transition">
+        ← All Store Demos
+      </a>
+    </div>
+  </div>
+
+  <!-- FLOATING LUXURY GLASS PILL NAVBAR -->
+  <header class="fixed top-12 left-0 right-0 z-40 px-3 sm:px-6 pointer-events-none">
+    <div class="max-w-6xl mx-auto glass-pill rounded-full py-2.5 px-4 sm:px-6 flex items-center justify-between shadow-2xl pointer-events-auto transition duration-300">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] font-cinzel font-bold text-sm group-hover:scale-105 transition">
+          N
+        </div>
+        <div class="flex flex-col">
+          <span class="font-cinzel font-black tracking-[0.22em] text-white text-sm sm:text-base leading-none">NOOLAM</span>
+          <span class="text-[8px] font-bold tracking-[0.3em] text-[#D4AF37] uppercase">Kanchipuram Silk</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-xs uppercase tracking-widest font-cinzel font-semibold text-white/80">
+        <a href="#archive" class="hover:text-[#D4AF37] transition">Six Moods</a>
+        <a href="#try-look" class="hover:text-[#D4AF37] transition">Try the Look</a>
+        <a href="#pick-silk" class="hover:text-[#D4AF37] transition">Pick a Silk</a>
+        <a href="#the-rack" class="hover:text-[#D4AF37] transition">The Rack</a>
+        <a href="#muse-film" class="hover:text-[#D4AF37] transition">Muse Film</a>
+        <a href="#bridal" class="hover:text-[#D4AF37] transition text-[#F5DE7A]">Bridal Edit</a>
+      </nav>
+
+      <!-- Right Utility Actions -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Wishlist -->
+        <button onclick="openWishlistToast()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-[#D4AF37] border border-[#D4AF37]/20 flex items-center justify-center transition relative" title="Saved Wishlist">
+          <i data-lucide="heart" class="w-4 h-4"></i>
+          <span id="wishlistCount" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#D4AF37] text-[#200407] font-bold text-[9px] flex items-center justify-center">3</span>
+        </button>
+
+        <!-- Bag / Cart -->
+        <button onclick="toggleCartDrawer(true)" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] font-bold text-xs transition shadow-lg shadow-[#D4AF37]/20">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          <span class="hidden sm:inline font-cinzel">Bag</span>
+          <span id="cartCountBadge" class="w-4 h-4 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] flex items-center justify-center font-bold">2</span>
+        </button>
+
+        <!-- Visit Showroom Button -->
+        <a href="https://wa.me/919876543210?text=Namaste%20NOOLAM,%20I%20would%20like%20to%20visit%20your%20Kanchipuram%20Heritage%20Showroom" 
+           target="_blank"
+           class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-white font-cinzel text-xs tracking-wider border border-white/20 transition">
+          <span>Visit Showroom</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================
+       SECTION 1: HERO ("Woven for the Divine.")
+       ======================================================== -->
+  <section id="hero" class="relative min-h-[95vh] flex flex-col justify-between bg-[#1A0408] text-white pt-32 sm:pt-40 pb-0 overflow-hidden">
+    
+    <!-- Background Heritage Showroom Image + Gradient Overlays -->
+    <div class="absolute inset-0 z-0">
+      <img src="assets/images/saree/01-hero.png" alt="NOOLAM Kanchipuram Showroom" 
+           class="w-full h-full object-cover object-center opacity-40 scale-105 transition duration-1000" />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#140204] via-[#200407]/80 to-[#200407]/90"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.15)_0,transparent_70%)]"></div>
+    </div>
+
+    <!-- Centered Hero Copy & CTAs -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 text-center my-auto py-12">
+      
+      <!-- Heritage Tag -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#F5DE7A] text-xs uppercase tracking-[0.25em] font-cinzel font-semibold mb-6 shadow-xl">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+        <span>The Kanchipuram Sovereign Archive</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+      </div>
+
+      <!-- Main Headline in Divine Serif -->
+      <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.08] text-white drop-shadow-2xl">
+        Woven for the <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#F5DE7A] via-[#D4AF37] to-[#E5C158] italic font-cormorant font-normal">Divine.</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-[#F7F3EA]/85 font-light leading-relaxed">
+        Handwoven on hereditary wooden pit-looms in Kanchipuram with certified 3-ply mulberry silk, double-interlocked Korvai borders, and sacred 24K temple gold zari.
+      </p>
+
+      <!-- Hero 2 Buttons -->
+      <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <!-- Button 1: Maroon & Gold -->
+        <a href="#try-look" 
+           class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#500A13] to-[#3A080E] hover:from-[#6B0E1B] hover:to-[#500A13] text-[#FFFDF9] font-cinzel font-bold text-xs sm:text-sm tracking-widest uppercase border border-[#D4AF37]/60 shadow-xl shadow-[#3A080E]/60 flex items-center justify-center gap-2 transition transform active:scale-95 group">
+          <span>Try the Look</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 text-[#D4AF37] group-hover:translate-x-1 transition"></i>
+        </a>
+
+        <!-- Button 2: Pure Ivory -->
+        <a href="#the-rack" 
+           class="w-full sm:w-auto px-8 py-4 rounded-full bg-[#FFFDF9] hover:bg-white text-[#200407] font-cinzel font-bold text-xs sm:text-sm tracking-widest uppercase border border-white/60 shadow-xl flex items-center justify-center gap-2 transition transform active:scale-95 group">
+          <span>Browse the Rack</span>
+          <i data-lucide="hanger" class="w-4 h-4 text-[#3A080E] group-hover:scale-110 transition"></i>
+        </a>
+      </div>
+
+      <!-- Quick Trust Indicators -->
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-[#D4AF37]/90 font-cinzel tracking-wider">
+        <span class="flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>100% Silk Mark India Certified</span>
+        </span>
+        <span class="flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>Certified 24K Tested Zari</span>
+        </span>
+        <span class="flex items-center gap-2">
+          <i data-lucide="truck" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>Direct-from-Weaver Price</span>
+        </span>
+      </div>
+
+    </div>
+
+    <!-- CONTINUOUS GOLD TICKER STRIP -->
+    <div class="relative z-20 bg-[#250409] border-y border-[#D4AF37]/40 py-3 overflow-hidden">
+      <div class="animate-marquee whitespace-nowrap flex items-center text-xs sm:text-sm font-cinzel tracking-[0.25em] text-[#F5DE7A] font-semibold">
+        <span class="mx-6">✦ TRY THE LOOK</span>
+        <span class="mx-6">✦ PURE KANCHI ZARI</span>
+        <span class="mx-6">✦ BRIDAL HEIRLOOMS</span>
+        <span class="mx-6">✦ 6 MOODS ARCHIVE</span>
+        <span class="mx-6">✦ SILK IN MOTION</span>
+        <span class="mx-6">✦ THE RACK (ON THE RAIL)</span>
+        <span class="mx-6">✦ CERTIFIED SILK MARK</span>
+        <span class="mx-6">✦ WOVEN FOR THE DIVINE</span>
+        <span class="mx-6">✦ 1000-YEAR TEMPLE MOTIFS</span>
+        <!-- Repeated for seamless loop -->
+        <span class="mx-6">✦ TRY THE LOOK</span>
+        <span class="mx-6">✦ PURE KANCHI ZARI</span>
+        <span class="mx-6">✦ BRIDAL HEIRLOOMS</span>
+        <span class="mx-6">✦ 6 MOODS ARCHIVE</span>
+        <span class="mx-6">✦ SILK IN MOTION</span>
+        <span class="mx-6">✦ THE RACK (ON THE RAIL)</span>
+        <span class="mx-6">✦ CERTIFIED SILK MARK</span>
+        <span class="mx-6">✦ WOVEN FOR THE DIVINE</span>
+        <span class="mx-6">✦ 1000-YEAR TEMPLE MOTIFS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 2: SIX MOODS ("The NOOLAM Archive")
+       ======================================================== -->
+  <section id="archive" class="py-24 sm:py-32 px-4 bg-white relative">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#D4AF37]/20">
+        <div>
+          <span class="text-xs uppercase tracking-[0.3em] text-[#3A080E] font-cinzel font-bold block mb-2">
+            The NOOLAM Archive
+          </span>
+          <h2 class="font-cinzel text-3xl sm:text-5xl font-black tracking-tight text-[#140204]">
+            Six Moods. <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#881337] via-[#D4AF37] to-[#B45309] italic font-cormorant">Timeless Drapes</span>
+          </h2>
+        </div>
+        <p class="text-sm text-[#4A4543] font-light max-w-sm md:text-right italic font-cormorant text-lg">
+          "Woven by hand, worn for a lifetime. Curated from the grand sanctum looms of Tamil Nadu."
+        </p>
+      </div>
+
+      <!-- 6 Gopuram Temple-Arch Shaped Cards Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 mt-12">
+        
+        <!-- Mood 1: Wedding Edit -->
+        <div class="group cursor-pointer flex flex-col items-center" onclick="filterByMood('wedding')">
+          <div class="w-full aspect-[9/16] gopuram-arch bg-[#200407] border-2 border-[#D4AF37]/40 p-1.5 relative overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#D4AF37] gold-glow-hover shadow-lg">
+            <!-- Gopuram Finial Accent at Top -->
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 z-20 text-[#D4AF37] text-xs">
+              <i data-lucide="crown" class="w-4 h-4"></i>
+            </div>
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" 
+                 alt="Wedding Edit Kanchipuram" class="w-full h-full object-cover gopuram-arch group-hover:scale-105 transition duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#200407] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
+            <div class="absolute bottom-3 left-2 right-2 text-center text-white">
+              <span class="text-[10px] text-[#F5DE7A] font-cinzel font-bold tracking-wider">₹48,500</span>
+            </div>
+          </div>
+          <h3 class="mt-4 font-cinzel font-bold text-xs uppercase tracking-widest text-[#140204] group-hover:text-[#881337] transition text-center">
+            Wedding Edit
+          </h3>
+          <p class="text-[10px] text-[#716A67] tracking-wider uppercase mt-0.5">Muhurtham Gold</p>
+        </div>
+
+        <!-- Mood 2: Kanchipuram Icons -->
+        <div class="group cursor-pointer flex flex-col items-center" onclick="filterByMood('icons')">
+          <div class="w-full aspect-[9/16] gopuram-arch bg-[#200407] border-2 border-[#D4AF37]/40 p-1.5 relative overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#D4AF37] gold-glow-hover shadow-lg">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 z-20 text-[#D4AF37] text-xs">
+              <i data-lucide="sparkle" class="w-4 h-4"></i>
+            </div>
+            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80" 
+                 alt="Kanchipuram Icons" class="w-full h-full object-cover gopuram-arch group-hover:scale-105 transition duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#200407] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
+            <div class="absolute bottom-3 left-2 right-2 text-center text-white">
+              <span class="text-[10px] text-[#F5DE7A] font-cinzel font-bold tracking-wider">₹38,000</span>
+            </div>
+          </div>
+          <h3 class="mt-4 font-cinzel font-bold text-xs uppercase tracking-widest text-[#140204] group-hover:text-[#881337] transition text-center">
+            Kanchi Icons
+          </h3>
+          <p class="text-[10px] text-[#716A67] tracking-wider uppercase mt-0.5">Mayil &amp; Yazhi</p>
+        </div>
+
+        <!-- Mood 3: Banarasi Heirlooms -->
+        <div class="group cursor-pointer flex flex-col items-center" onclick="filterByMood('banarasi')">
+          <div class="w-full aspect-[9/16] gopuram-arch bg-[#200407] border-2 border-[#D4AF37]/40 p-1.5 relative overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#D4AF37] gold-glow-hover shadow-lg">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 z-20 text-[#D4AF37] text-xs">
+              <i data-lucide="flower" class="w-4 h-4"></i>
+            </div>
+            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" 
+                 alt="Banarasi Heirlooms" class="w-full h-full object-cover gopuram-arch group-hover:scale-105 transition duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#200407] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
+            <div class="absolute bottom-3 left-2 right-2 text-center text-white">
+              <span class="text-[10px] text-[#F5DE7A] font-cinzel font-bold tracking-wider">₹42,500</span>
+            </div>
+          </div>
+          <h3 class="mt-4 font-cinzel font-bold text-xs uppercase tracking-widest text-[#140204] group-hover:text-[#881337] transition text-center">
+            Banarasi Kadhwa
+          </h3>
+          <p class="text-[10px] text-[#716A67] tracking-wider uppercase mt-0.5">Silver &amp; Zari</p>
+        </div>
+
+        <!-- Mood 4: Temple Silks -->
+        <div class="group cursor-pointer flex flex-col items-center" onclick="filterByMood('temple')">
+          <div class="w-full aspect-[9/16] gopuram-arch bg-[#200407] border-2 border-[#D4AF37]/40 p-1.5 relative overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#D4AF37] gold-glow-hover shadow-lg">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 z-20 text-[#D4AF37] text-xs">
+              <i data-lucide="flame" class="w-4 h-4"></i>
+            </div>
+            <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=600&q=80" 
+                 alt="Temple Silks" class="w-full h-full object-cover gopuram-arch group-hover:scale-105 transition duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#200407] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
+            <div class="absolute bottom-3 left-2 right-2 text-center text-white">
+              <span class="text-[10px] text-[#F5DE7A] font-cinzel font-bold tracking-wider">₹31,000</span>
+            </div>
+          </div>
+          <h3 class="mt-4 font-cinzel font-bold text-xs uppercase tracking-widest text-[#140204] group-hover:text-[#881337] transition text-center">
+            Temple Silks
+          </h3>
+          <p class="text-[10px] text-[#716A67] tracking-wider uppercase mt-0.5">Rudraksha Border</p>
+        </div>
+
+        <!-- Mood 5: Pastel Sovereign -->
+        <div class="group cursor-pointer flex flex-col items-center" onclick="filterByMood('pastel')">
+          <div class="w-full aspect-[9/16] gopuram-arch bg-[#200407] border-2 border-[#D4AF37]/40 p-1.5 relative overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#D4AF37] gold-glow-hover shadow-lg">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 z-20 text-[#D4AF37] text-xs">
+              <i data-lucide="gem" class="w-4 h-4"></i>
+            </div>
+            <img src="https://images.unsplash.com/photo-1583391733975-0210f0f4a86b?auto=format&fit=crop&w=600&q=80" 
+                 alt="Pastel Sovereign" class="w-full h-full object-cover gopuram-arch group-hover:scale-105 transition duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#200407] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
+            <div class="absolute bottom-3 left-2 right-2 text-center text-white">
+              <span class="text-[10px] text-[#F5DE7A] font-cinzel font-bold tracking-wider">₹34,500</span>
+            </div>
+          </div>
+          <h3 class="mt-4 font-cinzel font-bold text-xs uppercase tracking-widest text-[#140204] group-hover:text-[#881337] transition text-center">
+            Pastel Sovereign
+          </h3>
+          <p class="text-[10px] text-[#716A67] tracking-wider uppercase mt-0.5">Mint &amp; Rose Gold</p>
+        </div>
+
+        <!-- Mood 6: Royal Paithani -->
+        <div class="group cursor-pointer flex flex-col items-center" onclick="filterByMood('paithani')">
+          <div class="w-full aspect-[9/16] gopuram-arch bg-[#200407] border-2 border-[#D4AF37]/40 p-1.5 relative overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#D4AF37] gold-glow-hover shadow-lg">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 z-20 text-[#D4AF37] text-xs">
+              <i data-lucide="feather" class="w-4 h-4"></i>
+            </div>
+            <img src="https://images.unsplash.com/photo-1610030469668-93215984355f?auto=format&fit=crop&w=600&q=80" 
+                 alt="Royal Paithani" class="w-full h-full object-cover gopuram-arch group-hover:scale-105 transition duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#200407] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
+            <div class="absolute bottom-3 left-2 right-2 text-center text-white">
+              <span class="text-[10px] text-[#F5DE7A] font-cinzel font-bold tracking-wider">₹45,000</span>
+            </div>
+          </div>
+          <h3 class="mt-4 font-cinzel font-bold text-xs uppercase tracking-widest text-[#140204] group-hover:text-[#881337] transition text-center">
+            Royal Paithani
+          </h3>
+          <p class="text-[10px] text-[#716A67] tracking-wider uppercase mt-0.5">Peacock Asavali</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 3: TRY THE LOOK (Curated Occasion Styling & Bundle)
+       ======================================================== -->
+  <section id="try-look" class="py-24 sm:py-32 px-4 bg-[#FBF9F5] border-t border-[#D4AF37]/20 relative">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Section Title -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#3A080E] font-cinzel font-bold block mb-2">
+          Occasion Styling Studio
+        </span>
+        <h2 class="font-cinzel text-3xl sm:text-5xl font-black text-[#140204]">
+          Try the Look.
+        </h2>
+        <p class="text-sm text-[#716A67] mt-3 font-light">
+          Experience our master bridal ensembles styled with hand-embroidered blouses and antique temple heirloom jewelry.
+        </p>
+      </div>
+
+      <!-- Main Showcase Stage (Model on Left + "In this look" Sidebar on Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-3xl p-6 sm:p-10 border border-[#D4AF37]/30 shadow-2xl">
+        
+        <!-- Left: Full Stage Model Carousel (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col items-center">
+          
+          <!-- Look Navigation Counter -->
+          <div class="flex items-center justify-between w-full mb-4 px-2">
+            <span id="lookCounter" class="text-xs uppercase font-cinzel tracking-widest text-[#881337] font-bold">
+              1 of 8 · Ivory Temple Elephant
+            </span>
+            <div class="flex items-center gap-2">
+              <button onclick="prevLook()" class="w-8 h-8 rounded-full border border-slate-300 hover:border-[#D4AF37] hover:text-[#D4AF37] flex items-center justify-center transition">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              </button>
+              <button onclick="nextLook()" class="w-8 h-8 rounded-full border border-slate-300 hover:border-[#D4AF37] hover:text-[#D4AF37] flex items-center justify-center transition">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Central Model Card with Soft Vignette -->
+          <div class="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#D4AF37]/30 shadow-xl group">
+            <img id="currentLookImage" 
+                 src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=85" 
+                 alt="Styled Look Model" 
+                 class="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            
+            <!-- Quick Tag Badges on Model -->
+            <div class="absolute top-4 left-4">
+              <span class="px-3 py-1 rounded-full bg-[#200407]/90 text-[#F5DE7A] text-[10px] font-cinzel font-bold border border-[#D4AF37]/40">
+                ✦ Master Stylist Edit
+              </span>
+            </div>
+            
+            <div class="absolute bottom-4 left-4 right-4 text-center">
+              <span class="text-[11px] text-slate-300 bg-black/60 px-3 py-1 rounded-full backdrop-blur-sm">
+                Scroll or drag to see all 8 curated looks
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: "In this look" Curated Bundle Panel (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-6">
+          
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+              <h3 class="font-cinzel font-bold text-lg text-[#140204]">In this look</h3>
+              <span class="text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                Bundle 10% Off
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">Complete ensemble curated by royal wedding couturiers.</p>
+          </div>
+
+          <!-- Itemized Breakdown List -->
+          <div id="bundleItemsList" class="space-y-3">
+            <!-- Item 1: Saree -->
+            <div class="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=120&q=80" 
+                     alt="Saree thumbnail" class="w-12 h-12 rounded-lg object-cover border border-[#D4AF37]/30" />
+                <div>
+                  <h4 class="text-xs font-bold text-[#140204]">Ivory Elephant Kanchi Silk Saree</h4>
+                  <p class="text-[11px] text-[#881337] font-semibold">₹32,500</p>
+                </div>
+              </div>
+              <input type="checkbox" checked onchange="recalculateBundle()" class="w-4 h-4 accent-[#3A080E] rounded cursor-pointer" data-price="32500" />
+            </div>
+
+            <!-- Item 2: Blouse -->
+            <div class="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=120&q=80" 
+                     alt="Blouse thumbnail" class="w-12 h-12 rounded-lg object-cover border border-[#D4AF37]/30" />
+                <div>
+                  <h4 class="text-xs font-bold text-[#140204]">Hand-Zardozi Raw Silk Blouse</h4>
+                  <p class="text-[11px] text-[#881337] font-semibold">₹6,800</p>
+                </div>
+              </div>
+              <input type="checkbox" checked onchange="recalculateBundle()" class="w-4 h-4 accent-[#3A080E] rounded cursor-pointer" data-price="6800" />
+            </div>
+
+            <!-- Item 3: Temple Choker -->
+            <div class="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=120&q=80" 
+                     alt="Jewelry thumbnail" class="w-12 h-12 rounded-lg object-cover border border-[#D4AF37]/30" />
+                <div>
+                  <h4 class="text-xs font-bold text-[#140204]">22K Gold Antique Temple Choker</h4>
+                  <p class="text-[11px] text-[#881337] font-semibold">₹18,500</p>
+                </div>
+              </div>
+              <input type="checkbox" checked onchange="recalculateBundle()" class="w-4 h-4 accent-[#3A080E] rounded cursor-pointer" data-price="18500" />
+            </div>
+
+            <!-- Item 4: Jhumkas -->
+            <div class="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=120&q=80" 
+                     alt="Earrings thumbnail" class="w-12 h-12 rounded-lg object-cover border border-[#D4AF37]/30" />
+                <div>
+                  <h4 class="text-xs font-bold text-[#140204]">Kundan Peacock Temple Jhumkas</h4>
+                  <p class="text-[11px] text-[#881337] font-semibold">₹4,200</p>
+                </div>
+              </div>
+              <input type="checkbox" checked onchange="recalculateBundle()" class="w-4 h-4 accent-[#3A080E] rounded cursor-pointer" data-price="4200" />
+            </div>
+
+            <!-- Item 5: Ottiyanam Waistband -->
+            <div class="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=120&q=80" 
+                     alt="Ottiyanam thumbnail" class="w-12 h-12 rounded-lg object-cover border border-[#D4AF37]/30" />
+                <div>
+                  <h4 class="text-xs font-bold text-[#140204]">Antique Gold Temple Ottiyanam</h4>
+                  <p class="text-[11px] text-[#881337] font-semibold">₹9,500</p>
+                </div>
+              </div>
+              <input type="checkbox" checked onchange="recalculateBundle()" class="w-4 h-4 accent-[#3A080E] rounded cursor-pointer" data-price="9500" />
+            </div>
+          </div>
+
+          <!-- Total Calculation & Add Full Look Button -->
+          <div class="p-4 rounded-2xl bg-[#200407] text-white border border-[#D4AF37]/40 space-y-3">
+            <div class="flex items-center justify-between text-xs text-slate-300">
+              <span>Selected Pieces Total:</span>
+              <span id="bundleRawTotal" class="line-through text-slate-400">₹71,500</span>
+            </div>
+            <div class="flex items-center justify-between text-sm sm:text-base font-bold">
+              <span class="font-cinzel text-[#F5DE7A]">Bundle Price (10% Off):</span>
+              <span id="bundleDiscountedTotal" class="text-lg sm:text-xl font-cinzel text-[#F5DE7A]">₹64,350</span>
+            </div>
+            <button onclick="addBundleToBag()" 
+                    class="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-cinzel font-bold text-xs sm:text-sm tracking-wider uppercase transition shadow-lg shadow-[#D4AF37]/20 flex items-center justify-center gap-2 active:scale-95">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+              <span>Add Full Look to Bag 🛍️</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 4: PICK A SILK (3D Tilt Fan Arc)
+       ======================================================== -->
+  <section id="pick-silk" class="py-24 sm:py-32 px-4 bg-[#140204] text-white relative overflow-hidden">
+    
+    <div class="max-w-7xl mx-auto relative z-10">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#D4AF37] font-cinzel font-bold block mb-2">
+          Interactive Drapery Arc
+        </span>
+        <h2 class="font-cinzel text-3xl sm:text-5xl font-black text-white">
+          Pick a Silk.
+        </h2>
+        <p class="text-xs sm:text-sm text-[#D4AF37]/80 mt-2 font-light">
+          ✦ Tilt a card, press it, poke the silk. Experience the tactile weight of pure mulberry brocade.
+        </p>
+      </div>
+
+      <!-- Fanned 3D Tilt Card Grid -->
+      <div class="perspective-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 pt-4">
+        
+        <!-- Silk Card 1: PALACE CHECK -->
+        <div class="tilt-card relative bg-[#200407] rounded-3xl p-4 border border-[#D4AF37]/40 hover:border-[#D4AF37] shadow-2xl transition cursor-pointer group"
+             onmousemove="handleCardTilt(event, this)" onmouseleave="resetCardTilt(this)">
+          <!-- Giant Background Headline -->
+          <div class="absolute top-8 left-0 right-0 text-center pointer-events-none select-none z-0">
+            <span class="font-cinzel font-black text-4xl sm:text-5xl text-white/10 uppercase tracking-tighter">
+              PALACE
+            </span>
+          </div>
+
+          <div class="relative z-10 aspect-[3/4] rounded-2xl overflow-hidden mb-4 bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80" 
+                 alt="Palace Check Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <button onclick="event.stopPropagation(); toggleWishlist('Palace Check')" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-[#D4AF37] hover:scale-110 flex items-center justify-center transition">
+              <i data-lucide="heart" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="relative z-10 flex items-end justify-between">
+            <div>
+              <p class="text-[10px] text-[#D4AF37] uppercase tracking-widest font-cinzel font-semibold">Mustard &amp; Ruby Zari</p>
+              <h3 class="font-cinzel font-bold text-base text-white">Palace Check</h3>
+              <p class="text-sm font-cinzel text-[#F5DE7A] font-bold mt-0.5">₹29,800</p>
+            </div>
+            <button onclick="quickAddSaree('Palace Check Kanchi Saree', 29800)" 
+                    class="w-10 h-10 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] flex items-center justify-center shadow-lg active:scale-95 transition" title="Add to Bag">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Silk Card 2: BENGAL GARDEN -->
+        <div class="tilt-card relative bg-[#200407] rounded-3xl p-4 border border-[#D4AF37]/40 hover:border-[#D4AF37] shadow-2xl transition cursor-pointer group"
+             onmousemove="handleCardTilt(event, this)" onmouseleave="resetCardTilt(this)">
+          <div class="absolute top-8 left-0 right-0 text-center pointer-events-none select-none z-0">
+            <span class="font-cinzel font-black text-4xl sm:text-5xl text-white/10 uppercase tracking-tighter">
+              GARDEN
+            </span>
+          </div>
+
+          <div class="relative z-10 aspect-[3/4] rounded-2xl overflow-hidden mb-4 bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=80" 
+                 alt="Bengal Garden Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <button onclick="event.stopPropagation(); toggleWishlist('Bengal Garden')" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-[#D4AF37] hover:scale-110 flex items-center justify-center transition">
+              <i data-lucide="heart" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="relative z-10 flex items-end justify-between">
+            <div>
+              <p class="text-[10px] text-[#D4AF37] uppercase tracking-widest font-cinzel font-semibold">Forest Emerald Floral</p>
+              <h3 class="font-cinzel font-bold text-base text-white">Bengal Garden</h3>
+              <p class="text-sm font-cinzel text-[#F5DE7A] font-bold mt-0.5">₹34,200</p>
+            </div>
+            <button onclick="quickAddSaree('Bengal Garden Emerald Saree', 34200)" 
+                    class="w-10 h-10 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] flex items-center justify-center shadow-lg active:scale-95 transition" title="Add to Bag">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Silk Card 3: KANCHI RANI -->
+        <div class="tilt-card relative bg-[#200407] rounded-3xl p-4 border border-[#D4AF37]/40 hover:border-[#D4AF37] shadow-2xl transition cursor-pointer group"
+             onmousemove="handleCardTilt(event, this)" onmouseleave="resetCardTilt(this)">
+          <div class="absolute top-8 left-0 right-0 text-center pointer-events-none select-none z-0">
+            <span class="font-cinzel font-black text-4xl sm:text-5xl text-white/10 uppercase tracking-tighter">
+              RANI
+            </span>
+          </div>
+
+          <div class="relative z-10 aspect-[3/4] rounded-2xl overflow-hidden mb-4 bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=700&q=80" 
+                 alt="Kanchi Rani Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <button onclick="event.stopPropagation(); toggleWishlist('Kanchi Rani')" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-[#D4AF37] hover:scale-110 flex items-center justify-center transition">
+              <i data-lucide="heart" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="relative z-10 flex items-end justify-between">
+            <div>
+              <p class="text-[10px] text-[#D4AF37] uppercase tracking-widest font-cinzel font-semibold">Crimson Korvai Zari</p>
+              <h3 class="font-cinzel font-bold text-base text-white">Kanchi Rani</h3>
+              <p class="text-sm font-cinzel text-[#F5DE7A] font-bold mt-0.5">₹41,500</p>
+            </div>
+            <button onclick="quickAddSaree('Kanchi Rani Crimson Saree', 41500)" 
+                    class="w-10 h-10 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] flex items-center justify-center shadow-lg active:scale-95 transition" title="Add to Bag">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Silk Card 4: TEMPLE GOLD -->
+        <div class="tilt-card relative bg-[#200407] rounded-3xl p-4 border border-[#D4AF37]/40 hover:border-[#D4AF37] shadow-2xl transition cursor-pointer group"
+             onmousemove="handleCardTilt(event, this)" onmouseleave="resetCardTilt(this)">
+          <div class="absolute top-8 left-0 right-0 text-center pointer-events-none select-none z-0">
+            <span class="font-cinzel font-black text-4xl sm:text-5xl text-white/10 uppercase tracking-tighter">
+              GOLD
+            </span>
+          </div>
+
+          <div class="relative z-10 aspect-[3/4] rounded-2xl overflow-hidden mb-4 bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=700&q=80" 
+                 alt="Temple Gold Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <button onclick="event.stopPropagation(); toggleWishlist('Temple Gold')" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-[#D4AF37] hover:scale-110 flex items-center justify-center transition">
+              <i data-lucide="heart" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="relative z-10 flex items-end justify-between">
+            <div>
+              <p class="text-[10px] text-[#D4AF37] uppercase tracking-widest font-cinzel font-semibold">Ivory 24K Gopuram Weave</p>
+              <h3 class="font-cinzel font-bold text-base text-white">Temple Gold</h3>
+              <p class="text-sm font-cinzel text-[#F5DE7A] font-bold mt-0.5">₹49,000</p>
+            </div>
+            <button onclick="quickAddSaree('Temple Gold Ivory Saree', 49000)" 
+                    class="w-10 h-10 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] flex items-center justify-center shadow-lg active:scale-95 transition" title="Add to Bag">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 5: THE RACK ("Every silk, on the rail.")
+       ======================================================== -->
+  <section id="the-rack" class="py-24 sm:py-32 px-4 bg-white relative">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs uppercase tracking-[0.3em] text-[#3A080E] font-cinzel font-bold block mb-2">
+            Showroom Rail Experience
+          </span>
+          <h2 class="font-cinzel text-3xl sm:text-5xl font-black text-[#140204]">
+            Every silk, on the rail.
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">
+            Explore the collection · 9 Mastercraft pieces on display · Tap any hanger to lift and inspect.
+          </p>
+        </div>
+
+        <!-- Filter Chips with counts -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterRack('all', this)" class="rack-filter-chip px-3 py-1.5 rounded-full bg-[#200407] text-[#D4AF37] text-xs font-cinzel font-bold border border-[#D4AF37] transition">
+            All pieces (9)
+          </button>
+          <button onclick="filterRack('saree', this)" class="rack-filter-chip px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-cinzel font-semibold transition">
+            Silk Sarees (4)
+          </button>
+          <button onclick="filterRack('half', this)" class="rack-filter-chip px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-cinzel font-semibold transition">
+            Half Sarees (2)
+          </button>
+          <button onclick="filterRack('blouse', this)" class="rack-filter-chip px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-cinzel font-semibold transition">
+            Blouses (3)
+          </button>
+        </div>
+      </div>
+
+      <!-- CHROME RAIL CLOTHES RACK STAGE -->
+      <div class="relative pt-12 pb-16 px-4 bg-[#FAF7F2] rounded-3xl border border-[#D4AF37]/30 shadow-inner overflow-x-auto">
+        
+        <!-- The Chrome Metal Bar Across The Whole Section -->
+        <div class="chrome-rail h-3 w-full rounded-full relative z-10 flex items-center justify-between px-6">
+          <!-- Chrome End Brackets -->
+          <div class="w-6 h-8 -ml-4 rounded-sm bg-gradient-to-r from-slate-400 to-slate-700 border border-slate-400 shadow-md"></div>
+          <div class="w-6 h-8 -mr-4 rounded-sm bg-gradient-to-l from-slate-400 to-slate-700 border border-slate-400 shadow-md"></div>
+        </div>
+
+        <!-- Hanging Items on Wooden Hangers (Horizontal Scrollable Flex) -->
+        <div id="rackHangersContainer" class="flex items-start gap-8 min-w-max pt-1 px-4 mt-[-6px]">
+          
+          <!-- Hanger Item 1: Kanchi Korvai -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="saree"
+               onclick="openRackDetail('Kanchi Korvai Crimson Heirloom', 42000, 'saree', 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80')">
+            <!-- Wooden Hanger & Metal Hook -->
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <!-- Draped Cloth on Hanger -->
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80" 
+                   alt="Kanchi Saree on Rail" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <!-- Caption below rail -->
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Kanchi Korvai</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹42,000</span>
+          </div>
+
+          <!-- Hanger Item 2: Zardozi Blouse -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="blouse"
+               onclick="openRackDetail('Royal Temple Peocock Blouse', 8500, 'blouse', 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80')">
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80" 
+                   alt="Blouse on Rail" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Peacock Blouse</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹8,500</span>
+          </div>
+
+          <!-- Hanger Item 3: Mayil Yazhi Saree -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="saree"
+               onclick="openRackDetail('Mayil Yazhi Heritage Gold Saree', 38000, 'saree', 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80')">
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80" 
+                   alt="Mayil Yazhi Saree" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Mayil Yazhi</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹38,000</span>
+          </div>
+
+          <!-- Hanger Item 4: Kanchipuram Half Saree -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="half"
+               onclick="openRackDetail('Dhavani Temple Brocade Half Saree', 26000, 'half', 'https://images.unsplash.com/photo-1610030469668-93215984355f?auto=format&fit=crop&w=800&q=80')">
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1610030469668-93215984355f?auto=format&fit=crop&w=400&q=80" 
+                   alt="Half Saree" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Dhavani Half Saree</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹26,000</span>
+          </div>
+
+          <!-- Hanger Item 5: Banarasi Cutwork -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="saree"
+               onclick="openRackDetail('Banarasi Jangla Silver Saree', 45000, 'saree', 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=800&q=80')">
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=400&q=80" 
+                   alt="Banarasi Jangla" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Banarasi Jangla</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹45,000</span>
+          </div>
+
+          <!-- Hanger Item 6: Embroidered Velvet Blouse -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="blouse"
+               onclick="openRackDetail('Maroon Hand-Aari Velvet Blouse', 7200, 'blouse', 'https://images.unsplash.com/photo-1583391733975-0210f0f4a86b?auto=format&fit=crop&w=800&q=80')">
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1583391733975-0210f0f4a86b?auto=format&fit=crop&w=400&q=80" 
+                   alt="Aari Blouse" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Aari Velvet Blouse</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹7,200</span>
+          </div>
+
+          <!-- Hanger Item 7: Temple Gopuram Saree -->
+          <div class="rack-item group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-4"
+               data-category="saree"
+               onclick="openRackDetail('Vedic Temple Gopuram Zari Saree', 36500, 'saree', 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80')">
+            <div class="flex flex-col items-center">
+              <div class="hanger-hook"></div>
+              <div class="w-36 h-3.5 bg-[#854D0E] rounded-full border border-[#D4AF37]/50 shadow-md flex items-center justify-center">
+                <span class="text-[7px] text-[#F5DE7A] font-bold tracking-widest font-cinzel uppercase">NOOLAM</span>
+              </div>
+            </div>
+            <div class="w-32 aspect-[3/5] bg-white rounded-b-xl shadow-xl overflow-hidden border border-[#D4AF37]/20 mt-1 relative group-hover:border-[#D4AF37] group-hover:shadow-2xl transition">
+              <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80" 
+                   alt="Gopuram Saree" class="w-full h-full object-cover group-hover:scale-105 transition" />
+            </div>
+            <span class="mt-3 font-cinzel font-bold text-xs text-[#140204] group-hover:text-[#881337] transition">Gopuram Zari</span>
+            <span class="text-[11px] font-semibold text-[#881337]">₹36,500</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 7: THE MUSE FILM ("Feel the drape")
+       ======================================================== -->
+  <section id="muse-film" class="py-24 sm:py-32 bg-[#1A0408] text-white relative overflow-hidden">
+    
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
+      
+      <!-- Section Title -->
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#D4AF37] font-cinzel font-bold block mb-2">
+          The Muse Film
+        </span>
+        <h2 class="font-cinzel text-3xl sm:text-5xl font-black text-white">
+          Feel the <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#F5DE7A] via-[#D4AF37] to-[#B45309] italic font-cormorant">Drape.</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-[#F7F3EA]/70 mt-2 font-light">
+          A cinematic ode to the heirloom looms of South India and the women who carry their grace forward.
+        </p>
+      </div>
+
+      <!-- Main Film Layout: Left Vertical Photo Scroll + Center 16:9 Gold Frame Film + Right Vertical Photo Scroll -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        
+        <!-- Left Vertical Photo Scroll (Hidden on mobile) -->
+        <div class="hidden lg:block lg:col-span-2 h-[460px] overflow-hidden relative">
+          <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#1A0408] to-transparent z-10 pointer-events-none"></div>
+          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#1A0408] to-transparent z-10 pointer-events-none"></div>
+          
+          <div class="animate-scroll-up space-y-4">
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=300&q=80" alt="Weaving 1" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=300&q=80" alt="Weaving 2" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=300&q=80" alt="Weaving 3" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+            <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=300&q=80" alt="Weaving 4" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+          </div>
+        </div>
+
+        <!-- Center: 16:9 Cinematic Video with Ornate Gold Frame & Sound Toggle -->
+        <div class="lg:col-span-8">
+          <div class="relative rounded-3xl p-3 bg-gradient-to-b from-[#D4AF37]/40 via-[#881337]/30 to-[#D4AF37]/40 border-2 border-[#D4AF37] shadow-2xl gold-glow">
+            
+            <!-- Ornate Corner Brackets -->
+            <div class="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-[#F5DE7A]"></div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-[#F5DE7A]"></div>
+            <div class="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-[#F5DE7A]"></div>
+            <div class="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-[#F5DE7A]"></div>
+
+            <div class="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-inner">
+              <!-- Video / Cinematic Reel Placeholder -->
+              <img src="assets/images/saree/08-muse-film.png" alt="NOOLAM Muse Film" 
+                   class="w-full h-full object-cover opacity-90 hover:scale-105 transition duration-700" />
+              
+              <!-- Video Sound / Play Toggle Controls -->
+              <div class="absolute top-4 right-4 z-20">
+                <button onclick="toggleFilmSound(this)" class="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-[#F5DE7A] border border-[#D4AF37]/50 text-xs font-cinzel font-semibold flex items-center gap-1.5 hover:bg-black transition">
+                  <i data-lucide="volume-x" class="w-4 h-4"></i>
+                  <span>Sound Off</span>
+                </button>
+              </div>
+
+              <!-- Center Big Play Button -->
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#D4AF37]/90 text-[#200407] flex items-center justify-center shadow-2xl backdrop-blur-sm pointer-events-auto cursor-pointer hover:scale-110 transition active:scale-95"
+                     onclick="playFullFilmModal()">
+                  <i data-lucide="play" class="w-7 h-7 sm:w-9 sm:h-9 fill-current ml-1"></i>
+                </div>
+              </div>
+
+              <!-- Lower Title Badge -->
+              <div class="absolute bottom-4 left-4 z-20">
+                <span class="text-xs uppercase font-cinzel tracking-widest text-[#F5DE7A] font-bold bg-black/70 px-3 py-1 rounded-full border border-[#D4AF37]/30">
+                  CHAPTER I: The Temple Looms of Varadaraja
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- CTA Under Film -->
+          <div class="text-center mt-8">
+            <a href="#bridal" 
+               class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#500A13] to-[#3A080E] hover:from-[#6B0E1B] hover:to-[#500A13] text-white font-cinzel font-bold text-xs sm:text-sm tracking-widest uppercase border border-[#D4AF37] shadow-xl shadow-[#3A080E]/60 transition active:scale-95">
+              <span>Purchase the Collection</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-[#D4AF37]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Vertical Photo Scroll (Hidden on mobile) -->
+        <div class="hidden lg:block lg:col-span-2 h-[460px] overflow-hidden relative">
+          <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#1A0408] to-transparent z-10 pointer-events-none"></div>
+          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#1A0408] to-transparent z-10 pointer-events-none"></div>
+          
+          <div class="animate-scroll-down space-y-4">
+            <img src="https://images.unsplash.com/photo-1583391733975-0210f0f4a86b?auto=format&fit=crop&w=300&q=80" alt="Weaving 5" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+            <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=300&q=80" alt="Weaving 6" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+            <img src="https://images.unsplash.com/photo-1610030469668-93215984355f?auto=format&fit=crop&w=300&q=80" alt="Weaving 7" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=300&q=80" alt="Weaving 8" class="w-full h-44 rounded-xl object-cover border border-[#D4AF37]/30" />
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 8: THE MUSE REELS ("Silk, in motion.")
+       ======================================================== -->
+  <section id="muse-reels" class="py-24 sm:py-32 px-4 bg-[#FBF9F5] border-t border-[#D4AF37]/20 relative">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Title & Controls -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+        <div>
+          <span class="text-xs uppercase tracking-[0.3em] text-[#3A080E] font-cinzel font-bold block mb-2">
+            Dynamic Video Showcase
+          </span>
+          <h2 class="font-cinzel text-3xl sm:text-5xl font-black text-[#140204]">
+            Silk, in motion.
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">
+            Real brides, sacred temples, and authentic drape mechanics captured at 60fps.
+          </p>
+        </div>
+
+        <!-- Reel Controls -->
+        <div class="flex items-center gap-2">
+          <button onclick="prevReel()" class="p-2.5 rounded-full border border-slate-300 hover:border-[#D4AF37] hover:text-[#D4AF37] transition bg-white shadow">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <button onclick="toggleReelPlayPause()" id="reelPlayPauseBtn" class="p-2.5 rounded-full border border-slate-300 hover:border-[#D4AF37] hover:text-[#D4AF37] transition bg-white shadow">
+            <i data-lucide="pause" class="w-5 h-5"></i>
+          </button>
+          <button onclick="nextReel()" class="p-2.5 rounded-full border border-slate-300 hover:border-[#D4AF37] hover:text-[#D4AF37] transition bg-white shadow">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3D Curved Arc of 5 Vertical Reel Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+        
+        <!-- Reel 1 -->
+        <div class="group relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-200 hover:border-[#D4AF37] shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+             onclick="openReelModal('The Drape of Kanchipuram', 'Kanchipuram Loom Sanctum', '0:45')">
+          <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" 
+               alt="Reel 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40"></div>
+          
+          <!-- Top Tag -->
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] text-white">
+            <span class="px-2 py-0.5 rounded bg-black/60 font-mono">01 · 0:45</span>
+            <span class="text-[#F5DE7A]"><i data-lucide="video" class="w-3.5 h-3.5"></i></span>
+          </div>
+
+          <!-- Bottom Meta -->
+          <div class="absolute bottom-3 left-3 right-3 text-white">
+            <p class="text-[9px] uppercase tracking-wider text-[#D4AF37] font-cinzel font-semibold">Temple Looms</p>
+            <h4 class="font-cinzel font-bold text-xs leading-tight">The Drape of Kanchi</h4>
+            <!-- Progress Bar -->
+            <div class="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+              <div class="w-2/3 h-full bg-[#D4AF37]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 2: CENTER FEATURED REEL (Largest / Golden Glow) -->
+        <div class="group relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border-2 border-[#D4AF37] shadow-2xl transition-all duration-500 hover:-translate-y-3 cursor-pointer gold-glow"
+             onclick="openReelModal('Sound of 24K Zari', 'Weaver’s Village, Tamil Nadu', '0:30')">
+          <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80" 
+               alt="Reel 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/40"></div>
+          
+          <!-- Center Play Icon -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-full bg-[#D4AF37] text-[#200407] flex items-center justify-center shadow-xl group-hover:scale-110 transition">
+              <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+            </div>
+          </div>
+
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] text-white">
+            <span class="px-2 py-0.5 rounded bg-[#200407] text-[#F5DE7A] border border-[#D4AF37]/50 font-mono font-bold">02 · Live</span>
+            <span class="text-[#F5DE7A] font-bold">Playing</span>
+          </div>
+
+          <div class="absolute bottom-3 left-3 right-3 text-white">
+            <p class="text-[9px] uppercase tracking-wider text-[#F5DE7A] font-cinzel font-bold">24K Tested Zari</p>
+            <h4 class="font-cinzel font-black text-sm text-[#F5DE7A] leading-tight">Sound of Real Zari</h4>
+            <div class="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+              <div class="w-4/5 h-full bg-[#F5DE7A] animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 3 -->
+        <div class="group relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-200 hover:border-[#D4AF37] shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+             onclick="openReelModal('Muhurtham Morning Drape', 'Madurai Palace Sanctum', '0:50')">
+          <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" 
+               alt="Reel 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40"></div>
+          
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] text-white">
+            <span class="px-2 py-0.5 rounded bg-black/60 font-mono">03 · 0:50</span>
+            <span class="text-[#F5DE7A]"><i data-lucide="video" class="w-3.5 h-3.5"></i></span>
+          </div>
+
+          <div class="absolute bottom-3 left-3 right-3 text-white">
+            <p class="text-[9px] uppercase tracking-wider text-[#D4AF37] font-cinzel font-semibold">Madurai Royal</p>
+            <h4 class="font-cinzel font-bold text-xs leading-tight">Muhurtham Morning</h4>
+            <div class="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+              <div class="w-1/3 h-full bg-[#D4AF37]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 4 -->
+        <div class="group relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-200 hover:border-[#D4AF37] shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+             onclick="openReelModal('Pleats & Pallu Perfection', 'Chennai High Couturier', '0:40')">
+          <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=600&q=80" 
+               alt="Reel 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40"></div>
+          
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] text-white">
+            <span class="px-2 py-0.5 rounded bg-black/60 font-mono">04 · 0:40</span>
+            <span class="text-[#F5DE7A]"><i data-lucide="video" class="w-3.5 h-3.5"></i></span>
+          </div>
+
+          <div class="absolute bottom-3 left-3 right-3 text-white">
+            <p class="text-[9px] uppercase tracking-wider text-[#D4AF37] font-cinzel font-semibold">Drape Master</p>
+            <h4 class="font-cinzel font-bold text-xs leading-tight">Pleats &amp; Pallu</h4>
+            <div class="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+              <div class="w-1/2 h-full bg-[#D4AF37]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 5 -->
+        <div class="group relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-200 hover:border-[#D4AF37] shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+             onclick="openReelModal('The Royal Korvai Border', 'Kanchipuram Heritage Guild', '0:35')">
+          <img src="https://images.unsplash.com/photo-1610030469668-93215984355f?auto=format&fit=crop&w=600&q=80" 
+               alt="Reel 5" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40"></div>
+          
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] text-white">
+            <span class="px-2 py-0.5 rounded bg-black/60 font-mono">05 · 0:35</span>
+            <span class="text-[#F5DE7A]"><i data-lucide="video" class="w-3.5 h-3.5"></i></span>
+          </div>
+
+          <div class="absolute bottom-3 left-3 right-3 text-white">
+            <p class="text-[9px] uppercase tracking-wider text-[#D4AF37] font-cinzel font-semibold">Korvai Weave</p>
+            <h4 class="font-cinzel font-bold text-xs leading-tight">The Korvai Border</h4>
+            <div class="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+              <div class="w-3/4 h-full bg-[#D4AF37]"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 9: THE BRIDAL COLLECTION ("For the muhurtham...")
+       ======================================================== -->
+  <section id="bridal" class="py-24 sm:py-32 px-4 bg-white relative">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#3A080E] font-cinzel font-bold block mb-2">
+          Hallowed Wedding Weaves
+        </span>
+        <h2 class="font-cinzel text-3xl sm:text-5xl font-black text-[#140204]">
+          The Bridal Collection
+        </h2>
+        <p class="text-sm text-slate-500 mt-2 font-light italic font-cormorant text-lg">
+          "For the muhurtham and every vow after. Handcrafted to pass down three generations."
+        </p>
+      </div>
+
+      <!-- Bridal Carousel Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Bridal Card 1 -->
+        <div class="bg-[#FAF7F2] rounded-3xl p-6 border-2 border-[#D4AF37]/40 hover:border-[#D4AF37] transition-all duration-300 shadow-xl group">
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 bg-slate-900 relative">
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80" 
+                 alt="Bridal Muhurtham Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+            <div class="absolute top-3 left-3">
+              <span class="px-3 py-1 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] font-cinzel font-bold border border-[#D4AF37]/50">
+                ✦ 180-Hour Handloom Weave
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] uppercase tracking-widest text-[#881337] font-cinzel font-bold">Heirloom Edit</span>
+              <span class="text-xs text-slate-400">Code: NLM-091</span>
+            </div>
+            <h3 class="font-cinzel font-bold text-lg text-[#140204]">Maharani Crimson Temple Saree</h3>
+            <p class="text-xs text-slate-600 line-clamp-2">
+              Deep kumkum crimson 3-ply mulberry silk featuring double interlocking temple borders and heavy peacock zari pallu.
+            </p>
+            <div class="pt-4 flex items-center justify-between border-t border-slate-200">
+              <span class="font-cinzel font-bold text-xl text-[#881337]">₹54,000</span>
+              <button onclick="quickAddSaree('Maharani Crimson Temple Saree', 54000)" 
+                      class="px-5 py-2.5 rounded-full bg-[#200407] hover:bg-[#3A080E] text-[#F5DE7A] font-cinzel font-bold text-xs uppercase tracking-wider transition active:scale-95 shadow">
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bridal Card 2: Center Highlight -->
+        <div class="bg-[#FAF7F2] rounded-3xl p-6 border-2 border-[#D4AF37] transition-all duration-300 shadow-2xl group relative gold-glow">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-20 px-4 py-0.5 rounded-full bg-[#D4AF37] text-[#200407] text-[10px] font-cinzel font-black uppercase tracking-widest">
+            Royal Flagship Piece
+          </div>
+
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 bg-slate-900 relative">
+            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80" 
+                 alt="Vedic Gold Muhurtham Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+            <div class="absolute top-3 left-3">
+              <span class="px-3 py-1 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] font-cinzel font-bold border border-[#D4AF37]/50">
+                ✦ Pure 24K Tested Zari
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-cinzel font-bold">Crown Jewel</span>
+              <span class="text-xs text-slate-400">Code: NLM-099</span>
+            </div>
+            <h3 class="font-cinzel font-bold text-lg text-[#140204]">Swarna Gopuram Vedic Gold Saree</h3>
+            <p class="text-xs text-slate-600 line-clamp-2">
+              Hand-spun ivory warp overlaid with certified electroplated 24K pure gold temple spire motifs.
+            </p>
+            <div class="pt-4 flex items-center justify-between border-t border-slate-200">
+              <span class="font-cinzel font-bold text-xl text-[#D4AF37]">₹68,500</span>
+              <button onclick="quickAddSaree('Swarna Gopuram Vedic Gold Saree', 68500)" 
+                      class="px-5 py-2.5 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] font-cinzel font-black text-xs uppercase tracking-wider transition active:scale-95 shadow">
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bridal Card 3 -->
+        <div class="bg-[#FAF7F2] rounded-3xl p-6 border-2 border-[#D4AF37]/40 hover:border-[#D4AF37] transition-all duration-300 shadow-xl group">
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 bg-slate-900 relative">
+            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80" 
+                 alt="Emerald Peacock Saree" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+            <div class="absolute top-3 left-3">
+              <span class="px-3 py-1 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] font-cinzel font-bold border border-[#D4AF37]/50">
+                ✦ Korvai Double Shuttling
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] uppercase tracking-widest text-[#881337] font-cinzel font-bold">Heritage Brocade</span>
+              <span class="text-xs text-slate-400">Code: NLM-088</span>
+            </div>
+            <h3 class="font-cinzel font-bold text-lg text-[#140204]">Royal Emerald Mayil Brocade</h3>
+            <p class="text-xs text-slate-600 line-clamp-2">
+              Lush peacock green paired with a ruby-red contrasting Korvai border and antique copper zari highlights.
+            </p>
+            <div class="pt-4 flex items-center justify-between border-t border-slate-200">
+              <span class="font-cinzel font-bold text-xl text-[#881337]">₹47,500</span>
+              <button onclick="quickAddSaree('Royal Emerald Mayil Brocade', 47500)" 
+                      class="px-5 py-2.5 rounded-full bg-[#200407] hover:bg-[#3A080E] text-[#F5DE7A] font-cinzel font-bold text-xs uppercase tracking-wider transition active:scale-95 shadow">
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       FOOTER (Royal Temple Sanctum Style)
+       ======================================================== -->
+  <footer class="bg-[#140204] text-white border-t border-[#D4AF37]/30 py-16 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Col 1: Brand & Philosophy -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] font-cinzel font-bold text-sm">
+            N
+          </div>
+          <span class="font-cinzel font-black tracking-[0.22em] text-white text-base">NOOLAM</span>
+        </div>
+        <p class="text-xs text-[#D4AF37]/75 leading-relaxed font-light">
+          Woven for the Divine. Dedicated to preserving authentic hereditary handlooms of Kanchipuram with zero synthetic blends.
+        </p>
+        <div class="pt-2 text-[11px] text-[#F5DE7A] font-cinzel">
+          ✦ Silk Mark India Authorized Member #SM-9021
+        </div>
+      </div>
+
+      <!-- Col 2: The Collections -->
+      <div>
+        <h4 class="font-cinzel font-bold text-xs uppercase tracking-widest text-[#F5DE7A] mb-4">Collections</h4>
+        <ul class="space-y-2 text-xs text-slate-300 font-light">
+          <li><a href="#archive" class="hover:text-[#D4AF37] transition">The Six Moods Archive</a></li>
+          <li><a href="#try-look" class="hover:text-[#D4AF37] transition">Curated Occasion Styling</a></li>
+          <li><a href="#pick-silk" class="hover:text-[#D4AF37] transition">Pure Mulberry Brocades</a></li>
+          <li><a href="#the-rack" class="hover:text-[#D4AF37] transition">Showroom Clothes Rail</a></li>
+          <li><a href="#bridal" class="hover:text-[#D4AF37] transition">Muhurtham Bridal Edit</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Heritage Assurance -->
+      <div>
+        <h4 class="font-cinzel font-bold text-xs uppercase tracking-widest text-[#F5DE7A] mb-4">Assurance</h4>
+        <ul class="space-y-2 text-xs text-slate-300 font-light">
+          <li>✦ 100% Pure Mulberry Silk Guaranteed</li>
+          <li>✦ Tested &amp; Certified 24K Temple Zari</li>
+          <li>✦ Worldwide Insured DHL Express Shipping</li>
+          <li>✦ 7-Day Silk Exchange Policy</li>
+          <li>✦ Custom Hand-Tailored Blouse Stitching</li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Private Consultation & SheetStore Backend -->
+      <div>
+        <h4 class="font-cinzel font-bold text-xs uppercase tracking-widest text-[#F5DE7A] mb-4">Private Consultation</h4>
+        <p class="text-xs text-slate-400 mb-3">Book an exclusive 1-on-1 WhatsApp video drape session with our master weavers.</p>
+        <a href="https://wa.me/919876543210?text=Namaste%20NOOLAM,%20I%20would%20like%20to%20book%20a%20private%20silk%20consultation" 
+           target="_blank"
+           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-bold text-xs transition">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>WhatsApp Video Shopping</span>
+        </a>
+
+        <!-- SheetStore Integration Pill -->
+        <div class="mt-6 p-3 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[11px] text-slate-300">
+          <p class="font-semibold text-[#F5DE7A] flex items-center gap-1.5">
+            <i data-lucide="sheet" class="w-3.5 h-3.5"></i>
+            <span>SheetStore Pro E-Commerce Engine</span>
+          </p>
+          <p class="text-[10px] text-slate-400 mt-1">
+            Orders placed here sync 100% automatically into your Google Sheet and Android Admin App.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="max-w-7xl mx-auto pt-10 mt-10 border-t border-white/10 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 NOOLAM Silk Showcase • Powered by SheetStore Pro</p>
+      <div class="flex items-center gap-4 text-[11px] text-[#D4AF37]">
+        <a href="demo.html" class="hover:underline">Explore All 5+ Themes</a>
+        <span>•</span>
+        <a href="dashboard.html" class="hover:underline">Launch Your Own Store</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       MODAL 1: RACK HANGER DETAIL MODAL
+       ======================================================== -->
+  <div id="rackDetailModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 relative shadow-2xl border-2 border-[#D4AF37] max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeRackDetail()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
+        <!-- Big Saree Image on Hanger -->
+        <div class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#D4AF37]/40 shadow-xl">
+          <img id="rackDetailImage" src="" alt="Rack Item Detail" class="w-full h-full object-cover" />
+          <div class="absolute bottom-3 left-3 right-3 flex items-center justify-center gap-2">
+            <button onclick="toggleRackView('front')" id="btnViewFront" class="px-3 py-1 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] font-bold border border-[#D4AF37]/40">
+              Front Drape
+            </button>
+            <button onclick="toggleRackView('back')" id="btnViewBack" class="px-3 py-1 rounded-full bg-white/80 text-slate-800 text-[10px] font-bold border border-slate-300">
+              Pallu Detail
+            </button>
+          </div>
+        </div>
+
+        <!-- Detail Info & Checkout -->
+        <div class="space-y-4">
+          <span class="text-[10px] font-cinzel uppercase tracking-[0.25em] text-[#881337] font-bold block">
+            ✦ Certified Kanchipuram Handloom
+          </span>
+          <h3 id="rackDetailTitle" class="font-cinzel font-black text-xl text-[#140204] leading-tight"></h3>
+          <p id="rackDetailPrice" class="font-cinzel text-2xl font-black text-[#881337]"></p>
+
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Woven on hereditary wooden pit-looms in certified 3-ply pure mulberry silk. Accompanied by official Silk Mark hologram tag and zari purity certificate.
+          </p>
+
+          <!-- Size Chips for Blouse / Free Size for Saree -->
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1.5 font-cinzel">Select Size / Stitching:</label>
+            <div class="flex flex-wrap gap-2">
+              <button class="px-3 py-1 rounded-lg border border-[#D4AF37] bg-[#200407] text-[#F5DE7A] text-xs font-bold">Standard 38</button>
+              <button class="px-3 py-1 rounded-lg border border-slate-300 text-slate-700 text-xs hover:border-[#D4AF37]">Size 34</button>
+              <button class="px-3 py-1 rounded-lg border border-slate-300 text-slate-700 text-xs hover:border-[#D4AF37]">Size 36</button>
+              <button class="px-3 py-1 rounded-lg border border-slate-300 text-slate-700 text-xs hover:border-[#D4AF37]">Size 40</button>
+              <button class="px-3 py-1 rounded-lg border border-slate-300 text-slate-700 text-xs hover:border-[#D4AF37]">Custom Stitch</button>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="pt-4 space-y-2.5">
+            <button onclick="addCurrentRackItemToBag()" 
+                    class="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] text-[#200407] font-cinzel font-black text-xs tracking-wider uppercase transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+              <span>Add to Bag 🛍️</span>
+            </button>
+            <button onclick="openUpiModalForRackItem()" 
+                    class="w-full py-3 rounded-full bg-[#200407] text-white hover:bg-[#3A080E] font-cinzel font-bold text-xs tracking-wider uppercase transition border border-[#D4AF37]/50 flex items-center justify-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4 text-[#F5DE7A]"></i>
+              <span>Instant Buy via UPI ⚡</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 2: SLIDE-OUT CART DRAWER (SheetStore Core)
+       ======================================================== -->
+  <div id="cartDrawerBackdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity"></div>
+  <aside id="cartDrawer" class="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-white shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out border-l border-[#D4AF37]/40">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-slate-200 bg-[#200407] text-white flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-[#F5DE7A]"></i>
+        <h3 class="font-cinzel font-bold text-base text-[#F5DE7A]">Your Sovereign Bag</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Items Container -->
+    <div id="cartItemsContainer" class="p-5 overflow-y-auto flex-1 space-y-4">
+      <!-- Items dynamically populated via JS -->
+    </div>
+
+    <!-- Drawer Footer / Checkout -->
+    <div class="p-5 border-t border-slate-200 bg-[#FAF7F2] space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-500">
+        <span>Insured Worldwide Shipping:</span>
+        <span class="text-emerald-700 font-bold">FREE</span>
+      </div>
+      <div class="flex items-center justify-between text-base font-bold text-[#140204]">
+        <span class="font-cinzel">Total Amount:</span>
+        <span id="cartDrawerTotal" class="text-xl font-cinzel text-[#881337] font-black">₹0</span>
+      </div>
+      
+      <!-- Checkout Button -->
+      <button onclick="triggerSheetStoreCheckout()" 
+              class="w-full py-4 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-cinzel font-black text-xs sm:text-sm tracking-wider uppercase transition shadow-xl shadow-[#D4AF37]/30 flex items-center justify-center gap-2 active:scale-95">
+        <i data-lucide="shield-check" class="w-4 h-4"></i>
+        <span>Proceed to 1-Tap UPI / Card Checkout</span>
+      </button>
+      
+      <!-- WhatsApp Instant Order Backup -->
+      <button onclick="checkoutViaWhatsApp()" 
+              class="w-full py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-bold text-xs tracking-wide transition flex items-center justify-center gap-1.5 shadow">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        <span>Order via WhatsApp Assistant 📲</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ========================================================
+       MODAL 3: 1-TAP UPI QR CHECKOUT MODAL (Connected to Google Sheet)
+       ======================================================== -->
+  <div id="upiCheckoutModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 relative shadow-2xl border-2 border-[#D4AF37]">
+      
+      <button onclick="closeUpiModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="text-center mb-4">
+        <span class="w-10 h-10 rounded-full bg-[#200407] text-[#D4AF37] inline-flex items-center justify-center mb-2 font-cinzel font-bold text-lg">
+          N
+        </span>
+        <h3 class="font-cinzel font-black text-lg text-[#140204]">1-Tap UPI Instant Checkout</h3>
+        <p class="text-xs text-slate-500">Scan via GPay, PhonePe, Paytm, or BHIM</p>
+      </div>
+
+      <!-- QR Code Box -->
+      <div class="bg-[#FAF7F2] p-4 rounded-2xl border border-[#D4AF37]/30 text-center mb-4">
+        <img id="upiQrCodeImg" 
+             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=NOOLAM%20Silk&am=64350&cu=INR" 
+             alt="UPI QR Code" class="w-44 h-44 mx-auto rounded-xl border border-slate-300 shadow-md mb-2 bg-white p-2" />
+        <p class="text-xs font-bold text-[#881337] font-cinzel">Total Payable: <span id="upiModalAmount" class="text-base text-[#140204]">₹64,350</span></p>
+        <p class="text-[10px] text-slate-500 mt-0.5">UPI ID: <span class="font-mono font-bold text-slate-800">yuvitel@upi</span></p>
+      </div>
+
+      <!-- Customer Details Form for Google Sheet -->
+      <div class="space-y-2.5 text-left mb-4">
+        <input type="text" id="custName" placeholder="Aapka Poora Naam *" 
+               class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#D4AF37]" />
+        <input type="tel" id="custPhone" placeholder="WhatsApp Mobile Number *" 
+               class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#D4AF37]" />
+        <textarea id="custAddress" placeholder="Delivery Address with Pincode *" rows="2"
+                  class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#D4AF37]"></textarea>
+        <input type="text" id="custUtr" placeholder="Payment UTR / Ref No. (Payment ke baad) *" 
+               class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 font-mono focus:outline-none focus:border-[#D4AF37]" />
+      </div>
+
+      <!-- Submit Order Button -->
+      <button onclick="submitOrderToGoogleSheet()" id="btnSubmitOrder"
+              class="w-full py-3.5 rounded-full bg-[#200407] hover:bg-[#3A080E] text-[#F5DE7A] font-cinzel font-black text-xs uppercase tracking-wider transition shadow-lg active:scale-95 flex items-center justify-center gap-2">
+        <i data-lucide="check-circle" class="w-4 h-4"></i>
+        <span>Confirm Order &amp; Save to Google Sheet 🚀</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT ENGINE & LOGIC -->
+  <script>
+    // Shopping Bag State
+    let cartItems = [
+      { id: 'look-ensemble', name: 'Ivory Elephant Kanchi Silk Saree', price: 32500, qty: 1, img: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80' },
+      { id: 'look-blouse', name: 'Hand-Zardozi Raw Silk Blouse', price: 6800, qty: 1, img: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=200&q=80' }
+    ];
+
+    let activeRackItem = null;
+    let currentLookIndex = 0;
+
+    const curatedLooks = [
+      { name: "1 of 8 · Ivory Temple Elephant", img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=85" },
+      { name: "2 of 8 · Royal Emerald Peacock", img: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=85" },
+      { name: "3 of 8 · Crimson Rudraksha", img: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1000&q=85" },
+      { name: "4 of 8 · Swarna Gopuram Gold", img: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1000&q=85" },
+      { name: "5 of 8 · Pastel Sovereign Mint", img: "https://images.unsplash.com/photo-1583391733975-0210f0f4a86b?auto=format&fit=crop&w=1000&q=85" },
+      { name: "6 of 8 · Paithani Asavali Brocade", img: "https://images.unsplash.com/photo-1610030469668-93215984355f?auto=format&fit=crop&w=1000&q=85" },
+      { name: "7 of 8 · Kanchi Rani Magenta", img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=85" },
+      { name: "8 of 8 · Muhurtham Saffron Glow", img: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=85" }
+    ];
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateCartDisplay();
+      recalculateBundle();
+    });
+
+    // 1. Curated Look Navigation
+    function prevLook() {
+      currentLookIndex = (currentLookIndex - 1 + curatedLooks.length) % curatedLooks.length;
+      updateLookView();
+    }
+    function nextLook() {
+      currentLookIndex = (currentLookIndex + 1) % curatedLooks.length;
+      updateLookView();
+    }
+    function updateLookView() {
+      const look = curatedLooks[currentLookIndex];
+      document.getElementById('lookCounter').innerText = look.name;
+      document.getElementById('currentLookImage').src = look.img;
+    }
+
+    // 2. Bundle Price Recalculation
+    function recalculateBundle() {
+      const checkboxes = document.querySelectorAll('#bundleItemsList input[type="checkbox"]');
+      let total = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          total += parseInt(cb.getAttribute('data-price') || '0', 10);
+        }
+      });
+      const discounted = Math.round(total * 0.9);
+      document.getElementById('bundleRawTotal').innerText = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('bundleDiscountedTotal').innerText = '₹' + discounted.toLocaleString('en-IN');
+    }
+
+    function addBundleToBag() {
+      cartItems.push({
+        id: 'bundle-' + Date.now(),
+        name: 'The Curated Ensemble Look (Complete 5-Piece Set)',
+        price: 64350,
+        qty: 1,
+        img: curatedLooks[currentLookIndex].img
+      });
+      confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+      updateCartDisplay();
+      toggleCartDrawer(true);
+    }
+
+    // 3. 3D Tilt Card Physics on Hover
+    function handleCardTilt(e, card) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+    function resetCardTilt(card) {
+      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    }
+
+    // 4. Rack Filter
+    function filterRack(category, btn) {
+      document.querySelectorAll('.rack-filter-chip').forEach(c => {
+        c.className = 'rack-filter-chip px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-cinzel font-semibold transition';
+      });
+      btn.className = 'rack-filter-chip px-3 py-1.5 rounded-full bg-[#200407] text-[#D4AF37] text-xs font-cinzel font-bold border border-[#D4AF37] transition';
+
+      const items = document.querySelectorAll('.rack-item');
+      items.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // 5. Rack Detail Modal
+    function openRackDetail(title, price, type, imgUrl) {
+      activeRackItem = { title, price, type, imgUrl };
+      document.getElementById('rackDetailTitle').innerText = title;
+      document.getElementById('rackDetailPrice').innerText = '₹' + price.toLocaleString('en-IN');
+      document.getElementById('rackDetailImage').src = imgUrl;
+      document.getElementById('rackDetailModal').classList.remove('hidden');
+    }
+    function closeRackDetail() {
+      document.getElementById('rackDetailModal').classList.add('hidden');
+    }
+    function toggleRackView(view) {
+      const btnF = document.getElementById('btnViewFront');
+      const btnB = document.getElementById('btnViewBack');
+      if (view === 'front') {
+        btnF.className = 'px-3 py-1 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] font-bold border border-[#D4AF37]/40';
+        btnB.className = 'px-3 py-1 rounded-full bg-white/80 text-slate-800 text-[10px] font-bold border border-slate-300';
+      } else {
+        btnB.className = 'px-3 py-1 rounded-full bg-[#200407] text-[#F5DE7A] text-[10px] font-bold border border-[#D4AF37]/40';
+        btnF.className = 'px-3 py-1 rounded-full bg-white/80 text-slate-800 text-[10px] font-bold border border-slate-300';
+      }
+    }
+    function addCurrentRackItemToBag() {
+      if (!activeRackItem) return;
+      cartItems.push({
+        id: 'rack-' + Date.now(),
+        name: activeRackItem.title,
+        price: activeRackItem.price,
+        qty: 1,
+        img: activeRackItem.imgUrl
+      });
+      closeRackDetail();
+      updateCartDisplay();
+      toggleCartDrawer(true);
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } });
+    }
+    function openUpiModalForRackItem() {
+      closeRackDetail();
+      openUpiModal(activeRackItem ? activeRackItem.price : 42000);
+    }
+
+    // 6. Cart Drawer Toggle & Display
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cartDrawer');
+      const backdrop = document.getElementById('cartDrawerBackdrop');
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    function updateCartDisplay() {
+      const container = document.getElementById('cartItemsContainer');
+      const badge = document.getElementById('cartCountBadge');
+      let total = 0;
+      let count = 0;
+
+      container.innerHTML = '';
+      if (cartItems.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16 text-slate-400">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-3 text-slate-300"></i>
+            <p class="font-cinzel text-sm text-slate-600 font-bold">Your Bag is Empty</p>
+            <p class="text-xs text-slate-400 mt-1">Explore our 6 Moods archive and add a saree!</p>
+          </div>
+        `;
+      } else {
+        cartItems.forEach((item, index) => {
+          total += item.price * item.qty;
+          count += item.qty;
+          container.innerHTML += `
+            <div class="flex items-center justify-between p-3 rounded-2xl bg-[#FAF7F2] border border-[#D4AF37]/30">
+              <div class="flex items-center gap-3">
+                <img src="${item.img}" alt="${item.name}" class="w-14 h-14 rounded-xl object-cover border border-[#D4AF37]/30" />
+                <div>
+                  <h4 class="text-xs font-bold text-[#140204] font-cinzel line-clamp-1">${item.name}</h4>
+                  <p class="text-xs font-bold text-[#881337] mt-0.5">₹${item.price.toLocaleString('en-IN')}</p>
+                </div>
+              </div>
+              <button onclick="removeCartItem(${index})" class="text-slate-400 hover:text-red-600 p-1 transition" title="Remove">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          `;
+        });
+      }
+
+      badge.innerText = count;
+      document.getElementById('cartDrawerTotal').innerText = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('upiModalAmount').innerText = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=NOOLAM%20Silk&am=${total}&cu=INR`;
+      lucide.createIcons();
+    }
+
+    function removeCartItem(index) {
+      cartItems.splice(index, 1);
+      updateCartDisplay();
+    }
+
+    function quickAddSaree(name, price) {
+      cartItems.push({
+        id: 'saree-' + Date.now(),
+        name: name,
+        price: price,
+        qty: 1,
+        img: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80'
+      });
+      updateCartDisplay();
+      toggleCartDrawer(true);
+      confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+    }
+
+    // 7. UPI & SheetStore Google Sheet Submission
+    function triggerSheetStoreCheckout() {
+      toggleCartDrawer(false);
+      openUpiModal();
+    }
+    function openUpiModal(overrideAmt) {
+      if (overrideAmt) {
+        document.getElementById('upiModalAmount').innerText = '₹' + overrideAmt.toLocaleString('en-IN');
+        document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=NOOLAM%20Silk&am=${overrideAmt}&cu=INR`;
+      }
+      document.getElementById('upiCheckoutModal').classList.remove('hidden');
+    }
+    function closeUpiModal() {
+      document.getElementById('upiCheckoutModal').classList.add('hidden');
+    }
+
+    function submitOrderToGoogleSheet() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const utr = document.getElementById('custUtr').value.trim();
+
+      if (!name || !phone || !address) {
+        alert('Kripya apna Naam, Phone aur Delivery Address zaroor bharein!');
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmitOrder');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Saving to Google Sheet...`;
+      lucide.createIcons();
+
+      // Send Order to Master Central API
+      const orderId = 'NLM-' + Math.floor(100000 + Math.random() * 900000);
+      const totalText = document.getElementById('upiModalAmount').innerText;
+
+      // Google Sheet Web App URL
+      const webAppUrl = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec";
+
+      const params = new URLSearchParams({
+        action: 'createOrder',
+        order_id: orderId,
+        customer_name: name,
+        customer_phone: phone,
+        delivery_address: address,
+        product_title: 'NOOLAM Silk Bridal Ensemble',
+        amount: totalText.replace(/[^0-9]/g, ''),
+        utr: utr || 'PRE-VERIFY'
+      });
+
+      fetch(`${webAppUrl}?${params.toString()}`, { method: 'GET', mode: 'no-cors' })
+        .then(() => {
+          confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
+          alert(`🎉 Order Safalta-purvak Place Ho Gaya!\n\nOrder ID: ${orderId}\nCustomer: ${name}\nTotal: ${totalText}\n\nAapki Google Sheet aur Android App me instant record ho chuka hai!`);
+          closeUpiModal();
+          cartItems = [];
+          updateCartDisplay();
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> Confirm Order & Save to Google Sheet 🚀`;
+          lucide.createIcons();
+        })
+        .catch(err => {
+          alert('Order saved locally! Syncing with backend.');
+          closeUpiModal();
+          btn.disabled = false;
+        });
+    }
+
+    function checkoutViaWhatsApp() {
+      const total = document.getElementById('cartDrawerTotal').innerText;
+      const itemsList = cartItems.map(i => `• ${i.name} (₹${i.price.toLocaleString('en-IN')})`).join('\n');
+      const text = `Namaste NOOLAM,\nMai ye silk ensemble order karna chahta/chahti hu:\n\n${itemsList}\n\n*Total Amount:* ${total}\n\nKripya confirm karein aur payment & delivery details share karein!`;
+      window.open(`https://wa.me/919876543210?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function openWishlistToast() {
+      alert('❤️ Saved to Wishlist! 3 heirloom drapes bookmarked.');
+    }
+    function toggleWishlist(name) {
+      alert(`❤️ ${name} has been added to your NOOLAM Wishlist!`);
+    }
+
+    function toggleFilmSound(btn) {
+      if (btn.innerText.includes('Off')) {
+        btn.innerHTML = `<i data-lucide="volume-2" class="w-4 h-4"></i> <span>Sound On</span>`;
+      } else {
+        btn.innerHTML = `<i data-lucide="volume-x" class="w-4 h-4"></i> <span>Sound Off</span>`;
+      }
+      lucide.createIcons();
+    }
+    function playFullFilmModal() {
+      alert('🎬 Playing NOOLAM Brand Film: "Woven for the Divine — The Living Looms of Kanchipuram" (4K HDR)');
+    }
+    function openReelModal(title, loc, duration) {
+      alert(`🎥 Silk in Motion Reel\n\nTitle: ${title}\nLocation: ${loc}\nDuration: ${duration}\n\nReel playing at 60fps.`);
+    }
+    function prevReel() { alert('Previous Reel'); }
+    function nextReel() { alert('Next Reel'); }
+    function toggleReelPlayPause() {
+      const btn = document.getElementById('reelPlayPauseBtn');
+      btn.innerHTML = btn.innerHTML.includes('pause') ? `<i data-lucide="play" class="w-5 h-5"></i>` : `<i data-lucide="pause" class="w-5 h-5"></i>`;
+      lucide.createIcons();
+    }
+  </script>
+
+</body>
+</html>

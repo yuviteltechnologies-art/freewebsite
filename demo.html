@@ -144,6 +144,25 @@
       --theme-font-heading: 'Outfit', sans-serif;
     }
 
+    /* THEME 6: NOOLAM Royal Kanchipuram (Luxury Silk & Saree Showcase) */
+    [data-theme="noolam-saree"] {
+      --theme-bg: #140204;
+      --theme-bg-alt: #200407;
+      --theme-header-bg: rgba(20, 2, 4, 0.95);
+      --theme-card-bg: rgba(32, 4, 7, 0.88);
+      --theme-card-border: rgba(212, 175, 55, 0.35);
+      --theme-card-hover: rgba(212, 175, 55, 0.75);
+      --theme-text-primary: #FFFDF9;
+      --theme-text-secondary: #EAD8B1;
+      --theme-accent: #D4AF37;
+      --theme-accent-light: #F5DE7A;
+      --theme-title-grad: linear-gradient(135deg, #F5DE7A 0%, #D4AF37 50%, #B45309 100%);
+      --theme-btn-grad: linear-gradient(135deg, #500A13 0%, #3A080E 100%);
+      --theme-banner-grad: linear-gradient(to right, #250409, #500A13, #250409);
+      --theme-glow: rgba(212, 175, 55, 0.45);
+      --theme-font-heading: 'Cinzel', serif;
+    }
+
     /* THEME-RESPONSIVE ELEMENT BINDINGS */
     body {
       background-color: var(--theme-bg) !important;
@@ -218,10 +237,31 @@
     [data-theme="emerald-pro"] .text-blue-400,
     [data-theme="emerald-pro"] .text-blue-500 { color: #34D399 !important; }
     [data-theme="emerald-pro"] .bg-blue-600 { background-color: #059669 !important; }
+
+    /* THEME 6 NOOLAM SAREE ACCENTS */
+    [data-theme="noolam-saree"] .text-blue-400,
+    [data-theme="noolam-saree"] .text-blue-500 { color: #D4AF37 !important; }
+    [data-theme="noolam-saree"] .bg-blue-600 { background-color: #500A13 !important; }
   </style>
 </head>
 
 <body class="bg-[#070B18] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- TOP BANNER: NOOLAM SAREE SHOWCASE LIVE -->
+  <div class="bg-gradient-to-r from-[#200407] via-[#500A13] to-[#200407] border-b border-[#D4AF37]/40 py-2 px-4 text-xs font-medium text-center text-[#F5DE7A] flex items-center justify-between shadow-md">
+    <div class="hidden md:flex items-center gap-2 font-cinzel text-[11px]">
+      <span class="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping"></span>
+      <span>NEW TEMPLATE SHOWCASE ADDED</span>
+    </div>
+    <div class="mx-auto flex items-center gap-2">
+      <span class="font-bold">🥻 NOOLAM Kanchipuram Silk Saree Showcase:</span>
+      <span class="hidden sm:inline text-white/90">Woven for the Divine — 6 Moods, Try the Look, The Rack & 3D Tilt Fan Arc!</span>
+      <a href="saree-demo.html" class="px-3 py-1 rounded-full bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] font-bold text-xs tracking-wide transition ml-2 shadow inline-flex items-center gap-1">
+        <span>Live Saree Showcase Dekhein ➔</span>
+      </a>
+    </div>
+    <a href="dashboard.html" class="text-[11px] underline text-[#D4AF37] hover:text-white hidden lg:inline font-bold">1-Click Launch</a>
+  </div>
 
   <!-- TOP DEMO NOTICE BAR -->
   <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-700 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 shadow-md">
@@ -859,7 +899,8 @@
       'vedic-gold': '🕉️ Royal Vedic Gold',
       'minimal-light': '🛍️ Clean Minimal Light',
       'neon-violet': '👾 Cyberpunk Neon Violet',
-      'emerald-pro': '🌿 Emerald Business Pro'
+      'emerald-pro': '🌿 Emerald Business Pro',
+      'noolam-saree': '🥻 NOOLAM Kanchipuram Silk'
     };
 
     function applyTemplateTheme(id) {
@@ -1313,6 +1354,12 @@
       <button onclick="applyTemplateTheme('minimal-light')" data-theme-id="minimal-light" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-white text-slate-900 text-xs font-bold transition shadow" title="Clean Minimal Light (White D2C Store)">🛍️ Light</button>
       <button onclick="applyTemplateTheme('neon-violet')" data-theme-id="neon-violet" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition shadow" title="Cyberpunk Neon Violet (Gaming / Creator)">👾 Neon</button>
       <button onclick="applyTemplateTheme('emerald-pro')" data-theme-id="emerald-pro" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow" title="Emerald Business Pro (Finance / Corporate)">🌿 Emerald</button>
+      <button onclick="applyTemplateTheme('noolam-saree')" data-theme-id="noolam-saree" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-red-950 to-amber-700 hover:from-red-900 hover:to-amber-600 text-amber-300 border border-amber-500/50 text-xs font-bold transition shadow" title="NOOLAM Kanchipuram Silk Saree">🥻 Saree</button>
+      <a href="saree-demo.html" class="px-2.5 py-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#F5DE7A] text-[#200407] text-xs font-bold transition shadow flex items-center gap-1 font-cinzel" title="Open Full NOOLAM Interactive Saree Studio">
+        <span class="hidden sm:inline">✨ Saree Studio</span>
+        <span class="sm:hidden">✨ Studio</span>
+        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+      </a>
     </div>
   </div>
 </body>

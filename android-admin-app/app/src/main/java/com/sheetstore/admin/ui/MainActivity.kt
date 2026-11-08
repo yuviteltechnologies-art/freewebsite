@@ -92,6 +92,14 @@ class MainActivity : Activity() {
             description = "Corporate dark pine slate with vibrant mint green trust badges.",
             bestFor = "Best for: Financial consulting, ebooks, coaching & corporate sales",
             colors = listOf("#03140F", "#10B981", "#047857")
+        ),
+        WebTheme(
+            id = "noolam-saree",
+            name = "🥻 NOOLAM Kanchipuram Silk",
+            subtitle = "Sarees, Ethnic Wear & Bridal Couture",
+            description = "Royal South Indian temple sanctum aesthetic with 24K gold zari and Korvai borders.",
+            bestFor = "Best for: Silk sarees, handloom, lehengas, bridal jewellery & ethnic fashion",
+            colors = listOf("#140204", "#D4AF37", "#500A13")
         )
     )
 
