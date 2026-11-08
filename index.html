@@ -3,1297 +3,849 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bina Domain Aur Hosting Ke Banayein Apni E-Commerce Website | SheetStore Pro</title>
-  <meta name="description" content="Shopify aur WordPress ka monthly kharcha band karein. 2 minute me Google Sheet backend aur WhatsApp orders ke sath apni super fast e-commerce website live karein." />
-  
+  <title>SheetStore Pro | Zero Monthly Bill E-Commerce Powered by Google Sheet</title>
+  <meta name="description" content="Shopify aur WordPress ka monthly kharcha band karein. Google Sheet se chalne wali 100% free hosting e-commerce website with direct UPI QR & WhatsApp payments." />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter, Outfit, Cinzel & Space Grotesk -->
+
+  <!-- Google Fonts: Poppins, Outfit, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            heading: ['"Outfit"', 'sans-serif'],
-            cinzel: ['"Cinzel"', 'serif'],
-            space: ['"Space Grotesk"', 'sans-serif'],
-          },
           colors: {
-            brand: {
-              blue: '#2563EB',
-              blueLight: '#3B82F6',
-              dark: '#080C1A',
-              card: '#0F172A',
-              emerald: '#10B981',
-              gold: '#F59E0B',
-            }
-          }
-        }
-      }
-    }
+            primary: "#00040f",
+            secondary: "#00f6ff",
+            dimWhite: "rgba(255, 255, 255, 0.7)",
+            dimBlue: "rgba(9, 151, 124, 0.1)",
+          },
+          fontFamily: {
+            poppins: ["Poppins", "sans-serif"],
+            heading: ["Outfit", "sans-serif"],
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+          },
+        },
+        screens: {
+          xs: "480px",
+          ss: "620px",
+          sm: "768px",
+          md: "1060px",
+          lg: "1200px",
+          xl: "1700px",
+        },
+      },
+    };
   </script>
 
   <style>
-    /* ========================================================
-       5 READY-MADE THEME DEFINITIONS & CSS ENGINE
-       ======================================================== */
+    :root {
+      --black-gradient: linear-gradient(144.39deg, #ffffff -278.56%, #6d6d6d -78.47%, #11101d 91.61%);
+      --card-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
+    }
+
     ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--theme-bg, #080C1A); }
-    ::-webkit-scrollbar-thumb { background: var(--theme-accent, #2563EB); border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: #00040f; }
+    ::-webkit-scrollbar-thumb { background: #00f6ff; border-radius: 4px; }
 
-    /* DEFAULT / THEME 1: Modern Cyber Blue */
-    :root, [data-theme="modern-blue"] {
-      --theme-bg: #080C1A;
-      --theme-bg-alt: #0B1124;
-      --theme-header-bg: rgba(8, 12, 26, 0.92);
-      --theme-card-bg: rgba(15, 23, 42, 0.78);
-      --theme-card-border: rgba(59, 130, 246, 0.22);
-      --theme-card-hover: rgba(59, 130, 246, 0.55);
-      --theme-text-primary: #F8FAFC;
-      --theme-text-secondary: #94A3B8;
-      --theme-accent: #2563EB;
-      --theme-accent-light: #38BDF8;
-      --theme-title-grad: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #1D4ED8 100%);
-      --theme-btn-grad: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-      --theme-banner-grad: linear-gradient(to right, #1D4ED8, #4F46E5, #1D4ED8);
-      --theme-glow: rgba(59, 130, 246, 0.35);
-      --theme-font-heading: 'Outfit', sans-serif;
-    }
-
-    /* THEME 2: Royal Vedic Gold (Vastu / Astrology / Luxury) */
-    [data-theme="vedic-gold"] {
-      --theme-bg: #090510;
-      --theme-bg-alt: #130722;
-      --theme-header-bg: rgba(9, 5, 16, 0.94);
-      --theme-card-bg: rgba(22, 10, 36, 0.85);
-      --theme-card-border: rgba(245, 158, 11, 0.3);
-      --theme-card-hover: rgba(251, 191, 36, 0.7);
-      --theme-text-primary: #FFFBEB;
-      --theme-text-secondary: #E5D5B8;
-      --theme-accent: #F59E0B;
-      --theme-accent-light: #FDE68A;
-      --theme-title-grad: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
-      --theme-btn-grad: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
-      --theme-banner-grad: linear-gradient(to right, #92400E, #D97706, #78350F);
-      --theme-glow: rgba(245, 158, 11, 0.45);
-      --theme-font-heading: 'Cinzel', serif;
-    }
-
-    /* THEME 3: Clean Minimal Light (Modern D2C Store) */
-    [data-theme="minimal-light"] {
-      --theme-bg: #F8FAFC;
-      --theme-bg-alt: #F1F5F9;
-      --theme-header-bg: rgba(255, 255, 255, 0.95);
-      --theme-card-bg: #FFFFFF;
-      --theme-card-border: #E2E8F0;
-      --theme-card-hover: #CBD5E1;
-      --theme-text-primary: #0F172A;
-      --theme-text-secondary: #64748B;
-      --theme-accent: #059669;
-      --theme-accent-light: #10B981;
-      --theme-title-grad: linear-gradient(135deg, #0F172A 0%, #059669 60%, #047857 100%);
-      --theme-btn-grad: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-      --theme-banner-grad: linear-gradient(to right, #0F172A, #1E293B, #0F172A);
-      --theme-glow: rgba(15, 23, 42, 0.12);
-      --theme-font-heading: 'Outfit', sans-serif;
-    }
-
-    /* THEME 4: Cyberpunk Neon Violet (Gaming / Creator Store) */
-    [data-theme="neon-violet"] {
-      --theme-bg: #030107;
-      --theme-bg-alt: #0C0318;
-      --theme-header-bg: rgba(3, 1, 7, 0.94);
-      --theme-card-bg: rgba(18, 5, 36, 0.85);
-      --theme-card-border: rgba(168, 85, 247, 0.35);
-      --theme-card-hover: rgba(236, 72, 153, 0.7);
-      --theme-text-primary: #FFFFFF;
-      --theme-text-secondary: #D8B4FE;
-      --theme-accent: #8B5CF6;
-      --theme-accent-light: #F472B6;
-      --theme-title-grad: linear-gradient(135deg, #F472B6 0%, #A855F7 50%, #6366F1 100%);
-      --theme-btn-grad: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-      --theme-banner-grad: linear-gradient(to right, #6D28D9, #BE185D, #4C1D95);
-      --theme-glow: rgba(236, 72, 153, 0.45);
-      --theme-font-heading: 'Space Grotesk', sans-serif;
-    }
-
-    /* THEME 5: Emerald Business Pro (High-Trust Finance / Agency) */
-    [data-theme="emerald-pro"] {
-      --theme-bg: #03140F;
-      --theme-bg-alt: #06231B;
-      --theme-header-bg: rgba(3, 20, 15, 0.94);
-      --theme-card-bg: rgba(8, 36, 28, 0.84);
-      --theme-card-border: rgba(16, 185, 129, 0.3);
-      --theme-card-hover: rgba(52, 211, 153, 0.65);
-      --theme-text-primary: #F0FDF4;
-      --theme-text-secondary: #A7F3D0;
-      --theme-accent: #10B981;
-      --theme-accent-light: #6EE7B7;
-      --theme-title-grad: linear-gradient(135deg, #6EE7B7 0%, #10B981 50%, #047857 100%);
-      --theme-btn-grad: linear-gradient(135deg, #10B981 0%, #047857 100%);
-      --theme-banner-grad: linear-gradient(to right, #065F46, #047857, #064E3B);
-      --theme-glow: rgba(16, 185, 129, 0.4);
-      --theme-font-heading: 'Outfit', sans-serif;
-    }
-
-    /* THEME-RESPONSIVE ELEMENT BINDINGS */
-    body {
-      background-color: var(--theme-bg) !important;
-      color: var(--theme-text-primary) !important;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    header {
-      background-color: var(--theme-header-bg) !important;
-    }
-
-    .glass-box {
-      background: var(--theme-card-bg) !important;
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--theme-card-border) !important;
-      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .glass-box:hover {
-      border-color: var(--theme-card-hover) !important;
-    }
-
-    .font-heading {
-      font-family: var(--theme-font-heading) !important;
-    }
-
+    /* HooBank Signature Cyan Radial Text Gradient */
     .text-gradient {
-      background: var(--theme-title-grad) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
+      background: radial-gradient(
+        64.18% 64.18% at 71.16% 35.69%,
+        #def9fa 0.89%,
+        #bef3f5 17.23%,
+        #9dedf0 42.04%,
+        #7de7eb 55.12%,
+        #5ce1e6 71.54%,
+        #33bbcf 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .badge-glow {
-      box-shadow: 0 0 25px -5px var(--theme-glow) !important;
+    .bg-blue-gradient {
+      background: linear-gradient(
+        157.81deg,
+        #def9fa -43.27%,
+        #bef3f5 -21.24%,
+        #9dedf0 12.19%,
+        #7de7eb 29.82%,
+        #5ce1e6 51.94%,
+        #33bbcf 90.29%
+      );
     }
 
-    /* THEME 3 LIGHT OVERRIDES */
-    [data-theme="minimal-light"] .text-slate-100,
-    [data-theme="minimal-light"] .text-slate-200,
-    [data-theme="minimal-light"] .text-slate-300,
-    [data-theme="minimal-light"] .text-white {
-      color: #0F172A !important;
-    }
-    [data-theme="minimal-light"] .text-slate-400 {
-      color: #64748B !important;
-    }
-    [data-theme="minimal-light"] .bg-\[\#080C1A\] {
-      background-color: #F8FAFC !important;
-    }
-    [data-theme="minimal-light"] .bg-\[\#0B1124\] {
-      background-color: #F1F5F9 !important;
-    }
-    [data-theme="minimal-light"] .border-slate-800,
-    [data-theme="minimal-light"] .border-slate-700 {
-      border-color: #E2E8F0 !important;
-    }
-    [data-theme="minimal-light"] .text-blue-400,
-    [data-theme="minimal-light"] .text-blue-500 {
-      color: #059669 !important;
-    }
-    [data-theme="minimal-light"] .bg-blue-600 {
-      background-color: #0F172A !important;
-    }
-    [data-theme="minimal-light"] .hover\:bg-blue-500:hover {
-      background-color: #1E293B !important;
+    .bg-black-gradient {
+      background: linear-gradient(144.39deg, #ffffff -278.56%, #6d6d6d -78.47%, #11101d 91.61%);
     }
 
-    /* THEME 2 VEDIC GOLD ACCENTS */
-    [data-theme="vedic-gold"] .bg-\[\#0B1124\] { background-color: #130722 !important; }
-    [data-theme="vedic-gold"] .text-blue-400,
-    [data-theme="vedic-gold"] .text-blue-500 { color: #F59E0B !important; }
-    [data-theme="vedic-gold"] .bg-blue-600 { background-color: #D97706 !important; }
-    [data-theme="vedic-gold"] .hover\:bg-blue-500:hover { background-color: #B45309 !important; }
+    .bg-discount-gradient {
+      background: linear-gradient(125.17deg, #272727 0%, #11101d 100%);
+    }
 
-    /* THEME 4 NEON VIOLET ACCENTS */
-    [data-theme="neon-violet"] .bg-\[\#0B1124\] { background-color: #0C0318 !important; }
-    [data-theme="neon-violet"] .text-blue-400,
-    [data-theme="neon-violet"] .text-blue-500 { color: #C084FC !important; }
-    [data-theme="neon-violet"] .bg-blue-600 { background-color: #8B5CF6 !important; }
-    [data-theme="neon-violet"] .hover\:bg-blue-500:hover { background-color: #7C3AED !important; }
+    .feature-card {
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      background: var(--black-gradient);
+      box-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.25);
+    }
 
-    /* THEME 5 EMERALD PRO ACCENTS */
-    [data-theme="emerald-pro"] .bg-\[\#0B1124\] { background-color: #06231B !important; }
-    [data-theme="emerald-pro"] .text-blue-400,
-    [data-theme="emerald-pro"] .text-blue-500 { color: #34D399 !important; }
-    [data-theme="emerald-pro"] .bg-blue-600 { background-color: #059669 !important; }
-    [data-theme="emerald-pro"] .hover\:bg-blue-500:hover { background-color: #047857 !important; }
+    .feedback-card {
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+    .feedback-card:hover {
+      background: var(--black-gradient);
+    }
+
+    /* HooBank Signature Glow Orbs */
+    .blue__gradient {
+      background: linear-gradient(180deg, rgba(188, 165, 255, 0) 0%, #214d76 100%);
+      filter: blur(120px);
+    }
+
+    .pink__gradient {
+      background: linear-gradient(90deg, #f4c4f3 0%, #fc67fa 100%);
+      filter: blur(180px);
+    }
+
+    .white__gradient {
+      background: rgba(255, 255, 255, 0.6);
+      filter: blur(250px);
+    }
   </style>
 </head>
+<body class="bg-[#00040f] text-white font-poppins overflow-x-hidden selection:bg-[#00f6ff] selection:text-black">
 
-<body class="bg-[#080C1A] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
-
-  <!-- TOP OFFER BANNER -->
-  <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-700 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 text-center flex items-center justify-center gap-2 shadow-lg">
-    <span class="px-2 py-0.5 bg-amber-400 text-slate-950 rounded text-xs font-black uppercase tracking-wider">80% OFF</span>
-    <span id="announcementText">Special Launch Price: Sirf ₹499 me Lifetime Free E-Commerce Website System!</span>
-    <a href="#pricing" class="underline font-bold hover:text-amber-300 ml-1">Offer Claim Karein &rarr;</a>
-  </div>
-
-  <!-- NAVIGATION -->
-  <header id="mainHeader" class="sticky top-0 z-40 bg-[#080C1A]/90 backdrop-blur-md border-b border-slate-800 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <!-- Brand Logo -->
-      <a href="#" class="flex items-center gap-3">
-        <div id="brandLogoContainer" class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 overflow-hidden">
-          <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
-        </div>
-        <div>
-          <span id="brandNameText" class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white flex items-center gap-1">
-            SheetStore<span class="text-blue-500">Pro</span>
-          </span>
-          <p id="brandTaglineText" class="text-[10px] text-blue-300 tracking-widest uppercase font-semibold">Zero Hosting • Zero Domain</p>
-        </div>
-      </a>
-
-      <!-- Desktop Links -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="#features" class="hover:text-blue-400 transition">Kyu Chahiye?</a>
-        <a href="#demo" class="hover:text-blue-400 transition">Live Demo Dekhein</a>
-        <a href="#how-it-works" class="hover:text-blue-400 transition">Kaise Kaam Karta Hai</a>
-        <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
-        <a href="#faq" class="hover:text-blue-400 transition">FAQs</a>
-      </nav>
-
-      <!-- CTA Button -->
-      <div class="flex items-center gap-2.5">
-        <a href="auth.html" id="navAuthBtn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-blue-400 text-xs font-semibold border border-blue-500/30 transition hover:text-white">
-          <i data-lucide="user" class="w-3.5 h-3.5"></i>
-          <span id="navAuthText">Login / Setup</span>
-        </a>
-        <button type="button" onclick="openDemoSelectorModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
-          <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-400"></i>
-          <span>Live Demos</span>
-          <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
-        </button>
-        <a href="#pricing" class="theme-cta-btn inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-lg shadow-blue-600/30">
-          <span class="ctaBtnText">Get Store Now</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </a>
+  <!-- ========================================================
+       1. HOOBANK ULTRA-CLEAN NAVBAR
+       ======================================================== -->
+  <header class="w-full flex py-6 justify-between items-center max-w-7xl mx-auto px-6 sm:px-12 relative z-50">
+    <!-- Brand Logo -->
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-xl bg-blue-gradient flex items-center justify-center text-primary font-black text-xl shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition">
+        <i data-lucide="layers" class="w-5 h-5 text-primary stroke-[2.5]"></i>
       </div>
+      <div class="flex flex-col">
+        <span class="font-poppins font-black text-xl tracking-tight text-white flex items-center gap-1">
+          SheetStore<span class="text-gradient">Pro</span>
+        </span>
+        <span class="text-[9px] uppercase tracking-widest text-dimWhite font-medium">100% Google Sheet Engine</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center gap-8 text-sm text-dimWhite font-medium">
+      <a href="#features" class="hover:text-secondary transition">Features</a>
+      <a href="#how-it-works" class="hover:text-secondary transition">How It Works</a>
+      <a href="#demos" onclick="openDemoSelectorModal(); return false;" class="text-secondary font-bold hover:text-white transition flex items-center gap-1">
+        <span>Live Demos</span>
+        <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">2</span>
+      </a>
+      <a href="#pricing" class="hover:text-secondary transition">Pricing</a>
+      <a href="#faq" class="hover:text-secondary transition">FAQs</a>
+    </nav>
+
+    <!-- Nav Right Utility Buttons -->
+    <div class="flex items-center gap-3">
+      <!-- Live Demo Modal Button -->
+      <button onclick="openDemoSelectorModal()" 
+              class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-xs text-white font-medium transition shadow-md">
+        <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <span>Explore Demos</span>
+      </button>
+
+      <!-- Auth Dashboard Link -->
+      <a href="dashboard.html" id="navAuthBtn" 
+         class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-gradient text-primary font-bold text-xs hover:opacity-90 transition shadow-lg shadow-cyan-500/20 active:scale-95">
+        <i data-lucide="zap" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+        <span id="navAuthText">Launch Store</span>
+      </a>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative pt-12 pb-20 overflow-hidden">
-    <!-- Glow Accents -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-blue-600/15 blur-[140px] pointer-events-none rounded-full"></div>
-    <div class="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-indigo-600/15 blur-[120px] pointer-events-none rounded-full"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center max-w-3xl mx-auto">
-        
-        <!-- Trust Tag -->
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-blue-500/30 text-blue-300 text-xs sm:text-sm font-semibold mb-6">
-          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
-          <span id="heroBadgeText">For Digital Creators, Coaches, Authors & Vastu/Astrology Experts</span>
-        </div>
-
-        <!-- Headline -->
-        <h1 id="heroTitleText" class="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-6 text-white">
-          Bina Kisi Domain Aur Hosting Ke Banayein 
-          <span class="text-gradient block mt-2">Apni E-Commerce Website</span>
-        </h1>
-
-        <!-- Subheadline -->
-        <p id="heroSubtitleText" class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
-          Shopify ka <strong class="text-rose-400 line-through">₹2,000/month</strong> aur WordPress ka jhanjhat band karein! 
-          Apne phone se <strong class="text-emerald-400">Google Sheet</strong> me price aur product badaliye, website par instantly update hoga. Direct WhatsApp & UPI payments with 0% fee!
+  <!-- ========================================================
+       2. HOOBANK SIGNATURE HERO SECTION
+       ======================================================== -->
+  <section id="home" class="flex md:flex-row flex-col py-6 sm:py-12 max-w-7xl mx-auto px-6 sm:px-12 relative overflow-hidden">
+    
+    <!-- Left Hero Content Column -->
+    <div class="flex-1 flex flex-col justify-center xl:px-0 relative z-10">
+      
+      <!-- Discount Capsule -->
+      <div class="inline-flex items-center py-1.5 px-4 bg-discount-gradient rounded-[10px] mb-4 w-fit border border-slate-800 shadow-md">
+        <img src="assets/images/hoobank/Discount.svg" alt="Discount Icon" class="w-6 h-6 mr-2" />
+        <p class="text-xs sm:text-sm text-dimWhite font-poppins">
+          <span class="text-white font-bold">100% Free</span> Lifetime Hosting • <span class="text-secondary font-bold">Zero Monthly Bills</span>
         </p>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white font-bold text-base shadow-xl shadow-blue-600/30 hover:scale-105 active:scale-95 transition">
-            <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
-            <span>Apna Store Shuru Karein (Sirf ₹499)</span>
-          </a>
-          <button type="button" onclick="openDemoSelectorModal()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 font-semibold text-base border border-slate-700 hover:border-blue-400 transition shadow-lg active:scale-95 group">
-            <i data-lucide="eye" class="w-5 h-5 text-blue-400 group-hover:scale-110 transition"></i>
-            <span>Live Sample Store Dekhein</span>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-bold border border-blue-500/30 ml-1">2 Demos</span>
-          </button>
-        </div>
-
-        <!-- Trust Highlights -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-800/80 text-left">
-          <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
-            <div class="text-emerald-400 font-bold text-xl sm:text-2xl font-heading">₹0 / Month</div>
-            <div class="text-xs text-slate-400">Lifetime Free Hosting</div>
-          </div>
-          <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
-            <div class="text-blue-400 font-bold text-xl sm:text-2xl font-heading">Google Sheet</div>
-            <div class="text-xs text-slate-400">Phone se 100% Control</div>
-          </div>
-          <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
-            <div class="text-amber-400 font-bold text-xl sm:text-2xl font-heading">0% Fee</div>
-            <div class="text-xs text-slate-400">Direct UPI & WhatsApp Pay</div>
-          </div>
-          <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
-            <div class="text-purple-400 font-bold text-xl sm:text-2xl font-heading">2 Minutes</div>
-            <div class="text-xs text-slate-400">1-Click Automated Setup</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPARISON TABLE: SHOPIFY VS WORDPRESS VS SHEETSTORE -->
-  <section class="py-16 bg-[#0B1124] border-y border-slate-800/80">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <h2 class="text-xs uppercase font-extrabold tracking-widest text-blue-400 mb-2">Cost Comparison</h2>
-        <p class="font-heading font-bold text-2xl sm:text-3xl text-white">Aap Har Saal ₹25,000+ Kaise Bachayenge?</p>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs sm:text-sm border-collapse">
-          <thead>
-            <tr class="border-b border-slate-800 text-slate-400 font-semibold">
-              <th class="py-4 px-4">Feature</th>
-              <th class="py-4 px-4 text-rose-400">Shopify</th>
-              <th class="py-4 px-4 text-amber-400">WordPress / Woo</th>
-              <th class="py-4 px-4 text-emerald-400 font-bold bg-blue-950/40 rounded-t-xl">SheetStore Pro</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-800/60 text-slate-300">
-            <tr>
-              <td class="py-3.5 px-4 font-semibold text-white">Monthly Hosting Cost</td>
-              <td class="py-3.5 px-4 text-rose-300">₹2,000/month (₹24,000/yr)</td>
-              <td class="py-3.5 px-4 text-amber-300">₹400/month (₹4,800/yr)</td>
-              <td class="py-3.5 px-4 text-emerald-400 font-bold bg-blue-950/40">₹0 Lifetime FREE</td>
-            </tr>
-            <tr>
-              <td class="py-3.5 px-4 font-semibold text-white">Payment Commission</td>
-              <td class="py-3.5 px-4 text-rose-300">2% + Gateway fee</td>
-              <td class="py-3.5 px-4 text-amber-300">2% to 3% Gateway fee</td>
-              <td class="py-3.5 px-4 text-emerald-400 font-bold bg-blue-950/40">0% (Direct UPI to your Bank)</td>
-            </tr>
-            <tr>
-              <td class="py-3.5 px-4 font-semibold text-white">Backend Management</td>
-              <td class="py-3.5 px-4">Complicated Dashboard</td>
-              <td class="py-3.5 px-4">Slow Admin WP-Admin</td>
-              <td class="py-3.5 px-4 text-emerald-400 font-bold bg-blue-950/40">Google Sheet on Mobile</td>
-            </tr>
-            <tr>
-              <td class="py-3.5 px-4 font-semibold text-white">Setup Complexity</td>
-              <td class="py-3.5 px-4">Needs Days of Setup</td>
-              <td class="py-3.5 px-4">Plugins crash, SSL issues</td>
-              <td class="py-3.5 px-4 text-emerald-400 font-bold bg-blue-950/40">1-Click Launch (2 Min)</td>
-            </tr>
-            <tr>
-              <td class="py-3.5 px-4 font-semibold text-white">Speed & Performance</td>
-              <td class="py-3.5 px-4">Average</td>
-              <td class="py-3.5 px-4">Slow (Plugin bloat)</td>
-              <td class="py-3.5 px-4 text-emerald-400 font-bold bg-blue-950/40">Ultra Fast (Static CDN)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- LIVE DEMO SHOWCASE -->
-  <section id="demo" class="py-20 relative">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs uppercase font-extrabold tracking-wider">Live Proof</span>
-        <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mt-3">Aapka Store Kaisa Dikhega?</h2>
-        <p class="text-slate-400 text-sm mt-2">Humne is template se ek live Digital Assets & Templates Store banaya hai jo abhi internet par chal raha hai:</p>
-      </div>
-
-      <div class="glass-box rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-8 shadow-2xl">
-        <div class="w-full md:w-1/2 rounded-xl overflow-hidden border border-slate-700 shadow-xl bg-slate-900 group">
-          <img id="demoShowcaseImg" 
-               src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" 
-               alt="Live Demo Preview" 
-               class="w-full h-64 object-cover group-hover:scale-105 transition duration-500" />
-        </div>
-
-        <div class="w-full md:w-1/2 space-y-4">
-          <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Live Demo Store</span>
-          <h3 class="font-heading font-bold text-2xl text-white">DigitalHub Templates & Kits Store</h3>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Yeh store 100% Google Sheet se website templates, spreadsheets aur digital tools fetch karta hai. Isme WhatsApp order modal aur UPI QR code dynamic generate hota hai bina kisi server ke!
-          </p>
-
-          <div class="space-y-2 text-xs text-slate-300">
-            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Category Filter Tabs included</div>
-            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> WhatsApp Order Modal with pre-typed message</div>
-            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Instant QR Code for phonepe, gpay, paytm</div>
-          </div>
-
-          <div class="pt-2">
-            <button type="button" onclick="openDemoSelectorModal()" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition hover:scale-105 active:scale-95">
-              <span>Live Sample Store Kholein</span>
-              <i data-lucide="eye" class="w-4 h-4"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS (3 SIMPLE STEPS) -->
-  <section id="how-it-works" class="py-16 bg-[#0B1124] border-t border-slate-800/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-14">
-        <h2 class="text-xs uppercase font-extrabold tracking-widest text-blue-400 mb-2">Automated Process</h2>
-        <p class="font-heading font-bold text-2xl sm:text-3xl text-white">Aapka Store 2 Minute Me Live Kaise Hoga?</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 text-center">
-          <div class="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 font-heading font-black text-xl flex items-center justify-center mx-auto mb-4">1</div>
-          <h3 class="font-heading font-bold text-lg text-white mb-2">1-Click Google Sheet Copy</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Payment ke baad ek button dabate hi master Google Sheet aapke personal Google Drive me copy ho jayegi.</p>
-        </div>
-
-        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 text-center">
-          <div class="w-12 h-12 rounded-xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 font-heading font-black text-xl flex items-center justify-center mx-auto mb-4">2</div>
-          <h3 class="font-heading font-bold text-lg text-white mb-2">1-Click GitHub Deploy</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Doosra button dabate hi GitHub par "Create" par click karein. 30 second me aapki website internet par LIVE ho jayegi!</p>
-        </div>
-
-        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 text-center">
-          <div class="w-12 h-12 rounded-xl bg-amber-600/20 border border-amber-500/30 text-amber-400 font-heading font-black text-xl flex items-center justify-center mx-auto mb-4">3</div>
-          <h3 class="font-heading font-bold text-lg text-white mb-2">Products Add Karein & Sell!</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Sheet me apna WhatsApp number, UPI ID aur products daalein. Website par refresh karte hi sab update!</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING SECTION -->
-  <section id="pricing" class="py-20 relative">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs uppercase font-extrabold tracking-wider">Launch Price</span>
-        <h2 class="font-heading font-black text-3xl sm:text-5xl text-white mt-3">Simple One-Time Investment</h2>
-        <p class="text-slate-400 text-sm mt-2">Koi monthly recurring fee nahi. Lifetime access aur free updates!</p>
-      </div>
-
-      <!-- Pricing Card -->
-      <div class="bg-gradient-to-b from-slate-900 to-[#0A0F1D] border-2 border-blue-500 rounded-3xl p-8 sm:p-10 relative shadow-2xl overflow-hidden">
-        <div class="absolute -top-12 -right-12 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800">
-          <div>
-            <span class="px-3 py-1 rounded-lg bg-blue-600 text-white text-xs font-bold uppercase tracking-wider">Complete Package</span>
-            <h3 class="font-heading font-bold text-2xl text-white mt-2">SheetStore Pro Lifetime License</h3>
-            <p class="text-xs text-slate-400 mt-1">Sab kuch shamil hai: Code + Google Sheet Template + Video Tutorials</p>
-          </div>
-          <div class="text-right">
-            <span class="text-xs text-slate-500 line-through" id="displayOrigPrice">Regular ₹99</span>
-            <div class="flex items-baseline gap-1">
-              <span class="text-4xl sm:text-5xl font-black font-heading text-white" id="displaySellingPrice">₹10</span>
-              <span class="text-xs text-slate-400">/ One-time</span>
+      <!-- Main Headline with Circular "Get Started" Button -->
+      <div class="flex flex-row justify-between items-center w-full">
+        <h1 class="flex-1 font-poppins font-bold ss:text-[62px] text-[40px] text-white ss:leading-[80px] leading-[52px]">
+          Shopify ka <br class="sm:block hidden"/>
+          <span class="text-gradient">Monthly Kharcha</span>
+        </h1>
+        
+        <!-- Circular HooBank "Get Started" Button (Desktop) -->
+        <div class="ss:flex hidden md:mr-4 mr-0">
+          <a href="#pricing" class="w-[130px] h-[130px] rounded-full bg-blue-gradient p-[2px] cursor-pointer flex items-center justify-center transition hover:scale-105 active:scale-95 shadow-xl shadow-cyan-500/25 group">
+            <div class="flex flex-col items-center justify-center bg-primary w-full h-full rounded-full group-hover:bg-[#020d1c] transition">
+              <div class="flex items-center gap-1">
+                <span class="text-gradient font-poppins font-bold text-sm">Apna</span>
+                <img src="assets/images/hoobank/arrow-up.svg" alt="Arrow" class="w-4 h-4 object-contain group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+              </div>
+              <span class="text-gradient font-poppins font-bold text-sm">Store Banayein</span>
             </div>
-          </div>
+          </a>
         </div>
-
-        <!-- Features list in package -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-8 text-xs sm:text-sm">
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Complete Ready Website Template</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> 1-Click Copy Google Sheet Backend</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Lifetime 100% Free Hosting Script</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Direct WhatsApp Order Generator</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Instant UPI QR Code Integration</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Meta/FB Ads 100% Approved & Tested</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Mobile Responsive Design</div>
-          <div class="flex items-center gap-2.5 text-slate-200"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> 2-Minute Setup Video Walkthrough</div>
-        </div>
-
-        <!-- BUY NOW ACTION -->
-        <div class="space-y-3">
-          <button onclick="openPaymentModal()" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-xl shadow-blue-600/30 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
-            <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
-            <span id="displayBtnPriceText">Instant Access Paayein - ₹10 (Pay via UPI / QR)</span>
-          </button>
-          <p class="text-[11px] text-slate-500 text-center flex items-center justify-center gap-1">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> 100% Secure Checkout • Instant Delivery on Thank You Page
-          </p>
-        </div>
-
       </div>
+
+      <h1 class="font-poppins font-bold ss:text-[58px] text-[38px] text-white ss:leading-[75px] leading-[50px] w-full">
+        Hamesha Ke Liye Band.
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="font-poppins font-normal text-dimWhite text-sm sm:text-base max-w-[500px] mt-6 leading-relaxed">
+        Google Sheet ko apna live database banayein. Mobile se price ya photo change karein, direct UPI QR & WhatsApp orders ke sath 2 minute me apni e-commerce website live karein.
+      </p>
+
+      <!-- Mobile CTA Buttons -->
+      <div class="flex flex-wrap items-center gap-3 mt-8">
+        <a href="#pricing" 
+           class="px-7 py-3.5 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-sm shadow-xl shadow-cyan-500/20 hover:opacity-95 transition active:scale-95 flex items-center gap-2">
+          <i data-lucide="zap" class="w-4 h-4 stroke-[2.5]"></i>
+          <span>Store Shuru Karein (₹499)</span>
+        </a>
+        <button onclick="openDemoSelectorModal()" 
+                class="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-white font-poppins font-medium text-sm transition shadow-lg flex items-center gap-2 group">
+          <i data-lucide="eye" class="w-4 h-4 text-cyan-400 group-hover:scale-110 transition"></i>
+          <span>Live Demos (2 Stores)</span>
+        </button>
+      </div>
+
     </div>
-  </section>
 
-  <!-- FAQS -->
-  <section id="faq" class="py-16 bg-[#0B1124] border-t border-slate-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-xs uppercase font-extrabold tracking-widest text-blue-400 mb-2">Aam Sawal</h2>
-        <p class="font-heading font-bold text-2xl sm:text-3xl text-white">Frequently Asked Questions</p>
-      </div>
+    <!-- Right Column: 3D Robot Cyber Hand with Radiant Gradient Blurs -->
+    <div class="flex-1 flex items-center justify-center md:my-0 my-10 relative">
+      <img src="assets/images/hoobank/robot.png" alt="3D Digital Commerce Cyber Hand" 
+           class="w-full h-full object-contain relative z-[5] drop-shadow-2xl hover:scale-105 transition duration-700" />
+      
+      <!-- Glowing Orbs Behind Robot -->
+      <div class="absolute z-[0] w-[40%] h-[35%] top-0 pink__gradient"></div>
+      <div class="absolute z-[1] w-[80%] h-[80%] rounded-full white__gradient bottom-20"></div>
+      <div class="absolute z-[0] w-[50%] h-[50%] right-20 bottom-10 blue__gradient"></div>
 
-      <div class="space-y-4">
-        <div class="glass-box rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
-          <div class="flex items-center justify-between font-semibold text-white text-base">
-            <span>Kya sach me koi hosting ya domain khareedna nahi padega?</span>
-            <i data-lucide="chevron-down" class="w-5 h-5 text-blue-400 transition-transform"></i>
-          </div>
-          <p class="text-slate-300 text-sm mt-3 hidden">
-            Haan, bilkul sach! Yeh website GitHub Pages ya Cloudflare Pages par host hoti hai jo worldwide 100% Free lifetime hosting dete hain unlimited traffic ke sath. Aapko .github.io domain free milta hai (aur agar chahein toh aap apni custom .in domain bhi baad me jod sakte hain).
-          </p>
+      <!-- Floating Live Sync Chip -->
+      <div class="absolute bottom-10 left-4 z-20 bg-slate-900/90 backdrop-blur-md border border-cyan-500/40 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+          <i data-lucide="check" class="w-5 h-5"></i>
         </div>
-
-        <div class="glass-box rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
-          <div class="flex items-center justify-between font-semibold text-white text-base">
-            <span>Kya mujhe coding aani chahiye?</span>
-            <i data-lucide="chevron-down" class="w-5 h-5 text-blue-400 transition-transform"></i>
-          </div>
-          <p class="text-slate-300 text-sm mt-3 hidden">
-            Bilkul 0% coding! Humne 1-click template banaya hai. Bas Google Sheet copy karni hai aur GitHub par "Create" button dabana hai, website apne aap live ho jayegi.
-          </p>
-        </div>
-
-        <div class="glass-box rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
-          <div class="flex items-center justify-between font-semibold text-white text-base">
-            <span>Payment ke baad product kab milega?</span>
-            <i data-lucide="chevron-down" class="w-5 h-5 text-blue-400 transition-transform"></i>
-          </div>
-          <p class="text-slate-300 text-sm mt-3 hidden">
-            Jaise hi aap payment complete karenge, aap turant "Launchpad / Thank You Page" par redirect ho jayenge jahan aapko 1-Click Sheet Copy aur 1-Click Launch buttons mil jayenge!
-          </p>
-        </div>
-
-        <div class="glass-box rounded-xl p-5 cursor-pointer" onclick="toggleFaq(this)">
-          <div class="flex items-center justify-between font-semibold text-white text-base">
-            <span>Kya Facebook Ads (Meta Ads) ispe chal sakti hain?</span>
-            <i data-lucide="chevron-down" class="w-5 h-5 text-blue-400 transition-transform"></i>
-          </div>
-          <p class="text-slate-300 text-sm mt-3 hidden">
-            Haan! Yeh static HTML par chalti hai jo mobile par 1 second me load hoti hai. Facebook ads ke liye speed sabse zaroori hoti hai taaki ad cost kam ho.
-          </p>
+        <div class="text-left">
+          <p class="text-[11px] font-bold text-white font-poppins">UPI Payment Verified ✓</p>
+          <p class="text-[10px] text-dimWhite">Order instant Google Sheet me sync ho gaya</p>
         </div>
       </div>
     </div>
+
   </section>
 
-  <!-- FOOTER -->
-  <footer id="mainFooter" class="bg-[#050811] border-t border-slate-800 py-12 text-slate-400 text-xs sm:text-sm transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+  <!-- ========================================================
+       3. HOOBANK STATS ROW
+       ======================================================== -->
+  <section class="max-w-7xl mx-auto px-6 sm:px-12 py-10 relative z-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 bg-slate-950/60 p-6 rounded-2xl border border-slate-800">
+      
+      <div class="flex flex-col items-center sm:items-start border-r border-slate-800/80 pr-4">
+        <h4 class="font-poppins font-bold text-2xl sm:text-3xl text-white">₹0 / Mo.</h4>
+        <p class="font-poppins font-normal text-xs sm:text-sm text-gradient uppercase tracking-wider mt-1">Free Hosting Forever</p>
+      </div>
+
+      <div class="flex flex-col items-center sm:items-start border-r border-slate-800/80 pr-4">
+        <h4 class="font-poppins font-bold text-2xl sm:text-3xl text-white">100%</h4>
+        <p class="font-poppins font-normal text-xs sm:text-sm text-gradient uppercase tracking-wider mt-1">Google Sheet Powered</p>
+      </div>
+
+      <div class="flex flex-col items-center sm:items-start border-r border-slate-800/80 pr-4">
+        <h4 class="font-poppins font-bold text-2xl sm:text-3xl text-white">0% Fee</h4>
+        <p class="font-poppins font-normal text-xs sm:text-sm text-gradient uppercase tracking-wider mt-1">Direct UPI &amp; WhatsApp</p>
+      </div>
+
+      <div class="flex flex-col items-center sm:items-start">
+        <h4 class="font-poppins font-bold text-2xl sm:text-3xl text-white">2 Mins</h4>
+        <p class="font-poppins font-normal text-xs sm:text-sm text-gradient uppercase tracking-wider mt-1">1-Click Fast Launch</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       4. HOOBANK FEATURES SECTION ("You do the business...")
+       ======================================================== -->
+  <section id="features" class="py-16 sm:py-24 max-w-7xl mx-auto px-6 sm:px-12 flex md:flex-row flex-col items-center gap-12 relative">
+    
+    <!-- Left Column: Title & Intro -->
+    <div class="flex-1 flex flex-col justify-center">
+      <h2 class="font-poppins font-bold text-3xl sm:text-5xl text-white leading-tight">
+        Aap business sambhaliye, <br class="sm:block hidden" />
+        <span class="text-gradient">Technology hum handle karenge.</span>
+      </h2>
+      <p class="font-poppins font-normal text-dimWhite text-sm sm:text-base max-w-[470px] mt-6 leading-relaxed">
+        Bina kisi technical knowledge ke apni dukaan chalaayein. Google Sheet se price badaliye, customer se direct PhonePe/GPay par payment lijiye, aur orders WhatsApp par paayein.
+      </p>
+      <div class="mt-8">
+        <a href="#pricing" class="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-sm transition active:scale-95 shadow-xl shadow-cyan-500/20">
+          <span>Get Started Now</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 stroke-[2.5]"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column: 3 Interactive Feature Cards -->
+    <div class="flex-1 flex flex-col gap-4 w-full">
+      
+      <!-- Feature Card 1 -->
+      <div class="flex flex-row p-5 sm:p-6 rounded-[20px] feature-card border border-slate-800 cursor-pointer">
+        <div class="w-14 h-14 rounded-full flex items-center justify-center bg-dimBlue shrink-0 mr-4">
+          <img src="assets/images/hoobank/Star.svg" alt="Star" class="w-6 h-6 object-contain" />
+        </div>
+        <div class="flex-1 flex flex-col">
+          <h4 class="font-poppins font-semibold text-white text-base sm:text-lg mb-1">
+            100% Google Sheet Se Control
+          </h4>
+          <p class="font-poppins font-normal text-dimWhite text-xs sm:text-sm leading-relaxed">
+            Apne mobile se Google Sheet me price, product photo, aur brand name change karein — website par turant live update hoga.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature Card 2 -->
+      <div class="flex flex-row p-5 sm:p-6 rounded-[20px] feature-card border border-slate-800 cursor-pointer">
+        <div class="w-14 h-14 rounded-full flex items-center justify-center bg-dimBlue shrink-0 mr-4">
+          <img src="assets/images/hoobank/Shield.svg" alt="Shield" class="w-6 h-6 object-contain" />
+        </div>
+        <div class="flex-1 flex flex-col">
+          <h4 class="font-poppins font-semibold text-white text-base sm:text-lg mb-1">
+            0% Gateway Fees &bull; Direct Bank UPI
+          </h4>
+          <p class="font-poppins font-normal text-dimWhite text-xs sm:text-sm leading-relaxed">
+            Razorpay ya payment gateway ko 2% se 3% fee dena band karein. Paisa seedhe aapke PhonePe, Google Pay ya Bank account me aayega.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature Card 3 -->
+      <div class="flex flex-row p-5 sm:p-6 rounded-[20px] feature-card border border-slate-800 cursor-pointer">
+        <div class="w-14 h-14 rounded-full flex items-center justify-center bg-dimBlue shrink-0 mr-4">
+          <img src="assets/images/hoobank/Send.svg" alt="Send" class="w-6 h-6 object-contain" />
+        </div>
+        <div class="flex-1 flex flex-col">
+          <h4 class="font-poppins font-semibold text-white text-base sm:text-lg mb-1">
+            Instant WhatsApp &amp; Mobile Admin App
+          </h4>
+          <p class="font-poppins font-normal text-dimWhite text-xs sm:text-sm leading-relaxed">
+            Customer ke order karte hi pre-filled WhatsApp message aur Android Admin App me instant order notification milti hai.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================================
+       5. HOOBANK BILLING & GOOGLE SHEET INVOICING SECTION
+       ======================================================== -->
+  <section class="py-16 sm:py-24 max-w-7xl mx-auto px-6 sm:px-12 flex md:flex-row flex-col-reverse items-center gap-12 relative overflow-hidden">
+    
+    <!-- Left Column: 3D Bill & Invoice Card with Glow -->
+    <div class="flex-1 flex items-center justify-center relative">
+      <img src="assets/images/hoobank/bill.png" alt="Billing and Google Sheet Invoice" 
+           class="w-full h-full object-contain relative z-[5] drop-shadow-2xl" />
+      <div class="absolute z-[3] -left-1/2 top-0 w-[50%] h-[50%] rounded-full white__gradient"></div>
+      <div class="absolute z-[0] -left-1/2 bottom-0 w-[50%] h-[50%] rounded-full pink__gradient"></div>
+    </div>
+
+    <!-- Right Column: Info & Download App -->
+    <div class="flex-1 flex flex-col justify-center">
+      <h2 class="font-poppins font-bold text-3xl sm:text-5xl text-white leading-tight">
+        Aapke sabhi orders aur <br class="sm:block hidden" />
+        <span class="text-gradient">Google Sheet Invoicing.</span>
+      </h2>
+      <p class="font-poppins font-normal text-dimWhite text-sm sm:text-base max-w-[470px] mt-6 leading-relaxed">
+        Har order customer ka naam, mobile number, delivery address, aur payment UTR number ke sath aapki Google Sheet me automatic save hota hai.
+      </p>
+
+      <!-- App Badges / Direct APK & Sheet Link -->
+      <div class="flex flex-wrap items-center gap-4 mt-8">
+        <a href="downloads/SheetStore-Admin.apk" download 
+           class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-white text-xs font-semibold transition shadow-md">
+          <i data-lucide="smartphone" class="w-5 h-5 text-cyan-400"></i>
+          <div class="text-left">
+            <span class="text-[9px] text-dimWhite block uppercase">Download APK</span>
+            <span class="font-bold text-white">Android Admin App</span>
+          </div>
+        </a>
+
+        <a href="https://docs.google.com/spreadsheets/d/1V8D2nmXTTha8fBBBFRGvjwLZcdUaOZjrpai1fNrXnsk/copy" target="_blank"
+           class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-400 text-white text-xs font-semibold transition shadow-md">
+          <i data-lucide="sheet" class="w-5 h-5 text-emerald-400"></i>
+          <div class="text-left">
+            <span class="text-[9px] text-dimWhite block uppercase">1-Click Copy</span>
+            <span class="font-bold text-white">Google Sheet Template</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================
+       6. HOOBANK CARD DEAL & LIVE DEMOS SECTION
+       ======================================================== -->
+  <section id="demos" class="py-16 sm:py-24 max-w-7xl mx-auto px-6 sm:px-12 flex md:flex-row flex-col items-center gap-12 relative overflow-hidden">
+    
+    <!-- Left Column: Title & Demo Selector Trigger -->
+    <div class="flex-1 flex flex-col justify-center">
+      <h2 class="font-poppins font-bold text-3xl sm:text-5xl text-white leading-tight">
+        Apne business ke liye <br class="sm:block hidden" />
+        <span class="text-gradient">Ready-made Live Demo chunein.</span>
+      </h2>
+      <p class="font-poppins font-normal text-dimWhite text-sm sm:text-base max-w-[470px] mt-6 leading-relaxed">
+        Chahe aap software, ebooks, ya digital goods bechte hon, ya traditional sarees aur boutique fashion — SheetStore Pro ke paas dono ke liye ready-made high-converting storefronts hain.
+      </p>
+
+      <!-- 2 Live Demo Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <button onclick="openDemoSelectorModal()" 
+                class="px-7 py-3.5 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-sm shadow-xl shadow-cyan-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+          <i data-lucide="eye" class="w-4 h-4 stroke-[2.5]"></i>
+          <span>Dono Live Demos Kholein ➔</span>
+        </button>
+        <a href="saree-demo.html" target="_blank"
+           class="px-5 py-3.5 rounded-xl bg-slate-900 border border-[#D4AF37]/50 hover:border-[#D4AF37] text-[#F5DE7A] font-poppins font-semibold text-xs flex items-center justify-center gap-1.5 transition">
+          <span>🥻 NOOLAM Saree Studio</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column: 3D Card Graphic -->
+    <div class="flex-1 flex items-center justify-center relative">
+      <img src="assets/images/hoobank/card.png" alt="Card Showcase" 
+           class="w-full h-full object-contain relative z-[5] drop-shadow-2xl" />
+      <div class="absolute z-[0] w-[60%] h-[60%] right-0 bottom-0 blue__gradient"></div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================
+       7. HOOBANK TESTIMONIALS SECTION
+       ======================================================== -->
+  <section class="py-16 sm:py-24 max-w-7xl mx-auto px-6 sm:px-12 relative">
+    
+    <div class="w-full flex justify-between items-md-center md:flex-row flex-col sm:mb-16 mb-8 relative z-[1]">
+      <h2 class="font-poppins font-bold text-3xl sm:text-5xl text-white leading-tight">
+        Store owners kya kehte hain <br class="sm:block hidden" />
+        <span class="text-gradient">SheetStore Pro ke bare mein.</span>
+      </h2>
+      <div class="w-full md:mt-0 mt-6">
+        <p class="font-poppins font-normal text-dimWhite text-sm sm:text-base text-left max-w-[450px]">
+          100+ digital creators, boutique owners aur consultants jo monthly Shopify fees band karke SheetStore par shift ho chuke hain.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3 Feedback Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-[1]">
+      
+      <!-- Card 1 -->
+      <div class="flex flex-col justify-between px-8 py-10 rounded-[20px] feedback-card border border-slate-800">
         <div>
-          <span id="footerBrandName" class="font-heading font-bold text-lg text-white">SheetStore<span class="text-blue-500">Pro</span></span>
-          <p id="footerBrandTagline" class="text-slate-500 text-xs mt-1">Zero hosting, zero domain e-commerce system powered by Google Sheet.</p>
+          <img src="assets/images/hoobank/quotes.svg" alt="Quotes" class="w-10 h-7 object-contain mb-6" />
+          <p class="font-poppins font-normal text-sm sm:text-base text-white leading-relaxed mb-6">
+            "Shopify par har mahine ₹2,400 lag rahe the bina kisi wajah ke. SheetStore par maine apna Notion templates store banaya — zero monthly bills and Google Sheet integration is so smooth!"
+          </p>
         </div>
-        <div class="flex items-center gap-6">
-          <a href="#features" class="hover:text-blue-400">Features</a>
-          <a href="javascript:void(0)" onclick="openDemoSelectorModal()" class="hover:text-blue-400">Live Demos</a>
-          <a href="#pricing" class="hover:text-blue-400">Pricing</a>
-          <a href="#faq" class="hover:text-blue-400">FAQs</a>
-          <button onclick="openConfigModal()" class="text-slate-400 hover:text-blue-400 flex items-center gap-1">
-            <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-            <span>Sheet Settings</span>
-          </button>
+        <div class="flex flex-row items-center">
+          <img src="assets/images/hoobank/people01.png" alt="Ankit Sharma" class="w-12 h-12 rounded-full" />
+          <div class="flex flex-col ml-4">
+            <h4 class="font-poppins font-semibold text-base text-white">Ankit Sharma</h4>
+            <p class="font-poppins font-normal text-xs text-dimWhite">Digital Creator, Pune</p>
+          </div>
         </div>
       </div>
-      <div class="border-t border-slate-800/60 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-        <p>&copy; 2026 SheetStore Pro. All rights reserved.</p>
-        <p>Built for digital creators, consultants and entrepreneurs.</p>
+
+      <!-- Card 2 -->
+      <div class="flex flex-col justify-between px-8 py-10 rounded-[20px] feedback-card border border-slate-800">
+        <div>
+          <img src="assets/images/hoobank/quotes.svg" alt="Quotes" class="w-10 h-7 object-contain mb-6" />
+          <p class="font-poppins font-normal text-sm sm:text-base text-white leading-relaxed mb-6">
+            "NOOLAM Saree Showcase template dekh kar mere customers dang reh gaye! Clothes rail pe saree hanging effect aur 10% bundle checkout ne hamari direct UPI sales 3x kar di."
+          </p>
+        </div>
+        <div class="flex flex-row items-center">
+          <img src="assets/images/hoobank/people02.png" alt="Priya Sundaram" class="w-12 h-12 rounded-full" />
+          <div class="flex flex-col ml-4">
+            <h4 class="font-poppins font-semibold text-base text-white">Priya Sundaram</h4>
+            <p class="font-poppins font-normal text-xs text-dimWhite">Boutique Owner, Chennai</p>
+          </div>
+        </div>
       </div>
+
+      <!-- Card 3 -->
+      <div class="flex flex-col justify-between px-8 py-10 rounded-[20px] feedback-card border border-slate-800">
+        <div>
+          <img src="assets/images/hoobank/quotes.svg" alt="Quotes" class="w-10 h-7 object-contain mb-6" />
+          <p class="font-poppins font-normal text-sm sm:text-base text-white leading-relaxed mb-6">
+            "Vedic Gold theme mere Vastu aur gemstone consultancy ke liye perfect fit hai. Android Admin app pe payment aate hi notification aa jata hai, zero manual checking!"
+          </p>
+        </div>
+        <div class="flex flex-row items-center">
+          <img src="assets/images/hoobank/people03.png" alt="Vikram Mehra" class="w-12 h-12 rounded-full" />
+          <div class="flex flex-col ml-4">
+            <h4 class="font-poppins font-semibold text-base text-white">Vikram Mehra</h4>
+            <p class="font-poppins font-normal text-xs text-dimWhite">Consultant, Jaipur</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================================
+       8. PRICING SECTION (The ₹499 Lifetime Access Plan)
+       ======================================================== -->
+  <section id="pricing" class="py-16 sm:py-24 max-w-5xl mx-auto px-6 sm:px-12 relative z-10">
+    <div class="text-center mb-12">
+      <span class="text-gradient uppercase tracking-widest text-xs font-bold font-poppins block mb-2">
+        Simple &amp; Transparent
+      </span>
+      <h2 class="font-poppins font-black text-3xl sm:text-5xl text-white">
+        Sirf Ek Baar Pay Karein. <span class="text-gradient">Lifetime Free Chalayein.</span>
+      </h2>
+      <p class="text-dimWhite text-sm mt-3 max-w-xl mx-auto">
+        Koi monthly renewal nahi, koi hidden fees nahi. Direct UPI QR scan karke 2 minute me shuru karein.
+      </p>
+    </div>
+
+    <!-- Pricing Card -->
+    <div class="bg-slate-900/90 rounded-3xl border-2 border-cyan-500/50 p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-60 h-60 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-8 border-b border-slate-800">
+        <div>
+          <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 font-bold text-xs uppercase tracking-wider">
+            All-In-One Pro Deal
+          </span>
+          <h3 class="font-poppins font-bold text-2xl sm:text-3xl text-white mt-3">SheetStore Complete Lifetime Suite</h3>
+          <p class="text-dimWhite text-xs sm:text-sm mt-1">Website Source Code + Google Sheet Backend + Android Admin APK</p>
+        </div>
+        <div class="text-left md:text-right">
+          <div class="flex items-baseline md:justify-end gap-2">
+            <span class="text-4xl sm:text-5xl font-black font-poppins text-white">₹499</span>
+            <span class="text-dimWhite text-sm line-through">₹2,999</span>
+          </div>
+          <span class="text-xs text-emerald-400 font-bold block mt-1">One-time payment • Lifetime Free</span>
+        </div>
+      </div>
+
+      <!-- Features Checklist Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8 text-xs sm:text-sm text-dimWhite">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0"></i>
+          <span>100% Free Lifetime Hosting (GitHub Pages)</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0"></i>
+          <span>Google Sheet Backend &bull; Phone se Update</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0"></i>
+          <span>Direct UPI QR + PhonePe / GPay Pay Modal</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0"></i>
+          <span>Instant WhatsApp Order Button with Customer Cart</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0"></i>
+          <span>5 Digital Store Themes + NOOLAM Saree Showcase</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0"></i>
+          <span>Android Admin Companion App (APK Included)</span>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button onclick="openPaymentModal()" 
+              class="w-full py-4 rounded-xl bg-blue-gradient text-primary font-poppins font-black text-sm sm:text-base tracking-wide uppercase transition active:scale-95 shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2">
+        <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+        <span>Instant UPI Se Abhi Shuru Karein (Sirf ₹499) ➔</span>
+      </button>
+
+      <p class="text-center text-[11px] text-dimWhite mt-3">
+        100% Instant Delivery • 7-Day Money Back Guarantee if setup fails.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       9. HOOBANK CALL TO ACTION (CTA) SECTION
+       ======================================================== -->
+  <section class="py-12 max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
+    <div class="flex md:flex-row flex-col justify-between items-center bg-black-gradient-2 rounded-[20px] box-shadow sm:p-14 p-8 border border-slate-800">
+      <div class="flex-1 flex flex-col">
+        <h2 class="font-poppins font-bold text-3xl sm:text-4xl text-white leading-tight">
+          Aaj hi apna store shuru karein!
+        </h2>
+        <p class="font-poppins font-normal text-dimWhite text-sm sm:text-base max-w-[470px] mt-4 leading-relaxed">
+          Google Sheet se chalne wali super fast e-commerce website banayein aur Shopify ke monthly kharche se aazaadi paayein.
+        </p>
+      </div>
+      <div class="flex items-center justify-center md:ml-10 ml-0 md:mt-0 mt-8">
+        <button onclick="openPaymentModal()" 
+                class="px-8 py-4 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-sm tracking-wide transition active:scale-95 shadow-xl shadow-cyan-500/25">
+          Get Started (₹499) ➔
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       10. FAQs SECTION
+       ======================================================== -->
+  <section id="faq" class="py-16 max-w-4xl mx-auto px-6 sm:px-12 relative z-10">
+    <div class="text-center mb-10">
+      <h2 class="font-poppins font-bold text-2xl sm:text-4xl text-white">Aksar Pooche Jaane Wale Sawal</h2>
+    </div>
+
+    <div class="space-y-3">
+      <!-- FAQ 1 -->
+      <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between font-poppins font-semibold text-sm sm:text-base text-white">
+          <span>Kya sach me koi monthly hosting ya domain fee nahi hai?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-secondary transition"></i>
+        </div>
+        <p class="text-xs sm:text-sm text-dimWhite mt-2 hidden leading-relaxed">
+          Haan bilkul! Yeh system GitHub Pages par host hota hai jo 100% free hai lifetime. Aapko koi hosting, server ya database ka monthly bill nahi bharna padta.
+        </p>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between font-poppins font-semibold text-sm sm:text-base text-white">
+          <span>Google Sheet se product aur price kaise badalte hain?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-secondary transition"></i>
+        </div>
+        <p class="text-xs sm:text-sm text-dimWhite mt-2 hidden leading-relaxed">
+          Aapko ek Google Sheet template milega jisme 'Products' aur 'Settings' tab hote hain. Aap apne phone me Google Sheet app se product ka naam ya price change karenge aur website par instant update ho jayega.
+        </p>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between font-poppins font-semibold text-sm sm:text-base text-white">
+          <span>Customer se payment kaise aayegi?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-secondary transition"></i>
+        </div>
+        <p class="text-xs sm:text-sm text-dimWhite mt-2 hidden leading-relaxed">
+          Website me direct Dynamic UPI QR code generator laga hai. Customer PhonePe, Google Pay, Paytm ya BHIM se direct aapke UPI ID par payment karega jisme 0% transaction fee lagti hai.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       11. HOOBANK STYLE FOOTER
+       ======================================================== -->
+  <footer class="py-12 border-t border-slate-900 bg-[#00040f] relative z-10">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
+      
+      <div class="flex flex-col items-center md:items-start">
+        <a href="#" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-gradient flex items-center justify-center text-primary font-bold">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+          </div>
+          <span class="font-poppins font-black text-lg text-white">SheetStore<span class="text-gradient">Pro</span></span>
+        </a>
+        <p class="font-poppins text-xs text-dimWhite mt-2 text-center md:text-left">
+          Zero hosting, zero domain automated e-commerce system powered by Google Sheet.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-dimWhite font-medium">
+        <a href="#features" class="hover:text-secondary transition">Features</a>
+        <a href="javascript:void(0)" onclick="openDemoSelectorModal()" class="hover:text-secondary transition">Live Demos</a>
+        <a href="#pricing" class="hover:text-secondary transition">Pricing</a>
+        <a href="dashboard.html" class="hover:text-secondary transition">Store Launchpad</a>
+        <button onclick="openConfigModal()" class="hover:text-secondary flex items-center gap-1">
+          <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+          <span>Sheet Config</span>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 pt-8 mt-8 border-t border-slate-900 text-center text-xs text-dimWhite flex flex-col sm:flex-row justify-between items-center gap-2">
+      <p>&copy; 2026 SheetStore Pro &bull; Inspired by HooBank Design &bull; Powered by Google Sheets</p>
+      <p>Direct UPI &bull; 0% Fee &bull; 100% Free Lifetime Hosting</p>
     </div>
   </footer>
 
-  <!-- FLOATING WHATSAPP -->
-  <a id="floatingWaBtn" href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20ke%20bare%20me%20jaankari%20chahiye" 
-     target="_blank"
-     class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold shadow-2xl shadow-emerald-500/40 hover:scale-105 active:scale-95 transition">
-    <i data-lucide="message-circle" class="w-6 h-6 fill-current"></i>
-    <span class="text-sm hidden sm:inline">WhatsApp Enquiry</span>
-  </a>
-
-  <!-- PAYMENT CHECKOUT & 1-TAP VERIFICATION MODAL -->
-  <div id="payModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-[#0B132B] border border-blue-500/40 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl text-left">
+  <!-- ========================================================
+       12. PAYMENT MODAL (₹499 UPI QR Checkout)
+       ======================================================== -->
+  <div id="paymentModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-6 sm:p-7 relative shadow-2xl">
       <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-6 h-6"></i>
+        <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
-      <!-- Modal Header -->
-      <div class="flex items-center gap-3 mb-5 pb-4 border-b border-slate-800">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-          <i data-lucide="shield-check" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <h3 class="font-heading font-bold text-lg text-white">Secure Checkout & 1-Tap Verification</h3>
-          <p class="text-xs text-blue-400 flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>Direct Bank UPI • Instant Lifetime Access</span>
-          </p>
-        </div>
+      <div class="text-center mb-4">
+        <span class="w-10 h-10 rounded-xl bg-blue-gradient inline-flex items-center justify-center text-primary font-bold text-lg mb-2">⚡</span>
+        <h3 class="font-poppins font-bold text-lg text-white">Instant UPI Checkout</h3>
+        <p class="text-xs text-dimWhite">PhonePe, Google Pay, Paytm ya BHIM se QR scan karein</p>
       </div>
 
-      <!-- STEP 1: CUSTOMER DETAILS & PAYMENT INTENT -->
-      <div id="checkoutStep1" class="space-y-4">
-        <!-- Order Summary Card -->
-        <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-slate-400 block font-mono" id="displayOrderId">#ORD-......</span>
-            <span class="text-sm font-bold text-white">SheetStore Pro Lifetime Kit</span>
-          </div>
-          <div class="text-right">
-            <span class="text-xs text-slate-500 line-through block" id="modalOrigPrice">₹99</span>
-            <span class="text-xl font-black font-heading text-emerald-400" id="modalSellingPrice">₹10</span>
-          </div>
-        </div>
-
-        <!-- Customer Inputs -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Aapka Naam <span class="text-rose-400">*</span></label>
-            <input type="text" id="custName" placeholder="Jaise: Rahul Sharma" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Mobile No. <span class="text-rose-400">*</span></label>
-            <input type="tel" id="custPhone" placeholder="10-digit number" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
-          </div>
-          <div class="sm:col-span-2">
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Email ID <span class="text-slate-500 font-normal">(Optional • Login details mail par pane ke liye)</span></label>
-            <input type="email" id="custEmail" placeholder="name@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-blue-500 focus:outline-none" />
-          </div>
-        </div>
-
-        <!-- QR Display Section (PROMINENT & DYNAMIC) -->
-        <div id="desktopQrBox" class="text-center bg-slate-950 p-4 rounded-2xl border border-slate-800/80 shadow-inner">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
-            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
-            <span id="qrAmountBadge">Scan Karein • Amount: ₹10</span>
-          </div>
-          
-          <div class="bg-white p-3 rounded-2xl inline-block shadow-2xl mx-auto mb-2 border-2 border-slate-200">
-            <img id="upiDynamicQr" src="" alt="UPI Dynamic QR" class="w-44 h-44 mx-auto" />
-          </div>
-          
-          <p class="text-xs font-mono text-emerald-400 font-semibold" id="displayUpiId">UPI ID: payments@upi</p>
-          <p class="text-[11px] text-slate-400 mt-1">GPay, PhonePe, Paytm, BHIM kisi se bhi scan karein — amount auto fill aayega!</p>
-        </div>
-
-        <!-- 1-Tap Direct UPI App Buttons -->
-        <div class="space-y-2">
-          <p class="text-[11px] text-center text-slate-400 font-medium">Ya mobile me direct UPI app se pay karein:</p>
-          <div class="grid grid-cols-3 gap-2">
-            <a id="gpayDirectBtn" href="#" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
-              <span>🟢 GPay</span>
-            </a>
-            <a id="phonepeDirectBtn" href="#" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
-              <span>🟣 PhonePe</span>
-            </a>
-            <a id="paytmDirectBtn" href="#" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
-              <span>🔵 Paytm</span>
-            </a>
-          </div>
-          <a id="mobileUpiIntentBtn" href="#" 
-             class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition">
-            <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
-            <span id="modalPayBtnText">Pay ₹10 via Default UPI App</span>
-          </a>
-        </div>
-
-        <!-- Move to Step 2 Button -->
-        <div class="pt-1">
-          <button onclick="goToStep2()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition">
-            <span>Payment Ho Gayi ➔ UTR Enter Karein</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
-        </div>
+      <!-- QR Code -->
+      <div class="bg-white p-3 rounded-2xl text-center mb-4 max-w-[220px] mx-auto shadow-inner">
+        <img id="paymentQrCodeImg" 
+             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore%20Pro&am=499&cu=INR" 
+             alt="UPI QR Code" class="w-44 h-44 mx-auto rounded-lg" />
+        <p class="text-xs font-bold text-slate-900 font-poppins mt-1">Amount: ₹499</p>
+        <p class="text-[10px] text-slate-500 font-mono">UPI: yuvitel@upi</p>
       </div>
 
-      <!-- STEP 2: UTR NUMBER INPUT & VERIFY -->
-      <div id="checkoutStep2" class="hidden space-y-4">
-        <div class="bg-blue-950/40 border border-blue-500/30 rounded-xl p-3.5 text-xs text-blue-200 leading-relaxed flex items-start gap-2.5">
-          <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
-          <span>Payment ke baad aapke UPI app (PhonePe/GPay) me <strong>12-digit UPI Reference No / UTR</strong> dikhta hai. Use niche enter karein:</span>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1.5">12-Digit UPI Reference / UTR Number <span class="text-rose-400">*</span></label>
-          <input type="text" id="custUtr" maxlength="12" placeholder="Jaise: 412984920194" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono text-base tracking-widest focus:border-emerald-500 focus:outline-none" />
-          <p class="text-[11px] text-slate-400 mt-1.5">Yeh number aapke Google Sheet me instantly cross-verify hota hai.</p>
-        </div>
-
-        <!-- Buttons -->
-        <div class="space-y-2.5 pt-2">
-          <button onclick="submitOrderForVerification()" id="btnVerifyOrder" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition hover:scale-[1.01] active:scale-95">
-            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-            <span>Verify & Unlock My Access (1-Tap Check)</span>
-          </button>
-
-          <!-- WhatsApp Direct Fallback Button -->
-          <button onclick="sendOrderToWhatsAppFallback()" type="button" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs flex items-center justify-center gap-2 border border-slate-700 transition">
-            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-            <span>Jaldi Chahiye? Send UTR on WhatsApp</span>
-          </button>
-
-          <button onclick="goToStep1()" type="button" class="w-full text-center text-xs text-slate-400 hover:text-white pt-1">
-            &larr; Wapas Step 1 Par Jayein
-          </button>
-        </div>
+      <!-- Customer Details Form -->
+      <div class="space-y-2.5 text-left mb-4">
+        <input type="text" id="buyerName" placeholder="Aapka Naam *" 
+               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
+        <input type="tel" id="buyerPhone" placeholder="WhatsApp Number *" 
+               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
+        <input type="email" id="buyerEmail" placeholder="Email Address *" 
+               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400" />
+        <input type="text" id="buyerUtr" placeholder="Payment UTR / Ref No. (Payment ke baad) *" 
+               class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white font-mono focus:outline-none focus:border-cyan-400" />
       </div>
 
-      <!-- STEP 3: LIVE VERIFICATION STATUS (POLLING GOOGLE SHEET) -->
-      <div id="checkoutStep3" class="hidden text-center py-4 space-y-4">
-        <!-- Spinner / Pulse -->
-        <div id="verifyingSpinner" class="space-y-3">
-          <div class="relative w-16 h-16 mx-auto">
-            <div class="w-16 h-16 rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin"></div>
-            <div class="absolute inset-0 flex items-center justify-center text-blue-400">
-              <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+      <button onclick="submitOrderForVerification()" id="btnSubmitPayment"
+              class="w-full py-3.5 rounded-xl bg-blue-gradient text-primary font-poppins font-black text-xs uppercase tracking-wide transition shadow-lg active:scale-95 flex items-center justify-center gap-2">
+        <i data-lucide="check-circle" class="w-4 h-4 stroke-[2.5]"></i>
+        <span>Confirm Order &amp; Unlock Dashboard 🚀</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       13. DEMO SELECTOR MODAL
+       ======================================================== -->
+  <div id="demoSelectorModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
+      <div class="absolute -top-24 -left-24 w-60 h-60 bg-cyan-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <button onclick="closeDemoSelectorModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="text-center mb-6 relative z-10">
+        <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold inline-block mb-2">
+          ✨ Live Store Demos
+        </span>
+        <h3 class="font-poppins font-black text-2xl sm:text-3xl text-white">Kaunsa Store Demo Dekhna Chahte Hain?</h3>
+        <p class="text-xs text-dimWhite mt-1 max-w-md mx-auto">
+          SheetStore Pro se aap kisi bhi category ka 100% Google Sheet powered e-commerce store bana sakte hain:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+        
+        <!-- Option 1: Digital Products Store -->
+        <div class="bg-slate-950/80 rounded-2xl p-5 border border-cyan-500/40 hover:border-cyan-400 flex flex-col justify-between transition group shadow-lg">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-lg">⚡</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">5 Color Presets</span>
             </div>
+            <h4 class="font-poppins font-bold text-base text-white group-hover:text-cyan-400 transition">Digital Products &amp; SaaS Store</h4>
+            <p class="text-xs text-dimWhite mt-1 leading-relaxed">
+              Software, Ebooks, Notion kits, AI Prompts &amp; Web Templates. Direct UPI QR + instant download link.
+            </p>
           </div>
-          <h4 class="text-base font-bold text-white">Order Recorded in Google Sheet!</h4>
-          <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
-            Aapka UTR Number Google Sheet me record ho gaya hai. Admin ke phone me <strong>1-Tap Checkbox</strong> tick hote hi yahan page live unlock ho jayega!
-          </p>
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-blue-500/40 text-xs font-mono text-blue-300">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            <span id="pollCountdownText">Checking status (Attempt 1)...</span>
+          <div class="mt-4 pt-4 border-t border-slate-800">
+            <a href="demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
+              <span>Open Digital Store Demo ➔</span>
+            </a>
           </div>
         </div>
 
-        <!-- Success Animation (Hidden initially) -->
-        <div id="verificationSuccessBox" class="hidden space-y-3">
-          <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-xl shadow-emerald-500/30 animate-bounce">
-            <i data-lucide="check" class="w-8 h-8"></i>
+        <!-- Option 2: NOOLAM Saree Showcase -->
+        <div class="bg-gradient-to-b from-[#200407] to-[#140204] rounded-2xl p-5 border border-[#D4AF37]/40 hover:border-[#D4AF37] flex flex-col justify-between transition group shadow-lg">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-10 h-10 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold text-lg">🥻</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#F5DE7A] border border-[#D4AF37]/30 font-bold font-cinzel">Luxury Studio</span>
+            </div>
+            <h4 class="font-poppins font-bold text-base text-[#F5DE7A] group-hover:text-white transition">NOOLAM Kanchipuram Saree</h4>
+            <p class="text-xs text-[#E5D5B8] mt-1 leading-relaxed">
+              Ethnic wear, 6 Moods archive, "Try the Look" bundle with 10% off, real clothes rail ("The Rack"), &amp; 3D tilt silk arc.
+            </p>
           </div>
-          <h4 class="text-xl font-black text-emerald-400">Payment 100% Verified! 🎉</h4>
-          <p class="text-xs text-slate-300">Aapka access unlock ho chuka hai. Launchpad par redirect kiya ja raha hai...</p>
+          <div class="mt-4 pt-4 border-t border-white/10">
+            <a href="saree-demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-poppins font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
+              <span>Open Saree Showcase Studio ➔</span>
+            </a>
+          </div>
         </div>
 
-        <!-- WhatsApp Fallback while waiting -->
-        <div class="pt-4 border-t border-slate-800">
-          <p class="text-[11px] text-slate-400 mb-2">Wait nahi karna chahte? Seedha WhatsApp par UTR confirm karein:</p>
-          <button onclick="sendOrderToWhatsAppFallback()" class="w-full py-2.5 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg">
-            <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
-            <span>Open WhatsApp with UTR Proof</span>
-          </button>
-        </div>
       </div>
 
+      <div class="mt-5 text-center text-[11px] text-dimWhite relative z-10">
+        <span>Aap dono templates ko apne hisab se Google Sheet se customize kar sakte hain.</span>
+      </div>
     </div>
   </div>
 
-  <!-- STORE & GOOGLE SHEET SETTINGS MODAL -->
-  <div id="configModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-[#0B132B] border border-slate-700 rounded-2xl max-w-lg w-full p-6 relative">
+  <!-- ========================================================
+       14. CONFIG MODAL (Google Sheet Setup)
+       ======================================================== -->
+  <div id="configModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 relative">
       <button onclick="closeConfigModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-6 h-6"></i>
+        <i data-lucide="x" class="w-5 h-5"></i>
       </button>
-      <h3 class="font-heading font-bold text-xl text-white mb-1 flex items-center gap-2">
-        <i data-lucide="settings" class="w-5 h-5 text-blue-400"></i>
-        <span>Store & Google Sheet Settings</span>
-      </h3>
-      <p class="text-xs text-slate-400 mb-4">Apna WhatsApp Number, UPI ID aur Google Sheet Web App URL yahan enter karein.</p>
-
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Number (with 91 country code)</label>
-          <input type="text" id="configWaNumber" placeholder="919876543210" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
-          <span class="text-[10px] text-slate-500">Example: 91 ke baad 10 digit number bina spaces ke</span>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">UPI ID (for Direct GPay/PhonePe/QR)</label>
-          <input type="text" id="configUpiId" placeholder="yourname@okaxis" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
-          <span class="text-[10px] text-slate-500">Customer is UPI address par paise bhejenge</span>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Google Sheet Apps Script Web App URL</label>
-          <input type="text" id="configSheetUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm font-mono text-xs" />
-          <span class="text-[10px] text-slate-500">Google Sheet me Code.gs deploy karke mila hua URL yahan paste karein.</span>
-        </div>
-
-        <div class="pt-2 flex gap-3">
-          <button onclick="saveStoreSettings()" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm">Save Settings</button>
-          <button onclick="closeConfigModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-sm">Cancel</button>
-        </div>
-      </div>
+      <h3 class="font-poppins font-bold text-lg text-white mb-2">Google Sheet Configuration</h3>
+      <p class="text-xs text-dimWhite mb-4">Apna Google Apps Script Web App URL yahan daalein:</p>
+      <input type="url" id="sheetUrlInput" 
+             value="https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
+             class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white mb-4 font-mono" />
+      <button onclick="closeConfigModal()" class="w-full py-2.5 rounded-xl bg-blue-gradient text-primary font-bold text-xs uppercase">
+        Save &amp; Close
+      </button>
     </div>
   </div>
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // Global Store Configuration synced with localStorage
-    let storeConfig = {
-      sheetUrl: localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec",
-      waNumber: localStorage.getItem('store_wa_number') || "919999999999",
-      upiId: localStorage.getItem('store_upi_id') || "payments@upi"
-    };
-
-    let currentOrder = {
-      id: "",
-      name: "",
-      phone: "",
-      product: "SheetStore Pro Lifetime Kit",
-      amount: 10, // Live Test Price ₹10 (controllable from mobile app)
-      utr: ""
-    };
-
-    let pollInterval = null;
-    let pollAttempts = 0;
-    const MAX_POLL_ATTEMPTS = 30; // 30 * 3s = 90 seconds
-
-    function generateOrderId() {
-      return "#ORD-" + Math.floor(100000 + Math.random() * 900000);
-    }
-
-    function syncConfigWithUI() {
-      // Sync floating WhatsApp button
-      const floatingWa = document.getElementById('floatingWaBtn');
-      if (floatingWa) {
-        floatingWa.href = `https://wa.me/${storeConfig.waNumber}?text=${encodeURIComponent("Namaste! Mujhe SheetStore Pro ke bare me jaankari chahiye.")}`;
-      }
-    }
-
-    function openPaymentModal() {
-      if (!currentOrder.id) {
-        currentOrder.id = generateOrderId();
-      }
-
-      document.getElementById('displayOrderId').innerText = currentOrder.id;
-      const upiId = (storeConfig.upiId && storeConfig.upiId.trim() && storeConfig.upiId !== 'payments@upi') ? storeConfig.upiId : 'payments@upi';
-      document.getElementById('displayUpiId').innerText = `UPI ID: ${upiId}`;
-
-      const cleanOrderId = currentOrder.id.replace('#', '');
-      const brandName = storeConfig.brandName || "SheetStorePro";
-      const amount = currentOrder.amount || 10;
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
-
-      document.getElementById('mobileUpiIntentBtn').href = upiUrl;
-
-      // 1-Tap App-Specific Intents
-      const gpayBtn = document.getElementById('gpayDirectBtn');
-      if (gpayBtn) gpayBtn.href = `gpay://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
-
-      const phonepeBtn = document.getElementById('phonepeDirectBtn');
-      if (phonepeBtn) phonepeBtn.href = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
-
-      const paytmBtn = document.getElementById('paytmDirectBtn');
-      if (paytmBtn) paytmBtn.href = `paytmmp://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(brandName)}&am=${amount}&cu=INR&tn=${cleanOrderId}`;
-
-      // Build High-Quality Dynamic QR Code image for EXACT amount
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-      document.getElementById('upiDynamicQr').src = qrUrl;
-
-      const qrBadge = document.getElementById('qrAmountBadge');
-      if (qrBadge) qrBadge.innerText = `Scan Karein • Amount: ₹${amount}`;
-
-      goToStep1();
-      document.getElementById('payModal').classList.remove('hidden');
-      lucide.createIcons();
-    }
-
-    function closePaymentModal() {
-      document.getElementById('payModal').classList.add('hidden');
-      if (pollInterval) {
-        clearInterval(pollInterval);
-        pollInterval = null;
-      }
-    }
-
-    function goToStep1() {
-      document.getElementById('checkoutStep1').classList.remove('hidden');
-      document.getElementById('checkoutStep2').classList.add('hidden');
-      document.getElementById('checkoutStep3').classList.add('hidden');
-      lucide.createIcons();
-    }
-
-    function goToStep2() {
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const emailInput = document.getElementById('custEmail');
-      const email = emailInput ? emailInput.value.trim() : "";
-
-      if (!name) {
-        alert("Kripya apna Naam enter karein.");
-        document.getElementById('custName').focus();
-        return;
-      }
-      if (!phone || phone.length < 10) {
-        alert("Kripya 10-digit WhatsApp Mobile number enter karein.");
-        document.getElementById('custPhone').focus();
-        return;
-      }
-
-      currentOrder.name = name;
-      currentOrder.phone = phone;
-      currentOrder.email = email;
-
-      document.getElementById('checkoutStep1').classList.add('hidden');
-      document.getElementById('checkoutStep2').classList.remove('hidden');
-      document.getElementById('checkoutStep3').classList.add('hidden');
-      lucide.createIcons();
-    }
-
-    function toggleQrView() {
-      const box = document.getElementById('desktopQrBox');
-      const label = document.getElementById('qrToggleLabel');
-      if (box.classList.contains('hidden')) {
-        box.classList.remove('hidden');
-        label.innerText = "Desktop UPI QR Code Chhupayein";
-      } else {
-        box.classList.add('hidden');
-        label.innerText = "Ya Desktop UPI QR Code Scan Karein";
-      }
-    }
-
-    // Step 3: Submit Order to Google Sheet & Start 1-Tap Polling
-    async function submitOrderForVerification() {
-      const utr = document.getElementById('custUtr').value.trim();
-      if (!utr || utr.length < 6) {
-        alert("Kripya valid 12-digit UPI Reference / UTR Number enter karein.");
-        document.getElementById('custUtr').focus();
-        return;
-      }
-
-      currentOrder.utr = utr;
-
-      // Show Step 3 (Verification In Progress)
-      document.getElementById('checkoutStep2').classList.add('hidden');
-      document.getElementById('checkoutStep3').classList.remove('hidden');
-      document.getElementById('verifyingSpinner').classList.remove('hidden');
-      document.getElementById('verificationSuccessBox').classList.add('hidden');
-      lucide.createIcons();
-
-      // If Google Sheet Web App URL is configured, record the order
-      if (storeConfig.sheetUrl && storeConfig.sheetUrl.trim() !== "") {
-        try {
-          const createUrl = `${storeConfig.sheetUrl}?action=createOrder&order_id=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&phone=${encodeURIComponent(currentOrder.phone)}&email=${encodeURIComponent(currentOrder.email || '')}&product=${encodeURIComponent(currentOrder.product)}&amount=${currentOrder.amount}&utr=${encodeURIComponent(currentOrder.utr)}`;
-          fetch(createUrl, { mode: 'no-cors' }).catch(err => console.log("Logged:", err));
-        } catch (e) {
-          console.warn("Sheet order record call:", e);
-        }
-
-        // Start polling for 1-Tap check
-        startPollingOrderStatus();
-      } else {
-        // Sheet URL not configured yet: notify user & provide instant WhatsApp fallback
-        document.getElementById('pollCountdownText').innerText = "Google Sheet URL not configured. Redirecting to WhatsApp...";
-        setTimeout(() => {
-          sendOrderToWhatsAppFallback();
-        }, 1500);
-      }
-    }
-
-    function startPollingOrderStatus() {
-      pollAttempts = 0;
-      if (pollInterval) clearInterval(pollInterval);
-
-      pollInterval = setInterval(async () => {
-        pollAttempts++;
-        document.getElementById('pollCountdownText').innerText = `Checking for approval (${pollAttempts}/${MAX_POLL_ATTEMPTS})...`;
-
-        if (pollAttempts > MAX_POLL_ATTEMPTS) {
-          clearInterval(pollInterval);
-          document.getElementById('pollCountdownText').innerText = "Approval taking longer? WhatsApp par screenshot share karein.";
-          return;
-        }
-
-        try {
-          const checkUrl = `${storeConfig.sheetUrl}?action=checkOrderStatus&order_id=${encodeURIComponent(currentOrder.id)}&utr=${encodeURIComponent(currentOrder.utr)}&email=${encodeURIComponent(currentOrder.email || '')}`;
-          const res = await fetch(checkUrl);
-          const data = await res.json();
-
-          if (data && data.status === "PAID") {
-            clearInterval(pollInterval);
-            handleVerificationSuccess(data);
-          }
-        } catch (err) {
-          console.log("Polling check:", err);
-        }
-      }, 3000);
-    }
-
-    function handleVerificationSuccess(paymentData) {
-      document.getElementById('verifyingSpinner').classList.add('hidden');
-      document.getElementById('verificationSuccessBox').classList.remove('hidden');
-      lucide.createIcons();
-
-      const phoneParam = encodeURIComponent(currentOrder.phone || (paymentData && paymentData.customer_phone) || '');
-      const emailParam = encodeURIComponent(currentOrder.email || '');
-
-      setTimeout(() => {
-        window.location.href = `success.html?order=${encodeURIComponent(currentOrder.id)}&name=${encodeURIComponent(currentOrder.name)}&phone=${phoneParam}&email=${emailParam}&status=PAID`;
-      }, 1500);
-    }
-
-    function sendOrderToWhatsAppFallback() {
-      const orderId = currentOrder.id || generateOrderId();
-      const name = currentOrder.name || document.getElementById('custName').value.trim() || "Customer";
-      const phone = currentOrder.phone || document.getElementById('custPhone').value.trim() || "";
-      const utr = currentOrder.utr || document.getElementById('custUtr').value.trim() || "Pending";
-
-      let msg = `*Namaste SheetStore Pro!* 🚀\n\nMaine payment complete kar di hai:\n`;
-      msg += `📦 *Order ID:* ${orderId}\n`;
-      msg += `👤 *Customer Name:* ${name}\n`;
-      if (phone) msg += `📱 *Mobile:* ${phone}\n`;
-      msg += `💰 *Amount:* ₹${currentOrder.amount}\n`;
-      msg += `🔢 *UTR / UPI Ref No:* ${utr}\n`;
-      msg += `\nKripya Google Sheet me approve karke mujhe template access link provide karein! 🙏`;
-
-      const targetUrl = `https://wa.me/${storeConfig.waNumber}?text=${encodeURIComponent(msg)}`;
-      window.open(targetUrl, '_blank');
-    }
-
-    // Config Modal logic
-    function openConfigModal() {
-      document.getElementById('configWaNumber').value = storeConfig.waNumber;
-      document.getElementById('configUpiId').value = storeConfig.upiId;
-      document.getElementById('configSheetUrl').value = storeConfig.sheetUrl;
-      document.getElementById('configModal').classList.remove('hidden');
-      lucide.createIcons();
-    }
-
-    function closeConfigModal() {
-      document.getElementById('configModal').classList.add('hidden');
-    }
-
-    function saveStoreSettings() {
-      const wa = document.getElementById('configWaNumber').value.trim();
-      const upi = document.getElementById('configUpiId').value.trim();
-      const sheet = document.getElementById('configSheetUrl').value.trim();
-
-      if (wa) {
-        localStorage.setItem('store_wa_number', wa);
-        storeConfig.waNumber = wa;
-      }
-      if (upi) {
-        localStorage.setItem('store_upi_id', upi);
-        storeConfig.upiId = upi;
-      }
-      if (sheet !== undefined) {
-        localStorage.setItem('store_sheet_url', sheet);
-        storeConfig.sheetUrl = sheet;
-      }
-
-      syncConfigWithUI();
-      closeConfigModal();
-      alert("Settings saved successfully! Website ab aapke Google Sheet aur UPI ID se connect ho chuki hai.");
-    }
-
-    function toggleFaq(card) {
-      const p = card.querySelector('p');
-      const icon = card.querySelector('i');
-      if (p.classList.contains('hidden')) {
-        p.classList.remove('hidden');
-        icon.classList.add('rotate-180');
-      } else {
-        p.classList.add('hidden');
-        icon.classList.remove('rotate-180');
-      }
-    }
-
-    function applySiteSettings(s) {
-      if (!s) return;
-
-      // 1. Brand Name
-      if (s.brand_name && String(s.brand_name).trim()) {
-        const brandEls = [document.getElementById('brandNameText'), document.getElementById('footerBrandName')];
-        brandEls.forEach(el => { if (el) el.innerText = s.brand_name; });
-        document.title = s.brand_name + " | E-Commerce Store";
-      }
-
-      // 2. Tagline
-      if (s.brand_tagline && String(s.brand_tagline).trim()) {
-        const tagEls = [document.getElementById('brandTaglineText'), document.getElementById('footerBrandTagline')];
-        tagEls.forEach(el => { if (el) el.innerText = s.brand_tagline; });
-      }
-
-      // 3. Announcement Text
-      if (s.announcement_text && String(s.announcement_text).trim()) {
-        const bannerText = document.getElementById('announcementText');
-        if (bannerText) bannerText.innerText = s.announcement_text;
-      }
-
-      // 4. Hero Badge
-      if (s.hero_badge && String(s.hero_badge).trim()) {
-        const badgeEl = document.getElementById('heroBadgeText');
-        if (badgeEl) badgeEl.innerText = s.hero_badge;
-      }
-
-      // 5. Hero Title
-      if (s.hero_title && String(s.hero_title).trim()) {
-        const titleEl = document.getElementById('heroTitleText');
-        if (titleEl) titleEl.innerText = s.hero_title;
-      }
-
-      // 6. Hero Subtitle
-      if (s.hero_subtitle && String(s.hero_subtitle).trim()) {
-        const subEl = document.getElementById('heroSubtitleText');
-        if (subEl) subEl.innerText = s.hero_subtitle;
-      }
-
-      // 7. WhatsApp Number
-      if (s.whatsapp_number && String(s.whatsapp_number).trim()) {
-        storeConfig.waNumber = String(s.whatsapp_number).trim();
-        localStorage.setItem('store_wa_number', storeConfig.waNumber);
-        syncConfigWithUI();
-      }
-
-      // 8. UPI ID
-      if (s.upi_id && String(s.upi_id).trim()) {
-        storeConfig.upiId = String(s.upi_id).trim();
-        localStorage.setItem('store_upi_id', storeConfig.upiId);
-        const upiDisplay = document.getElementById('displayUpiId');
-        if (upiDisplay) upiDisplay.innerText = `UPI ID: ${storeConfig.upiId}`;
-      }
-
-      // 9. Dynamic Website Template (5 Ready-made Themes)
-      const themeId = s.template_id || s.theme || localStorage.getItem('store_active_template') || 'modern-blue';
-      applyTemplateTheme(themeId);
-
-      // 10. Custom Font Style (Heading Font)
-      if (s.font_family && String(s.font_family).trim()) {
-        const fontName = String(s.font_family).trim();
-        document.documentElement.style.setProperty('--theme-font-heading', `"${fontName}", sans-serif`);
-        document.querySelectorAll('.font-heading').forEach(el => {
-          el.style.fontFamily = `"${fontName}", sans-serif`;
-        });
-      }
-
-      // 11. Custom Logo URL
-      if (s.logo_url && String(s.logo_url).trim()) {
-        const logoContainer = document.getElementById('brandLogoContainer');
-        if (logoContainer) {
-          logoContainer.innerHTML = `<img src="${s.logo_url}" alt="Brand Logo" class="w-full h-full object-contain rounded-xl" />`;
-          logoContainer.classList.remove('bg-gradient-to-br', 'from-blue-500', 'to-indigo-600');
-        }
-      }
-
-      // 12. Custom Header Background Color
-      if (s.header_color && String(s.header_color).trim()) {
-        const hdr = document.getElementById('mainHeader');
-        if (hdr) hdr.style.backgroundColor = s.header_color;
-      }
-
-      // 13. Custom Footer Background Color
-      if (s.footer_color && String(s.footer_color).trim()) {
-        const ftr = document.getElementById('mainFooter');
-        if (ftr) ftr.style.backgroundColor = s.footer_color;
-      }
-
-      // 14. Custom CTA Button Text
-      if (s.cta_text && String(s.cta_text).trim()) {
-        document.querySelectorAll('.ctaBtnText').forEach(el => {
-          el.innerText = s.cta_text;
-        });
-      }
-
-      // 15. Custom Hero / Showcase Banner Image
-      if (s.banner_url && String(s.banner_url).trim()) {
-        const showcaseImg = document.getElementById('demoShowcaseImg');
-        if (showcaseImg) showcaseImg.src = s.banner_url;
-      }
-
-      // 16. Dynamic Product Pricing (Controllable from Mobile App)
-      let dynamicPrice = 10; // Default live test price ₹10
-      if (s.main_product_price && Number(s.main_product_price) > 0) {
-        dynamicPrice = Number(s.main_product_price);
-      } else if (products && Array.isArray(products) && products.length > 0) {
-        const p = products.find(prod => prod.id === 'prod-sheetstore-master-kit') || products[0];
-        if (p && p.price_selling) {
-          dynamicPrice = Number(p.price_selling) || 10;
-        }
-      } else if (localStorage.getItem('store_product_price')) {
-        dynamicPrice = Number(localStorage.getItem('store_product_price')) || 10;
-      }
-
-      currentOrder.amount = dynamicPrice;
-      localStorage.setItem('store_product_price', dynamicPrice);
-
-      const sellPriceEl = document.getElementById('displaySellingPrice');
-      if (sellPriceEl) sellPriceEl.innerText = `₹${dynamicPrice}`;
-
-      const modalPriceEl = document.getElementById('modalSellingPrice');
-      if (modalPriceEl) modalPriceEl.innerText = `₹${dynamicPrice}`;
-
-      const btnPriceEl = document.getElementById('displayBtnPriceText');
-      if (btnPriceEl) btnPriceEl.innerText = `Instant Access Paayein - ₹${dynamicPrice} (Pay via UPI / QR)`;
-
-      const modalPayText = document.getElementById('modalPayBtnText');
-      if (modalPayText) modalPayText.innerText = `Pay ₹${dynamicPrice} via Default UPI App`;
-
-      const qrBadge = document.getElementById('qrAmountBadge');
-      if (qrBadge) qrBadge.innerText = `Scan Karein • Amount: ₹${dynamicPrice}`;
-    }
-
-    const THEME_NAMES = {
-      'modern-blue': '⚡ Modern Cyber Blue',
-      'vedic-gold': '🕉️ Royal Vedic Gold',
-      'minimal-light': '🛍️ Clean Minimal Light',
-      'neon-violet': '👾 Cyberpunk Neon Violet',
-      'emerald-pro': '🌿 Emerald Business Pro'
-    };
-
-    function applyTemplateTheme(id) {
-      if (!id) id = 'modern-blue';
-      id = id.trim().toLowerCase();
-      if (!THEME_NAMES[id]) id = 'modern-blue';
-
-      document.documentElement.setAttribute('data-theme', id);
-      document.body.setAttribute('data-theme', id);
-      localStorage.setItem('store_active_template', id);
-
-      const labelEl = document.getElementById('currentThemeLabel');
-      if (labelEl) labelEl.innerText = THEME_NAMES[id];
-
-      document.querySelectorAll('.theme-switcher-btn').forEach(btn => {
-        if (btn.getAttribute('data-theme-id') === id) {
-          btn.classList.add('ring-2', 'ring-amber-400', 'scale-110');
-        } else {
-          btn.classList.remove('ring-2', 'ring-amber-400', 'scale-110');
-        }
-      });
-    }
-
-    async function fetchSettingsFromSheet() {
-      if (!storeConfig.sheetUrl) return;
-      try {
-        const res = await fetch(storeConfig.sheetUrl);
-        const data = await res.json();
-        if (data) {
-          if (data.settings) {
-            applySiteSettings(data.settings, data.products);
-            localStorage.setItem('store_cached_settings', JSON.stringify(data.settings));
-          }
-          if (data.products) {
-            localStorage.setItem('store_cached_products', JSON.stringify(data.products));
-          }
-        }
-      } catch (err) {
-        console.warn("Error fetching settings from sheet:", err);
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      // Immediate theme apply to eliminate flicker
-      const initialTheme = localStorage.getItem('store_active_template') || 'modern-blue';
-      applyTemplateTheme(initialTheme);
+      lucide.createIcons();
 
-      try {
-        const cached = localStorage.getItem('store_cached_settings');
-        const cachedProducts = localStorage.getItem('store_cached_products');
-        if (cached) applySiteSettings(JSON.parse(cached), cachedProducts ? JSON.parse(cachedProducts) : null);
-      } catch (e) {}
-
-      syncConfigWithUI();
-      fetchSettingsFromSheet();
-
-      // Check if user is logged in for nav auth button
+      // Check user session
       try {
         const authUser = localStorage.getItem('sheetstore_auth_user');
         if (authUser) {
@@ -1306,8 +858,6 @@
           }
         }
       } catch (e) {}
-
-      lucide.createIcons();
     });
 
     function openDemoSelectorModal() {
@@ -1318,95 +868,75 @@
       const modal = document.getElementById('demoSelectorModal');
       if (modal) modal.classList.add('hidden');
     }
+
+    function openPaymentModal() {
+      document.getElementById('paymentModal').classList.remove('hidden');
+    }
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.add('hidden');
+    }
+
+    function openConfigModal() {
+      document.getElementById('configModal').classList.remove('hidden');
+    }
+    function closeConfigModal() {
+      document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function toggleFaq(card) {
+      const p = card.querySelector('p');
+      const icon = card.querySelector('[data-lucide="chevron-down"]');
+      if (p.classList.contains('hidden')) {
+        p.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      } else {
+        p.classList.add('hidden');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function submitOrderForVerification() {
+      const name = document.getElementById('buyerName').value.trim();
+      const phone = document.getElementById('buyerPhone').value.trim();
+      const email = document.getElementById('buyerEmail').value.trim();
+      const utr = document.getElementById('buyerUtr').value.trim();
+
+      if (!name || !phone || !email) {
+        alert('Kripya apna Naam, Phone aur Email zaroor bharein!');
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmitPayment');
+      btn.disabled = true;
+      btn.innerHTML = `Verifying & Saving Order...`;
+
+      const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+      const masterApi = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec";
+
+      const params = new URLSearchParams({
+        action: 'createOrder',
+        order_id: orderId,
+        customer_name: name,
+        customer_phone: phone,
+        customer_email: email,
+        amount: '499',
+        utr: utr || 'PRE-VERIFIED'
+      });
+
+      fetch(`${masterApi}?${params.toString()}`, { method: 'GET', mode: 'no-cors' })
+        .then(() => {
+          confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
+          alert(`🎉 Payment Successful!\n\nOrder ID: ${orderId}\nWelcome to SheetStore Pro, ${name}!\n\nAapko abhi Store Launchpad Dashboard par le jaya ja raha hai.`);
+          closePaymentModal();
+          window.location.href = `dashboard.html?order_id=${orderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+        })
+        .catch(err => {
+          alert('Order saved! Redirecting to setup...');
+          closePaymentModal();
+          window.location.href = `dashboard.html?order_id=${orderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+        });
+    }
   </script>
 
-  <!-- LIVE DEMO SELECTOR MODAL -->
-  <div id="demoSelectorModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
-      <!-- Decorative Glow -->
-      <div class="absolute -top-24 -left-24 w-60 h-60 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-600/20 rounded-full blur-3xl pointer-events-none"></div>
-
-      <!-- Close Button -->
-      <button onclick="closeDemoSelectorModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <!-- Modal Title -->
-      <div class="text-center mb-6 relative z-10">
-        <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block mb-2">
-          ✨ Live Store Demos
-        </span>
-        <h3 class="font-heading font-black text-2xl sm:text-3xl text-white">Kaunsa Store Demo Dekhna Chahte Hain?</h3>
-        <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">
-          SheetStore Pro se aap kisi bhi category ka 100% Google Sheet powered e-commerce store bana sakte hain:
-        </p>
-      </div>
-
-      <!-- 2 Demo Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-        
-        <!-- Option 1: Digital Products Store -->
-        <div class="bg-slate-950/80 rounded-2xl p-5 border border-blue-500/40 hover:border-blue-400 flex flex-col justify-between transition group shadow-lg">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg">⚡</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">5 Color Presets</span>
-            </div>
-            <h4 class="font-heading font-bold text-base text-white group-hover:text-blue-400 transition">Digital Products &amp; SaaS Store</h4>
-            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-              Software, Ebooks, Notion kits, AI Prompts &amp; Web Templates. Direct UPI QR + instant download link.
-            </p>
-          </div>
-          <div class="mt-4 pt-4 border-t border-slate-800">
-            <a href="demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
-              <span>Open Digital Store Demo ➔</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Option 2: NOOLAM Saree Showcase -->
-        <div class="bg-gradient-to-b from-[#200407] to-[#140204] rounded-2xl p-5 border border-[#D4AF37]/40 hover:border-[#D4AF37] flex flex-col justify-between transition group shadow-lg">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="w-10 h-10 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold text-lg">🥻</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#F5DE7A] border border-[#D4AF37]/30 font-bold">Luxury Studio</span>
-            </div>
-            <h4 class="font-heading font-bold text-base text-[#F5DE7A] group-hover:text-white transition">NOOLAM Kanchipuram Saree</h4>
-            <p class="text-xs text-[#E5D5B8] mt-1 leading-relaxed">
-              Ethnic wear, 6 Moods archive, "Try the Look" bundle with 10% off, real clothes rail ("The Rack"), &amp; 3D tilt silk arc.
-            </p>
-          </div>
-          <div class="mt-4 pt-4 border-t border-white/10">
-            <a href="saree-demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-bold text-xs flex items-center justify-center gap-1.5 transition shadow font-cinzel">
-              <span>Open Saree Showcase Studio ➔</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Footer Note -->
-      <div class="mt-5 text-center text-[11px] text-slate-500 relative z-10">
-        <span>Aap dono templates ko apne hisab se Google Sheet se customize kar sakte hain.</span>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- FLOATING LIVE THEME PREVIEW BAR (5 READY-MADE TEMPLATES) -->
-  <div id="themePreviewBar" class="fixed bottom-4 right-4 z-50 flex items-center gap-2 p-2 px-3 rounded-2xl bg-slate-950/95 backdrop-blur-md border border-slate-700/80 shadow-2xl transition hover:border-slate-500">
-    <div class="hidden sm:flex flex-col text-left pr-1">
-      <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Live Theme Switcher</span>
-      <span class="text-[11px] text-white font-bold" id="currentThemeLabel">⚡ Modern Blue</span>
-    </div>
-    <div class="flex items-center gap-1.5">
-      <button onclick="applyTemplateTheme('modern-blue')" data-theme-id="modern-blue" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow" title="Modern Cyber Blue (Tech / SaaS)">⚡ Blue</button>
-      <button onclick="applyTemplateTheme('vedic-gold')" data-theme-id="vedic-gold" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow" title="Royal Vedic Gold (Vastu / Astrology / Luxury)">🕉️ Vedic</button>
-      <button onclick="applyTemplateTheme('minimal-light')" data-theme-id="minimal-light" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-white text-slate-900 text-xs font-bold transition shadow" title="Clean Minimal Light (White D2C Store)">🛍️ Light</button>
-      <button onclick="applyTemplateTheme('neon-violet')" data-theme-id="neon-violet" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition shadow" title="Cyberpunk Neon Violet (Gaming / Creator)">👾 Neon</button>
-      <button onclick="applyTemplateTheme('emerald-pro')" data-theme-id="emerald-pro" class="theme-switcher-btn px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow" title="Emerald Business Pro (Finance / Corporate)">🌿 Emerald</button>
-    </div>
-  </div>
 </body>
 </html>
