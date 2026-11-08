@@ -24,6 +24,12 @@ interface ApiService {
         @Body body: Map<String, String>
     ): Call<ApiResponse>
 
+    @POST
+    fun addProduct(
+        @Url fullUrl: String,
+        @Body body: Map<String, String>
+    ): Call<ApiResponse>
+
     @GET
     fun approveOrder(
         @Url fullUrl: String,
@@ -48,4 +54,3 @@ interface ApiService {
         @Query("amount") amount: String
     ): Call<ApiResponse>
 }
-

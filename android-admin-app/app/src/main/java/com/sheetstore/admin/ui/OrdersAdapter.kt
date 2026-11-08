@@ -1,7 +1,9 @@
 package com.sheetstore.admin.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -22,16 +24,28 @@ class OrdersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        val card = LinearLayout(parent.context).apply {
+        val context = parent.context
+        val card = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             layoutParams = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(0, 0, 0, 24)
+                setMargins(0, 0, 0, UiKit.dp(context, 16))
             }
-            setPadding(36, 36, 36, 36)
-            setBackgroundColor(Color.parseColor("#1E293B"))
+            setPadding(
+                UiKit.dp(context, 18),
+                UiKit.dp(context, 18),
+                UiKit.dp(context, 18),
+                UiKit.dp(context, 18)
+            )
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#121826"),
+                strokeColor = Color.parseColor("#1F2D48"),
+                strokeWidthDp = 1,
+                radiusDp = 18f,
+                context = context
+            )
         }
         return OrderViewHolder(card)
     }
@@ -45,10 +59,13 @@ class OrdersAdapter(
     class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(order: Order, onApproveClicked: (Order) -> Unit) {
             val layout = itemView as LinearLayout
+            val context = layout.context
             layout.removeAllViews()
 
-            // Header Row: Order ID + Status Badge
-            val headerRow = LinearLayout(layout.context).apply {
+            val isPaid = order.status.equals("PAID", ignoreCase = true) || order.verified
+
+            // 1. Top Header Row: Order ID + Status Badge
+            val headerRow = LinearLayout(context).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
                 layoutParams = LinearLayout.LayoutParams(
@@ -57,71 +74,162 @@ class OrdersAdapter(
                 )
             }
 
-            val orderIdView = TextView(layout.context).apply {
+            val orderIdView = TextView(context).apply {
                 text = order.orderId
-                textSize = 15f
+                textSize = 14f
                 typeface = Typeface.DEFAULT_BOLD
                 setTextColor(Color.WHITE)
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             }
             headerRow.addView(orderIdView)
 
-            val statusBadge = TextView(layout.context).apply {
-                val isPaid = order.status.equals("PAID", ignoreCase = true) || order.verified
-                text = if (isPaid) "PAID ✓" else "PENDING ⏳"
-                textSize = 11f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(if (isPaid) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"))
-                setBackgroundColor(if (isPaid) Color.parseColor("#064E3B") else Color.parseColor("#78350F"))
-                setPadding(20, 8, 20, 8)
-            }
+            val statusBadge = UiKit.createPillBadge(
+                context = context,
+                text = if (isPaid) "✓ PAID" else "⏳ PENDING",
+                textColor = if (isPaid) Color.parseColor("#10B981") else Color.parseColor("#F59E0B"),
+                bgColor = if (isPaid) Color.parseColor("#064E3B") else Color.parseColor("#451A03"),
+                borderColor = if (isPaid) Color.parseColor("#10B981") else Color.parseColor("#D97706")
+            )
             headerRow.addView(statusBadge)
             layout.addView(headerRow)
 
-            // Date & Amount Row
-            val metaView = TextView(layout.context).apply {
-                text = "${order.date} • ₹${order.amount}"
-                textSize = 12f
-                setTextColor(Color.parseColor("#38BDF8"))
-                setPadding(0, 8, 0, 16)
+            // 2. Date & Amount Row
+            val metaRow = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(0, UiKit.dp(context, 6), 0, UiKit.dp(context, 12))
             }
-            layout.addView(metaView)
 
-            // Customer Name & Product
-            val detailsView = TextView(layout.context).apply {
-                text = "👤 ${order.customerName} (${order.customerPhone})\n📦 ${order.product}"
-                textSize = 13f
-                setTextColor(Color.parseColor("#CBD5E1"))
-                setLineSpacing(6f, 1f)
-            }
-            layout.addView(detailsView)
-
-            // UTR Number Display
-            val utrView = TextView(layout.context).apply {
-                text = "🔢 UTR: ${order.utr.ifEmpty { "Not Provided" }}"
-                textSize = 12f
-                typeface = Typeface.MONOSPACE
+            val dateView = TextView(context).apply {
+                text = order.date
+                textSize = 11f
                 setTextColor(Color.parseColor("#94A3B8"))
-                setPadding(0, 12, 0, 16)
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             }
-            layout.addView(utrView)
+            metaRow.addView(dateView)
 
-            // If order is PENDING, show 1-Tap Approve Button
-            val isPaid = order.status.equals("PAID", ignoreCase = true) || order.verified
+            val amountView = TextView(context).apply {
+                text = "₹${order.amount.toInt()}"
+                textSize = 17f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#10B981"))
+            }
+            metaRow.addView(amountView)
+            layout.addView(metaRow)
+
+            // 3. Customer Info Box
+            val customerBox = LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#0B0F19"),
+                    strokeColor = Color.parseColor("#1C2638"),
+                    strokeWidthDp = 1,
+                    radiusDp = 12f,
+                    context = context
+                )
+                setPadding(
+                    UiKit.dp(context, 14),
+                    UiKit.dp(context, 12),
+                    UiKit.dp(context, 14),
+                    UiKit.dp(context, 12)
+                )
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    bottomMargin = UiKit.dp(context, 12)
+                }
+            }
+
+            val custNameView = TextView(context).apply {
+                text = "👤 ${order.customerName} (${order.customerPhone})"
+                textSize = 12.5f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.WHITE)
+            }
+            customerBox.addView(custNameView)
+
+            val productView = TextView(context).apply {
+                text = "📦 ${order.product}"
+                textSize = 11.5f
+                setTextColor(Color.parseColor("#38BDF8"))
+                setPadding(0, UiKit.dp(context, 4), 0, 0)
+            }
+            customerBox.addView(productView)
+
+            if (order.utr.isNotEmpty() && order.utr != "PRE-VERIFIED") {
+                val utrView = TextView(context).apply {
+                    text = "🔢 UPI Ref / UTR: ${order.utr}"
+                    textSize = 11f
+                    setTextColor(Color.parseColor("#CBD5E1"))
+                    setPadding(0, UiKit.dp(context, 4), 0, 0)
+                }
+                customerBox.addView(utrView)
+            }
+            layout.addView(customerBox)
+
+            // 4. Action Buttons Row: WhatsApp Chat + 1-Tap Approve
+            val actionRow = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+            }
+
+            val waBtn = Button(context).apply {
+                text = "💬 WhatsApp"
+                textSize = 11f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#34D399"))
+                background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#062E22"),
+                    strokeColor = Color.parseColor("#059669"),
+                    strokeWidthDp = 1,
+                    radiusDp = 12f,
+                    context = context
+                )
+                layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(context, 40), 1f).apply {
+                    rightMargin = UiKit.dp(context, 8)
+                }
+                setOnClickListener {
+                    val phone = order.customerPhone.replace("+", "").replace(" ", "").trim()
+                    val targetPhone = if (phone.startsWith("91") || phone.length > 10) phone else "91$phone"
+                    val msg = "Namaste ${order.customerName}! Aapke order ${order.orderId} (₹${order.amount.toInt()}) ke update ke silsile me sampark kiya gaya hai."
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/$targetPhone?text=${Uri.encode(msg)}"))
+                    context.startActivity(intent)
+                }
+            }
+            actionRow.addView(waBtn)
+
             if (!isPaid) {
-                val approveBtn = Button(layout.context).apply {
-                    text = "Approve Order [✓]"
-                    textSize = 12f
-                    setBackgroundColor(Color.parseColor("#10B981"))
-                    setTextColor(Color.parseColor("#022C22"))
+                val approveBtn = Button(context).apply {
+                    text = "⚡ Approve Order"
+                    textSize = 11f
                     typeface = Typeface.DEFAULT_BOLD
+                    setTextColor(Color.WHITE)
+                    background = UiKit.gradientButtonDrawable(
+                        startColor = Color.parseColor("#059669"),
+                        endColor = Color.parseColor("#047857"),
+                        radiusDp = 12f,
+                        context = context
+                    )
+                    layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(context, 40), 1.2f)
                     setOnClickListener {
                         onApproveClicked(order)
                     }
                 }
-                layout.addView(approveBtn)
+                actionRow.addView(approveBtn)
+            } else {
+                val approvedBadge = TextView(context).apply {
+                    text = "✓ Payment Verified"
+                    textSize = 11f
+                    typeface = Typeface.DEFAULT_BOLD
+                    setTextColor(Color.parseColor("#10B981"))
+                    gravity = Gravity.CENTER
+                    layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(context, 40), 1.2f)
+                }
+                actionRow.addView(approvedBadge)
             }
+
+            layout.addView(actionRow)
         }
     }
 }
-

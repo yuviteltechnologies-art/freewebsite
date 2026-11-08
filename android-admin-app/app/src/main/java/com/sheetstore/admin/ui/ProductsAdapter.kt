@@ -20,16 +20,28 @@ class ProductsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val card = LinearLayout(parent.context).apply {
+        val context = parent.context
+        val card = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             layoutParams = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(0, 0, 0, 24)
+                setMargins(0, 0, 0, UiKit.dp(context, 16))
             }
-            setPadding(36, 36, 36, 36)
-            setBackgroundColor(Color.parseColor("#1E293B"))
+            setPadding(
+                UiKit.dp(context, 18),
+                UiKit.dp(context, 18),
+                UiKit.dp(context, 18),
+                UiKit.dp(context, 18)
+            )
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#121826"),
+                strokeColor = Color.parseColor("#1F2D48"),
+                strokeWidthDp = 1,
+                radiusDp = 18f,
+                context = context
+            )
         }
         return ProductViewHolder(card)
     }
@@ -43,28 +55,11 @@ class ProductsAdapter(
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(product: Product, onSaveProduct: (Product, String, String, Boolean) -> Unit) {
             val layout = itemView as LinearLayout
+            val context = layout.context
             layout.removeAllViews()
 
-            // Title
-            val titleView = TextView(layout.context).apply {
-                text = product.title
-                textSize = 15f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(Color.WHITE)
-            }
-            layout.addView(titleView)
-
-            // Category & Badge
-            val catView = TextView(layout.context).apply {
-                text = "${product.category.uppercase()} • ${product.badge ?: "Digital File"}"
-                textSize = 11f
-                setTextColor(Color.parseColor("#38BDF8"))
-                setPadding(0, 4, 0, 16)
-            }
-            layout.addView(catView)
-
-            // Price Row
-            val priceRow = LinearLayout(layout.context).apply {
+            // 1. Top Header: Product Title + Category Pill
+            val headerRow = LinearLayout(context).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
                 layoutParams = LinearLayout.LayoutParams(
@@ -73,83 +68,149 @@ class ProductsAdapter(
                 )
             }
 
-            // Selling Price Input
-            val sellingLayout = LinearLayout(layout.context).apply {
+            val titleView = TextView(context).apply {
+                text = product.title
+                textSize = 14f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.WHITE)
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            headerRow.addView(titleView)
+
+            val catPill = UiKit.createPillBadge(
+                context = context,
+                text = product.category.uppercase(),
+                textColor = Color.parseColor("#38BDF8"),
+                bgColor = Color.parseColor("#0C2A4A"),
+                borderColor = Color.parseColor("#1E40AF")
+            )
+            headerRow.addView(catPill)
+            layout.addView(headerRow)
+
+            // 2. Subtitle / Badge
+            val badgeView = TextView(context).apply {
+                text = product.badge ?: "Standard Listing"
+                textSize = 11f
+                setTextColor(Color.parseColor("#94A3B8"))
+                setPadding(0, UiKit.dp(context, 4), 0, UiKit.dp(context, 12))
+            }
+            layout.addView(badgeView)
+
+            // 3. Dual Price Inputs Box (Selling Price & Original Price)
+            val priceCard = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#0B0F19"),
+                    strokeColor = Color.parseColor("#1C2638"),
+                    strokeWidthDp = 1,
+                    radiusDp = 12f,
+                    context = context
+                )
+                setPadding(
+                    UiKit.dp(context, 12),
+                    UiKit.dp(context, 10),
+                    UiKit.dp(context, 12),
+                    UiKit.dp(context, 10)
+                )
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    bottomMargin = UiKit.dp(context, 12)
+                }
+            }
+
+            // Selling Price Column
+            val sellingCol = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             }
-            val sellingLabel = TextView(layout.context).apply {
-                text = "Offer Price (₹):"
-                textSize = 11f
-                setTextColor(Color.parseColor("#94A3B8"))
+            val sellingLabel = TextView(context).apply {
+                text = "Offer Price (₹)"
+                textSize = 10.5f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#10B981"))
             }
-            sellingLayout.addView(sellingLabel)
+            sellingCol.addView(sellingLabel)
 
-            val sellingInput = EditText(layout.context).apply {
+            val sellingInput = EditText(context).apply {
                 setText(product.priceSelling)
                 setTextColor(Color.WHITE)
                 textSize = 14f
-                setBackgroundColor(Color.parseColor("#0F172A"))
-                setPadding(20, 16, 20, 16)
+                typeface = Typeface.DEFAULT_BOLD
+                background = null
+                setPadding(0, UiKit.dp(context, 4), 0, 0)
+                inputType = android.text.InputType.TYPE_CLASS_NUMBER
             }
-            sellingLayout.addView(sellingInput)
-            priceRow.addView(sellingLayout)
+            sellingCol.addView(sellingInput)
+            priceCard.addView(sellingCol)
 
-            // Space
-            val spacer = View(layout.context).apply {
-                layoutParams = LinearLayout.LayoutParams(24, 1)
-            }
-            priceRow.addView(spacer)
-
-            // Original Price Input
-            val originalLayout = LinearLayout(layout.context).apply {
+            // Original / MRP Price Column
+            val originalCol = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             }
-            val originalLabel = TextView(layout.context).apply {
-                text = "MRP (₹):"
-                textSize = 11f
+            val originalLabel = TextView(context).apply {
+                text = "Original / MRP (₹)"
+                textSize = 10.5f
                 setTextColor(Color.parseColor("#94A3B8"))
             }
-            originalLayout.addView(originalLabel)
+            originalCol.addView(originalLabel)
 
-            val originalInput = EditText(layout.context).apply {
+            val originalInput = EditText(context).apply {
                 setText(product.priceOriginal)
                 setTextColor(Color.parseColor("#CBD5E1"))
-                textSize = 14f
-                setBackgroundColor(Color.parseColor("#0F172A"))
-                setPadding(20, 16, 20, 16)
+                textSize = 13f
+                background = null
+                setPadding(0, UiKit.dp(context, 4), 0, 0)
+                inputType = android.text.InputType.TYPE_CLASS_NUMBER
             }
-            originalLayout.addView(originalInput)
-            priceRow.addView(originalLayout)
+            originalCol.addView(originalInput)
+            priceCard.addView(originalCol)
 
-            layout.addView(priceRow)
+            layout.addView(priceCard)
 
-            // Active Toggle
-            val activeSwitch = Switch(layout.context).apply {
-                text = "Show on Website (Active)"
-                setTextColor(Color.parseColor("#E2E8F0"))
-                textSize = 12f
-                isChecked = product.isActive?.equals("TRUE", ignoreCase = true) ?: true
-                setPadding(0, 16, 0, 16)
+            // 4. Action Row: Active Switch + Save Button
+            val actionRow = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
             }
-            layout.addView(activeSwitch)
 
-            // Save Product Button
-            val saveBtn = Button(layout.context).apply {
-                text = "Update Product Price 💾"
-                textSize = 12f
-                setBackgroundColor(Color.parseColor("#2563EB"))
+            val isCurrentlyActive = (product.isActive == null || product.isActive.equals("TRUE", ignoreCase = true))
+            val activeSwitch = Switch(context).apply {
+                text = "Live On Site"
+                setTextColor(Color.parseColor("#CBD5E1"))
+                textSize = 11.5f
+                isChecked = isCurrentlyActive
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            actionRow.addView(activeSwitch)
+
+            val saveBtn = Button(context).apply {
+                text = "💾 Update Price"
+                textSize = 11.5f
+                typeface = Typeface.DEFAULT_BOLD
                 setTextColor(Color.WHITE)
+                background = UiKit.gradientButtonDrawable(
+                    startColor = Color.parseColor("#2563EB"),
+                    endColor = Color.parseColor("#1D4ED8"),
+                    radiusDp = 10f,
+                    context = context
+                )
+                setPadding(UiKit.dp(context, 16), UiKit.dp(context, 8), UiKit.dp(context, 16), UiKit.dp(context, 8))
                 setOnClickListener {
                     val newSelling = sellingInput.text.toString().trim()
                     val newOriginal = originalInput.text.toString().trim()
                     val isActive = activeSwitch.isChecked
-                    onSaveProduct(product, newSelling, newOriginal, isActive)
+                    if (newSelling.isNotEmpty()) {
+                        onSaveProduct(product, newSelling, newOriginal, isActive)
+                    }
                 }
             }
-            layout.addView(saveBtn)
+            actionRow.addView(saveBtn)
+
+            layout.addView(actionRow)
         }
     }
 }
-

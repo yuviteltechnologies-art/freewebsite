@@ -240,12 +240,12 @@
       </div>
 
       <!-- Main Headline in Divine Serif -->
-      <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.08] text-white drop-shadow-2xl">
+      <h1 id="sareeHeroTitle" class="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.08] text-white drop-shadow-2xl">
         Woven for the <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#F5DE7A] via-[#D4AF37] to-[#E5C158] italic font-cormorant font-normal">Divine.</span>
       </h1>
 
       <!-- Subtitle -->
-      <p class="mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-[#F7F3EA]/85 font-light leading-relaxed">
+      <p id="sareeHeroSubtitle" class="mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-[#F7F3EA]/85 font-light leading-relaxed">
         Handwoven on hereditary wooden pit-looms in Kanchipuram with certified 3-ply mulberry silk, double-interlocked Korvai borders, and sacred 24K temple gold zari.
       </p>
 
@@ -1923,6 +1923,34 @@
     function closeDemoSelectorModal() {
       const modal = document.getElementById('demoSelectorModal');
       if (modal) modal.classList.add('hidden');
+    }
+
+    // Dynamic Google Sheet Settings Sync
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchSareeStoreSettings();
+    });
+
+    async function fetchSareeStoreSettings() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sheetUrl = urlParams.get('sheet') || localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec";
+      try {
+        const res = await fetch(sheetUrl);
+        const data = await res.json();
+        if (data && data.settings) {
+          const s = data.settings;
+          if (s.brand_name) {
+            document.querySelectorAll('.saree-brand-name').forEach(el => el.innerText = s.brand_name);
+          }
+          if (s.hero_title) {
+            const h = document.getElementById('sareeHeroTitle');
+            if (h) h.innerHTML = s.hero_title;
+          }
+          if (s.hero_subtitle) {
+            const sub = document.getElementById('sareeHeroSubtitle');
+            if (sub) sub.innerHTML = s.hero_subtitle;
+          }
+        }
+      } catch (e) {}
     }
   </script>
 
