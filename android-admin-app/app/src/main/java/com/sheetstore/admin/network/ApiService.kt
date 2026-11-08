@@ -9,7 +9,8 @@ interface ApiService {
 
     @GET
     fun getAdminDashboard(
-        @Url fullUrl: String
+        @Url fullUrl: String,
+        @Query("action") action: String = "getAdminDashboard"
     ): Call<DashboardResponse>
 
     @POST

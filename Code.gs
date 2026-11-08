@@ -106,8 +106,12 @@ function doGet(e) {
     }
 
     // ----------------------------------------------------
-    // DEFAULT: Fetch Site Settings + Products Catalog
+    // DEFAULT: Fetch Full Dashboard (Settings + Products Catalog + Orders + Stats)
     // ----------------------------------------------------
+    if (params.view !== "html") {
+      return handleGetAdminDashboard(ss, params);
+    }
+
     var settings = getSheetSettings(ss);
     var products = getSheetProducts(ss);
 

@@ -2,6 +2,9 @@ package com.sheetstore.admin.ui
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +13,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
@@ -20,19 +24,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sheetstore.admin.models.*
 import com.sheetstore.admin.network.ApiClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.ByteArrayOutputStream
 
 class MainActivity : Activity() {
+
+    private var autoPollJob: Job? = null
+    private val knownOrderIds = mutableSetOf<String>()
 
     private lateinit var contentContainer: FrameLayout
     private lateinit var navBar: LinearLayout
@@ -113,6 +118,8 @@ class MainActivity : Activity() {
     )
 
     companion object {
+        const val ORDER_CHANNEL_ID = "sheetstore_orders_channel"
+        const val NOTIFICATION_PERMISSION_CODE = 102
         private const val REQUEST_PICK_LOGO = 2001
         private const val REQUEST_PICK_BANNER = 2002
         private const val MASTER_AUTH_URL = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
@@ -137,6 +144,11 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize Local Push Notification Alert Channel & Known Orders
+        createNotificationChannel()
+        loadKnownOrderIds()
+        requestNotificationPermission()
 
         // Root Layout (Sleek Deep Night Navy #0B0F19)
         val root = LinearLayout(this).apply {
@@ -164,9 +176,6 @@ class MainActivity : Activity() {
 
         setContentView(root)
 
-        // Note: Sensitive SMS / notification permissions are strictly optional.
-        // Users can voluntarily enable Auto-Sync in Orders Tab or use 1-Tap Manual Approval without any permissions!
-
         // Flow check: If user hasn't completed multi-niche onboarding, show Onboarding Wizard!
         if (!isOnboardingCompleted()) {
             contentContainer.addView(createOnboardingView())
@@ -179,6 +188,35 @@ class MainActivity : Activity() {
             switchTab(0)
             fetchDashboard()
         }
+
+        // Start Background Auto-Polling for incoming orders
+        startAutoPolling()
+        handleIntentTab(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isOnboardingCompleted() && isSheetVerified()) {
+            fetchDashboard(silent = true)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIntentTab(intent)
+    }
+
+    private fun handleIntentTab(intent: Intent?) {
+        val tab = intent?.getIntExtra("open_tab", -1) ?: -1
+        if (tab >= 0) {
+            switchTab(tab)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        autoPollJob?.cancel()
     }
 
     // ==========================================
@@ -2084,9 +2122,17 @@ class MainActivity : Activity() {
     // ==========================================
     // DATA FETCHING & SESSION HELPERS
     // ==========================================
-    private fun fetchDashboard() {
-        val url = getSheetUrl()
-        if (url.isEmpty()) return
+    private fun fetchDashboard(silent: Boolean = false) {
+        val rawUrl = getSheetUrl().trim()
+        if (rawUrl.isEmpty()) return
+
+        val url = if (rawUrl.contains("action=")) {
+            rawUrl
+        } else if (rawUrl.contains("?")) {
+            "$rawUrl&action=getAdminDashboard"
+        } else {
+            "$rawUrl?action=getAdminDashboard"
+        }
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -2097,15 +2143,148 @@ class MainActivity : Activity() {
                     if (response.isSuccessful && response.body() != null) {
                         dashboardData = response.body()
                         updateStatsCard()
-                        dashboardData?.orders?.let { ordersAdapter.updateData(it) }
-                        dashboardData?.products?.let { productsAdapter.updateData(it) }
+
+                        val orders = dashboardData?.orders ?: emptyList()
+                        if (::ordersAdapter.isInitialized) {
+                            ordersAdapter.updateData(orders)
+                        }
+                        processNewOrdersForNotification(orders)
+
+                        dashboardData?.products?.let {
+                            if (::productsAdapter.isInitialized) {
+                                productsAdapter.updateData(it)
+                            }
+                        }
+
                         populateSettingsFields()
                         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
                         if (::topBrandNameView.isInitialized) topBrandNameView.text = brand
                         if (::topAvatarView.isInitialized) topAvatarView.text = if (brand.isNotEmpty()) brand.take(2).uppercase() else "SS"
+
+                        if (!silent) {
+                            Toast.makeText(this@MainActivity, "Data synced! (${orders.size} orders loaded)", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
-            } catch (e: Exception) {}
+            } catch (e: Exception) {
+                if (!silent) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@MainActivity, "Sync failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    // ==========================================
+    // LOCAL PUSH NOTIFICATIONS & AUTO-POLLING
+    // ==========================================
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                ORDER_CHANNEL_ID,
+                "SheetStore Order Alerts",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Naye customer orders aane par turant alert notification"
+                enableLights(true)
+                lightColor = Color.CYAN
+                enableVibration(true)
+                vibrationPattern = longArrayOf(0, 350, 150, 350)
+            }
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), NOTIFICATION_PERMISSION_CODE)
+            }
+        }
+    }
+
+    private fun loadKnownOrderIds() {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        val saved = prefs.getStringSet("known_order_ids", null)
+        if (saved != null) {
+            knownOrderIds.addAll(saved)
+        }
+    }
+
+    private fun saveKnownOrderIds() {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        prefs.edit().putStringSet("known_order_ids", HashSet(knownOrderIds)).apply()
+    }
+
+    private fun processNewOrdersForNotification(orders: List<Order>) {
+        if (orders.isEmpty()) return
+
+        if (knownOrderIds.isEmpty()) {
+            // First launch: cache existing orders so user is not spammed with historical orders
+            orders.forEach { knownOrderIds.add(it.orderId) }
+            saveKnownOrderIds()
+            return
+        }
+
+        var newOrderFound = false
+        for (order in orders) {
+            if (!knownOrderIds.contains(order.orderId)) {
+                knownOrderIds.add(order.orderId)
+                newOrderFound = true
+                triggerLocalOrderNotification(order)
+            }
+        }
+        if (newOrderFound) {
+            saveKnownOrderIds()
+        }
+    }
+
+    private fun triggerLocalOrderNotification(order: Order) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("open_tab", 0)
+        }
+        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            order.orderId.hashCode(),
+            intent,
+            flags
+        )
+
+        val notifText = "👤 ${order.customerName} (${if (order.customerPhone.isNotEmpty()) order.customerPhone else "Customer"})\n🛒 ${order.product} — ₹${order.amount}\n💳 UTR: ${if (order.utr.isNotEmpty()) order.utr else "Pending"}\n⚡ Tap karein order approve karne ke liye!"
+
+        val notification = NotificationCompat.Builder(this, ORDER_CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.stat_notify_chat)
+            .setContentTitle("🎉 Naya Order Aaya! (${order.orderId})")
+            .setContentText("${order.customerName} • ₹${order.amount} • ${order.product}")
+            .setStyle(NotificationCompat.BigTextStyle().bigText(notifText))
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            .setColor(Color.parseColor("#00F0FF"))
+            .build()
+
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.notify(order.orderId.hashCode(), notification)
+    }
+
+    private fun startAutoPolling() {
+        autoPollJob?.cancel()
+        autoPollJob = CoroutineScope(Dispatchers.Main).launch {
+            while (isActive) {
+                delay(20_000) // Poll Google Sheet every 20 seconds
+                if (isOnboardingCompleted() && isSheetVerified()) {
+                    fetchDashboard(silent = true)
+                }
+            }
         }
     }
 
