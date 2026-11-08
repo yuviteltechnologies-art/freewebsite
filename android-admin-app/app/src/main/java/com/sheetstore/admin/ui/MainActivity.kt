@@ -12,6 +12,8 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.view.Gravity
 import android.view.View
@@ -42,6 +44,8 @@ class MainActivity : Activity() {
     private lateinit var productsAdapter: ProductsAdapter
     private lateinit var authBtn: Button
     private lateinit var headerNichePill: TextView
+    private lateinit var topAvatarView: TextView
+    private lateinit var topBrandNameView: TextView
 
     // Top Stats Views
     private var statsRevenueView: TextView? = null
@@ -189,9 +193,31 @@ class MainActivity : Activity() {
             elevation = UiKit.dp(this@MainActivity, 6).toFloat()
         }
 
+        // Top Left: Interactive Store Quick Hub (Logo + Brand + Fast Setup)
+        val storeHeaderClickable = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 8)
+            }
+            isClickable = true
+            isFocusable = true
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#151E30"),
+                strokeColor = Color.parseColor("#223354"),
+                strokeWidthDp = 1,
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 6))
+            setOnClickListener {
+                showStoreQuickHubAndSettingsDialog()
+            }
+        }
+
         // Store Avatar Squircle
-        val avatar = TextView(this).apply {
-            val name = getLoggedInName()
+        topAvatarView = TextView(this).apply {
+            val name = dashboardData?.settings?.get("brand_name") ?: getLoggedInName()
             text = if (name.isNotEmpty()) name.take(2).uppercase() else "SS"
             textSize = 12.5f
             typeface = Typeface.DEFAULT_BOLD
@@ -200,14 +226,14 @@ class MainActivity : Activity() {
             background = UiKit.gradientButtonDrawable(
                 startColor = Color.parseColor("#2563EB"),
                 endColor = Color.parseColor("#00F0FF"),
-                radiusDp = 12f,
+                radiusDp = 10f,
                 context = this@MainActivity
             )
-            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 38), UiKit.dp(this@MainActivity, 38)).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 12)
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 36), UiKit.dp(this@MainActivity, 36)).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 8)
             }
         }
-        topBar.addView(avatar)
+        storeHeaderClickable.addView(topAvatarView)
 
         // Title + Live Sync Status
         val titleCol = LinearLayout(this).apply {
@@ -215,22 +241,33 @@ class MainActivity : Activity() {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
 
-        val brandName = TextView(this).apply {
-            text = dashboardData?.settings?.get("brand_name") ?: "SheetStore Pro"
-            textSize = 15f
+        topBrandNameView = TextView(this).apply {
+            text = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
+            textSize = 13.5f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
+            maxLines = 1
+            ellipsize = android.text.TextUtils.TruncateAt.END
         }
-        titleCol.addView(brandName)
+        titleCol.addView(topBrandNameView)
+
+        val hubHint = TextView(this).apply {
+            text = "⚡ Store Hub & QR ▾"
+            textSize = 10f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+        }
+        titleCol.addView(hubHint)
+        storeHeaderClickable.addView(titleCol)
+
+        topBar.addView(storeHeaderClickable)
 
         val activeNiche = getActiveNiche()
         headerNichePill = TextView(this).apply {
-            text = "${activeNiche.emoji} ${activeNiche.title.split("&").firstOrNull() ?: activeNiche.title}"
-            textSize = 10.5f
-            setTextColor(Color.parseColor("#38BDF8"))
+            text = "${activeNiche.emoji}"
+            textSize = 12f
+            visibility = View.GONE // integrated into store hub
         }
-        titleCol.addView(headerNichePill)
-        topBar.addView(titleCol)
 
         // Profile Button
         authBtn = Button(this).apply {
@@ -267,7 +304,7 @@ class MainActivity : Activity() {
                 context = this@MainActivity
             )
             layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 34), UiKit.dp(this@MainActivity, 34))
-            setOnClickListener { showSheetUrlDialog() }
+            setOnClickListener { showStoreQuickHubAndSettingsDialog() }
         }
         topBar.addView(settingsBtn)
 
@@ -797,9 +834,6 @@ class MainActivity : Activity() {
             orientation = LinearLayout.VERTICAL
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 24))
         }
-
-        // Store Links & Quick Hub Card
-        scrollContent.addView(createStoreHubCard())
 
         // Stats Card (Revenue & Orders Metric)
         val statsCard = LinearLayout(this).apply {
@@ -2175,6 +2209,9 @@ class MainActivity : Activity() {
                         dashboardData?.orders?.let { ordersAdapter.updateData(it) }
                         dashboardData?.products?.let { productsAdapter.updateData(it) }
                         populateSettingsFields()
+                        val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
+                        if (::topBrandNameView.isInitialized) topBrandNameView.text = brand
+                        if (::topAvatarView.isInitialized) topAvatarView.text = if (brand.isNotEmpty()) brand.take(2).uppercase() else "SS"
                     }
                 }
             } catch (e: Exception) {}
@@ -2215,6 +2252,379 @@ class MainActivity : Activity() {
                 }
             }
             .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun getUpiId(): String {
+        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+        val upi = prefs.getString("store_upi_id", "") ?: ""
+        if (upi.isNotEmpty()) return upi
+        return dashboardData?.settings?.get("upi_id") ?: "9907522413@ybl"
+    }
+
+    private fun showStoreQuickHubAndSettingsDialog() {
+        val dialogScroll = ScrollView(this).apply {
+            setBackgroundColor(Color.parseColor("#0F172A"))
+        }
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 24))
+        }
+
+        // Header with icon
+        val headerRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
+        }
+        val titleText = TextView(this).apply {
+            text = "⚡ Store Details & Quick Hub"
+            textSize = 17f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val liveBadge = UiKit.createPillBadge(this, "● Live Synced", Color.parseColor("#10B981"), Color.parseColor("#064E3B"), Color.parseColor("#10B981"))
+        headerRow.addView(titleText)
+        headerRow.addView(liveBadge)
+        layout.addView(headerRow)
+
+        val subHeader = TextView(this).apply {
+            text = "Aapki website URL, Logo, UPI QR Code, WhatsApp number aur Google Sheet sab yahan se live update honge:"
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 16))
+        }
+        layout.addView(subHeader)
+
+        // 1. BRAND NAME
+        val brandLabel = TextView(this).apply {
+            text = "🏷️ STORE / BRAND NAME"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        layout.addView(brandLabel)
+        val currentBrand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
+        val brandInput = UiKit.createStyledInput(this, "Store ka naam daalein", currentBrand)
+        layout.addView(brandInput)
+
+        // 2. STORE LOGO
+        val logoLabel = TextView(this).apply {
+            text = "🖼️ STORE LOGO (IMAGE URL)"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 6), 0, UiKit.dp(this@MainActivity, 6))
+        }
+        layout.addView(logoLabel)
+        val currentLogo = dashboardData?.settings?.get("logo_url") ?: ""
+        val logoInput = UiKit.createStyledInput(this, "https://... logo image link", currentLogo)
+        layout.addView(logoInput)
+
+        // 3. WEBSITE LIVE URL & QUICK ACTIONS
+        val webLabel = TextView(this).apply {
+            text = "🌐 LIVE WEBSITE URL"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 6), 0, UiKit.dp(this@MainActivity, 6))
+        }
+        layout.addView(webLabel)
+        val currentWebUrl = getWebsiteLiveUrl()
+        val webInput = UiKit.createStyledInput(this, "https://...", currentWebUrl)
+        layout.addView(webInput)
+
+        // Action Buttons for Website
+        val webBtnRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 16))
+        }
+        val openWebBtn = Button(this).apply {
+            text = "🌐 Open Website ↗"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = UiKit.gradientButtonDrawable(
+                startColor = Color.parseColor("#2563EB"),
+                endColor = Color.parseColor("#1D4ED8"),
+                radiusDp = 10f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 38), 1f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 6)
+            }
+            setOnClickListener {
+                val url = webInput.text.toString().trim().ifEmpty { getWebsiteLiveUrl() }
+                if (url.isNotEmpty()) {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    } catch (e: Exception) {
+                        Toast.makeText(this@MainActivity, "Could not open browser", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+        val copyWebBtn = UiKit.createSecondaryButton(this, "📋 Copy Link", "#38BDF8") {
+            val url = webInput.text.toString().trim().ifEmpty { getWebsiteLiveUrl() }
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            val clip = android.content.ClipData.newPlainText("Website URL", url)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(this@MainActivity, "Website link copied! ✓", Toast.LENGTH_SHORT).show()
+        }
+        copyWebBtn.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this, 38), 1f)
+        webBtnRow.addView(openWebBtn)
+        webBtnRow.addView(copyWebBtn)
+        layout.addView(webBtnRow)
+
+        // 4. UPI QR CODE & UPI ID (REAL TIME PREVIEW)
+        val upiCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#131B2E"),
+                strokeColor = Color.parseColor("#1E2D4A"),
+                strokeWidthDp = 1,
+                radiusDp = 16f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 16)
+            }
+        }
+        val upiHeader = TextView(this).apply {
+            text = "📲 STORE UPI ID & LIVE QR CODE"
+            textSize = 11.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 8))
+        }
+        upiCard.addView(upiHeader)
+
+        val currentUpi = dashboardData?.settings?.get("upi_id") ?: getUpiId()
+        val upiInput = UiKit.createStyledInput(this, "jaise: 9907522413@ybl", currentUpi)
+        upiCard.addView(upiInput)
+
+        // Real-time QR preview box
+        val qrBox = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            background = UiKit.cardDrawable(
+                bgColor = Color.WHITE,
+                strokeColor = Color.parseColor("#E2E8F0"),
+                strokeWidthDp = 1,
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 160), LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                gravity = Gravity.CENTER_HORIZONTAL
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+            }
+        }
+        val qrImageView = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 136), UiKit.dp(this@MainActivity, 136))
+            scaleType = ImageView.ScaleType.FIT_CENTER
+        }
+        val qrSubText = TextView(this).apply {
+            text = "Live UPI QR Preview"
+            textSize = 10f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#334155"))
+            gravity = Gravity.CENTER
+        }
+        qrBox.addView(qrImageView)
+        qrBox.addView(qrSubText)
+        upiCard.addView(qrBox)
+
+        fun refreshQrImage(upi: String) {
+            val cleanUpi = upi.trim()
+            if (cleanUpi.isEmpty()) return
+            val qrData = "upi://pay?pa=$cleanUpi&pn=SheetStore&am=499&cu=INR&tn=SheetStoreOrder"
+            val qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + Uri.encode(qrData)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val stream = java.net.URL(qrUrl).openStream()
+                    val bmp = BitmapFactory.decodeStream(stream)
+                    stream.close()
+                    withContext(Dispatchers.Main) {
+                        if (bmp != null) qrImageView.setImageBitmap(bmp)
+                    }
+                } catch (e: Exception) {}
+            }
+        }
+        refreshQrImage(currentUpi)
+
+        upiInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                refreshQrImage(s?.toString() ?: "")
+            }
+        })
+
+        val upiNote = TextView(this).apply {
+            text = "💡 Yehi QR code aur UPI ID aapki website par checkout ke waqt customer ko show hoga."
+            textSize = 10.5f
+            setTextColor(Color.parseColor("#94A3B8"))
+        }
+        upiCard.addView(upiNote)
+        layout.addView(upiCard)
+
+        // 5. WHATSAPP BUSINESS SUPPORT
+        val waLabel = TextView(this).apply {
+            text = "💬 WHATSAPP BUSINESS NUMBER"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        layout.addView(waLabel)
+        val currentWa = dashboardData?.settings?.get("whatsapp_number") ?: getLoggedInPhone().ifEmpty { "9907522413" }
+        val waInput = UiKit.createStyledInput(this, "jaise: 9907522413", currentWa)
+        layout.addView(waInput)
+
+        val testWaBtn = UiKit.createSecondaryButton(this, "📲 Test WhatsApp Chat", "#10B981") {
+            val wa = waInput.text.toString().trim()
+            if (wa.isNotEmpty()) {
+                try {
+                    val uri = Uri.parse("https://wa.me/$wa?text=${Uri.encode("Namaste! Yeh WhatsApp test message hai.")}")
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
+                } catch (e: Exception) {
+                    Toast.makeText(this@MainActivity, "WhatsApp not installed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        (testWaBtn.layoutParams as LinearLayout.LayoutParams).bottomMargin = UiKit.dp(this, 16)
+        layout.addView(testWaBtn)
+
+        // 6. GOOGLE SHEET BACKEND
+        val sheetLabel = TextView(this).apply {
+            text = "📊 GOOGLE SHEET WEB APP URL"
+            textSize = 11f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        layout.addView(sheetLabel)
+        val sheetInput = UiKit.createStyledInput(this, "https://script.google.com/macros/s/.../exec", getSheetUrl())
+        layout.addView(sheetInput)
+
+        val sheetBtnRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 20))
+        }
+        val openSheetBtn = UiKit.createSecondaryButton(this, "📊 Open Sheet ↗", "#38BDF8") {
+            val sUrl = getGoogleSpreadsheetUrl()
+            if (sUrl.isNotEmpty()) {
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sUrl)))
+                } catch (e: Exception) {
+                    Toast.makeText(this@MainActivity, "Could not open sheet", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        openSheetBtn.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this, 38), 1f).apply {
+            rightMargin = UiKit.dp(this@MainActivity, 6)
+        }
+        val testSyncBtn = UiKit.createSecondaryButton(this, "🔄 Test Sync", "#10B981") {
+            fetchDashboard()
+            Toast.makeText(this@MainActivity, "Syncing data from Google Sheet...", Toast.LENGTH_SHORT).show()
+        }
+        testSyncBtn.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this, 38), 1f)
+        sheetBtnRow.addView(openSheetBtn)
+        sheetBtnRow.addView(testSyncBtn)
+        layout.addView(sheetBtnRow)
+
+        // 7. SAVE BUTTON
+        var dialogRef: AlertDialog? = null
+        val saveBtn = Button(this).apply {
+            text = "💾 Save & Update Live Website & Sheet"
+            textSize = 12.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = UiKit.gradientButtonDrawable(
+                startColor = Color.parseColor("#059669"),
+                endColor = Color.parseColor("#047857"),
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                UiKit.dp(this@MainActivity, 46)
+            )
+            setOnClickListener {
+                val newBrand = brandInput.text.toString().trim()
+                val newLogo = logoInput.text.toString().trim()
+                val newWeb = webInput.text.toString().trim()
+                val newUpi = upiInput.text.toString().trim()
+                val newWa = waInput.text.toString().trim()
+                val newSheet = sheetInput.text.toString().trim()
+
+                if (newSheet.isNotEmpty()) {
+                    saveSheetUrl(newSheet)
+                }
+                val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
+                prefs.edit().apply {
+                    if (newUpi.isNotEmpty()) putString("store_upi_id", newUpi)
+                    if (newWeb.isNotEmpty()) putString("website_live_url", newWeb)
+                    if (newWa.isNotEmpty()) putString("logged_in_phone", newWa)
+                    if (newBrand.isNotEmpty()) putString("logged_in_name", newBrand)
+                    apply()
+                }
+
+                // Update top app bar views immediately
+                if (newBrand.isNotEmpty()) {
+                    topBrandNameView.text = newBrand
+                    topAvatarView.text = newBrand.take(2).uppercase()
+                }
+
+                // Sync to Google Sheet Backend Live
+                val url = getSheetUrl()
+                val body = mapOf(
+                    "action" to "updateSettings",
+                    "brand_name" to newBrand,
+                    "logo_url" to newLogo,
+                    "website_live_url" to newWeb,
+                    "upi_id" to newUpi,
+                    "whatsapp_number" to newWa
+                )
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val resp = ApiClient.service.updateSettings(fullUrl = url, body = body).execute()
+                        withContext(Dispatchers.Main) {
+                            if (resp.isSuccessful) {
+                                val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
+                                s["brand_name"] = newBrand
+                                s["logo_url"] = newLogo
+                                s["website_live_url"] = newWeb
+                                s["upi_id"] = newUpi
+                                s["whatsapp_number"] = newWa
+                                dashboardData = dashboardData?.copy(settings = s)
+                                Toast.makeText(this@MainActivity, "🎉 Store details & QR code live update ho gaye!", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@MainActivity, "Saved locally! (Sheet network: ${e.message})", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                Toast.makeText(this@MainActivity, "Updating live settings...", Toast.LENGTH_SHORT).show()
+                dialogRef?.dismiss()
+            }
+        }
+        layout.addView(saveBtn)
+
+        dialogScroll.addView(layout)
+
+        dialogRef = AlertDialog.Builder(this)
+            .setView(dialogScroll)
+            .setNegativeButton("Close", null)
             .show()
     }
 

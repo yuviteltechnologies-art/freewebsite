@@ -1216,11 +1216,11 @@
                   <span class="text-[10px] text-amber-200 font-semibold">Bina warning ke direct pay karein:</span>
                   <button type="button" onclick="copyUpiId()" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-[10.5px] font-bold flex items-center gap-1 transition">
                     <i data-lucide="copy" class="w-3 h-3"></i>
-                    <span>Copy UPI: yuvitel@upi</span>
+                    <span id="copyUpiBtnText">Copy UPI: 9907522413@ybl</span>
                   </button>
                 </div>
                 <p class="text-[10px] text-slate-400 leading-tight">
-                  👉 PhonePe / Google Pay kholein ➔ <strong>'Pay to UPI ID'</strong> par click karein ➔ <strong>yuvitel@upi</strong> paste karke ₹499 bhej dein.
+                  👉 PhonePe / Google Pay kholein ➔ <strong>'Pay to UPI ID'</strong> par click karein ➔ <strong id="safeUpiIdText">9907522413@ybl</strong> paste karke ₹499 bhej dein.
                 </p>
               </div>
             </div>
@@ -1231,11 +1231,11 @@
         <div id="qrCodeSection" class="hidden text-center space-y-3">
           <div class="bg-white p-3 rounded-2xl text-center max-w-[210px] mx-auto shadow-inner">
             <img id="paymentQrCodeImg" 
-                 src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore&am=499&cu=INR&tn=SheetStoreOrder" 
+                 src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9907522413@ybl&pn=SheetStore&am=499&cu=INR&tn=SheetStoreOrder" 
                  alt="UPI QR Code" class="w-40 h-40 mx-auto rounded-lg" />
             <p class="text-xs font-bold text-slate-900 font-poppins mt-1">Amount: ₹499 (Lifetime Access)</p>
             <div class="flex items-center justify-center gap-1.5 mt-0.5">
-              <span class="text-[10px] text-slate-600 font-mono font-bold">UPI: yuvitel@upi</span>
+              <span id="qrUpiTextDisplay" class="text-[10px] text-slate-600 font-mono font-bold">UPI: 9907522413@ybl</span>
               <button type="button" onclick="copyUpiId()" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold">Copy</button>
             </div>
           </div>
@@ -1582,9 +1582,77 @@
       lucide.createIcons();
     }
 
+    const MASTER_API_URL = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec";
+
+    let activeStoreSettings = {
+      brandName: localStorage.getItem('store_brand_name') || "new record",
+      upiId: localStorage.getItem('store_upi_id') || "9907522413@ybl",
+      whatsappNumber: localStorage.getItem('store_wa_num') || "9907522413",
+      sheetUrl: localStorage.getItem('store_sheet_url') || MASTER_API_URL
+    };
+
+    function applyStoreSettingsToDom() {
+      const upi = activeStoreSettings.upiId || '9907522413@ybl';
+      const brand = activeStoreSettings.brandName || 'SheetStore';
+      const wa = activeStoreSettings.whatsappNumber || '9907522413';
+
+      // 1. Update QR Code Image dynamically
+      const qrImg = document.getElementById('paymentQrCodeImg');
+      if (qrImg) {
+        const qrData = `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(brand)}&am=499&cu=INR&tn=SheetStoreOrder`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+      }
+
+      // 2. Update UPI texts & copy buttons
+      const copyTxt = document.getElementById('copyUpiBtnText');
+      if (copyTxt) copyTxt.innerText = `Copy UPI: ${upi}`;
+      const safeTxt = document.getElementById('safeUpiIdText');
+      if (safeTxt) safeTxt.innerText = upi;
+      const qrTxt = document.getElementById('qrUpiTextDisplay');
+      if (qrTxt) qrTxt.innerText = `UPI: ${upi}`;
+
+      // 3. Update WhatsApp links
+      document.querySelectorAll('.live-wa-link').forEach(link => {
+        link.href = `https://wa.me/${wa}?text=${encodeURIComponent("Namaste! Mujhe website ke bare me jaankari chahiye.")}`;
+      });
+    }
+
+    async function syncSettingsFromGoogleSheet() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sheetUrl = urlParams.get('sheet') || activeStoreSettings.sheetUrl;
+        const res = await fetch(sheetUrl);
+        const data = await res.json();
+        if (data && data.settings) {
+          const s = data.settings;
+          if (s.upi_id) {
+            activeStoreSettings.upiId = String(s.upi_id).trim();
+            localStorage.setItem('store_upi_id', activeStoreSettings.upiId);
+          }
+          if (s.whatsapp_number) {
+            activeStoreSettings.whatsappNumber = String(s.whatsapp_number).trim();
+            localStorage.setItem('store_wa_num', activeStoreSettings.whatsappNumber);
+          }
+          if (s.brand_name) {
+            activeStoreSettings.brandName = String(s.brand_name).trim();
+            localStorage.setItem('store_brand_name', activeStoreSettings.brandName);
+          }
+          applyStoreSettingsToDom();
+        }
+      } catch (e) {
+        console.warn('Silent sheet settings fetch:', e);
+      }
+    }
+
+    // Initialize dynamic settings on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      applyStoreSettingsToDom();
+      syncSettingsFromGoogleSheet();
+    });
+
     function launchUpi(app) {
-      const upiId = 'yuvitel@upi';
-      const payeeName = 'SheetStore';
+      const upiId = activeStoreSettings.upiId || '9907522413@ybl';
+      const payeeName = activeStoreSettings.brandName || 'SheetStore';
       const amount = '499';
       const note = 'SheetStoreKit';
 
@@ -1631,10 +1699,11 @@
     });
 
     function copyUpiId() {
-      navigator.clipboard.writeText('yuvitel@upi').then(() => {
-        alert('✅ UPI ID Copied: yuvitel@upi\n\nAb PhonePe ya Google Pay kholein, "Pay to UPI ID" option chunein aur yuvitel@upi paste karke ₹499 transfer karein. Isse bina kisi warning ke turant payment ho jayegi!');
+      const upiId = activeStoreSettings.upiId || '9907522413@ybl';
+      navigator.clipboard.writeText(upiId).then(() => {
+        alert(`✅ UPI ID Copied: ${upiId}\n\nAb PhonePe ya Google Pay kholein, "Pay to UPI ID" option chunein aur ${upiId} paste karke ₹499 transfer karein. Isse bina kisi warning ke turant payment ho jayegi!`);
       }).catch(() => {
-        prompt('UPI ID copy karein:', 'yuvitel@upi');
+        prompt('UPI ID copy karein:', upiId);
       });
     }
 

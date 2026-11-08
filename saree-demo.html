@@ -1624,7 +1624,7 @@
         <!-- Suspect App Guide -->
         <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-left">
           <p class="text-[10px] text-amber-900 leading-tight">
-            🛡️ <strong>"Suspect App" warning se bachne ka tarika:</strong> UPI ID <button type="button" onclick="copySareeUpiId()" class="font-bold underline text-amber-800">yuvitel@upi Copy karein</button> aur PhonePe/GPay me <em>'To UPI ID'</em> se direct pay karein.
+            🛡️ <strong>"Suspect App" warning se bachne ka tarika:</strong> UPI ID <button type="button" onclick="copySareeUpiId()" id="sareeCopyUpiBtn" class="font-bold underline text-amber-800">9907522413@ybl Copy karein</button> aur PhonePe/GPay me <em>'To UPI ID'</em> se direct pay karein.
           </p>
         </div>
       </div>
@@ -1634,11 +1634,11 @@
         <summary class="cursor-pointer hover:text-[#881337] font-medium select-none mb-2">📷 Ya Desktop QR Code Scan Karein</summary>
         <div class="bg-[#FAF7F2] p-4 rounded-2xl border border-[#D4AF37]/30 text-center mb-2">
           <img id="upiQrCodeImg" 
-               src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=NOOLAM%20Silk&am=64350&cu=INR" 
+               src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9907522413@ybl&pn=NOOLAM%20Silk&am=64350&cu=INR" 
                alt="UPI QR Code" class="w-40 h-40 mx-auto rounded-xl border border-slate-300 shadow-md mb-2 bg-white p-2" />
           <p class="text-xs font-bold text-[#881337] font-cinzel">Total Payable: <span id="upiModalAmount" class="text-base text-[#140204]">₹64,350</span></p>
           <div class="flex items-center justify-center gap-1.5 mt-0.5">
-            <span class="text-[10px] text-slate-600 font-mono font-bold">UPI: yuvitel@upi</span>
+            <span id="sareeUpiTextDisplay" class="text-[10px] text-slate-600 font-mono font-bold">UPI: 9907522413@ybl</span>
             <button type="button" onclick="copySareeUpiId()" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold">Copy</button>
           </div>
         </div>
@@ -1862,7 +1862,8 @@
       badge.innerText = count;
       document.getElementById('cartDrawerTotal').innerText = '₹' + total.toLocaleString('en-IN');
       document.getElementById('upiModalAmount').innerText = '₹' + total.toLocaleString('en-IN');
-      document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=NOOLAM%20Silk&am=${total}&cu=INR`;
+      const upiId = activeSareeUpiId || '9907522413@ybl';
+      document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${encodeURIComponent(upiId)}&pn=NOOLAM%20Silk&am=${total}&cu=INR`;
       lucide.createIcons();
     }
 
@@ -1885,14 +1886,18 @@
     }
 
     // 7. UPI & SheetStore Google Sheet Submission
+    let activeSareeUpiId = localStorage.getItem('store_upi_id') || '9907522413@ybl';
+    let activeSareeWaNum = localStorage.getItem('store_wa_num') || '9907522413';
+
     function triggerSheetStoreCheckout() {
       toggleCartDrawer(false);
       openUpiModal();
     }
     function openUpiModal(overrideAmt) {
+      const upiId = activeSareeUpiId || '9907522413@ybl';
       if (overrideAmt) {
         document.getElementById('upiModalAmount').innerText = '₹' + overrideAmt.toLocaleString('en-IN');
-        document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=NOOLAM%20Silk&am=${overrideAmt}&cu=INR`;
+        document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${encodeURIComponent(upiId)}&pn=NOOLAM%20Silk&am=${overrideAmt}&cu=INR`;
       }
       document.getElementById('upiCheckoutModal').classList.remove('hidden');
     }
@@ -1901,16 +1906,17 @@
     }
 
     function copySareeUpiId() {
-      navigator.clipboard.writeText('yuvitel@upi').then(() => {
-        alert('✅ UPI ID Copied: yuvitel@upi\n\nAb PhonePe ya Google Pay kholein aur "Pay to UPI ID" option me yuvitel@upi daalkar payment transfer karein.');
+      const upiId = activeSareeUpiId || '9907522413@ybl';
+      navigator.clipboard.writeText(upiId).then(() => {
+        alert(`✅ UPI ID Copied: ${upiId}\n\nAb PhonePe ya Google Pay kholein aur "Pay to UPI ID" option me ${upiId} daalkar payment transfer karein.`);
       }).catch(() => {
-        prompt('UPI ID copy karein:', 'yuvitel@upi');
+        prompt('UPI ID copy karein:', upiId);
       });
     }
 
     function launchSareeUpi(app) {
       const totalText = document.getElementById('upiModalAmount').innerText.replace(/[^\d]/g, '') || '64350';
-      const upiId = 'yuvitel@upi';
+      const upiId = activeSareeUpiId || '9907522413@ybl';
       const payeeName = 'NOOLAM';
       const note = 'SareeOrder';
 
@@ -2032,8 +2038,21 @@
       if (modal) modal.classList.add('hidden');
     }
 
+    function applySareeSettingsToDom() {
+      const copyBtn = document.getElementById('sareeCopyUpiBtn');
+      if (copyBtn) copyBtn.innerText = `${activeSareeUpiId} Copy karein`;
+      const upiTxt = document.getElementById('sareeUpiTextDisplay');
+      if (upiTxt) upiTxt.innerText = `UPI: ${activeSareeUpiId}`;
+      const qrImg = document.getElementById('upiQrCodeImg');
+      if (qrImg) {
+        const total = document.getElementById('upiModalAmount') ? document.getElementById('upiModalAmount').innerText.replace(/[^\d]/g, '') || '64350' : '64350';
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${encodeURIComponent(activeSareeUpiId)}&pn=NOOLAM%20Silk&am=${total}&cu=INR`;
+      }
+    }
+
     // Dynamic Google Sheet Settings Sync
     document.addEventListener('DOMContentLoaded', () => {
+      applySareeSettingsToDom();
       fetchSareeStoreSettings();
     });
 
@@ -2045,6 +2064,14 @@
         const data = await res.json();
         if (data && data.settings) {
           const s = data.settings;
+          if (s.upi_id) {
+            activeSareeUpiId = String(s.upi_id).trim();
+            localStorage.setItem('store_upi_id', activeSareeUpiId);
+          }
+          if (s.whatsapp_number) {
+            activeSareeWaNum = String(s.whatsapp_number).trim();
+            localStorage.setItem('store_wa_num', activeSareeWaNum);
+          }
           if (s.brand_name) {
             document.querySelectorAll('.saree-brand-name').forEach(el => el.innerText = s.brand_name);
           }
@@ -2056,6 +2083,7 @@
             const sub = document.getElementById('sareeHeroSubtitle');
             if (sub) sub.innerHTML = s.hero_subtitle;
           }
+          applySareeSettingsToDom();
         }
       } catch (e) {}
     }
