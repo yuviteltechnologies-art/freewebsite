@@ -114,13 +114,95 @@
         Yeh launchpad dashboard sirf paid members ke liye hai. Agar aapne payment kiya hai toh 12-digit UTR verify karein, ya QR scan karke pay karein.
       </p>
 
-      <!-- QR Code -->
-      <div class="bg-white p-3 rounded-2xl text-center mb-4 max-w-[190px] mx-auto shadow-inner">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore%20Pro&am=499&cu=INR" 
-             alt="UPI QR Code" class="w-36 h-36 mx-auto rounded-lg" />
-        <p class="text-xs font-bold text-slate-900 font-sans mt-1">Amount: ₹499</p>
-        <p class="text-[10px] text-slate-600 font-mono">UPI: yuvitel@upi</p>
+      <!-- 1-Tap UPI Apps Grid -->
+      <div class="mb-4 space-y-2.5">
+        <p class="text-[11px] font-semibold text-slate-300 text-left">App chun kar direct ₹499 pay karein:</p>
+        <div class="grid grid-cols-2 gap-2">
+          <!-- PhonePe -->
+          <button type="button" onclick="launchGuardUpi('phonepe')"
+                  class="p-2.5 rounded-xl bg-gradient-to-br from-[#5f259f] to-[#3b1266] border border-purple-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0">
+              <span class="text-[#5f259f] font-black text-base leading-none">पे</span>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-white leading-tight">PhonePe</p>
+              <p class="text-[9.5px] text-purple-200">1-Tap Pay</p>
+            </div>
+          </button>
+
+          <!-- Google Pay -->
+          <button type="button" onclick="launchGuardUpi('gpay')"
+                  class="p-2.5 rounded-xl bg-slate-950 border border-slate-700 hover:border-blue-400 text-left transition active:scale-95 shadow flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 p-1">
+              <svg viewBox="0 0 24 24" class="w-full h-full">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.99 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-white leading-tight">Google Pay</p>
+              <p class="text-[9.5px] text-slate-400">Fast UPI</p>
+            </div>
+          </button>
+
+          <!-- Paytm -->
+          <button type="button" onclick="launchGuardUpi('paytm')"
+                  class="p-2.5 rounded-xl bg-gradient-to-br from-[#002E6E] to-[#001838] border border-cyan-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 p-1">
+              <span class="font-black text-[9px] tracking-tight leading-none"><span style="color:#002E6E;">pay</span><span style="color:#00BAF2;">tm</span></span>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-white leading-tight">Paytm UPI</p>
+              <p class="text-[9.5px] text-cyan-200">1-Tap Pay</p>
+            </div>
+          </button>
+
+          <!-- Any UPI App -->
+          <button type="button" onclick="launchGuardUpi('generic')"
+                  class="p-2.5 rounded-xl bg-gradient-to-br from-emerald-950 to-teal-950 border border-emerald-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0 text-slate-950 font-black text-xs font-mono">
+              UPI
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-white leading-tight">Any UPI App</p>
+              <p class="text-[9.5px] text-emerald-300">BHIM, Cred</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- Safe Direct UPI ID Copy & Warning Guide -->
+        <div class="p-3 rounded-2xl bg-slate-950/90 border border-amber-500/30 text-left space-y-1.5">
+          <p class="text-[11px] font-bold text-amber-300">
+            🛡️ PhonePe/GPay me "Suspect App" warning aaye toh?
+          </p>
+          <p class="text-[10px] text-slate-300 leading-relaxed">
+            Browser se open karne par banking apps security alert dete hain. <strong>Aapka payment safe hai.</strong> Direct bina warning pay karne ke liye:
+          </p>
+          <div class="flex items-center gap-2 pt-0.5">
+            <span class="text-[10px] text-slate-400">Sabse Safe:</span>
+            <button type="button" onclick="copyGuardUpiId()" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-[10.5px] font-bold flex items-center gap-1 transition">
+              <i data-lucide="copy" class="w-3 h-3"></i>
+              <span>Copy UPI: yuvitel@upi</span>
+            </button>
+          </div>
+          <p class="text-[9.5px] text-slate-400">
+            👉 App me <em>'To UPI ID'</em> me <strong>yuvitel@upi</strong> paste karke ₹499 transfer karein.
+          </p>
+        </div>
       </div>
+
+      <!-- Optional QR Code Dropdown -->
+      <details class="text-center mb-4 text-xs text-slate-400 cursor-pointer">
+        <summary class="hover:text-cyan-400 select-none font-medium">📷 Ya QR Code scan karke pay karein</summary>
+        <div class="bg-white p-3 rounded-2xl text-center my-3 max-w-[190px] mx-auto shadow-inner">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore&am=499&cu=INR&tn=SheetStoreOrder" 
+               alt="UPI QR Code" class="w-36 h-36 mx-auto rounded-lg" />
+          <p class="text-xs font-bold text-slate-900 font-sans mt-1">Amount: ₹499</p>
+          <p class="text-[10px] text-slate-600 font-mono">UPI: yuvitel@upi</p>
+        </div>
+      </details>
 
       <!-- Verification Form -->
       <div class="space-y-2.5 text-left mb-4">
@@ -1441,6 +1523,41 @@
 
       lucide.createIcons();
     });
+
+    function copyGuardUpiId() {
+      navigator.clipboard.writeText('yuvitel@upi').then(() => {
+        alert('✅ UPI ID Copied: yuvitel@upi\n\nAb PhonePe ya Google Pay kholein, "Pay to UPI ID" option chunein aur yuvitel@upi paste karke ₹499 transfer karein. Isse bina kisi warning ke turant payment ho jayegi!');
+      }).catch(() => {
+        prompt('UPI ID copy karein:', 'yuvitel@upi');
+      });
+    }
+
+    function launchGuardUpi(app) {
+      const upiId = 'yuvitel@upi';
+      const payeeName = 'SheetStore';
+      const amount = '499';
+      const note = 'SheetStoreKit';
+
+      const genericUri = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+
+      let targetUri = genericUri;
+      if (app === 'phonepe') {
+        targetUri = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+      } else if (app === 'gpay') {
+        targetUri = `gpay://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+      } else if (app === 'paytm') {
+        targetUri = `paytmmp://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+      }
+
+      const start = Date.now();
+      setTimeout(() => {
+        if (targetUri !== genericUri && (Date.now() - start < 1800)) {
+          window.location.href = genericUri;
+        }
+      }, 1000);
+
+      window.location.href = targetUri;
+    }
 
     function checkPaymentLockStatus() {
       const isPaid = currentUser && (currentUser.is_paid === true || currentUser.status === "ACTIVE");
