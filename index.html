@@ -273,10 +273,11 @@
           <i data-lucide="user" class="w-3.5 h-3.5"></i>
           <span id="navAuthText">Login / Setup</span>
         </a>
-        <a href="demo.html" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
-          <i data-lucide="external-link" class="w-3.5 h-3.5 text-blue-400"></i>
-          <span>Live Demo</span>
-        </a>
+        <button type="button" onclick="openDemoSelectorModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+          <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-400"></i>
+          <span>Live Demos</span>
+          <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
+        </button>
         <a href="#pricing" class="theme-cta-btn inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-lg shadow-blue-600/30">
           <span class="ctaBtnText">Get Store Now</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -318,14 +319,11 @@
             <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
             <span>Apna Store Shuru Karein (Sirf ₹499)</span>
           </a>
-          <a href="demo.html" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-semibold text-base border border-slate-700 hover:border-blue-400 transition">
-            <i data-lucide="eye" class="w-5 h-5 text-blue-400"></i>
-            <span>Live Sample Store</span>
-          </a>
-          <a href="saree-demo.html" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-[#200407] to-[#500A13] hover:from-[#3A080E] hover:to-[#6B0E1B] text-[#F5DE7A] font-semibold text-base border border-[#D4AF37]/50 shadow-lg shadow-amber-950/40 transition">
-            <span>🥻 Saree Showcase Demo</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 text-[#D4AF37]"></i>
-          </a>
+          <button type="button" onclick="openDemoSelectorModal()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 font-semibold text-base border border-slate-700 hover:border-blue-400 transition shadow-lg active:scale-95 group">
+            <i data-lucide="eye" class="w-5 h-5 text-blue-400 group-hover:scale-110 transition"></i>
+            <span>Live Sample Store Dekhein</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-bold border border-blue-500/30 ml-1">2 Demos</span>
+          </button>
         </div>
 
         <!-- Trust Highlights -->
@@ -438,10 +436,10 @@
           </div>
 
           <div class="pt-2">
-            <a href="demo.html" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition hover:scale-105">
+            <button type="button" onclick="openDemoSelectorModal()" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition hover:scale-105 active:scale-95">
               <span>Live Sample Store Kholein</span>
-              <i data-lucide="external-link" class="w-4 h-4"></i>
-            </a>
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -595,7 +593,7 @@
         </div>
         <div class="flex items-center gap-6">
           <a href="#features" class="hover:text-blue-400">Features</a>
-          <a href="demo.html" class="hover:text-blue-400">Live Demo</a>
+          <a href="javascript:void(0)" onclick="openDemoSelectorModal()" class="hover:text-blue-400">Live Demos</a>
           <a href="#pricing" class="hover:text-blue-400">Pricing</a>
           <a href="#faq" class="hover:text-blue-400">FAQs</a>
           <button onclick="openConfigModal()" class="text-slate-400 hover:text-blue-400 flex items-center gap-1">
@@ -1311,7 +1309,90 @@
 
       lucide.createIcons();
     });
+
+    function openDemoSelectorModal() {
+      const modal = document.getElementById('demoSelectorModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+    function closeDemoSelectorModal() {
+      const modal = document.getElementById('demoSelectorModal');
+      if (modal) modal.classList.add('hidden');
+    }
   </script>
+
+  <!-- LIVE DEMO SELECTOR MODAL -->
+  <div id="demoSelectorModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
+      <!-- Decorative Glow -->
+      <div class="absolute -top-24 -left-24 w-60 h-60 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Close Button -->
+      <button onclick="closeDemoSelectorModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Title -->
+      <div class="text-center mb-6 relative z-10">
+        <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block mb-2">
+          ✨ Live Store Demos
+        </span>
+        <h3 class="font-heading font-black text-2xl sm:text-3xl text-white">Kaunsa Store Demo Dekhna Chahte Hain?</h3>
+        <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">
+          SheetStore Pro se aap kisi bhi category ka 100% Google Sheet powered e-commerce store bana sakte hain:
+        </p>
+      </div>
+
+      <!-- 2 Demo Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+        
+        <!-- Option 1: Digital Products Store -->
+        <div class="bg-slate-950/80 rounded-2xl p-5 border border-blue-500/40 hover:border-blue-400 flex flex-col justify-between transition group shadow-lg">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg">⚡</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">5 Color Presets</span>
+            </div>
+            <h4 class="font-heading font-bold text-base text-white group-hover:text-blue-400 transition">Digital Products &amp; SaaS Store</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+              Software, Ebooks, Notion kits, AI Prompts &amp; Web Templates. Direct UPI QR + instant download link.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-800">
+            <a href="demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
+              <span>Open Digital Store Demo ➔</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Option 2: NOOLAM Saree Showcase -->
+        <div class="bg-gradient-to-b from-[#200407] to-[#140204] rounded-2xl p-5 border border-[#D4AF37]/40 hover:border-[#D4AF37] flex flex-col justify-between transition group shadow-lg">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-10 h-10 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold text-lg">🥻</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#F5DE7A] border border-[#D4AF37]/30 font-bold">Luxury Studio</span>
+            </div>
+            <h4 class="font-heading font-bold text-base text-[#F5DE7A] group-hover:text-white transition">NOOLAM Kanchipuram Saree</h4>
+            <p class="text-xs text-[#E5D5B8] mt-1 leading-relaxed">
+              Ethnic wear, 6 Moods archive, "Try the Look" bundle with 10% off, real clothes rail ("The Rack"), &amp; 3D tilt silk arc.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-white/10">
+            <a href="saree-demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-bold text-xs flex items-center justify-center gap-1.5 transition shadow font-cinzel">
+              <span>Open Saree Showcase Studio ➔</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Note -->
+      <div class="mt-5 text-center text-[11px] text-slate-500 relative z-10">
+        <span>Aap dono templates ko apne hisab se Google Sheet se customize kar sakte hain.</span>
+      </div>
+
+    </div>
+  </div>
 
   <!-- FLOATING LIVE THEME PREVIEW BAR (5 READY-MADE TEMPLATES) -->
   <div id="themePreviewBar" class="fixed bottom-4 right-4 z-50 flex items-center gap-2 p-2 px-3 rounded-2xl bg-slate-950/95 backdrop-blur-md border border-slate-700/80 shadow-2xl transition hover:border-slate-500">
