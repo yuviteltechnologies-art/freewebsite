@@ -788,7 +788,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.2.2 • Secure Admin Portal",
+            text = "🚀 v1.2.3 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -823,7 +823,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.2.2)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.3)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -942,7 +942,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.2.2",
+            text = "⚡ SheetStore Admin v1.2.3",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -2300,7 +2300,257 @@ class MainActivity : Activity() {
         return container
     }
 
-    // SUB-TAB 1: SITE MAIN DETAILS
+    // ==========================================
+    // EXCEL / SPREADSHEET INPUT COMPONENT HELPERS
+    // ==========================================
+    private fun createExcelStyledInput(hintText: String, initialVal: String, inputType: Int = InputType.TYPE_CLASS_TEXT, multiline: Boolean = false): EditText {
+        return EditText(this).apply {
+            hint = hintText
+            setHintTextColor(Color.parseColor("#4B5563"))
+            setText(initialVal)
+            setTextColor(Color.WHITE)
+            textSize = 13f
+            typeface = Typeface.MONOSPACE
+            this.inputType = if (multiline) (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE) else inputType
+            if (multiline) {
+                minLines = 2
+                maxLines = 4
+                gravity = Gravity.TOP or Gravity.START
+            }
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#060B14"),
+                strokeColor = Color.parseColor("#1F2D44"),
+                strokeWidthDp = 1,
+                radiusDp = 6f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
+
+    private fun createExcelRow(
+        cellRef: String,
+        title: String,
+        subHint: String?,
+        inputView: View,
+        actionView: View? = null,
+        previewView: View? = null,
+        onSaveRow: (() -> Unit)? = null
+    ): View {
+        val rowContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0E1626"),
+                strokeColor = Color.parseColor("#1B2940"),
+                strokeWidthDp = 1,
+                radiusDp = 8f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 10)
+            }
+        }
+
+        // Header: Monospace Excel Cell Tag [A1] + Title (weight 1) + [💾 Save] button
+        val headerLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+
+        val cellTag = TextView(this).apply {
+            text = " $cellRef "
+            textSize = 10.5f
+            typeface = Typeface.MONOSPACE
+            setTextColor(Color.parseColor("#10B981"))
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#062419"),
+                strokeColor = Color.parseColor("#10B981"),
+                strokeWidthDp = 1,
+                radiusDp = 4f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 8)
+            }
+        }
+        headerLayout.addView(cellTag)
+
+        val titleView = TextView(this).apply {
+            text = title
+            textSize = 12.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 8)
+            }
+        }
+        headerLayout.addView(titleView)
+
+        if (onSaveRow != null) {
+            val saveBtn = Button(this).apply {
+                text = "💾 Save"
+                textSize = 11f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#A7F3D0"))
+                background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#064E3B"),
+                    strokeColor = Color.parseColor("#10B981"),
+                    strokeWidthDp = 1,
+                    radiusDp = 6f,
+                    context = this@MainActivity
+                )
+                setPadding(UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 4))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, UiKit.dp(this@MainActivity, 32))
+                setOnClickListener { onSaveRow() }
+            }
+            headerLayout.addView(saveBtn)
+        }
+
+        rowContainer.addView(headerLayout)
+
+        // Main input view
+        rowContainer.addView(inputView)
+
+        // Optional action button (e.g. Gallery pick)
+        if (actionView != null) {
+            rowContainer.addView(actionView)
+        }
+
+        // Optional preview view (e.g. Image Preview)
+        if (previewView != null) {
+            rowContainer.addView(previewView)
+        }
+
+        // Sub hint
+        if (!subHint.isNullOrEmpty()) {
+            val hintView = TextView(this).apply {
+                text = "↳ $subHint"
+                textSize = 10.5f
+                setTextColor(Color.parseColor("#64748B"))
+                setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+            }
+            rowContainer.addView(hintView)
+        }
+
+        return rowContainer
+    }
+
+    private fun saveIndividualSetting(key: String, value: String, label: String) {
+        val url = getSheetUrl()
+        if (url.isEmpty()) {
+            Toast.makeText(this, "Pehle Google Sheet URL set karein", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        pendingSettings[key] = value
+        val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
+        s[key] = value
+        dashboardData = dashboardData?.copy(settings = s)
+
+        Toast.makeText(this, "Saving '$label'... ⏳", Toast.LENGTH_SHORT).show()
+
+        val body = mapOf(
+            "action" to "updateSettings",
+            key to value
+        )
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val call = ApiClient.service.updateSettings(fullUrl = url, body = body)
+                val res = call.execute()
+                withContext(Dispatchers.Main) {
+                    if (res.isSuccessful) {
+                        Toast.makeText(this@MainActivity, "🎉 '$label' live Google Sheet par save ho gaya!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Save error: HTTP ${res.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "✓ Local me update ho gaya (${e.localizedMessage})", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun saveMultipleSettings(entries: Map<String, String>, label: String) {
+        val url = getSheetUrl()
+        if (url.isEmpty()) {
+            Toast.makeText(this, "Pehle Google Sheet URL set karein", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        for ((k, v) in entries) {
+            pendingSettings[k] = v
+        }
+        val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
+        s.putAll(entries)
+        dashboardData = dashboardData?.copy(settings = s)
+
+        Toast.makeText(this, "Saving '$label'... ⏳", Toast.LENGTH_SHORT).show()
+
+        val body = mutableMapOf<String, String>()
+        body["action"] = "updateSettings"
+        body.putAll(entries)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val call = ApiClient.service.updateSettings(fullUrl = url, body = body)
+                val res = call.execute()
+                withContext(Dispatchers.Main) {
+                    if (res.isSuccessful) {
+                        Toast.makeText(this@MainActivity, "🎉 '$label' live Google Sheet par save ho gaya!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Save error: HTTP ${res.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "✓ Local me update ho gaya (${e.localizedMessage})", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun loadPreviewImage(urlOrB64: String, target: ImageView) {
+        if (urlOrB64.isEmpty()) {
+            target.visibility = View.GONE
+            return
+        }
+        target.visibility = View.VISIBLE
+        if (urlOrB64.startsWith("data:image")) {
+            try {
+                val b64 = urlOrB64.substringAfter("base64,")
+                val decoded = Base64.decode(b64, Base64.DEFAULT)
+                val bmp = BitmapFactory.decodeByteArray(decoded, 0, decoded.size)
+                target.setImageBitmap(bmp)
+            } catch (_: Exception) {}
+        } else if (urlOrB64.startsWith("http://") || urlOrB64.startsWith("https://")) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val input = java.net.URL(urlOrB64).openStream()
+                    val bmp = BitmapFactory.decodeStream(input)
+                    withContext(Dispatchers.Main) {
+                        target.setImageBitmap(bmp)
+                    }
+                } catch (_: Exception) {}
+            }
+        }
+    }
+
+    // SUB-TAB 1: SITE MAIN DETAILS & CONTACT DIRECTORY (EXCEL SHEET INPUT STYLE WITH INDIVIDUAL SAVE BUTTONS)
     private fun createSiteMainDetailsSubTab(): View {
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -2310,30 +2560,301 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        form.addView(createSubTabBackHeader("🏢 1st: Site Main Details", "Apni website ka Brand Name, Tagline aur Live Store Link yahan se manage karein:"))
+        form.addView(createSubTabBackHeader("🏢 1st: Site Main Details & Contact Directory", "Dukaan ki sabhi details yahan enter karein. Har row ke aage diye Save button se individual save karein:"))
 
-        val (brandCard, brandBody) = UiKit.createSectionContainer(this, "🏢 Brand Identity", "Core")
-        brandBody.addView(UiKit.createFieldLabel(this, "Store / Brand Name:"))
-        val initialBrand = pendingSettings["brand_name"] ?: dashboardData?.settings?.get("brand_name") ?: ""
-        brandNameInput = UiKit.createStyledInput(this, "e.g. SheetStore Pro", initialBrand)
-        brandBody.addView(brandNameInput)
-
-        brandBody.addView(UiKit.createFieldLabel(this, "Brand Tagline:"))
-        val initialTagline = pendingSettings["brand_tagline"] ?: dashboardData?.settings?.get("brand_tagline") ?: ""
-        taglineInput = UiKit.createStyledInput(this, "e.g. 100% Free Google Sheet Store", initialTagline)
-        brandBody.addView(taglineInput)
-
-        brandBody.addView(UiKit.createFieldLabel(this, "Custom Logo Image URL:"))
-        val initialLogo = pendingSettings["logo_url"] ?: dashboardData?.settings?.get("logo_url") ?: ""
-        logoUrlInput = UiKit.createStyledInput(this, "https://example.com/logo.png", initialLogo)
-        brandBody.addView(logoUrlInput)
-
-        val openImgUpdaterBtn = UiKit.createSecondaryButton(this, "🖼️ Open Image Updater (Upload Logo 300x300)", "#38BDF8") {
-            designSubTabIndex = 4
-            refreshCurrentTab()
+        // Top Google Sheet Banner
+        val sheetHeaderCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#061A12"),
+                strokeColor = Color.parseColor("#059669"),
+                strokeWidthDp = 1,
+                radiusDp = 10f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 12)
+            }
         }
-        brandBody.addView(openImgUpdaterBtn)
-        form.addView(brandCard)
+
+        val sheetTitle = TextView(this).apply {
+            text = "📗 Google Sheets Mode: Store & Contact Directory"
+            textSize = 13.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#34D399"))
+        }
+        val formulaBar = TextView(this).apply {
+            text = "fx | =STORE_DIRECTORY(Row, Field_Value)"
+            textSize = 10.5f
+            typeface = Typeface.MONOSPACE
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
+        }
+        val sheetSub = TextView(this).apply {
+            text = "Excel grid format: Jiske paas jo information ho wo daal kar uske aage bane Save button se turant save kar sakta hai:"
+            textSize = 11f
+            setTextColor(Color.parseColor("#CBD5E1"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        sheetHeaderCard.addView(sheetTitle)
+        sheetHeaderCard.addView(formulaBar)
+        sheetHeaderCard.addView(sheetSub)
+        form.addView(sheetHeaderCard)
+
+        // [A1] Store / Brand Name
+        val initialBrand = pendingSettings["brand_name"] ?: dashboardData?.settings?.get("brand_name") ?: ""
+        brandNameInput = createExcelStyledInput("e.g. SheetStore Pro ya Apni Dukaan Ka Naam", initialBrand)
+        form.addView(createExcelRow(
+            cellRef = "A1",
+            title = "Store / Brand Name",
+            subHint = "Website aur invoice me sabse upar dikhne wala store title.",
+            inputView = brandNameInput,
+            onSaveRow = {
+                val v = brandNameInput.text.toString().trim()
+                saveIndividualSetting("brand_name", v, "Brand Name")
+            }
+        ))
+
+        // [A2] Brand Tagline
+        val initialTagline = pendingSettings["brand_tagline"] ?: dashboardData?.settings?.get("brand_tagline") ?: ""
+        taglineInput = createExcelStyledInput("e.g. 100% Quality Guaranteed • Best Prices", initialTagline)
+        form.addView(createExcelRow(
+            cellRef = "A2",
+            title = "Brand Tagline",
+            subHint = "Brand name ke niche dikhne wali short punchline.",
+            inputView = taglineInput,
+            onSaveRow = {
+                val v = taglineInput.text.toString().trim()
+                saveIndividualSetting("brand_tagline", v, "Brand Tagline")
+            }
+        ))
+
+        // [A3] Logo Photo
+        val initialLogo = pendingSettings["logo_url"] ?: dashboardData?.settings?.get("logo_url") ?: ""
+        logoUrlInput = createExcelStyledInput("https://example.com/logo.png ya niche gallery se chunein", initialLogo)
+        val pickLogoBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se Logo Chunein (300x300 px)", "#10B981") {
+            openImagePicker(REQUEST_PICK_LOGO)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        liveLogoPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 70), UiKit.dp(this@MainActivity, 70)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
+        }
+        loadPreviewImage(initialLogo, liveLogoPreview!!)
+        form.addView(createExcelRow(
+            cellRef = "A3",
+            title = "Store Official Logo (300x300 px)",
+            subHint = "Website header, invoices & branding me dikhne wala store logo.",
+            inputView = logoUrlInput,
+            actionView = pickLogoBtn,
+            previewView = liveLogoPreview,
+            onSaveRow = {
+                val v = logoUrlInput.text.toString().trim()
+                saveIndividualSetting("logo_url", v, "Store Logo")
+            }
+        ))
+
+        // [A4] WhatsApp Order Number
+        val initialWa = pendingSettings["whatsapp_number"] ?: dashboardData?.settings?.get("whatsapp_number") ?: ""
+        waNumberInput = createExcelStyledInput("e.g. 919876543210 (Country code sahit)", initialWa, InputType.TYPE_CLASS_PHONE)
+        form.addView(createExcelRow(
+            cellRef = "A4",
+            title = "Primary WhatsApp Order Number",
+            subHint = "Naye website orders ka WhatsApp alert is number par seedha prapt hoga.",
+            inputView = waNumberInput,
+            onSaveRow = {
+                val v = waNumberInput.text.toString().trim()
+                saveIndividualSetting("whatsapp_number", v, "WhatsApp Number")
+            }
+        ))
+
+        // [A5] Alternative Contact Number
+        val initialAlt = pendingSettings["alt_phone"] ?: dashboardData?.settings?.get("alt_phone") ?: ""
+        altPhoneInput = createExcelStyledInput("e.g. 919811223344", initialAlt, InputType.TYPE_CLASS_PHONE)
+        form.addView(createExcelRow(
+            cellRef = "A5",
+            title = "Alternative Contact Number",
+            subHint = "Backup mobile number agar primary number busy ya unavailable ho.",
+            inputView = altPhoneInput,
+            onSaveRow = {
+                val v = altPhoneInput.text.toString().trim()
+                saveIndividualSetting("alt_phone", v, "Alternative Number")
+            }
+        ))
+
+        // [A6] Customer Care Helpline Number
+        val initialHelp = pendingSettings["helpline_number"] ?: dashboardData?.settings?.get("helpline_number") ?: ""
+        helplineInput = createExcelStyledInput("e.g. 1800-123-4567 ya 919876543210", initialHelp, InputType.TYPE_CLASS_PHONE)
+        form.addView(createExcelRow(
+            cellRef = "A6",
+            title = "Customer Care Helpline Number",
+            subHint = "Support helpline number website header & footer me dikhaya jayega.",
+            inputView = helplineInput,
+            onSaveRow = {
+                val v = helplineInput.text.toString().trim()
+                saveIndividualSetting("helpline_number", v, "Helpline Number")
+            }
+        ))
+
+        // [A7] Official Business Email ID
+        val initialEmail = pendingSettings["business_email"] ?: dashboardData?.settings?.get("business_email") ?: ""
+        businessEmailInput = createExcelStyledInput("e.g. support@mystore.com", initialEmail, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+        form.addView(createExcelRow(
+            cellRef = "A7",
+            title = "Official Business Email ID",
+            subHint = "Official email address customer inquiries & receipts ke liye.",
+            inputView = businessEmailInput,
+            onSaveRow = {
+                val v = businessEmailInput.text.toString().trim()
+                saveIndividualSetting("business_email", v, "Business Email")
+            }
+        ))
+
+        // [A8] Shop / Business Physical Address
+        val initialAddress = pendingSettings["business_address"] ?: dashboardData?.settings?.get("business_address") ?: ""
+        businessAddressInput = createExcelStyledInput("Shop No, Street, Landmark, City, State, Pincode", initialAddress, multiline = true)
+        form.addView(createExcelRow(
+            cellRef = "A8",
+            title = "Shop / Business Physical Address",
+            subHint = "Website contact section aur billing invoices par dikhne wala address.",
+            inputView = businessAddressInput,
+            onSaveRow = {
+                val v = businessAddressInput.text.toString().trim()
+                saveIndividualSetting("business_address", v, "Business Address")
+            }
+        ))
+
+        // [A9] Google Maps Location Link
+        val initialMap = pendingSettings["map_url"] ?: dashboardData?.settings?.get("map_url") ?: ""
+        mapUrlInput = createExcelStyledInput("e.g. https://maps.google.com/?q=28.6139,77.2090", initialMap)
+        form.addView(createExcelRow(
+            cellRef = "A9",
+            title = "Google Maps Location Link",
+            subHint = "Customer tap karke seedha Google Maps par aapki shop navigate kar sakein.",
+            inputView = mapUrlInput,
+            onSaveRow = {
+                val v = mapUrlInput.text.toString().trim()
+                saveIndividualSetting("map_url", v, "Google Maps Link")
+            }
+        ))
+
+        // [A10] Store UPI ID
+        val initialUpi = pendingSettings["upi_id"] ?: dashboardData?.settings?.get("upi_id") ?: ""
+        upiIdInput = createExcelStyledInput("e.g. merchant@okaxis ya store@upi", initialUpi)
+        form.addView(createExcelRow(
+            cellRef = "A10",
+            title = "Store UPI ID (Where Money is Received)",
+            subHint = "Checkout ke dauran customer is UPI ID par direct payment bhejte hain.",
+            inputView = upiIdInput,
+            onSaveRow = {
+                val v = upiIdInput.text.toString().trim()
+                saveIndividualSetting("upi_id", v, "Store UPI ID")
+            }
+        ))
+
+        // [A11] Payment UPI QR Code Photo
+        val initialQr = pendingSettings["qr_code_url"] ?: dashboardData?.settings?.get("qr_code_url") ?: ""
+        qrCodeUrlInput = createExcelStyledInput("https://example.com/qr.png ya niche gallery se chunein", initialQr)
+        val pickQrBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se UPI QR Chunein", "#10B981") {
+            openImagePicker(REQUEST_PICK_QR)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        liveQrPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 100), UiKit.dp(this@MainActivity, 100)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
+        }
+        loadPreviewImage(initialQr, liveQrPreview!!)
+        form.addView(createExcelRow(
+            cellRef = "A11",
+            title = "Payment UPI QR Code Photo",
+            subHint = "BharatPe / Paytm / PhonePe / Custom QR code checkout screen ke liye.",
+            inputView = qrCodeUrlInput,
+            actionView = pickQrBtn,
+            previewView = liveQrPreview,
+            onSaveRow = {
+                val v = qrCodeUrlInput.text.toString().trim()
+                saveIndividualSetting("qr_code_url", v, "Payment QR Code")
+            }
+        ))
+
+        // [A12] Website Contact Us Form Switch
+        val showForm = pendingSettings["show_contact_form"] ?: dashboardData?.settings?.get("show_contact_form") ?: "true"
+        contactFormSwitch = Switch(this).apply {
+            text = "Show Interactive Contact Form On Website"
+            setTextColor(Color.WHITE)
+            textSize = 12.5f
+            typeface = Typeface.DEFAULT_BOLD
+            isChecked = showForm.equals("true", ignoreCase = true)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 4))
+        }
+        form.addView(createExcelRow(
+            cellRef = "A12",
+            title = "Website Contact Us Form (Toggle)",
+            subHint = "Active hone par website footer me lead / inquiry contact form display hoga.",
+            inputView = contactFormSwitch,
+            onSaveRow = {
+                val v = if (contactFormSwitch.isChecked) "true" else "false"
+                saveIndividualSetting("show_contact_form", v, "Contact Form Toggle")
+            }
+        ))
+
+        // [A13] Top Announcement Bar
+        val annContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+        val showAnn = pendingSettings["show_announcement"] ?: dashboardData?.settings?.get("show_announcement") ?: "true"
+        announcementSwitch = Switch(this).apply {
+            text = "Show Top Announcement Bar Strip"
+            setTextColor(Color.WHITE)
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            isChecked = showAnn.equals("true", ignoreCase = true)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        annContainer.addView(announcementSwitch)
+
+        val initialAnn = pendingSettings["announcement_text"] ?: dashboardData?.settings?.get("announcement_text") ?: ""
+        announcementInput = createExcelStyledInput("e.g. Diwali Dhamaka! Flat 50% OFF on all items", initialAnn)
+        annContainer.addView(announcementInput)
+
+        form.addView(createExcelRow(
+            cellRef = "A13",
+            title = "Top Announcement Strip & Offer Text",
+            subHint = "Website ke sabse upar scroll hone wali promo offer strip.",
+            inputView = annContainer,
+            onSaveRow = {
+                val show = if (announcementSwitch.isChecked) "true" else "false"
+                val text = announcementInput.text.toString().trim()
+                saveMultipleSettings(mapOf("show_announcement" to show, "announcement_text" to text), "Announcement Bar")
+            }
+        ))
+
+        // [A14] CTA Button Text
+        val initialCta = pendingSettings["cta_text"] ?: dashboardData?.settings?.get("cta_text") ?: ""
+        ctaTextInput = createExcelStyledInput("e.g. Shop Collection / Order On WhatsApp", initialCta)
+        form.addView(createExcelRow(
+            cellRef = "A14",
+            title = "Primary Call-To-Action (CTA) Button Text",
+            subHint = "Hero banner aur shopping card ke main action button par likha text.",
+            inputView = ctaTextInput,
+            onSaveRow = {
+                val v = ctaTextInput.text.toString().trim()
+                saveIndividualSetting("cta_text", v, "CTA Button Text")
+            }
+        ))
 
         // Live Website Store Links Card
         val (webCard, webBody) = UiKit.createSectionContainer(this, "🌐 Live Website Store Links", "Online")
@@ -2380,403 +2901,10 @@ class MainActivity : Activity() {
         webBody.addView(rowBtns)
         form.addView(webCard)
 
-        // Save Button
-        val saveBtn = UiKit.createPrimaryButton(
+        // Bulk Save Button (Excel emerald green gradient)
+        val saveAllBtn = UiKit.createPrimaryButton(
             context = this,
-            btnText = "🚀 Save Site Details Live",
-            startColor = "#2563EB",
-            endColor = "#00F0FF"
-        ) {
-            saveWebsiteSettings()
-        }
-        form.addView(saveBtn)
-
-        scroll.addView(form)
-        return scroll
-    }
-
-    // ==========================================
-    // EXCEL / SPREADSHEET INPUT COMPONENT HELPERS
-    // ==========================================
-    private fun createExcelStyledInput(hintText: String, initialVal: String, inputType: Int = InputType.TYPE_CLASS_TEXT, multiline: Boolean = false): EditText {
-        return EditText(this).apply {
-            hint = hintText
-            setHintTextColor(Color.parseColor("#4B5563"))
-            setText(initialVal)
-            setTextColor(Color.WHITE)
-            textSize = 13f
-            typeface = Typeface.MONOSPACE
-            this.inputType = if (multiline) (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE) else inputType
-            if (multiline) {
-                minLines = 2
-                maxLines = 4
-                gravity = Gravity.TOP or Gravity.START
-            }
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#060B14"),
-                strokeColor = Color.parseColor("#1F2D44"),
-                strokeWidthDp = 1,
-                radiusDp = 6f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-    }
-
-    private fun createExcelRow(
-        cellRef: String,
-        title: String,
-        subHint: String?,
-        inputView: View,
-        actionView: View? = null,
-        previewView: View? = null
-    ): View {
-        val rowContainer = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#0E1626"),
-                strokeColor = Color.parseColor("#1B2940"),
-                strokeWidthDp = 1,
-                radiusDp = 8f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 8)
-            }
-        }
-
-        // Header: Monospace Excel Cell Tag [A1] + Title
-        val headerLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 6)
-            }
-        }
-
-        val cellTag = TextView(this).apply {
-            text = " $cellRef "
-            textSize = 10.5f
-            typeface = Typeface.MONOSPACE
-            setTextColor(Color.parseColor("#10B981")) // Excel Emerald Green Accent
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#062419"),
-                strokeColor = Color.parseColor("#10B981"),
-                strokeWidthDp = 1,
-                radiusDp = 4f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 8)
-            }
-        }
-        headerLayout.addView(cellTag)
-
-        val titleView = TextView(this).apply {
-            text = title
-            textSize = 13f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-        }
-        headerLayout.addView(titleView)
-        rowContainer.addView(headerLayout)
-
-        // Main input view
-        rowContainer.addView(inputView)
-
-        // Optional action button (e.g. Gallery pick)
-        if (actionView != null) {
-            rowContainer.addView(actionView)
-        }
-
-        // Optional preview view (e.g. Image Preview)
-        if (previewView != null) {
-            rowContainer.addView(previewView)
-        }
-
-        // Sub hint
-        if (!subHint.isNullOrEmpty()) {
-            val hintView = TextView(this).apply {
-                text = "↳ $subHint"
-                textSize = 10.5f
-                setTextColor(Color.parseColor("#64748B"))
-                setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
-            }
-            rowContainer.addView(hintView)
-        }
-
-        return rowContainer
-    }
-
-    private fun loadPreviewImage(urlOrB64: String, target: ImageView) {
-        if (urlOrB64.isEmpty()) {
-            target.visibility = View.GONE
-            return
-        }
-        target.visibility = View.VISIBLE
-        if (urlOrB64.startsWith("data:image")) {
-            try {
-                val b64 = urlOrB64.substringAfter("base64,")
-                val decoded = Base64.decode(b64, Base64.DEFAULT)
-                val bmp = BitmapFactory.decodeByteArray(decoded, 0, decoded.size)
-                target.setImageBitmap(bmp)
-            } catch (_: Exception) {}
-        } else if (urlOrB64.startsWith("http://") || urlOrB64.startsWith("https://")) {
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val input = java.net.URL(urlOrB64).openStream()
-                    val bmp = BitmapFactory.decodeStream(input)
-                    withContext(Dispatchers.Main) {
-                        target.setImageBitmap(bmp)
-                    }
-                } catch (_: Exception) {}
-            }
-        }
-    }
-
-    // SUB-TAB 3: OTHER DETAILS & CONTACT DIRECTORY (EXCEL SHEET INPUT STYLE)
-    private fun createOtherDetailsSubTab(): View {
-        val scroll = ScrollView(this).apply {
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-        }
-        val form = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
-        }
-
-        form.addView(createSubTabBackHeader("📋 3rd: Other Details & Contact Directory", "QR Code, WhatsApp, Logo, Phone, Address, Map, Email & Form (Excel Sheet Entry):"))
-
-        // Top Google Sheet Banner
-        val sheetHeaderCard = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#061A12"),
-                strokeColor = Color.parseColor("#059669"),
-                strokeWidthDp = 1,
-                radiusDp = 10f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 12)
-            }
-        }
-
-        val sheetTitle = TextView(this).apply {
-            text = "📗 Google Sheets Mode: Store & Contact Directory"
-            textSize = 13.5f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#34D399"))
-        }
-        val formulaBar = TextView(this).apply {
-            text = "fx | =STORE_DIRECTORY(Row, Field_Value)"
-            textSize = 10.5f
-            typeface = Typeface.MONOSPACE
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
-        }
-        val sheetSub = TextView(this).apply {
-            text = "Excel sheet ki tarah niche diye gaye cells me information enter karein aur live sync karein:"
-            textSize = 11f
-            setTextColor(Color.parseColor("#CBD5E1"))
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
-        }
-        sheetHeaderCard.addView(sheetTitle)
-        sheetHeaderCard.addView(formulaBar)
-        sheetHeaderCard.addView(sheetSub)
-        form.addView(sheetHeaderCard)
-
-        // [A1] Logo Photo
-        val initialLogo = pendingSettings["logo_url"] ?: dashboardData?.settings?.get("logo_url") ?: ""
-        logoUrlInput = createExcelStyledInput("https://example.com/logo.png ya niche se upload karein", initialLogo)
-        val pickLogoBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se Logo Chunein (300x300 px)", "#10B981") {
-            openImagePicker(REQUEST_PICK_LOGO)
-        }.apply {
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
-                topMargin = UiKit.dp(this@MainActivity, 6)
-            }
-        }
-        liveLogoPreview = ImageView(this).apply {
-            scaleType = ImageView.ScaleType.FIT_CENTER
-            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 70), UiKit.dp(this@MainActivity, 70)).apply {
-                topMargin = UiKit.dp(this@MainActivity, 6)
-            }
-            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
-        }
-        loadPreviewImage(initialLogo, liveLogoPreview!!)
-        form.addView(createExcelRow(
-            cellRef = "A1",
-            title = "Store Official Logo (300x300 px)",
-            subHint = "Website header, invoice & branding me dikhne wala store logo.",
-            inputView = logoUrlInput,
-            actionView = pickLogoBtn,
-            previewView = liveLogoPreview
-        ))
-
-        // [A2] WhatsApp Number
-        val initialWa = pendingSettings["whatsapp_number"] ?: dashboardData?.settings?.get("whatsapp_number") ?: ""
-        waNumberInput = createExcelStyledInput("e.g. 919876543210", initialWa, InputType.TYPE_CLASS_PHONE)
-        form.addView(createExcelRow(
-            cellRef = "A2",
-            title = "Primary WhatsApp Order Number",
-            subHint = "Naye order ka WhatsApp message is number par direct prapt hoga.",
-            inputView = waNumberInput
-        ))
-
-        // [A3] Alternative Number
-        val initialAlt = pendingSettings["alt_phone"] ?: dashboardData?.settings?.get("alt_phone") ?: ""
-        altPhoneInput = createExcelStyledInput("e.g. 919811223344", initialAlt, InputType.TYPE_CLASS_PHONE)
-        form.addView(createExcelRow(
-            cellRef = "A3",
-            title = "Alternative Contact Number",
-            subHint = "Backup mobile number agar primary number busy ya unavailable ho.",
-            inputView = altPhoneInput
-        ))
-
-        // [A4] Helpline Number
-        val initialHelp = pendingSettings["helpline_number"] ?: dashboardData?.settings?.get("helpline_number") ?: ""
-        helplineInput = createExcelStyledInput("e.g. 1800-123-4567 ya 919876543210", initialHelp, InputType.TYPE_CLASS_PHONE)
-        form.addView(createExcelRow(
-            cellRef = "A4",
-            title = "Customer Care Helpline Number",
-            subHint = "Support helpline number website header & footer me dikhaya jayega.",
-            inputView = helplineInput
-        ))
-
-        // [A5] Email ID
-        val initialEmail = pendingSettings["business_email"] ?: dashboardData?.settings?.get("business_email") ?: ""
-        businessEmailInput = createExcelStyledInput("e.g. support@mystore.com", initialEmail, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-        form.addView(createExcelRow(
-            cellRef = "A5",
-            title = "Official Business Email ID",
-            subHint = "Official email address customer inquiries & receipts ke liye.",
-            inputView = businessEmailInput
-        ))
-
-        // [A6] Address
-        val initialAddress = pendingSettings["business_address"] ?: dashboardData?.settings?.get("business_address") ?: ""
-        businessAddressInput = createExcelStyledInput("Shop No, Street, Landmark, City, State, Pincode", initialAddress, multiline = true)
-        form.addView(createExcelRow(
-            cellRef = "A6",
-            title = "Shop / Business Physical Address",
-            subHint = "Website contact section aur billing invoices par dikhne wala address.",
-            inputView = businessAddressInput
-        ))
-
-        // [A7] Google Map
-        val initialMap = pendingSettings["map_url"] ?: dashboardData?.settings?.get("map_url") ?: ""
-        mapUrlInput = createExcelStyledInput("e.g. https://maps.google.com/?q=28.6139,77.2090", initialMap)
-        form.addView(createExcelRow(
-            cellRef = "A7",
-            title = "Google Maps Location Link",
-            subHint = "Customer tap karke seedha Google Maps par aapki shop navigate kar sakein.",
-            inputView = mapUrlInput
-        ))
-
-        // [A8] Store UPI ID
-        val initialUpi = pendingSettings["upi_id"] ?: dashboardData?.settings?.get("upi_id") ?: ""
-        upiIdInput = createExcelStyledInput("e.g. merchant@okaxis ya store@upi", initialUpi)
-        form.addView(createExcelRow(
-            cellRef = "A8",
-            title = "Store UPI ID (Where Money is Received)",
-            subHint = "Checkout ke dauran customer is UPI ID par direct payment bhejte hain.",
-            inputView = upiIdInput
-        ))
-
-        // [A9] QR Code Photo / URL
-        val initialQr = pendingSettings["qr_code_url"] ?: dashboardData?.settings?.get("qr_code_url") ?: ""
-        qrCodeUrlInput = createExcelStyledInput("https://example.com/qr.png ya niche se upload karein", initialQr)
-        val pickQrBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se UPI QR Chunein", "#10B981") {
-            openImagePicker(REQUEST_PICK_QR)
-        }.apply {
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
-                topMargin = UiKit.dp(this@MainActivity, 6)
-            }
-        }
-        liveQrPreview = ImageView(this).apply {
-            scaleType = ImageView.ScaleType.FIT_CENTER
-            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 100), UiKit.dp(this@MainActivity, 100)).apply {
-                topMargin = UiKit.dp(this@MainActivity, 6)
-            }
-            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
-        }
-        loadPreviewImage(initialQr, liveQrPreview!!)
-        form.addView(createExcelRow(
-            cellRef = "A9",
-            title = "Payment UPI QR Code Photo",
-            subHint = "BharatPe / Paytm / PhonePe / Custom QR code checkout screen ke liye.",
-            inputView = qrCodeUrlInput,
-            actionView = pickQrBtn,
-            previewView = liveQrPreview
-        ))
-
-        // [A10] Contact Us Form Switch
-        val showForm = pendingSettings["show_contact_form"] ?: dashboardData?.settings?.get("show_contact_form") ?: "true"
-        contactFormSwitch = Switch(this).apply {
-            text = "Show Interactive Contact Form On Website"
-            setTextColor(Color.WHITE)
-            textSize = 12.5f
-            typeface = Typeface.DEFAULT_BOLD
-            isChecked = showForm.equals("true", ignoreCase = true)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 4))
-        }
-        form.addView(createExcelRow(
-            cellRef = "A10",
-            title = "Website Contact Us Form (Toggle)",
-            subHint = "Active hone par website footer me lead / inquiry contact form display hoga.",
-            inputView = contactFormSwitch
-        ))
-
-        // [A11] Top Announcement Bar
-        val annContainer = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-        }
-        val showAnn = pendingSettings["show_announcement"] ?: dashboardData?.settings?.get("show_announcement") ?: "true"
-        announcementSwitch = Switch(this).apply {
-            text = "Show Top Announcement Bar Strip"
-            setTextColor(Color.WHITE)
-            textSize = 12f
-            typeface = Typeface.DEFAULT_BOLD
-            isChecked = showAnn.equals("true", ignoreCase = true)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-        }
-        annContainer.addView(announcementSwitch)
-
-        val initialAnn = pendingSettings["announcement_text"] ?: dashboardData?.settings?.get("announcement_text") ?: ""
-        announcementInput = createExcelStyledInput("e.g. Diwali Dhamaka! Flat 50% OFF on all items", initialAnn)
-        annContainer.addView(announcementInput)
-
-        form.addView(createExcelRow(
-            cellRef = "A11",
-            title = "Top Announcement Strip & Offer Text",
-            subHint = "Website ke sabse upar scroll hone wali promo offer strip.",
-            inputView = annContainer
-        ))
-
-        // [A12] CTA Button Text
-        val initialCta = pendingSettings["cta_text"] ?: dashboardData?.settings?.get("cta_text") ?: ""
-        ctaTextInput = createExcelStyledInput("e.g. Shop Collection / Order On WhatsApp", initialCta)
-        form.addView(createExcelRow(
-            cellRef = "A12",
-            title = "Primary Call-To-Action (CTA) Button Text",
-            subHint = "Hero banner aur shopping card ke main action button par likha text.",
-            inputView = ctaTextInput
-        ))
-
-        // Save Button (Excel emerald green gradient)
-        val saveBtn = UiKit.createPrimaryButton(
-            context = this,
-            btnText = "💾 Save All 12 Fields Live to Google Sheet",
+            btnText = "💾 Save All 14 Fields Together (Bulk Live Sync)",
             startColor = "#059669",
             endColor = "#10B981"
         ) {
@@ -2786,17 +2914,17 @@ class MainActivity : Activity() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 UiKit.dp(this@MainActivity, 48)
             ).apply {
-                topMargin = UiKit.dp(this@MainActivity, 10)
+                topMargin = UiKit.dp(this@MainActivity, 12)
                 bottomMargin = UiKit.dp(this@MainActivity, 20)
             }
         }
-        form.addView(saveBtn)
+        form.addView(saveAllBtn)
 
         scroll.addView(form)
         return scroll
     }
 
-    // SUB-TAB 4: FONTS & OTHER INFORMATION
+    // SUB-TAB 3: FONTS & STYLING INFORMATION
     private fun createFontsAndInfoSubTab(): View {
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -2806,7 +2934,7 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        form.addView(createSubTabBackHeader("🔤 4th: Fonts & Other Information", "Heading fonts, website color themes aur hero headlines ko customise karein:"))
+        form.addView(createSubTabBackHeader("🔤 3rd: Fonts & Styling Information", "Heading fonts, website color themes aur hero headlines ko customise karein:"))
 
         // 1. Fonts & Custom Colors
         val (styleCard, styleBody) = UiKit.createSectionContainer(this, "🎨 Fonts & Colors", "Visuals")
@@ -2876,7 +3004,7 @@ class MainActivity : Activity() {
         return scroll
     }
 
-    // SUB-TAB 5: WHOLE WEBSITE IMAGE UPDATER
+    // SUB-TAB 4: WHOLE WEBSITE IMAGE UPDATER
     private fun createImageUpdaterSubTab(): View {
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -2886,7 +3014,7 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        form.addView(createSubTabBackHeader("🖼️ 5th: Whole Website Image Updater", "Website ke Brand Logo aur Hero Banner photos ko gallery se upload karein ya direct URL update karein (Dimensions mentioned):"))
+        form.addView(createSubTabBackHeader("🖼️ 4th: Whole Website Image Updater", "Website ke Brand Logo aur Hero Banner photos ko gallery se upload karein ya direct URL update karein (Dimensions mentioned):"))
 
         // 1. Logo Updater
         val (logoCard, logoBody) = UiKit.createSectionContainer(this, "🖼️ 1. Store Brand Logo", "Square 300x300")
@@ -3658,7 +3786,7 @@ class MainActivity : Activity() {
             setTextColor(Color.WHITE)
         }
         val subHeading = TextView(this).apply {
-            text = "Website ke kisi bhi section ko customize karne ke liye niche diye gaye 5 buttons me se kisi par tap karein:"
+            text = "Website ke kisi bhi section ko customize karne ke liye niche diye gaye 4 buttons me se kisi par tap karein:"
             textSize = 12f
             setTextColor(Color.parseColor("#94A3B8"))
             setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
@@ -3667,14 +3795,14 @@ class MainActivity : Activity() {
         headerCard.addView(subHeading)
         container.addView(headerCard)
 
-        // The 5 Long Height & Width Menu Buttons / Cards
+        // The 4 Long Height & Width Menu Buttons / Cards
         val menuItems = listOf(
             StudioMenuItem(
                 index = 0,
                 icon = "🏢",
-                title = "1st: Site Main Details",
-                subtitle = "Brand Name, Tagline & Live Website URL links",
-                badge = "Core Identity",
+                title = "1st: Site Main Details & Contact Directory",
+                subtitle = "Brand Name, WhatsApp, Phone, Address, Map, UPI, QR & Contact Form (Individual Save)",
+                badge = "Excel Grid • 14 Fields",
                 accentColor = "#00F0FF"
             ),
             StudioMenuItem(
@@ -3687,24 +3815,16 @@ class MainActivity : Activity() {
             ),
             StudioMenuItem(
                 index = 2,
-                icon = "📋",
-                title = "3rd: Other Details & Contact Directory",
-                subtitle = "QR Code, WhatsApp, Logo, Phone, Helpline, Address, Map, Email & Form",
-                badge = "Excel Sheet Grid",
-                accentColor = "#10B981"
-            ),
-            StudioMenuItem(
-                index = 3,
                 icon = "🔤",
-                title = "4th: Fonts & Other Information",
+                title = "3rd: Fonts & Styling Information",
                 subtitle = "Heading Font Family, Header/Footer Colors & Hero Headlines",
                 badge = "Design & Fonts",
                 accentColor = "#F59E0B"
             ),
             StudioMenuItem(
-                index = 4,
+                index = 3,
                 icon = "🖼️",
-                title = "5th: Whole Website Image Updater",
+                title = "4th: Whole Website Image Updater",
                 subtitle = "Upload Brand Logo (300x300 px), Hero Banner (1200x500 px) & UPI QR",
                 badge = "Photos & Media",
                 accentColor = "#38BDF8"
@@ -3723,9 +3843,8 @@ class MainActivity : Activity() {
         return when (designSubTabIndex) {
             0 -> createSiteMainDetailsSubTab()
             1 -> createThemeSelectionSubTab()
-            2 -> createOtherDetailsSubTab()
-            3 -> createFontsAndInfoSubTab()
-            4 -> createImageUpdaterSubTab()
+            2 -> createFontsAndInfoSubTab()
+            3 -> createImageUpdaterSubTab()
             else -> createSiteStudioMenuHub()
         }
     }
