@@ -64,7 +64,7 @@ class MainActivity : Activity() {
     private var ordersSegmentLiveBtn: TextView? = null
     private var ordersSegmentPaidBtn: TextView? = null
     private var ordersEmptyView: TextView? = null
-    private var designSubTabIndex = 0
+    private var designSubTabIndex = -1
 
     // 6 Ready-made Website Themes
     data class WebTheme(
@@ -705,7 +705,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.2.0 • Secure Admin Portal",
+            text = "🚀 v1.2.1 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -740,7 +740,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.2.0)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.1)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -859,7 +859,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.2.0",
+            text = "⚡ SheetStore Admin v1.2.1",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -2169,6 +2169,54 @@ class MainActivity : Activity() {
     // 5-BUTTON WEBSITE CMS & STUDIO SUB-TABS
     // ==========================================
 
+    private fun createSubTabBackHeader(title: String, subtitle: String): View {
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+
+        val backBtn = TextView(this).apply {
+            text = "⬅️ Wapas Studio Menu Par Jayein"
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#00F0FF"))
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0F1E36"),
+                strokeColor = Color.parseColor("#00F0FF"),
+                strokeWidthDp = 1,
+                radiusDp = 10f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 9), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 9))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 12)
+            }
+            setOnClickListener {
+                syncVisibleInputsToPending()
+                designSubTabIndex = -1
+                refreshCurrentTab()
+            }
+        }
+        container.addView(backBtn)
+
+        val titleView = TextView(this).apply {
+            text = title
+            textSize = 18f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+        }
+        val subView = TextView(this).apply {
+            text = subtitle
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        container.addView(titleView)
+        container.addView(subView)
+
+        return container
+    }
+
     // SUB-TAB 1: SITE MAIN DETAILS
     private fun createSiteMainDetailsSubTab(): View {
         val scroll = ScrollView(this).apply {
@@ -2179,25 +2227,7 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        val headerBox = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
-        }
-        val title = TextView(this).apply {
-            text = "🏢 Site Main Details"
-            textSize = 18f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-        }
-        val sub = TextView(this).apply {
-            text = "Apni website ka Brand Name, Tagline aur Live Store Link yahan se manage karein:"
-            textSize = 12f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
-        }
-        headerBox.addView(title)
-        headerBox.addView(sub)
-        form.addView(headerBox)
+        form.addView(createSubTabBackHeader("🏢 1st: Site Main Details", "Apni website ka Brand Name, Tagline aur Live Store Link yahan se manage karein:"))
 
         val (brandCard, brandBody) = UiKit.createSectionContainer(this, "🏢 Brand Identity", "Core")
         brandBody.addView(UiKit.createFieldLabel(this, "Store / Brand Name:"))
@@ -2292,25 +2322,7 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        val headerBox = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
-        }
-        val title = TextView(this).apply {
-            text = "📋 Other Store Details"
-            textSize = 18f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-        }
-        val sub = TextView(this).apply {
-            text = "WhatsApp number, UPI ID, top announcement bar aur action buttons yahan se set karein:"
-            textSize = 12f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
-        }
-        headerBox.addView(title)
-        headerBox.addView(sub)
-        form.addView(headerBox)
+        form.addView(createSubTabBackHeader("📋 3rd: Other Details", "WhatsApp number, UPI ID, top announcement bar aur action buttons yahan se set karein:"))
 
         // 1. WhatsApp & UPI Payments
         val (payCard, payBody) = UiKit.createSectionContainer(this, "💳 WhatsApp & Payments", "Revenue")
@@ -2393,25 +2405,7 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        val headerBox = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
-        }
-        val title = TextView(this).apply {
-            text = "🔤 Fonts & Other Information"
-            textSize = 18f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-        }
-        val sub = TextView(this).apply {
-            text = "Heading fonts, website color themes aur hero headlines ko customise karein:"
-            textSize = 12f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
-        }
-        headerBox.addView(title)
-        headerBox.addView(sub)
-        form.addView(headerBox)
+        form.addView(createSubTabBackHeader("🔤 4th: Fonts & Other Information", "Heading fonts, website color themes aur hero headlines ko customise karein:"))
 
         // 1. Fonts & Custom Colors
         val (styleCard, styleBody) = UiKit.createSectionContainer(this, "🎨 Fonts & Colors", "Visuals")
@@ -2491,25 +2485,7 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        val headerBox = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
-        }
-        val title = TextView(this).apply {
-            text = "🖼️ Whole Website Image Updater"
-            textSize = 18f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-        }
-        val sub = TextView(this).apply {
-            text = "Website ke Brand Logo aur Hero Banner photos ko gallery se upload karein ya direct URL update karein (Dimensions mentioned):"
-            textSize = 12f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
-        }
-        headerBox.addView(title)
-        headerBox.addView(sub)
-        form.addView(headerBox)
+        form.addView(createSubTabBackHeader("🖼️ 5th: Whole Website Image Updater", "Website ke Brand Logo aur Hero Banner photos ko gallery se upload karein ya direct URL update karein (Dimensions mentioned):"))
 
         // 1. Logo Updater
         val (logoCard, logoBody) = UiKit.createSectionContainer(this, "🖼️ 1. Store Brand Logo", "Square 300x300")
@@ -3076,106 +3052,238 @@ class MainActivity : Activity() {
     }
 
     // ==========================================
-    // WEBSITE CMS & STUDIO TAB (5 DEDICATED BUTTONS)
+    // WEBSITE CMS & STUDIO (5 DEDICATED BIG BUTTONS)
     // ==========================================
-    private fun createWebsiteDesignAndCustomTab(): View {
+
+    private fun createThemeSelectionSubTab(): View {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(Color.parseColor("#0B0F19"))
         }
 
-        // Horizontal scrollable 5-button top dock
-        val subTabScroll = HorizontalScrollView(this).apply {
-            isHorizontalScrollBarEnabled = false
-            setBackgroundColor(Color.parseColor("#0F172A"))
-            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8))
-            elevation = UiKit.dp(this@MainActivity, 4).toFloat()
+        val backHeader = createSubTabBackHeader(
+            title = "🎨 2nd: Theme Selection",
+            subtitle = "Website ke liye ready-made theme chunein aur 1-click me live apply karein:"
+        ).apply {
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), 0)
         }
+        root.addView(backHeader)
 
-        val subTabRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-        }
-
-        val tabs = listOf(
-            Pair("🏢 Site Main Details", 0),
-            Pair("🎨 Theme Selection", 1),
-            Pair("📋 Other Details", 2),
-            Pair("🔤 Fonts & Other Info", 3),
-            Pair("🖼️ Image Updater", 4)
-        )
-
-        val tabButtons = mutableListOf<TextView>()
-
-        val subContentContainer = FrameLayout(this).apply {
+        val nicheView = createNicheAndThemesTab().apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f)
         }
-
-        fun updateSubTabStyles() {
-            tabButtons.forEachIndexed { idx, btn ->
-                val isActive = (designSubTabIndex == idx)
-                if (isActive) {
-                    btn.setTextColor(Color.WHITE)
-                    btn.background = UiKit.cardDrawable(
-                        bgColor = Color.parseColor("#152846"),
-                        strokeColor = Color.parseColor("#00F0FF"),
-                        strokeWidthDp = 1,
-                        radiusDp = 10f,
-                        context = this@MainActivity
-                    )
-                } else {
-                    btn.setTextColor(Color.parseColor("#94A3B8"))
-                    btn.background = UiKit.cardDrawable(
-                        bgColor = Color.parseColor("#121826"),
-                        strokeColor = Color.parseColor("#1E2D48"),
-                        strokeWidthDp = 1,
-                        radiusDp = 10f,
-                        context = this@MainActivity
-                    )
-                }
-            }
-        }
-
-        fun renderSubContent() {
-            syncVisibleInputsToPending()
-            subContentContainer.removeAllViews()
-            val view = when (designSubTabIndex) {
-                0 -> createSiteMainDetailsSubTab()
-                1 -> createNicheAndThemesTab()
-                2 -> createOtherDetailsSubTab()
-                3 -> createFontsAndInfoSubTab()
-                4 -> createImageUpdaterSubTab()
-                else -> createSiteMainDetailsSubTab()
-            }
-            subContentContainer.addView(view)
-            updateSubTabStyles()
-        }
-
-        tabs.forEach { (title, idx) ->
-            val btn = TextView(this).apply {
-                text = title
-                textSize = 11.5f
-                typeface = Typeface.DEFAULT_BOLD
-                gravity = Gravity.CENTER
-                setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8))
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                    setMargins(UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4), 0)
-                }
-                setOnClickListener {
-                    designSubTabIndex = idx
-                    renderSubContent()
-                }
-            }
-            tabButtons.add(btn)
-            subTabRow.addView(btn)
-        }
-
-        subTabScroll.addView(subTabRow)
-        root.addView(subTabScroll)
-
-        renderSubContent()
-        root.addView(subContentContainer)
-
+        root.addView(nicheView)
         return root
+    }
+
+    private data class StudioMenuItem(
+        val index: Int,
+        val icon: String,
+        val title: String,
+        val subtitle: String,
+        val badge: String,
+        val accentColor: String
+    )
+
+    private fun createStudioMenuCard(item: StudioMenuItem): LinearLayout {
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#121826"),
+                strokeColor = Color.parseColor("#1E2D48"),
+                strokeWidthDp = 1,
+                radiusDp = 16f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 18))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 14)
+            }
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                designSubTabIndex = item.index
+                refreshCurrentTab()
+            }
+        }
+
+        // Left Icon Box (Tall, rounded, colored border)
+        val iconBox = TextView(this).apply {
+            text = item.icon
+            textSize = 24f
+            gravity = Gravity.CENTER
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#152238"),
+                strokeColor = Color.parseColor(item.accentColor),
+                strokeWidthDp = 1,
+                radiusDp = 14f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 50), UiKit.dp(this@MainActivity, 50)).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 14)
+            }
+        }
+        card.addView(iconBox)
+
+        // Middle Content (Title + Badge + Subtitle)
+        val textContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+
+        val topRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+
+        val titleView = TextView(this).apply {
+            text = item.title
+            textSize = 14.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        topRow.addView(titleView)
+
+        val badgePill = UiKit.createPillBadge(
+            context = this,
+            text = item.badge,
+            textColor = Color.parseColor(item.accentColor),
+            bgColor = Color.parseColor("#0C2038"),
+            borderColor = Color.parseColor(item.accentColor)
+        )
+        topRow.addView(badgePill)
+        textContainer.addView(topRow)
+
+        val subView = TextView(this).apply {
+            text = item.subtitle
+            textSize = 11.5f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setLineSpacing(3f, 1.15f)
+            setPadding(0, UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 6), 0)
+        }
+        textContainer.addView(subView)
+        card.addView(textContainer)
+
+        // Right Arrow Indicator
+        val arrow = TextView(this).apply {
+            text = "➔"
+            textSize = 18f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor(item.accentColor))
+            setPadding(UiKit.dp(this@MainActivity, 6), 0, 0, 0)
+        }
+        card.addView(arrow)
+
+        return card
+    }
+
+    private fun createSiteStudioMenuHub(): View {
+        val scroll = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+            setBackgroundColor(Color.parseColor("#0B0F19"))
+        }
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 32))
+        }
+
+        // Header Title Box
+        val headerCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0F172A"),
+                strokeColor = Color.parseColor("#1E2D48"),
+                strokeWidthDp = 1,
+                radiusDp = 16f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 16)
+            }
+        }
+        val heading = TextView(this).apply {
+            text = "🛠️ Website Site Studio"
+            textSize = 19f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+        }
+        val subHeading = TextView(this).apply {
+            text = "Website ke kisi bhi section ko customize karne ke liye niche diye gaye 5 buttons me se kisi par tap karein:"
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        headerCard.addView(heading)
+        headerCard.addView(subHeading)
+        container.addView(headerCard)
+
+        // The 5 Long Height & Width Menu Buttons / Cards
+        val menuItems = listOf(
+            StudioMenuItem(
+                index = 0,
+                icon = "🏢",
+                title = "1st: Site Main Details",
+                subtitle = "Brand Name, Tagline & Live Website URL links",
+                badge = "Core Identity",
+                accentColor = "#00F0FF"
+            ),
+            StudioMenuItem(
+                index = 1,
+                icon = "🎨",
+                title = "2nd: Theme Selection",
+                subtitle = "6 Ready-made Themes, Niche Filters & Live Screenshot Previews",
+                badge = "Themes & Niche",
+                accentColor = "#A78BFA"
+            ),
+            StudioMenuItem(
+                index = 2,
+                icon = "📋",
+                title = "3rd: Other Details",
+                subtitle = "WhatsApp Orders Number, Store UPI ID, Announcement Bar & CTA",
+                badge = "Orders & UPI",
+                accentColor = "#10B981"
+            ),
+            StudioMenuItem(
+                index = 3,
+                icon = "🔤",
+                title = "4th: Fonts & Other Information",
+                subtitle = "Heading Font Family, Header/Footer Colors & Hero Headlines",
+                badge = "Design & Fonts",
+                accentColor = "#F59E0B"
+            ),
+            StudioMenuItem(
+                index = 4,
+                icon = "🖼️",
+                title = "5th: Whole Website Image Updater",
+                subtitle = "Upload Brand Logo (300x300 px), Hero Banner (1200x500 px) & UPI QR",
+                badge = "Photos & Media",
+                accentColor = "#38BDF8"
+            )
+        )
+
+        for (item in menuItems) {
+            container.addView(createStudioMenuCard(item))
+        }
+
+        scroll.addView(container)
+        return scroll
+    }
+
+    private fun createWebsiteDesignAndCustomTab(): View {
+        return when (designSubTabIndex) {
+            0 -> createSiteMainDetailsSubTab()
+            1 -> createThemeSelectionSubTab()
+            2 -> createOtherDetailsSubTab()
+            3 -> createFontsAndInfoSubTab()
+            4 -> createImageUpdaterSubTab()
+            else -> createSiteStudioMenuHub()
+        }
     }
 
     // ==========================================
@@ -3213,6 +3321,9 @@ class MainActivity : Activity() {
     }
 
     private fun switchTab(tabIndex: Int) {
+        if (tabIndex == 1 && currentTab != 1) {
+            designSubTabIndex = -1
+        }
         currentTab = tabIndex
         contentContainer.removeAllViews()
 
@@ -3248,6 +3359,16 @@ class MainActivity : Activity() {
                 null
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (currentTab == 1 && designSubTabIndex != -1) {
+            syncVisibleInputsToPending()
+            designSubTabIndex = -1
+            refreshCurrentTab()
+            return
+        }
+        super.onBackPressed()
     }
 
     // ==========================================
