@@ -20,6 +20,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Base64
 import android.view.Gravity
@@ -140,6 +141,7 @@ class MainActivity : Activity() {
         private const val REQUEST_PICK_LOGO = 2001
         private const val REQUEST_PICK_BANNER = 2002
         private const val REQUEST_PICK_LOGO_HUB = 2003
+        private const val REQUEST_PICK_QR = 2004
         private const val MASTER_AUTH_URL = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
     }
 
@@ -151,6 +153,7 @@ class MainActivity : Activity() {
     private val pendingSettings = mutableMapOf<String, String>()
     private var liveLogoPreview: ImageView? = null
     private var liveBannerPreview: ImageView? = null
+    private var liveQrPreview: ImageView? = null
 
     private lateinit var brandNameInput: EditText
     private lateinit var taglineInput: EditText
@@ -167,6 +170,13 @@ class MainActivity : Activity() {
     private lateinit var announcementSwitch: Switch
     private lateinit var waNumberInput: EditText
     private lateinit var upiIdInput: EditText
+    private lateinit var altPhoneInput: EditText
+    private lateinit var helplineInput: EditText
+    private lateinit var businessEmailInput: EditText
+    private lateinit var businessAddressInput: EditText
+    private lateinit var mapUrlInput: EditText
+    private lateinit var qrCodeUrlInput: EditText
+    private lateinit var contactFormSwitch: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -260,114 +270,187 @@ class MainActivity : Activity() {
     }
 
     // ==========================================
-    // TOP APP BAR (NATIVE LOOK & FEEL)
+    // TOP APP BAR (PROFILE & LOGOUT ONLY)
     // ==========================================
     private fun createTopAppBar(): LinearLayout {
         val topBar = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14))
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 12))
             setBackgroundColor(Color.parseColor("#0F172A"))
             elevation = UiKit.dp(this@MainActivity, 6).toFloat()
         }
 
-        // Top Left: Interactive Store Quick Hub (Logo + Brand + Fast Setup)
-        val storeHeaderClickable = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 8)
-            }
-            isClickable = true
-            isFocusable = true
+        // Left: Profile & Subscription Button
+        authBtn = Button(this).apply {
+            val name = getLoggedInName().ifEmpty { "Profile" }
+            text = "👤 $name"
+            textSize = 11.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#38BDF8"))
             background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#151E30"),
-                strokeColor = Color.parseColor("#223354"),
+                bgColor = Color.parseColor("#152238"),
+                strokeColor = Color.parseColor("#1E3A8A"),
                 strokeWidthDp = 1,
-                radiusDp = 12f,
+                radiusDp = 10f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 6))
-            setOnClickListener {
-                openAccountFullScreenView()
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 6))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, UiKit.dp(this@MainActivity, 38))
+            setOnClickListener { showProfileSubscriptionDialog() }
+        }
+        topBar.addView(authBtn)
+
+        // Center: Brand Name Title & Small Avatar
+        val centerBox = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                leftMargin = UiKit.dp(this@MainActivity, 6)
+                rightMargin = UiKit.dp(this@MainActivity, 6)
             }
         }
 
-        // Store Avatar Squircle
         topAvatarView = TextView(this).apply {
-            val name = dashboardData?.settings?.get("brand_name") ?: getLoggedInName()
-            text = if (name.isNotEmpty()) name.take(2).uppercase() else "SS"
-            textSize = 12.5f
+            val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
+            text = brand.take(2).uppercase()
+            textSize = 11f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
             background = UiKit.gradientButtonDrawable(
                 startColor = Color.parseColor("#2563EB"),
                 endColor = Color.parseColor("#00F0FF"),
-                radiusDp = 10f,
+                radiusDp = 8f,
                 context = this@MainActivity
             )
-            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 36), UiKit.dp(this@MainActivity, 36)).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 8)
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 26), UiKit.dp(this@MainActivity, 26)).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 6)
             }
         }
-        storeHeaderClickable.addView(topAvatarView)
-
-        // Title + Live Sync Status
-        val titleCol = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-        }
+        centerBox.addView(topAvatarView)
 
         topBrandNameView = TextView(this).apply {
-            text = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
+            val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
+            text = brand
             textSize = 13.5f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             maxLines = 1
             ellipsize = android.text.TextUtils.TruncateAt.END
         }
-        titleCol.addView(topBrandNameView)
-
-        val hubHint = TextView(this).apply {
-            text = "⚡ Store Hub & Settings ▾"
-            textSize = 10f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#38BDF8"))
-        }
-        titleCol.addView(hubHint)
-        storeHeaderClickable.addView(titleCol)
-
-        topBar.addView(storeHeaderClickable)
+        centerBox.addView(topBrandNameView)
+        topBar.addView(centerBox)
 
         val activeNiche = getActiveNiche()
         headerNichePill = TextView(this).apply {
-            text = "${activeNiche.emoji}"
-            textSize = 12f
-            visibility = View.GONE // integrated into store hub
+            text = activeNiche.emoji
+            visibility = View.GONE
         }
 
-        // Profile / Login Button (Cleanly separated on the right)
-        authBtn = Button(this).apply {
-            val email = getLoggedInEmail()
-            text = if (email.isNotEmpty()) "👤 ${getLoggedInName()}" else "👤 Login"
-            textSize = 11f
+        // Right: Logout Button
+        val logoutBtn = Button(this).apply {
+            text = "🚪 Logout"
+            textSize = 11.5f
             typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#10B981"))
+            setTextColor(Color.parseColor("#F87171"))
             background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#132A24"),
-                strokeColor = Color.parseColor("#059669"),
+                bgColor = Color.parseColor("#271216"),
+                strokeColor = Color.parseColor("#7F1D1D"),
                 strokeWidthDp = 1,
                 radiusDp = 10f,
                 context = this@MainActivity
             )
             setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 6))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, UiKit.dp(this@MainActivity, 34))
-            setOnClickListener { openAccountFullScreenView() }
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, UiKit.dp(this@MainActivity, 38))
+            setOnClickListener {
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("Logout Confirmation")
+                    .setMessage("Kya aap Admin Portal se logout karna chahte hain?")
+                    .setPositiveButton("Logout") { _, _ -> performLogout() }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            }
         }
-        topBar.addView(authBtn)
+        topBar.addView(logoutBtn)
 
         return topBar
+    }
+
+    private fun showProfileSubscriptionDialog() {
+        val dialogView = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor("#0F172A"))
+            setPadding(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20))
+        }
+
+        val header = TextView(this).apply {
+            text = "👤 Merchant Profile & Subscription"
+            textSize = 17f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
+        }
+        dialogView.addView(header)
+
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#121826"),
+                strokeColor = Color.parseColor("#1E2D48"),
+                strokeWidthDp = 1,
+                radiusDp = 16f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16))
+        }
+
+        val name = getLoggedInName().ifEmpty { "Store Owner" }
+        val phone = getLoggedInPhone().ifEmpty { "9907522413" }
+        val email = getLoggedInEmail().ifEmpty { "merchant@sheetstore.com" }
+        val userId = getUserId().ifEmpty { "PRO-MERCHANT" }
+
+        val details = listOf(
+            Pair("👤 Store Owner:", name),
+            Pair("📱 Registered Phone:", phone),
+            Pair("✉️ Registered Email:", email),
+            Pair("🆔 Merchant ID:", userId),
+            Pair("⚡ Subscription Plan:", "Lifetime Pro License"),
+            Pair("🟢 Status:", "✓ Active & Verified"),
+            Pair("📅 Validity:", "Lifetime Unlimited Access"),
+            Pair("📊 Database:", "Google Sheet Cloud Sync Active")
+        )
+
+        for (item in details) {
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                setPadding(0, UiKit.dp(this@MainActivity, 6), 0, UiKit.dp(this@MainActivity, 6))
+            }
+            val label = TextView(this).apply {
+                text = item.first
+                textSize = 12f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#94A3B8"))
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.1f)
+            }
+            val value = TextView(this).apply {
+                text = item.second
+                textSize = 12f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(if (item.first.contains("Status")) Color.parseColor("#10B981") else Color.WHITE)
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.4f)
+            }
+            row.addView(label)
+            row.addView(value)
+            card.addView(row)
+        }
+        dialogView.addView(card)
+
+        AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton("Theek Hai / Close", null)
+            .show()
     }
 
     // ==========================================
@@ -705,7 +788,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.2.1 • Secure Admin Portal",
+            text = "🚀 v1.2.2 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -740,7 +823,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.2.1)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.2)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -859,7 +942,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.2.1",
+            text = "⚡ SheetStore Admin v1.2.2",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -2312,7 +2395,156 @@ class MainActivity : Activity() {
         return scroll
     }
 
-    // SUB-TAB 3: OTHER DETAILS (WhatsApp, UPI, Announcement Bar, CTA)
+    // ==========================================
+    // EXCEL / SPREADSHEET INPUT COMPONENT HELPERS
+    // ==========================================
+    private fun createExcelStyledInput(hintText: String, initialVal: String, inputType: Int = InputType.TYPE_CLASS_TEXT, multiline: Boolean = false): EditText {
+        return EditText(this).apply {
+            hint = hintText
+            setHintTextColor(Color.parseColor("#4B5563"))
+            setText(initialVal)
+            setTextColor(Color.WHITE)
+            textSize = 13f
+            typeface = Typeface.MONOSPACE
+            this.inputType = if (multiline) (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE) else inputType
+            if (multiline) {
+                minLines = 2
+                maxLines = 4
+                gravity = Gravity.TOP or Gravity.START
+            }
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#060B14"),
+                strokeColor = Color.parseColor("#1F2D44"),
+                strokeWidthDp = 1,
+                radiusDp = 6f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
+
+    private fun createExcelRow(
+        cellRef: String,
+        title: String,
+        subHint: String?,
+        inputView: View,
+        actionView: View? = null,
+        previewView: View? = null
+    ): View {
+        val rowContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0E1626"),
+                strokeColor = Color.parseColor("#1B2940"),
+                strokeWidthDp = 1,
+                radiusDp = 8f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+            }
+        }
+
+        // Header: Monospace Excel Cell Tag [A1] + Title
+        val headerLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+
+        val cellTag = TextView(this).apply {
+            text = " $cellRef "
+            textSize = 10.5f
+            typeface = Typeface.MONOSPACE
+            setTextColor(Color.parseColor("#10B981")) // Excel Emerald Green Accent
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#062419"),
+                strokeColor = Color.parseColor("#10B981"),
+                strokeWidthDp = 1,
+                radiusDp = 4f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 8)
+            }
+        }
+        headerLayout.addView(cellTag)
+
+        val titleView = TextView(this).apply {
+            text = title
+            textSize = 13f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        headerLayout.addView(titleView)
+        rowContainer.addView(headerLayout)
+
+        // Main input view
+        rowContainer.addView(inputView)
+
+        // Optional action button (e.g. Gallery pick)
+        if (actionView != null) {
+            rowContainer.addView(actionView)
+        }
+
+        // Optional preview view (e.g. Image Preview)
+        if (previewView != null) {
+            rowContainer.addView(previewView)
+        }
+
+        // Sub hint
+        if (!subHint.isNullOrEmpty()) {
+            val hintView = TextView(this).apply {
+                text = "↳ $subHint"
+                textSize = 10.5f
+                setTextColor(Color.parseColor("#64748B"))
+                setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+            }
+            rowContainer.addView(hintView)
+        }
+
+        return rowContainer
+    }
+
+    private fun loadPreviewImage(urlOrB64: String, target: ImageView) {
+        if (urlOrB64.isEmpty()) {
+            target.visibility = View.GONE
+            return
+        }
+        target.visibility = View.VISIBLE
+        if (urlOrB64.startsWith("data:image")) {
+            try {
+                val b64 = urlOrB64.substringAfter("base64,")
+                val decoded = Base64.decode(b64, Base64.DEFAULT)
+                val bmp = BitmapFactory.decodeByteArray(decoded, 0, decoded.size)
+                target.setImageBitmap(bmp)
+            } catch (_: Exception) {}
+        } else if (urlOrB64.startsWith("http://") || urlOrB64.startsWith("https://")) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val input = java.net.URL(urlOrB64).openStream()
+                    val bmp = BitmapFactory.decodeStream(input)
+                    withContext(Dispatchers.Main) {
+                        target.setImageBitmap(bmp)
+                    }
+                } catch (_: Exception) {}
+            }
+        }
+    }
+
+    // SUB-TAB 3: OTHER DETAILS & CONTACT DIRECTORY (EXCEL SHEET INPUT STYLE)
     private fun createOtherDetailsSubTab(): View {
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -2322,72 +2554,241 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        form.addView(createSubTabBackHeader("📋 3rd: Other Details", "WhatsApp number, UPI ID, top announcement bar aur action buttons yahan se set karein:"))
+        form.addView(createSubTabBackHeader("📋 3rd: Other Details & Contact Directory", "QR Code, WhatsApp, Logo, Phone, Address, Map, Email & Form (Excel Sheet Entry):"))
 
-        // 1. WhatsApp & UPI Payments
-        val (payCard, payBody) = UiKit.createSectionContainer(this, "💳 WhatsApp & Payments", "Revenue")
-        payBody.addView(UiKit.createFieldLabel(this, "WhatsApp Order Mobile Number (with 91):"))
-        val initialWa = pendingSettings["whatsapp_number"] ?: dashboardData?.settings?.get("whatsapp_number") ?: ""
-        waNumberInput = UiKit.createStyledInput(this, "e.g. 919876543210", initialWa)
-        payBody.addView(waNumberInput)
-
-        val waHelp = TextView(this).apply {
-            text = "💡 Website se aane wale naye orders ka WhatsApp message is number par prapt hoga."
-            textSize = 11f
-            setTextColor(Color.parseColor("#64748B"))
-            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, UiKit.dp(this@MainActivity, 10))
+        // Top Google Sheet Banner
+        val sheetHeaderCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#061A12"),
+                strokeColor = Color.parseColor("#059669"),
+                strokeWidthDp = 1,
+                radiusDp = 10f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 12)
+            }
         }
-        payBody.addView(waHelp)
 
-        payBody.addView(UiKit.createFieldLabel(this, "UPI ID (Where Payments Are Received):"))
-        val initialUpi = pendingSettings["upi_id"] ?: dashboardData?.settings?.get("upi_id") ?: ""
-        upiIdInput = UiKit.createStyledInput(this, "e.g. merchant@okaxis", initialUpi)
-        payBody.addView(upiIdInput)
-
-        val upiHelp = TextView(this).apply {
-            text = "💡 Customer checkout ke dauran QR scan karke is UPI ID par seedha payment karenge."
-            textSize = 11f
-            setTextColor(Color.parseColor("#64748B"))
+        val sheetTitle = TextView(this).apply {
+            text = "📗 Google Sheets Mode: Store & Contact Directory"
+            textSize = 13.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#34D399"))
+        }
+        val formulaBar = TextView(this).apply {
+            text = "fx | =STORE_DIRECTORY(Row, Field_Value)"
+            textSize = 10.5f
+            typeface = Typeface.MONOSPACE
+            setTextColor(Color.parseColor("#94A3B8"))
             setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
         }
-        payBody.addView(upiHelp)
-        form.addView(payCard)
+        val sheetSub = TextView(this).apply {
+            text = "Excel sheet ki tarah niche diye gaye cells me information enter karein aur live sync karein:"
+            textSize = 11f
+            setTextColor(Color.parseColor("#CBD5E1"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        sheetHeaderCard.addView(sheetTitle)
+        sheetHeaderCard.addView(formulaBar)
+        sheetHeaderCard.addView(sheetSub)
+        form.addView(sheetHeaderCard)
 
-        // 2. Announcement Bar
-        val (annCard, annBody) = UiKit.createSectionContainer(this, "📢 Top Announcement Bar", "Promotions")
-        announcementSwitch = Switch(this).apply {
-            text = "Show Top Announcement Bar"
+        // [A1] Logo Photo
+        val initialLogo = pendingSettings["logo_url"] ?: dashboardData?.settings?.get("logo_url") ?: ""
+        logoUrlInput = createExcelStyledInput("https://example.com/logo.png ya niche se upload karein", initialLogo)
+        val pickLogoBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se Logo Chunein (300x300 px)", "#10B981") {
+            openImagePicker(REQUEST_PICK_LOGO)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        liveLogoPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 70), UiKit.dp(this@MainActivity, 70)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
+        }
+        loadPreviewImage(initialLogo, liveLogoPreview!!)
+        form.addView(createExcelRow(
+            cellRef = "A1",
+            title = "Store Official Logo (300x300 px)",
+            subHint = "Website header, invoice & branding me dikhne wala store logo.",
+            inputView = logoUrlInput,
+            actionView = pickLogoBtn,
+            previewView = liveLogoPreview
+        ))
+
+        // [A2] WhatsApp Number
+        val initialWa = pendingSettings["whatsapp_number"] ?: dashboardData?.settings?.get("whatsapp_number") ?: ""
+        waNumberInput = createExcelStyledInput("e.g. 919876543210", initialWa, InputType.TYPE_CLASS_PHONE)
+        form.addView(createExcelRow(
+            cellRef = "A2",
+            title = "Primary WhatsApp Order Number",
+            subHint = "Naye order ka WhatsApp message is number par direct prapt hoga.",
+            inputView = waNumberInput
+        ))
+
+        // [A3] Alternative Number
+        val initialAlt = pendingSettings["alt_phone"] ?: dashboardData?.settings?.get("alt_phone") ?: ""
+        altPhoneInput = createExcelStyledInput("e.g. 919811223344", initialAlt, InputType.TYPE_CLASS_PHONE)
+        form.addView(createExcelRow(
+            cellRef = "A3",
+            title = "Alternative Contact Number",
+            subHint = "Backup mobile number agar primary number busy ya unavailable ho.",
+            inputView = altPhoneInput
+        ))
+
+        // [A4] Helpline Number
+        val initialHelp = pendingSettings["helpline_number"] ?: dashboardData?.settings?.get("helpline_number") ?: ""
+        helplineInput = createExcelStyledInput("e.g. 1800-123-4567 ya 919876543210", initialHelp, InputType.TYPE_CLASS_PHONE)
+        form.addView(createExcelRow(
+            cellRef = "A4",
+            title = "Customer Care Helpline Number",
+            subHint = "Support helpline number website header & footer me dikhaya jayega.",
+            inputView = helplineInput
+        ))
+
+        // [A5] Email ID
+        val initialEmail = pendingSettings["business_email"] ?: dashboardData?.settings?.get("business_email") ?: ""
+        businessEmailInput = createExcelStyledInput("e.g. support@mystore.com", initialEmail, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+        form.addView(createExcelRow(
+            cellRef = "A5",
+            title = "Official Business Email ID",
+            subHint = "Official email address customer inquiries & receipts ke liye.",
+            inputView = businessEmailInput
+        ))
+
+        // [A6] Address
+        val initialAddress = pendingSettings["business_address"] ?: dashboardData?.settings?.get("business_address") ?: ""
+        businessAddressInput = createExcelStyledInput("Shop No, Street, Landmark, City, State, Pincode", initialAddress, multiline = true)
+        form.addView(createExcelRow(
+            cellRef = "A6",
+            title = "Shop / Business Physical Address",
+            subHint = "Website contact section aur billing invoices par dikhne wala address.",
+            inputView = businessAddressInput
+        ))
+
+        // [A7] Google Map
+        val initialMap = pendingSettings["map_url"] ?: dashboardData?.settings?.get("map_url") ?: ""
+        mapUrlInput = createExcelStyledInput("e.g. https://maps.google.com/?q=28.6139,77.2090", initialMap)
+        form.addView(createExcelRow(
+            cellRef = "A7",
+            title = "Google Maps Location Link",
+            subHint = "Customer tap karke seedha Google Maps par aapki shop navigate kar sakein.",
+            inputView = mapUrlInput
+        ))
+
+        // [A8] Store UPI ID
+        val initialUpi = pendingSettings["upi_id"] ?: dashboardData?.settings?.get("upi_id") ?: ""
+        upiIdInput = createExcelStyledInput("e.g. merchant@okaxis ya store@upi", initialUpi)
+        form.addView(createExcelRow(
+            cellRef = "A8",
+            title = "Store UPI ID (Where Money is Received)",
+            subHint = "Checkout ke dauran customer is UPI ID par direct payment bhejte hain.",
+            inputView = upiIdInput
+        ))
+
+        // [A9] QR Code Photo / URL
+        val initialQr = pendingSettings["qr_code_url"] ?: dashboardData?.settings?.get("qr_code_url") ?: ""
+        qrCodeUrlInput = createExcelStyledInput("https://example.com/qr.png ya niche se upload karein", initialQr)
+        val pickQrBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se UPI QR Chunein", "#10B981") {
+            openImagePicker(REQUEST_PICK_QR)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        liveQrPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 100), UiKit.dp(this@MainActivity, 100)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
+        }
+        loadPreviewImage(initialQr, liveQrPreview!!)
+        form.addView(createExcelRow(
+            cellRef = "A9",
+            title = "Payment UPI QR Code Photo",
+            subHint = "BharatPe / Paytm / PhonePe / Custom QR code checkout screen ke liye.",
+            inputView = qrCodeUrlInput,
+            actionView = pickQrBtn,
+            previewView = liveQrPreview
+        ))
+
+        // [A10] Contact Us Form Switch
+        val showForm = pendingSettings["show_contact_form"] ?: dashboardData?.settings?.get("show_contact_form") ?: "true"
+        contactFormSwitch = Switch(this).apply {
+            text = "Show Interactive Contact Form On Website"
             setTextColor(Color.WHITE)
             textSize = 12.5f
             typeface = Typeface.DEFAULT_BOLD
-            val showAnn = pendingSettings["show_announcement"] ?: dashboardData?.settings?.get("show_announcement") ?: "true"
-            isChecked = showAnn.equals("true", ignoreCase = true)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 10))
+            isChecked = showForm.equals("true", ignoreCase = true)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 4))
         }
-        annBody.addView(announcementSwitch)
+        form.addView(createExcelRow(
+            cellRef = "A10",
+            title = "Website Contact Us Form (Toggle)",
+            subHint = "Active hone par website footer me lead / inquiry contact form display hoga.",
+            inputView = contactFormSwitch
+        ))
 
-        annBody.addView(UiKit.createFieldLabel(this, "Announcement Bar Text:"))
+        // [A11] Top Announcement Bar
+        val annContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+        val showAnn = pendingSettings["show_announcement"] ?: dashboardData?.settings?.get("show_announcement") ?: "true"
+        announcementSwitch = Switch(this).apply {
+            text = "Show Top Announcement Bar Strip"
+            setTextColor(Color.WHITE)
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            isChecked = showAnn.equals("true", ignoreCase = true)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+        }
+        annContainer.addView(announcementSwitch)
+
         val initialAnn = pendingSettings["announcement_text"] ?: dashboardData?.settings?.get("announcement_text") ?: ""
-        announcementInput = UiKit.createStyledInput(this, "e.g. Diwali Dhamaka! Flat 50% OFF on all items", initialAnn)
-        annBody.addView(announcementInput)
-        form.addView(annCard)
+        announcementInput = createExcelStyledInput("e.g. Diwali Dhamaka! Flat 50% OFF on all items", initialAnn)
+        annContainer.addView(announcementInput)
 
-        // 3. CTA Button
-        val (ctaCard, ctaBody) = UiKit.createSectionContainer(this, "🎯 Store Action & CTA", "Conversion")
-        ctaBody.addView(UiKit.createFieldLabel(this, "Call-to-Action (CTA) Button Text:"))
+        form.addView(createExcelRow(
+            cellRef = "A11",
+            title = "Top Announcement Strip & Offer Text",
+            subHint = "Website ke sabse upar scroll hone wali promo offer strip.",
+            inputView = annContainer
+        ))
+
+        // [A12] CTA Button Text
         val initialCta = pendingSettings["cta_text"] ?: dashboardData?.settings?.get("cta_text") ?: ""
-        ctaTextInput = UiKit.createStyledInput(this, "e.g. Shop Collection / Buy Now", initialCta)
-        ctaBody.addView(ctaTextInput)
-        form.addView(ctaCard)
+        ctaTextInput = createExcelStyledInput("e.g. Shop Collection / Order On WhatsApp", initialCta)
+        form.addView(createExcelRow(
+            cellRef = "A12",
+            title = "Primary Call-To-Action (CTA) Button Text",
+            subHint = "Hero banner aur shopping card ke main action button par likha text.",
+            inputView = ctaTextInput
+        ))
 
-        // Save Button
+        // Save Button (Excel emerald green gradient)
         val saveBtn = UiKit.createPrimaryButton(
             context = this,
-            btnText = "🚀 Save Other Details Live",
-            startColor = "#2563EB",
-            endColor = "#00F0FF"
+            btnText = "💾 Save All 12 Fields Live to Google Sheet",
+            startColor = "#059669",
+            endColor = "#10B981"
         ) {
             saveWebsiteSettings()
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                UiKit.dp(this@MainActivity, 48)
+            ).apply {
+                topMargin = UiKit.dp(this@MainActivity, 10)
+                bottomMargin = UiKit.dp(this@MainActivity, 20)
+            }
         }
         form.addView(saveBtn)
 
@@ -2757,6 +3158,27 @@ class MainActivity : Activity() {
         if (::upiIdInput.isInitialized && upiIdInput.isAttachedToWindow) {
             pendingSettings["upi_id"] = upiIdInput.text.toString().trim()
         }
+        if (::altPhoneInput.isInitialized && altPhoneInput.isAttachedToWindow) {
+            pendingSettings["alt_phone"] = altPhoneInput.text.toString().trim()
+        }
+        if (::helplineInput.isInitialized && helplineInput.isAttachedToWindow) {
+            pendingSettings["helpline_number"] = helplineInput.text.toString().trim()
+        }
+        if (::businessEmailInput.isInitialized && businessEmailInput.isAttachedToWindow) {
+            pendingSettings["business_email"] = businessEmailInput.text.toString().trim()
+        }
+        if (::businessAddressInput.isInitialized && businessAddressInput.isAttachedToWindow) {
+            pendingSettings["business_address"] = businessAddressInput.text.toString().trim()
+        }
+        if (::mapUrlInput.isInitialized && mapUrlInput.isAttachedToWindow) {
+            pendingSettings["map_url"] = mapUrlInput.text.toString().trim()
+        }
+        if (::qrCodeUrlInput.isInitialized && qrCodeUrlInput.isAttachedToWindow) {
+            pendingSettings["qr_code_url"] = qrCodeUrlInput.text.toString().trim()
+        }
+        if (::contactFormSwitch.isInitialized && contactFormSwitch.isAttachedToWindow) {
+            pendingSettings["show_contact_form"] = if (contactFormSwitch.isChecked) "true" else "false"
+        }
     }
 
     private fun populateSettingsFields() {
@@ -2811,6 +3233,28 @@ class MainActivity : Activity() {
         }
         if (::upiIdInput.isInitialized && upiIdInput.isAttachedToWindow) {
             upiIdInput.setText(pendingSettings["upi_id"] ?: s["upi_id"] ?: "")
+        }
+        if (::altPhoneInput.isInitialized && altPhoneInput.isAttachedToWindow) {
+            altPhoneInput.setText(pendingSettings["alt_phone"] ?: s["alt_phone"] ?: "")
+        }
+        if (::helplineInput.isInitialized && helplineInput.isAttachedToWindow) {
+            helplineInput.setText(pendingSettings["helpline_number"] ?: s["helpline_number"] ?: "")
+        }
+        if (::businessEmailInput.isInitialized && businessEmailInput.isAttachedToWindow) {
+            businessEmailInput.setText(pendingSettings["business_email"] ?: s["business_email"] ?: "")
+        }
+        if (::businessAddressInput.isInitialized && businessAddressInput.isAttachedToWindow) {
+            businessAddressInput.setText(pendingSettings["business_address"] ?: s["business_address"] ?: "")
+        }
+        if (::mapUrlInput.isInitialized && mapUrlInput.isAttachedToWindow) {
+            mapUrlInput.setText(pendingSettings["map_url"] ?: s["map_url"] ?: "")
+        }
+        if (::qrCodeUrlInput.isInitialized && qrCodeUrlInput.isAttachedToWindow) {
+            qrCodeUrlInput.setText(pendingSettings["qr_code_url"] ?: s["qr_code_url"] ?: "")
+        }
+        if (::contactFormSwitch.isInitialized && contactFormSwitch.isAttachedToWindow) {
+            val show = pendingSettings["show_contact_form"] ?: s["show_contact_form"] ?: "true"
+            contactFormSwitch.isChecked = show.equals("true", ignoreCase = true)
         }
     }
 
@@ -3244,9 +3688,9 @@ class MainActivity : Activity() {
             StudioMenuItem(
                 index = 2,
                 icon = "📋",
-                title = "3rd: Other Details",
-                subtitle = "WhatsApp Orders Number, Store UPI ID, Announcement Bar & CTA",
-                badge = "Orders & UPI",
+                title = "3rd: Other Details & Contact Directory",
+                subtitle = "QR Code, WhatsApp, Logo, Phone, Helpline, Address, Map, Email & Form",
+                badge = "Excel Sheet Grid",
                 accentColor = "#10B981"
             ),
             StudioMenuItem(
@@ -3593,7 +4037,7 @@ class MainActivity : Activity() {
     }
 
     private fun openAccountFullScreenView() {
-        switchTab(4)
+        showProfileSubscriptionDialog()
     }
 
     private fun createSettingsAndHubTab(): View {
@@ -4571,6 +5015,18 @@ class MainActivity : Activity() {
                             liveBannerPreview?.setImageBitmap(scaled)
                             liveBannerPreview?.visibility = View.VISIBLE
                             Toast.makeText(this, "Banner photo chuni gayi! (1200x500 px)", Toast.LENGTH_SHORT).show()
+                        }
+                        REQUEST_PICK_QR -> {
+                            val scaled = scaleBitmap(originalBitmap, 400, 400)
+                            val base64 = bitmapToBase64(scaled)
+                            val dataUrl = "data:image/jpeg;base64,$base64"
+                            pendingSettings["qr_code_url"] = dataUrl
+                            if (::qrCodeUrlInput.isInitialized && qrCodeUrlInput.isAttachedToWindow) {
+                                qrCodeUrlInput.setText(dataUrl)
+                            }
+                            liveQrPreview?.setImageBitmap(scaled)
+                            liveQrPreview?.visibility = View.VISIBLE
+                            Toast.makeText(this, "UPI QR Code photo chuni gayi!", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

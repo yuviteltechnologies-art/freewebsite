@@ -1989,7 +1989,15 @@
       brandName: localStorage.getItem('store_brand_name') || "new record",
       upiId: localStorage.getItem('store_upi_id') || "9907522413@ybl",
       whatsappNumber: localStorage.getItem('store_wa_num') || "9907522413",
-      sheetUrl: localStorage.getItem('store_sheet_url') || MASTER_API_URL
+      sheetUrl: localStorage.getItem('store_sheet_url') || MASTER_API_URL,
+      logoUrl: localStorage.getItem('store_logo_url') || "",
+      qrCodeUrl: localStorage.getItem('store_qr_code_url') || "",
+      altPhone: localStorage.getItem('store_alt_phone') || "",
+      helplineNumber: localStorage.getItem('store_helpline') || "",
+      businessEmail: localStorage.getItem('store_email') || "",
+      businessAddress: localStorage.getItem('store_address') || "",
+      mapUrl: localStorage.getItem('store_map_url') || "",
+      showContactForm: localStorage.getItem('store_show_contact_form') || "true"
     };
 
     function applyStoreSettingsToDom() {
@@ -2000,8 +2008,12 @@
       // 1. Update QR Code Image dynamically
       const qrImg = document.getElementById('paymentQrCodeImg');
       if (qrImg) {
-        const qrData = `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(brand)}&am=499&cu=INR&tn=SheetStoreOrder`;
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+        if (activeStoreSettings.qrCodeUrl) {
+          qrImg.src = activeStoreSettings.qrCodeUrl;
+        } else {
+          const qrData = `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(brand)}&am=499&cu=INR&tn=SheetStoreOrder`;
+          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+        }
       }
 
       // 2. Update UPI texts & copy buttons
@@ -2016,6 +2028,43 @@
       document.querySelectorAll('.live-wa-link').forEach(link => {
         link.href = `https://wa.me/${wa}?text=${encodeURIComponent("Namaste! Mujhe website ke bare me jaankari chahiye.")}`;
       });
+
+      // 4. Update Logo if custom logo is uploaded
+      if (activeStoreSettings.logoUrl) {
+        document.querySelectorAll('.store-logo-img').forEach(img => {
+          img.src = activeStoreSettings.logoUrl;
+        });
+      }
+
+      // 5. Update Helpline & Alternate Phone
+      if (activeStoreSettings.helplineNumber) {
+        document.querySelectorAll('.store-helpline-link').forEach(link => {
+          link.href = `tel:${activeStoreSettings.helplineNumber}`;
+          link.innerText = activeStoreSettings.helplineNumber;
+        });
+      }
+
+      // 6. Update Official Email
+      if (activeStoreSettings.businessEmail) {
+        document.querySelectorAll('.store-email-link').forEach(link => {
+          link.href = `mailto:${activeStoreSettings.businessEmail}`;
+          link.innerText = activeStoreSettings.businessEmail;
+        });
+      }
+
+      // 7. Update Physical Address
+      if (activeStoreSettings.businessAddress) {
+        document.querySelectorAll('.store-address-text').forEach(el => {
+          el.innerText = activeStoreSettings.businessAddress;
+        });
+      }
+
+      // 8. Update Google Map
+      if (activeStoreSettings.mapUrl) {
+        document.querySelectorAll('.store-map-link').forEach(link => {
+          link.href = activeStoreSettings.mapUrl;
+        });
+      }
     }
 
     async function syncSettingsFromGoogleSheet() {
@@ -2037,6 +2086,38 @@
           if (s.brand_name) {
             activeStoreSettings.brandName = String(s.brand_name).trim();
             localStorage.setItem('store_brand_name', activeStoreSettings.brandName);
+          }
+          if (s.logo_url) {
+            activeStoreSettings.logoUrl = String(s.logo_url).trim();
+            localStorage.setItem('store_logo_url', activeStoreSettings.logoUrl);
+          }
+          if (s.qr_code_url) {
+            activeStoreSettings.qrCodeUrl = String(s.qr_code_url).trim();
+            localStorage.setItem('store_qr_code_url', activeStoreSettings.qrCodeUrl);
+          }
+          if (s.alt_phone) {
+            activeStoreSettings.altPhone = String(s.alt_phone).trim();
+            localStorage.setItem('store_alt_phone', activeStoreSettings.altPhone);
+          }
+          if (s.helpline_number) {
+            activeStoreSettings.helplineNumber = String(s.helpline_number).trim();
+            localStorage.setItem('store_helpline', activeStoreSettings.helplineNumber);
+          }
+          if (s.business_email) {
+            activeStoreSettings.businessEmail = String(s.business_email).trim();
+            localStorage.setItem('store_email', activeStoreSettings.businessEmail);
+          }
+          if (s.business_address) {
+            activeStoreSettings.businessAddress = String(s.business_address).trim();
+            localStorage.setItem('store_address', activeStoreSettings.businessAddress);
+          }
+          if (s.map_url) {
+            activeStoreSettings.mapUrl = String(s.map_url).trim();
+            localStorage.setItem('store_map_url', activeStoreSettings.mapUrl);
+          }
+          if (s.show_contact_form) {
+            activeStoreSettings.showContactForm = String(s.show_contact_form).trim();
+            localStorage.setItem('store_show_contact_form', activeStoreSettings.showContactForm);
           }
           applyStoreSettingsToDom();
         }
