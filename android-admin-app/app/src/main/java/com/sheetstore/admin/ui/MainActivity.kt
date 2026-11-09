@@ -56,9 +56,13 @@ class MainActivity : Activity() {
     private lateinit var topBrandNameView: TextView
     private var activeHubMockupLogo: ImageView? = null
 
-    // Top Stats Views
+    // Top Stats Views & Orders Segment Views
     private var statsRevenueView: TextView? = null
     private var statsOrdersView: TextView? = null
+    private var ordersSegmentLiveBtn: TextView? = null
+    private var ordersSegmentPaidBtn: TextView? = null
+    private var ordersEmptyView: TextView? = null
+    private var designSubTabIndex = 0
 
     // 6 Ready-made Website Themes
     data class WebTheme(
@@ -1261,100 +1265,111 @@ class MainActivity : Activity() {
         val swipeLayout = SwipeRefreshLayout(this)
         val scrollContent = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 24))
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 24))
         }
 
-        // Stats Card (Revenue & Orders Metric)
-        val statsCard = LinearLayout(this).apply {
+        // ==========================================
+        // 1. UNIFIED COMMON BOX (Revenue + Fast UTR Approval + Search Bar)
+        // ==========================================
+        val unifiedBox = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             background = UiKit.cardDrawable(
                 bgColor = Color.parseColor("#121826"),
-                strokeColor = Color.parseColor("#1F2D48"),
-                strokeWidthDp = 1,
-                radiusDp = 20f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 18))
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 18)
-            }
-        }
-
-        val statsTitle = TextView(this).apply {
-            text = "💰 REVENUE & ORDERS STATS"
-            textSize = 11f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#94A3B8"))
-        }
-        statsCard.addView(statsTitle)
-
-        statsRevenueView = TextView(this).apply {
-            text = "₹0.00"
-            textSize = 28f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#10B981"))
-            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
-        }
-        statsCard.addView(statsRevenueView)
-
-        statsOrdersView = TextView(this).apply {
-            text = "Total Orders: 0 (Paid: 0 • Pending: 0)"
-            textSize = 12f
-            setTextColor(Color.parseColor("#CBD5E1"))
-        }
-        statsCard.addView(statsOrdersView)
-        scrollContent.addView(statsCard)
-
-        // Manual Payment Approval & Quick UTR Verification Card
-        val manualCard = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#121826"),
-                strokeColor = Color.parseColor("#2563EB"),
+                strokeColor = Color.parseColor("#1E2D48"),
                 strokeWidthDp = 1,
                 radiusDp = 18f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16))
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 16)
+                bottomMargin = UiKit.dp(this@MainActivity, 14)
             }
         }
 
-        val manualHeader = LinearLayout(this).apply {
+        // --- Row 1: Revenue Stats + Quick Sync Button ---
+        val statsRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 8))
+        }
+        val revCol = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val revLabel = TextView(this).apply {
+            text = "💰 TOTAL STORE REVENUE"
+            textSize = 10f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#94A3B8"))
+        }
+        revCol.addView(revLabel)
+
+        statsRevenueView = TextView(this).apply {
+            text = "₹${(dashboardData?.stats?.totalRevenue ?: 0.0).toInt()}"
+            textSize = 24f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#10B981"))
+            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, UiKit.dp(this@MainActivity, 2))
+        }
+        revCol.addView(statsRevenueView)
+
+        statsOrdersView = TextView(this).apply {
+            val stats = dashboardData?.stats
+            text = "Total Orders: ${stats?.totalOrders ?: 0} (Paid: ${stats?.paidOrders ?: 0} • Pending: ${stats?.pendingOrders ?: 0})"
+            textSize = 11f
+            setTextColor(Color.parseColor("#CBD5E1"))
+        }
+        revCol.addView(statsOrdersView)
+        statsRow.addView(revCol)
+
+        val syncBtn = UiKit.createSecondaryButton(this, "🔄 Sync Sheet", "#38BDF8") {
+            fetchDashboard()
+            Toast.makeText(this@MainActivity, "Refreshing from Google Sheet...", Toast.LENGTH_SHORT).show()
+        }
+        syncBtn.layoutParams = LinearLayout.LayoutParams(
+            UiKit.dp(this@MainActivity, 105),
+            UiKit.dp(this@MainActivity, 38)
+        )
+        statsRow.addView(syncBtn)
+        unifiedBox.addView(statsRow)
+
+        // --- Divider Line ---
+        val divider = View(this).apply {
+            setBackgroundColor(Color.parseColor("#1C2638"))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 1)).apply {
+                setMargins(0, UiKit.dp(this@MainActivity, 6), 0, UiKit.dp(this@MainActivity, 10))
+            }
+        }
+        unifiedBox.addView(divider)
+
+        // --- Row 2: Manual Payment Approval Action ---
+        val manualRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 10))
+        }
+        val manualHintCol = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
         val manualTitle = TextView(this).apply {
-            text = "🖐️ MANUAL PAYMENT APPROVAL"
+            text = "⚡ Manual Payment Check"
             textSize = 12f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
-        val manualBadge = UiKit.createPillBadge(this, "0 Permissions Needed", Color.parseColor("#38BDF8"), Color.parseColor("#0C4A6E"), Color.parseColor("#0284C7"))
-        manualHeader.addView(manualTitle)
-        manualHeader.addView(manualBadge)
-        manualCard.addView(manualHeader)
-
-        val manualDesc = TextView(this).apply {
-            text = "Sensitive SMS permission optional hai! Aap customer ka 12-digit UTR daal kar direct verify kar sakte hain ya neeche order par 'Approve' click karein."
-            textSize = 11f
+        manualHintCol.addView(manualTitle)
+        val manualSub = TextView(this).apply {
+            text = "Bank SMS ya screenshot match karein"
+            textSize = 10f
             setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
         }
-        manualCard.addView(manualDesc)
+        manualHintCol.addView(manualSub)
+        manualRow.addView(manualHintCol)
 
-        val manualBtnRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-        }
         val btnApproveUtr = Button(this).apply {
             text = "🔍 12-Digit UTR Approve"
             textSize = 11f
@@ -1363,57 +1378,47 @@ class MainActivity : Activity() {
             background = UiKit.gradientButtonDrawable(
                 startColor = Color.parseColor("#2563EB"),
                 endColor = Color.parseColor("#1D4ED8"),
-                radiusDp = 12f,
+                radiusDp = 10f,
                 context = this@MainActivity
             )
-            layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 42), 1.2f).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 8)
-            }
+            layoutParams = LinearLayout.LayoutParams(
+                UiKit.dp(this@MainActivity, 155),
+                UiKit.dp(this@MainActivity, 38)
+            )
             setOnClickListener {
                 showManualUtrApprovalDialog()
             }
         }
+        manualRow.addView(btnApproveUtr)
+        unifiedBox.addView(manualRow)
 
-        val btnRefreshOrders = UiKit.createSecondaryButton(this, "🔄 Sync Sheet", "#38BDF8") {
-            fetchDashboard()
-            Toast.makeText(this@MainActivity, "Refreshing orders from Google Sheet...", Toast.LENGTH_SHORT).show()
-        }
-        btnRefreshOrders.layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 42), 1f)
-
-        manualBtnRow.addView(btnApproveUtr)
-        manualBtnRow.addView(btnRefreshOrders)
-        manualCard.addView(manualBtnRow)
-        scrollContent.addView(manualCard)
-
-        // Live Search Input for Orders
-        val searchCard = LinearLayout(this).apply {
+        // --- Row 3: Live Search Bar ---
+        val searchBar = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
             background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#0F172A"),
-                strokeColor = Color.parseColor("#1E293B"),
+                bgColor = Color.parseColor("#0B0F19"),
+                strokeColor = Color.parseColor("#1E2D48"),
                 strokeWidthDp = 1,
-                radiusDp = 14f,
+                radiusDp = 10f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 4))
+            setPadding(UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 4))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 14)
-            }
+            )
         }
         val searchIcon = TextView(this).apply {
             text = "🔍"
-            textSize = 14f
-            setPadding(0, 0, UiKit.dp(this@MainActivity, 8), 0)
+            textSize = 13f
+            setPadding(0, 0, UiKit.dp(this@MainActivity, 6), 0)
         }
         val searchInput = EditText(this).apply {
             hint = "Search by UTR, Order ID, Phone or Name..."
             setHintTextColor(Color.parseColor("#64748B"))
             setTextColor(Color.WHITE)
-            textSize = 12f
+            textSize = 11.5f
             background = null
             isSingleLine = true
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
@@ -1421,23 +1426,117 @@ class MainActivity : Activity() {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     ordersAdapter.filter(s?.toString() ?: "")
+                    updateEmptyOrdersVisibility()
                 }
                 override fun afterTextChanged(s: android.text.Editable?) {}
             })
         }
-        searchCard.addView(searchIcon)
-        searchCard.addView(searchInput)
-        scrollContent.addView(searchCard)
+        searchBar.addView(searchIcon)
+        searchBar.addView(searchInput)
+        unifiedBox.addView(searchBar)
 
-        // Section Title: Live Incoming Orders
-        val sectionTitle = TextView(this).apply {
-            text = "Live Incoming Orders"
-            textSize = 14f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
+        scrollContent.addView(unifiedBox)
+
+        // ==========================================
+        // 2. TWO SEPARATE SEGMENTS: Live Incoming vs Paid Orders
+        // ==========================================
+        val segmentContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#0F172A"),
+                strokeColor = Color.parseColor("#1E293B"),
+                strokeWidthDp = 1,
+                radiusDp = 12f,
+                context = this@MainActivity
+            )
+            setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 12)
+            }
         }
-        scrollContent.addView(sectionTitle)
+
+        val pendingCount = dashboardData?.stats?.pendingOrders ?: 0
+        val paidCount = dashboardData?.stats?.paidOrders ?: 0
+
+        val tabLiveBtn = TextView(this).apply {
+            text = "⚡ Live Incoming ($pendingCount)"
+            textSize = 11.5f
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        ordersSegmentLiveBtn = tabLiveBtn
+
+        val tabPaidBtn = TextView(this).apply {
+            text = "✓ Paid Orders ($paidCount)"
+            textSize = 11.5f
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        ordersSegmentPaidBtn = tabPaidBtn
+
+        fun updateSegmentStyles(activeTab: OrdersAdapter.OrderFilterTab) {
+            if (activeTab == OrdersAdapter.OrderFilterTab.LIVE_INCOMING) {
+                tabLiveBtn.setTextColor(Color.WHITE)
+                tabLiveBtn.background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#152846"),
+                    strokeColor = Color.parseColor("#00F0FF"),
+                    strokeWidthDp = 1,
+                    radiusDp = 9f,
+                    context = this@MainActivity
+                )
+                tabPaidBtn.setTextColor(Color.parseColor("#94A3B8"))
+                tabPaidBtn.background = null
+            } else {
+                tabPaidBtn.setTextColor(Color.WHITE)
+                tabPaidBtn.background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#063D2B"),
+                    strokeColor = Color.parseColor("#10B981"),
+                    strokeWidthDp = 1,
+                    radiusDp = 9f,
+                    context = this@MainActivity
+                )
+                tabLiveBtn.setTextColor(Color.parseColor("#94A3B8"))
+                tabLiveBtn.background = null
+            }
+        }
+
+        tabLiveBtn.setOnClickListener {
+            ordersAdapter.setFilterTab(OrdersAdapter.OrderFilterTab.LIVE_INCOMING)
+            updateSegmentStyles(OrdersAdapter.OrderFilterTab.LIVE_INCOMING)
+            updateEmptyOrdersVisibility()
+        }
+
+        tabPaidBtn.setOnClickListener {
+            ordersAdapter.setFilterTab(OrdersAdapter.OrderFilterTab.PAID)
+            updateSegmentStyles(OrdersAdapter.OrderFilterTab.PAID)
+            updateEmptyOrdersVisibility()
+        }
+
+        segmentContainer.addView(tabLiveBtn)
+        segmentContainer.addView(tabPaidBtn)
+        scrollContent.addView(segmentContainer)
+
+        updateSegmentStyles(OrdersAdapter.OrderFilterTab.LIVE_INCOMING)
+
+        // Empty Orders State View
+        val emptyNotice = TextView(this).apply {
+            text = "🎉 Koi pending order nahi hai!\nSabhi incoming orders verified hain."
+            textSize = 12.5f
+            setTextColor(Color.parseColor("#94A3B8"))
+            gravity = Gravity.CENTER
+            setLineSpacing(4f, 1.15f)
+            setPadding(0, UiKit.dp(this@MainActivity, 32), 0, UiKit.dp(this@MainActivity, 32))
+            visibility = View.GONE
+        }
+        ordersEmptyView = emptyNotice
+        scrollContent.addView(emptyNotice)
 
         // RecyclerView
         val rv = RecyclerView(this).apply {
@@ -1463,7 +1562,23 @@ class MainActivity : Activity() {
     private fun updateStatsCard() {
         val stats = dashboardData?.stats ?: return
         statsRevenueView?.text = "₹${stats.totalRevenue.toInt()}"
-        statsOrdersView?.text = "Total: ${stats.totalOrders} Orders (Paid: ${stats.paidOrders} • Pending: ${stats.pendingOrders})"
+        statsOrdersView?.text = "Total: ${stats.totalOrders} • Paid: ${stats.paidOrders} • Pending: ${stats.pendingOrders}"
+        ordersSegmentLiveBtn?.text = "⚡ Live Incoming (${stats.pendingOrders})"
+        ordersSegmentPaidBtn?.text = "✓ Paid Orders (${stats.paidOrders})"
+        updateEmptyOrdersVisibility()
+    }
+
+    private fun updateEmptyOrdersVisibility() {
+        if (!::ordersAdapter.isInitialized) return
+        val count = ordersAdapter.itemCount
+        ordersEmptyView?.apply {
+            visibility = if (count == 0) View.VISIBLE else View.GONE
+            text = if (ordersAdapter.getFilterTab() == OrdersAdapter.OrderFilterTab.LIVE_INCOMING) {
+                "🎉 Koi pending order nahi hai!\nSabhi incoming orders verified hain."
+            } else {
+                "Abhi tak koi paid order nahi hai."
+            }
+        }
     }
 
     private fun approveOrder(order: Order) {
@@ -2551,26 +2666,133 @@ class MainActivity : Activity() {
     }
 
     // ==========================================
-    // MODERN BOTTOM NAVIGATION DOCK
+    // COMBINED THEME & CUSTOM CMS TAB
+    // ==========================================
+    private fun createWebsiteDesignAndCustomTab(): View {
+        val root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor("#0B0F19"))
+        }
+
+        // Sub-segment switcher at top of tab
+        val subTabRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setBackgroundColor(Color.parseColor("#0F172A"))
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8))
+            elevation = UiKit.dp(this@MainActivity, 4).toFloat()
+        }
+
+        val btnThemes = TextView(this).apply {
+            text = "🎨 Website Themes"
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+
+        val btnCustom = TextView(this).apply {
+            text = "🛠️ Store Styling CMS"
+            textSize = 12f
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                leftMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+
+        val subContentContainer = FrameLayout(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f)
+        }
+
+        fun updateSubTabStyles() {
+            if (designSubTabIndex == 0) {
+                btnThemes.setTextColor(Color.WHITE)
+                btnThemes.background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#152846"),
+                    strokeColor = Color.parseColor("#00F0FF"),
+                    strokeWidthDp = 1,
+                    radiusDp = 10f,
+                    context = this@MainActivity
+                )
+                btnCustom.setTextColor(Color.parseColor("#94A3B8"))
+                btnCustom.background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#121826"),
+                    strokeColor = Color.parseColor("#1E2D48"),
+                    strokeWidthDp = 1,
+                    radiusDp = 10f,
+                    context = this@MainActivity
+                )
+            } else {
+                btnCustom.setTextColor(Color.WHITE)
+                btnCustom.background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#152846"),
+                    strokeColor = Color.parseColor("#00F0FF"),
+                    strokeWidthDp = 1,
+                    radiusDp = 10f,
+                    context = this@MainActivity
+                )
+                btnThemes.setTextColor(Color.parseColor("#94A3B8"))
+                btnThemes.background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#121826"),
+                    strokeColor = Color.parseColor("#1E2D48"),
+                    strokeWidthDp = 1,
+                    radiusDp = 10f,
+                    context = this@MainActivity
+                )
+            }
+        }
+
+        fun renderSubContent() {
+            subContentContainer.removeAllViews()
+            val view = if (designSubTabIndex == 0) createNicheAndThemesTab() else createWebsiteCustomizerTab()
+            subContentContainer.addView(view)
+            updateSubTabStyles()
+        }
+
+        btnThemes.setOnClickListener {
+            designSubTabIndex = 0
+            renderSubContent()
+        }
+
+        btnCustom.setOnClickListener {
+            designSubTabIndex = 1
+            renderSubContent()
+        }
+
+        subTabRow.addView(btnThemes)
+        subTabRow.addView(btnCustom)
+        root.addView(subTabRow)
+
+        renderSubContent()
+        root.addView(subContentContainer)
+
+        return root
+    }
+
+    // ==========================================
+    // MODERN BOTTOM NAVIGATION DOCK (3 TABS)
     // ==========================================
     private fun createBottomNav(): LinearLayout {
         return LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             setBackgroundColor(Color.parseColor("#0F172A"))
-            setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 10))
+            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 10))
             elevation = UiKit.dp(this@MainActivity, 8).toFloat()
 
             addView(createNavItem("🛒 Orders", 0))
-            addView(createNavItem("🎯 Themes", 1))
-            addView(createNavItem("🛠️ Custom", 2))
-            addView(createNavItem("📦 Products", 3))
+            addView(createNavItem("🎨 Customize", 1))
+            addView(createNavItem("📦 Products", 2))
         }
     }
 
     private fun createNavItem(label: String, index: Int): Button {
         return Button(this).apply {
             text = label
-            textSize = 10.5f
+            textSize = 11f
             typeface = Typeface.DEFAULT_BOLD
             setBackgroundColor(Color.TRANSPARENT)
             setPadding(UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6))
@@ -2591,9 +2813,8 @@ class MainActivity : Activity() {
 
         val tabView = when (tabIndex) {
             0 -> createOrdersTab()
-            1 -> createNicheAndThemesTab()
-            2 -> createWebsiteCustomizerTab()
-            3 -> createProductsTab()
+            1 -> createWebsiteDesignAndCustomTab()
+            2 -> createProductsTab()
             4 -> createSettingsAndHubTab()
             else -> createOrdersTab()
         }

@@ -18,30 +18,55 @@ class OrdersAdapter(
     private val onApproveClicked: (Order) -> Unit
 ) : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
 
+    enum class OrderFilterTab { LIVE_INCOMING, PAID }
+
     private var fullOrdersList: List<Order> = initialOrders
-    private var displayedOrders: MutableList<Order> = initialOrders.toMutableList()
+    private var displayedOrders: MutableList<Order> = mutableListOf()
+    private var currentFilterTab: OrderFilterTab = OrderFilterTab.LIVE_INCOMING
+    private var currentSearchQuery: String = ""
+
+    init {
+        applyFilters()
+    }
+
+    fun setFilterTab(tab: OrderFilterTab) {
+        this.currentFilterTab = tab
+        applyFilters()
+    }
+
+    fun getFilterTab(): OrderFilterTab = currentFilterTab
+
+    fun getPendingCount(): Int = fullOrdersList.count { !(it.status.equals("PAID", ignoreCase = true) || it.verified) }
+    fun getPaidCount(): Int = fullOrdersList.count { it.status.equals("PAID", ignoreCase = true) || it.verified }
 
     fun updateData(newOrders: List<Order>) {
         this.fullOrdersList = newOrders
-        this.displayedOrders.clear()
-        this.displayedOrders.addAll(newOrders)
-        notifyDataSetChanged()
+        applyFilters()
     }
 
     fun filter(query: String) {
-        val q = query.trim().lowercase()
+        this.currentSearchQuery = query.trim().lowercase()
+        applyFilters()
+    }
+
+    private fun applyFilters() {
         displayedOrders.clear()
-        if (q.isEmpty()) {
-            displayedOrders.addAll(fullOrdersList)
-        } else {
-            displayedOrders.addAll(fullOrdersList.filter { order ->
-                order.orderId.lowercase().contains(q) ||
-                order.utr.lowercase().contains(q) ||
-                order.customerName.lowercase().contains(q) ||
-                order.customerPhone.lowercase().contains(q) ||
-                order.product.lowercase().contains(q)
-            })
+        val filtered = fullOrdersList.filter { order ->
+            val isPaid = order.status.equals("PAID", ignoreCase = true) || order.verified
+            val matchesTab = when (currentFilterTab) {
+                OrderFilterTab.LIVE_INCOMING -> !isPaid
+                OrderFilterTab.PAID -> isPaid
+            }
+            val matchesQuery = currentSearchQuery.isEmpty() ||
+                order.orderId.lowercase().contains(currentSearchQuery) ||
+                order.utr.lowercase().contains(currentSearchQuery) ||
+                order.customerName.lowercase().contains(currentSearchQuery) ||
+                order.customerPhone.lowercase().contains(currentSearchQuery) ||
+                order.product.lowercase().contains(currentSearchQuery)
+
+            matchesTab && matchesQuery
         }
+        displayedOrders.addAll(filtered)
         notifyDataSetChanged()
     }
 
