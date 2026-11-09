@@ -168,7 +168,7 @@ class MainActivity : Activity() {
         // Initialize Local Push Notification Alert Channel & Known Orders
         createNotificationChannel()
         loadKnownOrderIds()
-        requestNotificationPermission()
+        // Notification permission will be requested after login in showDashboardHome()
 
         // Root Layout (Sleek Deep Night Navy #0B0F19)
         val root = LinearLayout(this).apply {
@@ -205,7 +205,6 @@ class MainActivity : Activity() {
 
         // Start Background Auto-Polling for incoming orders
         startAutoPolling()
-        handleIntentTab(intent)
     }
 
     override fun onResume() {
@@ -700,10 +699,10 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🔒 v1.0.5 • Secure Admin Portal",
-            textColor = Color.parseColor("#94A3B8"),
-            bgColor = Color.parseColor("#151E30"),
-            borderColor = Color.parseColor("#223354")
+            text = "🚀 v1.1.0 • Secure Admin Portal",
+            textColor = Color.parseColor("#00F0FF"),
+            bgColor = Color.parseColor("#0C2A4A"),
+            borderColor = Color.parseColor("#00F0FF")
         )
         splash.addView(pillBadge)
 
@@ -735,12 +734,14 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()}"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.1.0)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
         handleIntentTab(intent)
         fetchDashboard()
+        // Request notification permission after login / dashboard launch
+        requestNotificationPermission()
     }
 
     private fun showBackendApiConfigDialog() {
@@ -846,9 +847,18 @@ class MainActivity : Activity() {
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 4))
         }
         container.addView(headerTitle)
+
+        val vBadge = UiKit.createPillBadge(
+            context = this,
+            text = "⚡ SheetStore Admin v1.1.0",
+            textColor = Color.parseColor("#00F0FF"),
+            bgColor = Color.parseColor("#0C2A4A"),
+            borderColor = Color.parseColor("#00F0FF")
+        )
+        container.addView(vBadge)
 
         val headerSub = TextView(this).apply {
             text = "Bina login ke app access nahi kiya ja sakta. Kripya apna registered WhatsApp Number / Email aur Password daalein:"
@@ -856,7 +866,7 @@ class MainActivity : Activity() {
             setTextColor(Color.parseColor("#94A3B8"))
             gravity = Gravity.CENTER
             setLineSpacing(5f, 1.15f)
-            setPadding(UiKit.dp(this@MainActivity, 12), 0, UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 22))
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 22))
         }
         container.addView(headerSub)
 
