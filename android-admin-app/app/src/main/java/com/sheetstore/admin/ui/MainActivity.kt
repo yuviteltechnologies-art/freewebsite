@@ -788,7 +788,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.2.4 • Secure Admin Portal",
+            text = "🚀 v1.2.5 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -823,7 +823,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.2.4)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.5)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -942,7 +942,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.2.4",
+            text = "⚡ SheetStore Admin v1.2.5",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -2016,137 +2016,459 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun createCategoryRectCard(cat: WebsiteCategory, isActive: Boolean): View {
+    private fun createCategoryScreenshotMockup(cat: WebsiteCategory): View {
+        val mockupFrame = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#060B13"),
+                strokeColor = Color.parseColor(cat.accentColor),
+                strokeWidthDp = 1,
+                radiusDp = 4f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                UiKit.dp(this@MainActivity, 125)
+            ).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+            }
+            setPadding(
+                UiKit.dp(this@MainActivity, 6),
+                UiKit.dp(this@MainActivity, 6),
+                UiKit.dp(this@MainActivity, 6),
+                UiKit.dp(this@MainActivity, 6)
+            )
+        }
+
+        when (cat.id) {
+            "ecommerce" -> {
+                val nav = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                nav.addView(TextView(this).apply {
+                    text = "🛒 STORE"
+                    textSize = 8f
+                    typeface = Typeface.DEFAULT_BOLD
+                    setTextColor(Color.WHITE)
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+                })
+                nav.addView(TextView(this).apply {
+                    text = "🔍  🛒(2)"
+                    textSize = 7.5f
+                    setTextColor(Color.parseColor("#94A3B8"))
+                })
+                mockupFrame.addView(nav)
+
+                val hero = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(
+                        bgColor = Color.parseColor("#0A2540"),
+                        strokeColor = Color.parseColor("#0284C7"),
+                        strokeWidthDp = 1,
+                        radiusDp = 3f,
+                        context = this@MainActivity
+                    )
+                    setPadding(UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 3))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                hero.addView(TextView(this).apply {
+                    text = "🔥 SALE 50% OFF"
+                    textSize = 7.5f
+                    typeface = Typeface.DEFAULT_BOLD
+                    setTextColor(Color.parseColor("#FDE047"))
+                })
+                hero.addView(TextView(this).apply {
+                    text = "Direct UPI Checkout"
+                    textSize = 6.5f
+                    setTextColor(Color.parseColor("#BAE6FD"))
+                })
+                mockupFrame.addView(hero)
+
+                val grid = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                val p1 = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#0F172A"), Color.parseColor("#1E293B"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                        rightMargin = UiKit.dp(this@MainActivity, 3)
+                    }
+                }
+                p1.addView(TextView(this).apply { text = "👟 Shoes"; textSize = 6.5f; setTextColor(Color.WHITE); maxLines = 1 })
+                val p1Bottom = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+                p1Bottom.addView(TextView(this).apply { text = "₹499"; textSize = 7f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#10B981")); layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f) })
+                p1Bottom.addView(TextView(this).apply { text = "+Cart"; textSize = 6f; setTextColor(Color.WHITE); background = UiKit.cardDrawable(Color.parseColor("#2563EB"), Color.TRANSPARENT, 0, 2f, this@MainActivity); setPadding(UiKit.dp(this@MainActivity, 3), 0, UiKit.dp(this@MainActivity, 3), 0) })
+                p1.addView(p1Bottom)
+                grid.addView(p1)
+
+                val p2 = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#0F172A"), Color.parseColor("#1E293B"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                        leftMargin = UiKit.dp(this@MainActivity, 3)
+                    }
+                }
+                p2.addView(TextView(this).apply { text = "👕 T-Shirt"; textSize = 6.5f; setTextColor(Color.WHITE); maxLines = 1 })
+                val p2Bottom = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+                p2Bottom.addView(TextView(this).apply { text = "₹299"; textSize = 7f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#10B981")); layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f) })
+                p2Bottom.addView(TextView(this).apply { text = "+Cart"; textSize = 6f; setTextColor(Color.WHITE); background = UiKit.cardDrawable(Color.parseColor("#2563EB"), Color.TRANSPARENT, 0, 2f, this@MainActivity); setPadding(UiKit.dp(this@MainActivity, 3), 0, UiKit.dp(this@MainActivity, 3), 0) })
+                p2.addView(p2Bottom)
+                grid.addView(p2)
+
+                mockupFrame.addView(grid)
+            }
+            "portfolio" -> {
+                val nav = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                nav.addView(TextView(this).apply {
+                    text = "💼 ALEX DEV"; textSize = 8f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#A78BFA"))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+                })
+                nav.addView(TextView(this).apply { text = "☰ Menu"; textSize = 7.5f; setTextColor(Color.parseColor("#94A3B8")) })
+                mockupFrame.addView(nav)
+
+                val hero = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#1E1138"), Color.parseColor("#7C3AED"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                hero.addView(TextView(this).apply { text = "Alex • Product Designer"; textSize = 7.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE) })
+                hero.addView(TextView(this).apply { text = "Case Studies & Reviews"; textSize = 6.5f; setTextColor(Color.parseColor("#DDD6FE")) })
+                hero.addView(TextView(this).apply {
+                    text = "💼 Hire Me / Inquire →"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE)
+                    background = UiKit.cardDrawable(Color.parseColor("#6D28D9"), Color.TRANSPARENT, 0, 2f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 1), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 1))
+                })
+                mockupFrame.addView(hero)
+
+                val projRow = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                val pj1 = TextView(this).apply {
+                    text = "📱 Fintech App\nUI/UX Design"
+                    textSize = 6f
+                    setTextColor(Color.parseColor("#C4B5FD"))
+                    background = UiKit.cardDrawable(Color.parseColor("#15102A"), Color.parseColor("#2E1E5E"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = UiKit.dp(this@MainActivity, 3) }
+                }
+                val pj2 = TextView(this).apply {
+                    text = "🌐 Web Platform\nNext.js & Cloud"
+                    textSize = 6f
+                    setTextColor(Color.parseColor("#C4B5FD"))
+                    background = UiKit.cardDrawable(Color.parseColor("#15102A"), Color.parseColor("#2E1E5E"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { leftMargin = UiKit.dp(this@MainActivity, 3) }
+                }
+                projRow.addView(pj1)
+                projRow.addView(pj2)
+                mockupFrame.addView(projRow)
+            }
+            "linktree" -> {
+                val header = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    gravity = Gravity.CENTER_HORIZONTAL
+                    background = UiKit.cardDrawable(Color.parseColor("#062319"), Color.parseColor("#059669"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                header.addView(TextView(this).apply { text = "🌱 @official_brand ✓"; textSize = 7.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#6EE7B7")); gravity = Gravity.CENTER })
+                header.addView(TextView(this).apply { text = "All bio links & direct contacts"; textSize = 6f; setTextColor(Color.parseColor("#A7F3D0")); gravity = Gravity.CENTER })
+                mockupFrame.addView(header)
+
+                val link1 = TextView(this).apply {
+                    text = "💬 WhatsApp Direct Chat"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE); gravity = Gravity.CENTER
+                    background = UiKit.cardDrawable(Color.parseColor("#065F46"), Color.parseColor("#10B981"), 1, 3f, this@MainActivity)
+                    setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { bottomMargin = UiKit.dp(this@MainActivity, 3) }
+                }
+                val link2 = TextView(this).apply {
+                    text = "📸 Instagram & YouTube"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE); gravity = Gravity.CENTER
+                    background = UiKit.cardDrawable(Color.parseColor("#1E1B4B"), Color.parseColor("#6366F1"), 1, 3f, this@MainActivity)
+                    setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { bottomMargin = UiKit.dp(this@MainActivity, 3) }
+                }
+                val link3 = TextView(this).apply {
+                    text = "🛍️ Buy Products Online"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE); gravity = Gravity.CENTER
+                    background = UiKit.cardDrawable(Color.parseColor("#3B1B06"), Color.parseColor("#D97706"), 1, 3f, this@MainActivity)
+                    setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                mockupFrame.addView(link1)
+                mockupFrame.addView(link2)
+                mockupFrame.addView(link3)
+            }
+            "digital_product" -> {
+                val nav = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                nav.addView(TextView(this).apply { text = "💻 DIGI STORE"; textSize = 8f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#F59E0B")); layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f) })
+                nav.addView(TextView(this).apply { text = "⚡ Instant"; textSize = 7.5f; setTextColor(Color.parseColor("#FCD34D")) })
+                mockupFrame.addView(nav)
+
+                val fileCard = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#261706"), Color.parseColor("#D97706"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                val pdfIcon = TextView(this).apply {
+                    text = "📄\nPDF"
+                    textSize = 6f
+                    gravity = Gravity.CENTER
+                    setTextColor(Color.WHITE)
+                    background = UiKit.cardDrawable(Color.parseColor("#B45309"), Color.TRANSPARENT, 0, 2f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 2))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { rightMargin = UiKit.dp(this@MainActivity, 4) }
+                }
+                val fileDetails = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+                }
+                fileDetails.addView(TextView(this).apply { text = "Ultimate Guide (PDF)"; textSize = 7.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE) })
+                fileDetails.addView(TextView(this).apply { text = "₹199 • Instant Link"; textSize = 6.5f; setTextColor(Color.parseColor("#34D399")) })
+                fileCard.addView(pdfIcon)
+                fileCard.addView(fileDetails)
+                mockupFrame.addView(fileCard)
+
+                val downloadCta = TextView(this).apply {
+                    text = "⚡ Pay via UPI & Auto Download"
+                    textSize = 6.5f
+                    typeface = Typeface.DEFAULT_BOLD
+                    setTextColor(Color.WHITE)
+                    gravity = Gravity.CENTER
+                    background = UiKit.cardDrawable(Color.parseColor("#B45309"), Color.TRANSPARENT, 0, 3f, this@MainActivity)
+                    setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                mockupFrame.addView(downloadCta)
+            }
+            "blogger" -> {
+                val nav = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                nav.addView(TextView(this).apply { text = "✍️ THE BLOG"; textSize = 8f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#EC4899")); layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f) })
+                nav.addView(TextView(this).apply { text = "Daily Articles"; textSize = 6.5f; setTextColor(Color.parseColor("#94A3B8")) })
+                mockupFrame.addView(nav)
+
+                val articleBox = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#1C0C1B"), Color.parseColor("#BE185D"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                articleBox.addView(TextView(this).apply { text = "TECH • 5 MIN READ"; textSize = 6f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#F472B6")) })
+                articleBox.addView(TextView(this).apply { text = "Future of Web Apps in 2026"; textSize = 7.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE) })
+                articleBox.addView(TextView(this).apply { text = "How creators build fast sites..."; textSize = 6f; setTextColor(Color.parseColor("#CBD5E1")) })
+                mockupFrame.addView(articleBox)
+
+                val recent = TextView(this).apply {
+                    text = "📰 Latest: 10 Coding Productivity Tips\n📰 Growth: SEO Best Practices"
+                    textSize = 6f
+                    setTextColor(Color.parseColor("#94A3B8"))
+                    background = UiKit.cardDrawable(Color.parseColor("#0F172A"), Color.parseColor("#1E293B"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                mockupFrame.addView(recent)
+            }
+            "shop" -> {
+                val nav = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                nav.addView(TextView(this).apply { text = "🏬 APNA STORE"; textSize = 8f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#38BDF8")); layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f) })
+                nav.addView(TextView(this).apply { text = "🟢 Open"; textSize = 7.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#10B981")) })
+                mockupFrame.addView(nav)
+
+                val banner = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#082236"), Color.parseColor("#0284C7"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 3))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                banner.addView(TextView(this).apply { text = "Neighborhood Dukaan & Delivery"; textSize = 7f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE) })
+                banner.addView(TextView(this).apply { text = "📍 Main Road • WhatsApp Ordering"; textSize = 6f; setTextColor(Color.parseColor("#7DD3FC")) })
+                mockupFrame.addView(banner)
+
+                val itemsRow = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                val it1 = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#0F172A"), Color.parseColor("#1E293B"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = UiKit.dp(this@MainActivity, 3) }
+                }
+                it1.addView(TextView(this).apply { text = "🌾 Atta 5kg"; textSize = 6.5f; setTextColor(Color.WHITE) })
+                it1.addView(TextView(this).apply { text = "₹220"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#10B981")) })
+                itemsRow.addView(it1)
+
+                val it2 = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#0F172A"), Color.parseColor("#1E293B"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 2))
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { leftMargin = UiKit.dp(this@MainActivity, 3) }
+                }
+                it2.addView(TextView(this).apply { text = "🍚 Rice 1kg"; textSize = 6.5f; setTextColor(Color.WHITE) })
+                it2.addView(TextView(this).apply { text = "₹110"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#10B981")) })
+                itemsRow.addView(it2)
+
+                mockupFrame.addView(itemsRow)
+            }
+            "display_store" -> {
+                val nav = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                nav.addView(TextView(this).apply { text = "🏷️ SHOWROOM"; textSize = 8f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#8B5CF6")); layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f) })
+                nav.addView(TextView(this).apply { text = "Catalog"; textSize = 6.5f; setTextColor(Color.parseColor("#C4B5FD")) })
+                mockupFrame.addView(nav)
+
+                val showcase = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = UiKit.cardDrawable(Color.parseColor("#1B1238"), Color.parseColor("#6D28D9"), 1, 3f, this@MainActivity)
+                    setPadding(UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 4)
+                    }
+                }
+                showcase.addView(TextView(this).apply { text = "🛋️ Luxury Sofa Set"; textSize = 7.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.WHITE) })
+                showcase.addView(TextView(this).apply { text = "Model #RF-804 • Solid Wood"; textSize = 6f; setTextColor(Color.parseColor("#DDD6FE")) })
+                showcase.addView(TextView(this).apply { text = "₹18,500 (Direct Deal)"; textSize = 6.5f; typeface = Typeface.DEFAULT_BOLD; setTextColor(Color.parseColor("#34D399")) })
+                mockupFrame.addView(showcase)
+
+                val inquiryBtn = TextView(this).apply {
+                    text = "💬 Inquire on WhatsApp"
+                    textSize = 6.5f
+                    typeface = Typeface.DEFAULT_BOLD
+                    setTextColor(Color.WHITE)
+                    gravity = Gravity.CENTER
+                    background = UiKit.cardDrawable(Color.parseColor("#15803D"), Color.TRANSPARENT, 0, 3f, this@MainActivity)
+                    setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                mockupFrame.addView(inquiryBtn)
+            }
+            else -> {
+                val generic = TextView(this).apply {
+                    text = "🌐 ${cat.title}\n${cat.description}"
+                    textSize = 7f
+                    setTextColor(Color.parseColor("#CBD5E1"))
+                }
+                mockupFrame.addView(generic)
+            }
+        }
+
+        return mockupFrame
+    }
+
+    private fun createCategoryRectGridCard(cat: WebsiteCategory, isActive: Boolean): View {
         val card = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             background = UiKit.cardDrawable(
                 bgColor = if (isActive) Color.parseColor("#0C202F") else Color.parseColor("#0E1626"),
-                strokeColor = if (isActive) Color.parseColor("#00F0FF") else Color.parseColor("#1B2940"),
+                strokeColor = if (isActive) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
                 strokeWidthDp = if (isActive) 2 else 1,
                 radiusDp = 6f, // RECTANGULAR BOX
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14))
+            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8))
+        }
+
+        // Top Header Row: Icon + Title (weight 1) + Status/Tag Badge
+        val topRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 12)
+                bottomMargin = UiKit.dp(this@MainActivity, 4)
             }
         }
 
-        // Header Row: Rectangular Icon Box + Title/Subtitle (weight 1) + Status Badge
-        val topRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 10)
-            }
-        }
-
-        // Rectangular Icon Box
-        val iconBox = TextView(this).apply {
-            text = cat.icon
-            textSize = 22f
-            gravity = Gravity.CENTER
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#152238"),
-                strokeColor = Color.parseColor(cat.accentColor),
-                strokeWidthDp = 1,
-                radiusDp = 6f, // RECTANGULAR BOX
-                context = this@MainActivity
-            )
-            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 46), UiKit.dp(this@MainActivity, 46)).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 12)
-            }
-        }
-        topRow.addView(iconBox)
-
-        val titleCol = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 8)
-            }
-        }
         val titleView = TextView(this).apply {
-            text = cat.title
-            textSize = 14f
+            text = "${cat.icon} ${cat.title}"
+            textSize = 11.5f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
+            maxLines = 1
+            ellipsize = android.text.TextUtils.TruncateAt.END
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 4)
+            }
         }
-        val subView = TextView(this).apply {
-            text = cat.subtitle
-            textSize = 11f
-            setTextColor(Color.parseColor("#38BDF8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
-        }
-        titleCol.addView(titleView)
-        titleCol.addView(subView)
-        topRow.addView(titleCol)
+        topRow.addView(titleView)
 
-        // Status Badge (Rectangular)
         val statusBadge = TextView(this).apply {
             text = if (isActive) "✓ ACTIVE" else cat.badge
-            textSize = 10f
+            textSize = 8.5f
             typeface = Typeface.MONOSPACE
             setTextColor(if (isActive) Color.parseColor("#10B981") else Color.parseColor("#94A3B8"))
             background = UiKit.cardDrawable(
                 bgColor = if (isActive) Color.parseColor("#063321") else Color.parseColor("#141D2E"),
                 strokeColor = if (isActive) Color.parseColor("#10B981") else Color.parseColor("#25354F"),
                 strokeWidthDp = 1,
-                radiusDp = 4f, // RECTANGULAR BOX
+                radiusDp = 3f, // RECTANGULAR BOX
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4))
+            setPadding(UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 2))
         }
         topRow.addView(statusBadge)
         card.addView(topRow)
 
-        // Rectangular Description & Key Features Box
-        val descBox = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#060B14"),
-                strokeColor = Color.parseColor("#192438"),
-                strokeWidthDp = 1,
-                radiusDp = 4f, // RECTANGULAR BOX
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 8))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 10)
-            }
-        }
-        val descText = TextView(this).apply {
-            text = cat.description
-            textSize = 11.5f
-            setTextColor(Color.parseColor("#CBD5E1"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-        }
-        descBox.addView(descText)
+        // Visual Homepage Screenshot Mockup Box
+        val mockupView = createCategoryScreenshotMockup(cat)
+        card.addView(mockupView)
 
-        // Bullets
-        for (bullet in cat.bullets) {
-            val bRow = TextView(this).apply {
-                text = "✓  $bullet"
-                textSize = 10.5f
-                setTextColor(Color.parseColor("#94A3B8"))
-                setPadding(0, UiKit.dp(this@MainActivity, 1), 0, UiKit.dp(this@MainActivity, 1))
-            }
-            descBox.addView(bRow)
-        }
-        card.addView(descBox)
-
-        // Action Buttons Row (Rectangular Boxes)
-        val actionRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        }
-
-        // Apply Button
+        // Action Buttons: Apply + Demo (Compact Rectangular)
         val applyBtn = Button(this).apply {
             if (isActive) {
-                text = "✓ Currently Active Website Type"
+                text = "✓ CURRENTLY ACTIVE"
                 setTextColor(Color.parseColor("#A7F3D0"))
                 background = UiKit.cardDrawable(
                     bgColor = Color.parseColor("#064E3B"),
@@ -2157,7 +2479,7 @@ class MainActivity : Activity() {
                 )
                 isEnabled = false
             } else {
-                text = "⚡ Apply This Website Type"
+                text = "⚡ Apply Theme"
                 setTextColor(Color.WHITE)
                 background = UiKit.gradientButtonDrawable(
                     startColor = Color.parseColor("#2563EB"),
@@ -2170,25 +2492,28 @@ class MainActivity : Activity() {
                     applyWebsiteCategory(cat)
                 }
             }
-            textSize = 11.5f
+            textSize = 10.5f
             typeface = Typeface.DEFAULT_BOLD
-            layoutParams = LinearLayout.LayoutParams(0, UiKit.dp(this@MainActivity, 40), 1f).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 8)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                UiKit.dp(this@MainActivity, 32)
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 4)
             }
         }
-        actionRow.addView(applyBtn)
+        card.addView(applyBtn)
 
-        // Demo Button
-        val demoBtn = UiKit.createSecondaryButton(this, "🌐 Demo ↗", cat.accentColor) {
+        val demoBtn = UiKit.createSecondaryButton(this, "🌐 Live Demo ↗", cat.accentColor) {
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(cat.demoUrl)))
             } catch (e: Exception) {
                 Toast.makeText(this@MainActivity, "Browser could not be opened", Toast.LENGTH_SHORT).show()
             }
         }.apply {
+            textSize = 9.5f
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                UiKit.dp(this@MainActivity, 40)
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                UiKit.dp(this@MainActivity, 26)
             )
             background = UiKit.cardDrawable(
                 bgColor = Color.parseColor("#121826"),
@@ -2197,11 +2522,10 @@ class MainActivity : Activity() {
                 radiusDp = 6f, // RECTANGULAR BOX
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 12), 0, UiKit.dp(this@MainActivity, 12), 0)
+            setPadding(0, 0, 0, 0)
         }
-        actionRow.addView(demoBtn)
+        card.addView(demoBtn)
 
-        card.addView(actionRow)
         return card
     }
 
@@ -2243,7 +2567,7 @@ class MainActivity : Activity() {
             setTextColor(Color.parseColor("#38BDF8"))
         }
         val infoSub = TextView(this).apply {
-            text = "Yahan se aap jo category select karenge, website usi ke according layout, buttons aur behavior adopt kar legi:"
+            text = "Har theme ke home page ka screenshot mockup niche diya gaya hai. Jo look aapko pasand ho use 1-click me Apply karein:"
             textSize = 11f
             setTextColor(Color.parseColor("#94A3B8"))
             setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
@@ -2257,9 +2581,46 @@ class MainActivity : Activity() {
             ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_website_category", "ecommerce")
             ?: "ecommerce").trim().lowercase()
 
-        for (cat in websiteCategories) {
-            val isActive = (currentActiveCat == cat.id.lowercase())
-            container.addView(createCategoryRectCard(cat, isActive))
+        // 2 Rectangular Blocks Per Row (2-Column Grid)
+        for (pair in websiteCategories.chunked(2)) {
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    bottomMargin = UiKit.dp(this@MainActivity, 10)
+                }
+            }
+
+            val cat1 = pair[0]
+            val isActive1 = (currentActiveCat == cat1.id.lowercase())
+            val card1 = createCategoryRectGridCard(cat1, isActive1).apply {
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                    rightMargin = UiKit.dp(this@MainActivity, 5)
+                }
+            }
+            row.addView(card1)
+
+            if (pair.size > 1) {
+                val cat2 = pair[1]
+                val isActive2 = (currentActiveCat == cat2.id.lowercase())
+                val card2 = createCategoryRectGridCard(cat2, isActive2).apply {
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                        leftMargin = UiKit.dp(this@MainActivity, 5)
+                    }
+                }
+                row.addView(card2)
+            } else {
+                val spacer = View(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                        leftMargin = UiKit.dp(this@MainActivity, 5)
+                    }
+                }
+                row.addView(spacer)
+            }
+
+            container.addView(row)
         }
 
         scroll.addView(container)
