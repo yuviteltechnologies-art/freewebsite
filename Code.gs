@@ -68,10 +68,13 @@ function doGet(e) {
     }
 
     // ----------------------------------------------------
-    // ACTION 6: Android Admin App - Update Site Settings
+    // ACTION 6: Android Admin App - Update Site Settings & Logo Upload
     // ----------------------------------------------------
     if (action === "updateSettings") {
       return handleUpdateSettings(ss, params);
+    }
+    if (action === "uploadImage" || action === "uploadLogo") {
+      return handleUploadImage(ss, params);
     }
 
     // ----------------------------------------------------
@@ -167,6 +170,8 @@ function doPost(e) {
       return handleGetAdminDashboard(ss, params);
     } else if (action === "updateSettings") {
       return handleUpdateSettings(ss, params);
+    } else if (action === "uploadImage" || action === "uploadLogo") {
+      return handleUploadImage(ss, params);
     } else if (action === "updateProduct") {
       return handleUpdateProduct(ss, params);
     } else if (action === "addProduct") {
@@ -647,6 +652,75 @@ function handleUpdateSettings(ss, params) {
     updated_keys: updatedKeys,
     settings: getSheetSettings(ss)
   });
+}
+
+/**
+ * 6B. Android Admin App: Upload Store Logo / Icon to Google Drive
+ */
+function handleUploadImage(ss, params) {
+  try {
+    var base64Data = params.base64 || params.data || "";
+    var filename = params.filename || ("store_logo_" + new Date().getTime() + ".jpg");
+    var mimeType = params.mimeType || "image/jpeg";
+
+    if (!base64Data) {
+      return returnJsonResponse({ success: false, error: "Missing image base64 data" });
+    }
+
+    if (base64Data.indexOf(",") > -1) {
+      base64Data = base64Data.split(",")[1];
+    }
+
+    var decoded = Utilities.base64Decode(base64Data);
+    var blob = Utilities.newBlob(decoded, mimeType, filename);
+
+    var folderName = "SheetStore_Uploads";
+    var folders = DriveApp.getFoldersByName(folderName);
+    var folder;
+    if (folders.hasNext()) {
+      folder = folders.next();
+    } else {
+      folder = DriveApp.createFolder(folderName);
+    }
+
+    var file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+    var fileId = file.getId();
+    // High-speed Google CDN direct embedding URL
+    var fileUrl = "https://lh3.googleusercontent.com/d/" + fileId;
+
+    // Automatically update Settings sheet if updateLogo is true or key is logo_url
+    if (params.updateLogo === true || params.updateLogo === "true" || params.setting_key === "logo_url") {
+      var settingsSheet = ss.getSheetByName("Settings");
+      if (!settingsSheet) {
+        settingsSheet = ss.insertSheet("Settings");
+        settingsSheet.appendRow(["key", "value", "description"]);
+      }
+      var data = settingsSheet.getDataRange().getValues();
+      var updated = false;
+      for (var r = 1; r < data.length; r++) {
+        if (String(data[r][0]).trim().toLowerCase() === "logo_url") {
+          settingsSheet.getRange(r + 1, 2).setValue(fileUrl);
+          updated = true;
+          break;
+        }
+      }
+      if (!updated) {
+        settingsSheet.appendRow(["logo_url", fileUrl, "Custom logo image URL"]);
+      }
+      SpreadsheetApp.flush();
+    }
+
+    return returnJsonResponse({
+      success: true,
+      message: "Logo uploaded to Google Drive successfully!",
+      fileId: fileId,
+      url: fileUrl
+    });
+  } catch (err) {
+    return returnJsonResponse({ success: false, error: err.toString() });
+  }
 }
 
 /**

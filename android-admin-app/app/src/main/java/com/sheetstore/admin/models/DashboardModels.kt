@@ -48,7 +48,9 @@ data class Product(
 data class ApiResponse(
     @SerializedName("success") val success: Boolean,
     @SerializedName("message") val message: String?,
-    @SerializedName("error") val error: String?
+    @SerializedName("error") val error: String?,
+    @SerializedName("url") val url: String? = null,
+    @SerializedName("fileId") val fileId: String? = null
 )
 
 data class AuthUser(

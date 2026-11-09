@@ -20,6 +20,12 @@ interface ApiService {
     ): Call<ApiResponse>
 
     @POST
+    fun uploadImage(
+        @Url fullUrl: String,
+        @Body body: Map<String, String>
+    ): Call<ApiResponse>
+
+    @POST
     fun updateProduct(
         @Url fullUrl: String,
         @Body body: Map<String, String>
