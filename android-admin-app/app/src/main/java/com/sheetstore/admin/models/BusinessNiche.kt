@@ -59,10 +59,23 @@ object NicheCatalog {
             defaultBadge = "🕉️ PRAN PRATISHTHIT & CERTIFIED REMEDIES"
         ),
         BusinessNiche(
+            id = "linktree",
+            emoji = "🌲",
+            title = "Linktree & Digital Visiting Card",
+            subtitle = "Bio link, WhatsApp card, social profiles, payment QR & mini store",
+            recommendedThemeId = "neon-violet",
+            recommendedThemeName = "Cyberpunk Neon Violet",
+            features = listOf("All-in-one Bio Links", "1-Tap WhatsApp Contact", "Direct UPI QR Payment", "Save Contact (vCard)"),
+            defaultHeroTitle = "Connect With Me — All Links & Products in One Place",
+            defaultHeroSubtitle = "Follow my social handles, browse top products, and pay directly via UPI.",
+            defaultTagline = "Official Bio & Digital Business Card",
+            defaultBadge = "🌲 VERIFIED DIGITAL BIO CARD"
+        ),
+        BusinessNiche(
             id = "portfolio",
             emoji = "💼",
-            title = "Portfolio & Agency Services",
-            subtitle = "Freelancers, designers, developers, consultants & client bookings",
+            title = "Personal Website & Agency Portfolio",
+            subtitle = "Freelancers, developers, designers, consultants & client bookings",
             recommendedThemeId = "emerald-pro",
             recommendedThemeName = "Emerald Business Pro",
             features = listOf("Service Packages", "Case Study Showcase", "Client WhatsApp Inquiries", "High-Trust B2B Branding"),

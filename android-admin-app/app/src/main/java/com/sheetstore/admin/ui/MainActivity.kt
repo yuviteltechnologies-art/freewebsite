@@ -67,7 +67,8 @@ class MainActivity : Activity() {
         val subtitle: String,
         val description: String,
         val bestFor: String,
-        val colors: List<String>
+        val colors: List<String>,
+        val matchedNiches: List<String>
     )
 
     private val availableTemplates = listOf(
@@ -77,7 +78,8 @@ class MainActivity : Activity() {
             subtitle = "Tech, SaaS & Digital Store (Default)",
             description = "Sleek dark slate aesthetic with electric blue glows and glassmorphism.",
             bestFor = "Best for: Software, digital goods, web kits & modern agencies",
-            colors = listOf("#080C1A", "#2563EB", "#38BDF8")
+            colors = listOf("#080C1A", "#2563EB", "#38BDF8"),
+            matchedNiches = listOf("digital", "portfolio", "ecommerce", "linktree")
         ),
         WebTheme(
             id = "vedic-gold",
@@ -85,7 +87,8 @@ class MainActivity : Activity() {
             subtitle = "Vastu, Astrology & Luxury Spiritual",
             description = "Majestic dark plum maroon with radiant sun gold and warm ambient lighting.",
             bestFor = "Best for: Vastu Shastra, astrology, gemstones, spiritual items & luxury",
-            colors = listOf("#090510", "#F59E0B", "#D97706")
+            colors = listOf("#090510", "#F59E0B", "#D97706"),
+            matchedNiches = listOf("vastu")
         ),
         WebTheme(
             id = "minimal-light",
@@ -93,23 +96,26 @@ class MainActivity : Activity() {
             subtitle = "Modern D2C Storefront (White)",
             description = "Crisp white minimalist design with high-contrast text & emerald green accents.",
             bestFor = "Best for: Clean retail, e-commerce, physical products & fashion",
-            colors = listOf("#F8FAFC", "#0F172A", "#059669")
+            colors = listOf("#F8FAFC", "#0F172A", "#059669"),
+            matchedNiches = listOf("ecommerce", "linktree", "portfolio")
         ),
         WebTheme(
             id = "neon-violet",
             name = "👾 Cyberpunk Neon Violet",
-            subtitle = "Creators, AI Prompts & Gaming",
+            subtitle = "Creators, AI Prompts & Bio Links",
             description = "Pitch black background with radiant violet and neon pink gradients.",
-            bestFor = "Best for: AI prompts, video LUTs, Canva templates & gaming assets",
-            colors = listOf("#030107", "#8B5CF6", "#EC4899")
+            bestFor = "Best for: Bio link cards, AI prompts, Canva templates & gaming assets",
+            colors = listOf("#030107", "#8B5CF6", "#EC4899"),
+            matchedNiches = listOf("linktree", "digital")
         ),
         WebTheme(
             id = "emerald-pro",
             name = "🌿 Emerald Business Pro",
             subtitle = "Finance & High-Trust B2B",
             description = "Corporate dark pine slate with vibrant mint green trust badges.",
-            bestFor = "Best for: Financial consulting, ebooks, coaching & corporate sales",
-            colors = listOf("#03140F", "#10B981", "#047857")
+            bestFor = "Best for: Freelancers, web agency, consulting, ebooks & corporate sales",
+            colors = listOf("#03140F", "#10B981", "#047857"),
+            matchedNiches = listOf("portfolio", "ecommerce", "digital")
         ),
         WebTheme(
             id = "noolam-saree",
@@ -117,7 +123,8 @@ class MainActivity : Activity() {
             subtitle = "Sarees, Ethnic Wear & Bridal Couture",
             description = "Royal South Indian temple sanctum aesthetic with 24K gold zari and Korvai borders.",
             bestFor = "Best for: Silk sarees, handloom, lehengas, bridal jewellery & ethnic fashion",
-            colors = listOf("#140204", "#D4AF37", "#500A13")
+            colors = listOf("#140204", "#D4AF37", "#500A13"),
+            matchedNiches = listOf("saree", "ecommerce")
         )
     )
 
@@ -199,7 +206,7 @@ class MainActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        if (isUserLoggedIn() && isThemeSelected()) {
+        if (isUserLoggedIn() && isOnboardingCompleted()) {
             fetchDashboard(silent = true)
         }
     }
@@ -207,7 +214,7 @@ class MainActivity : Activity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
-        if (isUserLoggedIn() && isThemeSelected()) {
+        if (isUserLoggedIn() && isOnboardingCompleted()) {
             topBarView.visibility = View.VISIBLE
             navBar.visibility = View.VISIBLE
             handleIntentTab(intent)
@@ -381,7 +388,7 @@ class MainActivity : Activity() {
         return NicheCatalog.getNicheById(getActiveNicheId())
     }
 
-    private fun createOnboardingView(): View {
+    private fun createOnboardingView(isFromDashboard: Boolean = false): View {
         val scroll = ScrollView(this).apply {
             setBackgroundColor(Color.parseColor("#0B0F19"))
         }
@@ -391,10 +398,29 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 24), UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 40))
         }
 
+        // Back button if opened from dashboard
+        if (isFromDashboard) {
+            val backRow = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+            }
+            val backBtn = TextView(this).apply {
+                text = "← Back to Dashboard"
+                textSize = 12.5f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#38BDF8"))
+                setOnClickListener {
+                    showDashboardHome()
+                }
+            }
+            backRow.addView(backBtn)
+            container.addView(backRow)
+        }
+
         // Header Badge
         val topBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 INITIAL SETUP WIZARD",
+            text = "✨ BUSINESS SEGMENT SELECTION",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -403,7 +429,7 @@ class MainActivity : Activity() {
 
         // Title
         val titleView = TextView(this).apply {
-            text = "Apna Business Niche Chunein"
+            text = "Apna Business Segment Chunein"
             textSize = 21f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
@@ -413,7 +439,7 @@ class MainActivity : Activity() {
 
         // Subtitle
         val subtitleView = TextView(this).apply {
-            text = "SheetStore Pro multi-purpose hai! Aap kis tarah ki website chalana chahte hain? Chuniye, aur app automatic matching theme aur copy set kar dega:"
+            text = "SheetStore Pro multi-purpose hai! Aap kis category ka business chalate hain? Chuniye, aur app automatic matching website layout aur copy set kar dega:"
             textSize = 12.5f
             setTextColor(Color.parseColor("#94A3B8"))
             setLineSpacing(6f, 1.15f)
@@ -549,7 +575,7 @@ class MainActivity : Activity() {
         // Action Button: Save Niche & Apply Recommended Defaults
         val continueBtn = UiKit.createPrimaryButton(
             context = this,
-            btnText = "Apply Niche & Launch Store ➔",
+            btnText = "Apply Segment & Launch Store ➔",
             startColor = "#2563EB",
             endColor = "#00F0FF"
         ) {
@@ -561,14 +587,9 @@ class MainActivity : Activity() {
             applyWebsiteTemplate(chosen.recommendedThemeId, chosen.recommendedThemeName)
             saveNicheDefaultsToSheet(chosen)
 
-            Toast.makeText(this, "🎉 '${chosen.title}' activated! Matched theme applied.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "🎉 '${chosen.title}' activated! Matched website theme applied.", Toast.LENGTH_LONG).show()
 
-            contentContainer.removeAllViews()
-            if (!isSheetVerified()) {
-                showFullScreenLoginScreen()
-            } else {
-                showDashboardHome()
-            }
+            showDashboardHome()
         }
         container.addView(continueBtn)
 
@@ -702,8 +723,8 @@ class MainActivity : Activity() {
     private fun checkAuthAndNavigate() {
         if (!isUserLoggedIn()) {
             showFullScreenLoginScreen()
-        } else if (!isThemeSelected()) {
-            showFullScreenThemeSelection()
+        } else if (!isOnboardingCompleted()) {
+            showFullScreenSegmentSelection()
         } else {
             showDashboardHome()
         }
@@ -914,8 +935,8 @@ class MainActivity : Activity() {
                     if (success) {
                         val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
                         prefs.edit().putBoolean("is_sheet_verified", true).apply()
-                        if (!isThemeSelected()) {
-                            showFullScreenThemeSelection()
+                        if (!isOnboardingCompleted()) {
+                            showFullScreenSegmentSelection()
                         } else {
                             showDashboardHome()
                         }
@@ -985,20 +1006,20 @@ class MainActivity : Activity() {
                 bgColor = bgCol,
                 strokeColor = accentCol,
                 strokeWidthDp = 1,
-                radiusDp = 12f,
+                radiusDp = 10f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 10))
+            setPadding(UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 8))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                topMargin = UiKit.dp(this@MainActivity, 8)
+                topMargin = UiKit.dp(this@MainActivity, 6)
                 bottomMargin = UiKit.dp(this@MainActivity, 8)
             }
         }
 
-        // Mock Browser Address Bar
+        // Mock Browser Address Bar (Compact)
         val urlBar = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
@@ -1006,86 +1027,75 @@ class MainActivity : Activity() {
                 bgColor = if (isLight) Color.parseColor("#E2E8F0") else Color.parseColor("#151F33"),
                 strokeColor = Color.TRANSPARENT,
                 strokeWidthDp = 0,
-                radiusDp = 6f,
+                radiusDp = 5f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4))
+            setPadding(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 3), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 3))
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 8)
+                bottomMargin = UiKit.dp(this@MainActivity, 6)
             }
         }
+        val lockDot = View(this).apply {
+            background = UiKit.cardDrawable(Color.parseColor("#10B981"), Color.TRANSPARENT, 0, 3f, this@MainActivity)
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6)).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        urlBar.addView(lockDot)
+
         val lockText = TextView(this).apply {
-            text = "🌐 https://yourstore.github.io/store"
-            textSize = 9.5f
+            text = "🔒 https://yourstore.com (${theme.name.take(18)})"
+            textSize = 8.5f
             setTextColor(if (isLight) Color.parseColor("#475569") else Color.parseColor("#94A3B8"))
         }
         urlBar.addView(lockText)
         box.addView(urlBar)
 
-        // Mock Website Navbar
-        val mockNav = LinearLayout(this).apply {
+        // Mock Website Compact Hero / Header Bar
+        val mockHeroRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-        }
-        val mockBrand = TextView(this).apply {
-            text = when (theme.id) {
-                "noolam-saree" -> "🥻 NOOLAM SILK STUDIO"
-                "vedic-gold" -> "🕉️ VEDIC STORE"
-                "neon-violet" -> "👾 CREATOR HUB"
-                "emerald-pro" -> "🌿 PRO CONSULTING"
-                "minimal-light" -> "🛍️ D2C STORE"
-                else -> "⚡ DIGITAL STORE"
-            }
-            textSize = 11f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(if (isLight) Color.parseColor("#0F172A") else Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-        }
-        val mockCart = TextView(this).apply {
-            text = "🛒 CART (1)"
-            textSize = 9.5f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(accentCol)
-        }
-        mockNav.addView(mockBrand)
-        mockNav.addView(mockCart)
-        box.addView(mockNav)
-
-        // Mock Website Hero Banner
-        val mockHero = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER_HORIZONTAL
             background = UiKit.cardDrawable(
                 bgColor = if (isLight) Color.parseColor("#F1F5F9") else Color.parseColor("#101A2E"),
                 strokeColor = accentCol,
                 strokeWidthDp = 1,
-                radiusDp = 8f,
+                radiusDp = 6f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 8)
-            }
+            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 6))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         }
-        val mockHeroTitle = TextView(this).apply {
+
+        val brandCol = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        val mockBrand = TextView(this).apply {
             text = when (theme.id) {
-                "noolam-saree" -> "Bridal Silk Sarees & Ethnic Handloom"
-                "vedic-gold" -> "Energized Vastu Yantras & Gemstones"
-                "neon-violet" -> "AI Prompts, Notion Kits & 3D Assets"
-                "emerald-pro" -> "Financial Blueprints & Wealth Consulting"
-                "minimal-light" -> "Modern D2C Apparel & Clean Lifestyle"
-                else -> "Instant Download Digital Products & Software"
+                "noolam-saree" -> "🥻 NOOLAM Silk Studio"
+                "vedic-gold" -> "🕉️ Vedic Vastu Store"
+                "neon-violet" -> "👾 Bio Links & Creator"
+                "emerald-pro" -> "🌿 B2B Consulting Pro"
+                "minimal-light" -> "🛍️ Clean D2C Storefront"
+                else -> "⚡ Cyber Digital Store"
             }
-            textSize = 11.5f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(lightCol)
-            gravity = Gravity.CENTER
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-        }
-        val mockHeroBtn = TextView(this).apply {
-            text = "🛍️ Buy with Instant UPI ➔"
             textSize = 10f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(if (isLight) Color.parseColor("#0F172A") else Color.WHITE)
+        }
+        brandCol.addView(mockBrand)
+
+        val mockTag = TextView(this).apply {
+            text = "Live Website Mockup Preview"
+            textSize = 8f
+            setTextColor(lightCol)
+        }
+        brandCol.addView(mockTag)
+        mockHeroRow.addView(brandCol)
+
+        val mockPayBtn = TextView(this).apply {
+            text = "⚡ Instant UPI ➔"
+            textSize = 8.5f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
@@ -1093,259 +1103,22 @@ class MainActivity : Activity() {
                 bgColor = accentCol,
                 strokeColor = Color.TRANSPARENT,
                 strokeWidthDp = 0,
-                radiusDp = 6f,
+                radiusDp = 4f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 5), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 5))
+            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 4))
         }
-        mockHero.addView(mockHeroTitle)
-        mockHero.addView(mockHeroBtn)
-        box.addView(mockHero)
-
-        // Mock Product Row Preview
-        val prodRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-        }
-        for (i in 1..2) {
-            val prodCard = LinearLayout(this).apply {
-                orientation = LinearLayout.VERTICAL
-                background = UiKit.cardDrawable(
-                    bgColor = if (isLight) Color.WHITE else Color.parseColor("#152033"),
-                    strokeColor = Color.parseColor("#334155"),
-                    strokeWidthDp = 1,
-                    radiusDp = 6f,
-                    context = this@MainActivity
-                )
-                setPadding(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6))
-                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                    if (i == 1) rightMargin = UiKit.dp(this@MainActivity, 6)
-                }
-            }
-            val pName = TextView(this).apply {
-                text = if (i == 1) "Featured Product #1" else "Best Seller Item #2"
-                textSize = 9.5f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(if (isLight) Color.parseColor("#0F172A") else Color.WHITE)
-            }
-            val pPrice = TextView(this).apply {
-                text = if (i == 1) "₹499.00" else "₹999.00"
-                textSize = 9f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(accentCol)
-            }
-            prodCard.addView(pName)
-            prodCard.addView(pPrice)
-            prodRow.addView(prodCard)
-        }
-        box.addView(prodRow)
+        mockHeroRow.addView(mockPayBtn)
+        box.addView(mockHeroRow)
 
         return box
     }
 
-    private fun showFullScreenThemeSelection(isFromSettings: Boolean = false) {
+    private fun showFullScreenSegmentSelection(isFromDashboard: Boolean = false) {
         topBarView.visibility = View.GONE
         navBar.visibility = View.GONE
         contentContainer.removeAllViews()
-
-        val scroll = ScrollView(this).apply {
-            setBackgroundColor(Color.parseColor("#0B0F19"))
-            layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-        }
-
-        val container = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 28), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 40))
-        }
-
-        val stepBadge = UiKit.createPillBadge(
-            context = this,
-            text = "🌐 LIVE WEBSITE STOREFRONT THEME SETUP",
-            textColor = Color.parseColor("#00F0FF"),
-            bgColor = Color.parseColor("#0C2A4A"),
-            borderColor = Color.parseColor("#00F0FF")
-        )
-        container.addView(stepBadge)
-
-        val titleView = TextView(this).apply {
-            text = "Select Website Theme (वेबसाइट की थीम)"
-            textSize = 21f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 4))
-        }
-        container.addView(titleView)
-
-        val subView = TextView(this).apply {
-            text = "Ye setting aapki live customer website (Storefront) ka design badal degi (App ka nahi). Niche har theme ka live website mockup screenshot preview dekhein aur apni dukan ke liye chunein:"
-            textSize = 12f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setLineSpacing(5f, 1.15f)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 18))
-        }
-        container.addView(subView)
-
-        val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
-        var selectedThemeId = prefs.getString("selected_theme_id", "modern-blue") ?: "modern-blue"
-        var selectedThemeName = "⚡ Modern Cyber Blue"
-
-        val themeCards = mutableListOf<Pair<WebTheme, LinearLayout>>()
-
-        for (theme in availableTemplates) {
-            val isSelected = (theme.id == selectedThemeId)
-            if (isSelected) selectedThemeName = theme.name
-
-            val card = LinearLayout(this).apply {
-                orientation = LinearLayout.VERTICAL
-                background = UiKit.cardDrawable(
-                    bgColor = if (isSelected) Color.parseColor("#152238") else Color.parseColor("#121826"),
-                    strokeColor = if (isSelected) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
-                    strokeWidthDp = if (isSelected) 2 else 1,
-                    radiusDp = 18f,
-                    context = this@MainActivity
-                )
-                setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16))
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                    bottomMargin = UiKit.dp(this@MainActivity, 16)
-                }
-            }
-
-            val topRow = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER_VERTICAL
-            }
-            val title = TextView(this).apply {
-                text = theme.name
-                textSize = 14.5f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(Color.WHITE)
-                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            }
-            topRow.addView(title)
-
-            val chkBadge = UiKit.createPillBadge(
-                context = this,
-                text = if (isSelected) "✓ SELECTED FOR WEBSITE" else "SELECT",
-                textColor = if (isSelected) Color.parseColor("#00F0FF") else Color.parseColor("#64748B"),
-                bgColor = if (isSelected) Color.parseColor("#0C2A4A") else Color.parseColor("#172033"),
-                borderColor = if (isSelected) Color.parseColor("#00F0FF") else Color.parseColor("#25334D")
-            )
-            topRow.addView(chkBadge)
-            card.addView(topRow)
-
-            val sub = TextView(this).apply {
-                text = theme.subtitle
-                textSize = 11f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(Color.parseColor("#38BDF8"))
-                setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4))
-            }
-            card.addView(sub)
-
-            val desc = TextView(this).apply {
-                text = theme.description
-                textSize = 11f
-                setTextColor(Color.parseColor("#94A3B8"))
-                setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-            }
-            card.addView(desc)
-
-            // VISUAL WEBSITE SCREENSHOT & MOCKUP PREVIEW
-            card.addView(createWebsiteMockupBox(theme))
-
-            // Action Button to view live demo in browser
-            val demoBtn = UiKit.createSecondaryButton(this, "🌐 Live Website Demo Kholein ↗", theme.colors[1]) {
-                val demoUrl = if (theme.id == "noolam-saree") {
-                    "https://yuviteltechnologies-art.github.io/freewebsite/saree-demo.html"
-                } else {
-                    "https://yuviteltechnologies-art.github.io/freewebsite/demo.html"
-                }
-                try {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(demoUrl)))
-                } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, "Browser could not be opened", Toast.LENGTH_SHORT).show()
-                }
-            }
-            demoBtn.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                UiKit.dp(this@MainActivity, 38)
-            ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 6)
-            }
-            card.addView(demoBtn)
-
-            val swatchRow = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER_VERTICAL
-            }
-            for (col in theme.colors) {
-                val circle = View(this).apply {
-                    background = UiKit.cardDrawable(
-                        bgColor = Color.parseColor(col),
-                        strokeColor = Color.parseColor("#334155"),
-                        strokeWidthDp = 1,
-                        radiusDp = 6f,
-                        context = this@MainActivity
-                    )
-                    layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 20), UiKit.dp(this@MainActivity, 20)).apply {
-                        rightMargin = UiKit.dp(this@MainActivity, 6)
-                    }
-                }
-                swatchRow.addView(circle)
-            }
-            card.addView(swatchRow)
-
-            card.setOnClickListener {
-                selectedThemeId = theme.id
-                selectedThemeName = theme.name
-                for ((t, c) in themeCards) {
-                    val sel = (t.id == selectedThemeId)
-                    c.background = UiKit.cardDrawable(
-                        bgColor = if (sel) Color.parseColor("#152238") else Color.parseColor("#121826"),
-                        strokeColor = if (sel) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
-                        strokeWidthDp = if (sel) 2 else 1,
-                        radiusDp = 18f,
-                        context = this@MainActivity
-                    )
-                    val r = c.getChildAt(0) as? LinearLayout
-                    val b = r?.getChildAt(1) as? TextView
-                    b?.text = if (sel) "✓ SELECTED FOR WEBSITE" else "SELECT"
-                    b?.setTextColor(if (sel) Color.parseColor("#00F0FF") else Color.parseColor("#64748B"))
-                }
-            }
-
-            themeCards.add(Pair(theme, card))
-            container.addView(card)
-        }
-
-        val proceedBtn = Button(this).apply {
-            text = "✨ Apply Website Theme & Launch Store ➔"
-            textSize = 13.5f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            background = UiKit.gradientButtonDrawable(
-                startColor = Color.parseColor("#2563EB"),
-                endColor = Color.parseColor("#00F0FF"),
-                radiusDp = 14f,
-                context = this@MainActivity
-            )
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 50)).apply {
-                topMargin = UiKit.dp(this@MainActivity, 12)
-            }
-            setOnClickListener {
-                val chosen = availableTemplates.find { it.id == selectedThemeId } ?: availableTemplates[0]
-                prefs.edit().putString("selected_theme_id", chosen.id).putBoolean("is_theme_selected", true).apply()
-
-                applyWebsiteTemplate(chosen.id, chosen.name)
-
-                Toast.makeText(this@MainActivity, "🎉 Website Theme '${chosen.name}' apply ho gaya! Live website par changes update ho gaye.", Toast.LENGTH_LONG).show()
-
-                showDashboardHome()
-            }
-        }
-        container.addView(proceedBtn)
-
-        scroll.addView(container)
-        contentContainer.addView(scroll)
+        contentContainer.addView(createOnboardingView(isFromDashboard))
     }
 
     // ==========================================
@@ -1883,15 +1656,15 @@ class MainActivity : Activity() {
                 bgColor = Color.parseColor("#152238"),
                 strokeColor = Color.parseColor("#00F0FF"),
                 strokeWidthDp = 1,
-                radiusDp = 20f,
+                radiusDp = 18f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 18))
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 14))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 20)
+                bottomMargin = UiKit.dp(this@MainActivity, 18)
             }
         }
 
@@ -1911,8 +1684,8 @@ class MainActivity : Activity() {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
         val nicheTitle = TextView(this).apply {
-            text = "Active Niche: ${activeNiche.title}"
-            textSize = 14f
+            text = "Active Segment: ${activeNiche.title}"
+            textSize = 13.5f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
         }
@@ -1929,22 +1702,21 @@ class MainActivity : Activity() {
         nicheBanner.addView(topRow)
 
         // Switch Niche Button
-        val switchNicheBtn = UiKit.createSecondaryButton(this, "🎯 Switch Business Niche / Wizard", "#00F0FF") {
-            contentContainer.removeAllViews()
-            contentContainer.addView(createOnboardingView())
+        val switchNicheBtn = UiKit.createSecondaryButton(this, "🎯 Switch Business Segment / Niche", "#00F0FF") {
+            showFullScreenSegmentSelection(isFromDashboard = true)
         }
         switchNicheBtn.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            topMargin = UiKit.dp(this@MainActivity, 12)
+            topMargin = UiKit.dp(this@MainActivity, 10)
         }
         nicheBanner.addView(switchNicheBtn)
         container.addView(nicheBanner)
 
-        // Section Title: 6 Ready-made Themes
+        // Section Title: Website Themes
         val heading = TextView(this).apply {
-            text = "🎨 6 Ready-Made Themes (1-Click Switcher)"
+            text = "🎨 Website Themes (वेबसाइट की थीम)"
             textSize = 16f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
@@ -1953,21 +1725,119 @@ class MainActivity : Activity() {
         container.addView(heading)
 
         val subtext = TextView(this).apply {
-            text = "Apni pasand ka ready-made theme select karein. Live website ka color scheme, font aur styling 1 click me update ho jayegi:"
-            textSize = 12f
+            text = "Live website ka theme aur layout badalne ke liye select karein. Default me aapke business segment ke themes dikh rahe hain:"
+            textSize = 11.5f
             setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 16))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
         }
         container.addView(subtext)
 
-        val currentActiveId = (dashboardData?.settings?.get("template_id") ?: "modern-blue").trim().lowercase()
-
-        // Render 6 Themes Cards
-        for (theme in availableTemplates) {
-            val isActive = (currentActiveId == theme.id)
-            val card = createTemplateCard(theme, isActive)
-            container.addView(card)
+        // Horizontal Niche Filter Chips Bar
+        val chipScroll = HorizontalScrollView(this).apply {
+            isHorizontalScrollBarEnabled = false
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 14)
+            }
         }
+
+        val chipRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+
+        data class NicheFilter(val id: String, val label: String)
+        val filterChips = mutableListOf(
+            NicheFilter(activeNiche.id, "🎯 My Niche (${activeNiche.id.uppercase()})"),
+            NicheFilter("all", "🌟 All Themes")
+        )
+        for (n in NicheCatalog.allNiches) {
+            if (n.id != activeNiche.id) {
+                filterChips.add(NicheFilter(n.id, "${n.emoji} ${n.title.take(15)}"))
+            }
+        }
+
+        var activeFilterId = activeNiche.id
+        val chipButtons = mutableListOf<Pair<String, TextView>>()
+        val themesContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+
+        fun renderThemes() {
+            themesContainer.removeAllViews()
+            val currentActiveId = (dashboardData?.settings?.get("template_id") ?: "modern-blue").trim().lowercase()
+
+            val filtered = if (activeFilterId == "all") {
+                availableTemplates
+            } else {
+                availableTemplates.filter { it.matchedNiches.contains(activeFilterId) }
+            }
+
+            if (filtered.isEmpty()) {
+                val emptyNotice = TextView(this@MainActivity).apply {
+                    text = "Is category ke liye themes jald hi add ho rahe hain. 'All Themes' chunein."
+                    textSize = 12f
+                    setTextColor(Color.parseColor("#94A3B8"))
+                    gravity = Gravity.CENTER
+                    setPadding(0, UiKit.dp(this@MainActivity, 20), 0, UiKit.dp(this@MainActivity, 20))
+                }
+                themesContainer.addView(emptyNotice)
+            } else {
+                for (theme in filtered) {
+                    val isActive = (currentActiveId == theme.id)
+                    val card = createTemplateCard(theme, isActive)
+                    themesContainer.addView(card)
+                }
+            }
+        }
+
+        for (chip in filterChips) {
+            val isSelected = (chip.id == activeFilterId)
+            val chipBtn = TextView(this).apply {
+                text = chip.label
+                textSize = 11f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(if (isSelected) Color.parseColor("#00F0FF") else Color.parseColor("#94A3B8"))
+                background = UiKit.cardDrawable(
+                    bgColor = if (isSelected) Color.parseColor("#152846") else Color.parseColor("#121826"),
+                    strokeColor = if (isSelected) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
+                    strokeWidthDp = if (isSelected) 2 else 1,
+                    radiusDp = 16f,
+                    context = this@MainActivity
+                )
+                setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    rightMargin = UiKit.dp(this@MainActivity, 8)
+                }
+                setOnClickListener {
+                    activeFilterId = chip.id
+                    for ((cid, btn) in chipButtons) {
+                        val sel = (cid == activeFilterId)
+                        btn.setTextColor(if (sel) Color.parseColor("#00F0FF") else Color.parseColor("#94A3B8"))
+                        btn.background = UiKit.cardDrawable(
+                            bgColor = if (sel) Color.parseColor("#152846") else Color.parseColor("#121826"),
+                            strokeColor = if (sel) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
+                            strokeWidthDp = if (sel) 2 else 1,
+                            radiusDp = 16f,
+                            context = this@MainActivity
+                        )
+                    }
+                    renderThemes()
+                }
+            }
+            chipButtons.add(Pair(chip.id, chipBtn))
+            chipRow.addView(chipBtn)
+        }
+        chipScroll.addView(chipRow)
+        container.addView(chipScroll)
+
+        // Initial render
+        renderThemes()
+        container.addView(themesContainer)
 
         scroll.addView(container)
         return scroll
@@ -1980,15 +1850,15 @@ class MainActivity : Activity() {
                 bgColor = if (isActive) Color.parseColor("#152238") else Color.parseColor("#121826"),
                 strokeColor = if (isActive) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
                 strokeWidthDp = if (isActive) 2 else 1,
-                radiusDp = 18f,
+                radiusDp = 16f,
                 context = this@MainActivity
             )
-            setPadding(UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 18), UiKit.dp(this@MainActivity, 18))
+            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 14))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 16)
+                bottomMargin = UiKit.dp(this@MainActivity, 14)
             }
         }
 
@@ -2000,7 +1870,7 @@ class MainActivity : Activity() {
 
         val titleView = TextView(this).apply {
             text = theme.name
-            textSize = 14.5f
+            textSize = 14f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
@@ -2009,7 +1879,7 @@ class MainActivity : Activity() {
 
         val badge = UiKit.createPillBadge(
             context = this,
-            text = if (isActive) "✓ ACTIVE LIVE" else "READY-MADE",
+            text = if (isActive) "✓ ACTIVE ON WEBSITE" else "READY-MADE",
             textColor = if (isActive) Color.parseColor("#10B981") else Color.parseColor("#94A3B8"),
             bgColor = if (isActive) Color.parseColor("#064E3B") else Color.parseColor("#1A2234"),
             borderColor = if (isActive) Color.parseColor("#10B981") else Color.parseColor("#2E3D5B")
@@ -2020,41 +1890,31 @@ class MainActivity : Activity() {
         // Subtitle
         val subtitleView = TextView(this).apply {
             text = theme.subtitle
-            textSize = 11.5f
+            textSize = 11f
             setTextColor(Color.parseColor(if (theme.id == "vedic-gold") "#F59E0B" else "#38BDF8"))
             typeface = Typeface.DEFAULT_BOLD
-            setPadding(0, UiKit.dp(this@MainActivity, 6), 0, UiKit.dp(this@MainActivity, 4))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 2))
         }
         card.addView(subtitleView)
 
-        // Description
-        val descView = TextView(this).apply {
-            text = theme.description
-            textSize = 11.5f
-            setTextColor(Color.parseColor("#CBD5E1"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
-        }
-        card.addView(descView)
-
         // Best For Tag
-        val bestForView = TextView(this).apply {
+        val descView = TextView(this).apply {
             text = theme.bestFor
             textSize = 10.5f
             setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 12))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
         }
-        card.addView(bestForView)
+        card.addView(descView)
 
         // Color Swatches Row
         val swatchesRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 6))
         }
-
         val paletteLabel = TextView(this).apply {
             text = "Palette: "
-            textSize = 11f
+            textSize = 10f
             setTextColor(Color.parseColor("#64748B"))
         }
         swatchesRow.addView(paletteLabel)
@@ -2065,18 +1925,18 @@ class MainActivity : Activity() {
                     bgColor = Color.parseColor(colorHex),
                     strokeColor = Color.parseColor("#334155"),
                     strokeWidthDp = 1,
-                    radiusDp = 6f,
+                    radiusDp = 5f,
                     context = this@MainActivity
                 )
-                layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 24), UiKit.dp(this@MainActivity, 24)).apply {
-                    setMargins(UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4), 0)
+                layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16)).apply {
+                    setMargins(UiKit.dp(this@MainActivity, 3), 0, UiKit.dp(this@MainActivity, 3), 0)
                 }
             }
             swatchesRow.addView(dot)
         }
         card.addView(swatchesRow)
 
-        // Visual Website Screenshot / Mockup Preview
+        // Compact Visual Website Screenshot / Mockup Preview
         card.addView(createWebsiteMockupBox(theme))
 
         val demoBtn = UiKit.createSecondaryButton(this, "🌐 Live Website Demo Kholein ↗", theme.colors[1]) {
@@ -2093,9 +1953,9 @@ class MainActivity : Activity() {
         }
         demoBtn.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            UiKit.dp(this@MainActivity, 38)
+            UiKit.dp(this@MainActivity, 36)
         ).apply {
-            bottomMargin = UiKit.dp(this@MainActivity, 8)
+            bottomMargin = UiKit.dp(this@MainActivity, 6)
         }
         card.addView(demoBtn)
 
@@ -2107,7 +1967,7 @@ class MainActivity : Activity() {
                     bgColor = Color.parseColor("#064E3B"),
                     strokeColor = Color.parseColor("#10B981"),
                     strokeWidthDp = 1,
-                    radiusDp = 12f,
+                    radiusDp = 10f,
                     context = this@MainActivity
                 )
                 setTextColor(Color.parseColor("#A7F3D0"))
@@ -2117,7 +1977,7 @@ class MainActivity : Activity() {
                 background = UiKit.gradientButtonDrawable(
                     startColor = Color.parseColor("#2563EB"),
                     endColor = Color.parseColor("#1D4ED8"),
-                    radiusDp = 12f,
+                    radiusDp = 10f,
                     context = this@MainActivity
                 )
                 setTextColor(Color.WHITE)
@@ -2126,10 +1986,10 @@ class MainActivity : Activity() {
                     applyWebsiteTemplate(theme.id, theme.name)
                 }
             }
-            textSize = 12.5f
+            textSize = 12f
             typeface = Typeface.DEFAULT_BOLD
-            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 44))
+            setPadding(0, UiKit.dp(this@MainActivity, 8), 0, UiKit.dp(this@MainActivity, 8))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 42))
         }
         card.addView(applyBtn)
 
