@@ -1453,16 +1453,26 @@
         }
       }
 
-      // If user arrived from order completion in URL but no session yet, verify with backend
-      if (!currentUser && urlOrderId) {
-        currentUser = {
-          id: urlOrderId,
-          name: urlName ? decodeURIComponent(urlName) : "Store Owner",
-          email: urlEmail ? decodeURIComponent(urlEmail) : "",
-          is_paid: false,
-          status: "PENDING",
-          onboarding_step: 1
-        };
+      // If user arrived from order completion in URL
+      if (urlOrderId) {
+        const cleanUrlOrderId = urlOrderId.replace(/^#/, '').trim();
+        if (!currentUser) {
+          currentUser = {
+            id: cleanUrlOrderId,
+            name: urlName ? decodeURIComponent(urlName) : "Store Owner",
+            email: urlEmail ? decodeURIComponent(urlEmail) : "",
+            is_paid: true,
+            status: "ACTIVE",
+            onboarding_step: 1
+          };
+        } else {
+          currentUser.id = cleanUrlOrderId;
+          if (urlName && !currentUser.name) currentUser.name = decodeURIComponent(urlName);
+          if (urlEmail && !currentUser.email) currentUser.email = decodeURIComponent(urlEmail);
+          currentUser.is_paid = true;
+          currentUser.status = "ACTIVE";
+        }
+        localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
       }
 
       if (!currentUser) {
@@ -1605,8 +1615,13 @@
     async function verifyPaymentWithBackendSilently() {
       if (!currentUser) return;
       try {
-        const identifier = currentUser.phone || currentUser.email || currentUser.id || "";
-        const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&phone=${encodeURIComponent(currentUser.phone || '')}&email=${encodeURIComponent(currentUser.email || '')}&order_id=${encodeURIComponent(currentUser.id || '')}`;
+        const cleanOrderId = (currentUser.id || '').replace(/^#/, '').trim();
+        let queryParts = [];
+        if (cleanOrderId) queryParts.push(`order_id=${encodeURIComponent(cleanOrderId)}`);
+        if (currentUser.phone) queryParts.push(`phone=${encodeURIComponent(currentUser.phone)}`);
+        if (currentUser.email) queryParts.push(`email=${encodeURIComponent(currentUser.email)}`);
+        
+        const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&${queryParts.join('&')}`;
         const res = await fetch(url);
         const data = await res.json();
         if (data && (data.status === "PAID" || data.is_paid === true)) {
@@ -1654,8 +1669,13 @@
       lucide.createIcons();
 
       try {
-        const orderId = (currentUser && currentUser.id) || '';
-        const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&utr=${encodeURIComponent(utr)}&phone=${encodeURIComponent(phone)}&order_id=${encodeURIComponent(orderId)}`;
+        const cleanOrderId = ((currentUser && currentUser.id) || '').replace(/^#/, '').trim();
+        let queryParts = [];
+        if (cleanOrderId) queryParts.push(`order_id=${encodeURIComponent(cleanOrderId)}`);
+        if (utr) queryParts.push(`utr=${encodeURIComponent(utr)}`);
+        if (phone) queryParts.push(`phone=${encodeURIComponent(phone)}`);
+
+        const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&${queryParts.join('&')}`;
         const res = await fetch(url);
         const data = await res.json();
 

@@ -2225,12 +2225,15 @@
 
       if (activePollTimer) clearInterval(activePollTimer);
 
+      const cleanOrderId = String(orderId).replace(/^#/, '').trim();
+
       activePollTimer = setInterval(async () => {
         attempts++;
         if (pollAttemptDisplay) pollAttemptDisplay.innerText = attempts;
 
         try {
-          const checkUrl = `${masterApi}?action=checkOrderStatus&order_id=${encodeURIComponent(orderId)}&utr=${encodeURIComponent(cleanUtr)}&phone=${cleanPhone}`;
+          // Poll specifically by unique Order ID so we never cross-match older test UTRs
+          const checkUrl = `${masterApi}?action=checkOrderStatus&order_id=${encodeURIComponent(cleanOrderId)}`;
           const res = await fetch(checkUrl);
           const data = await res.json();
 
@@ -2251,7 +2254,7 @@
 
             // Save verified paid user session
             const authUser = {
-              id: orderId,
+              id: cleanOrderId,
               name: name,
               phone: cleanPhone,
               email: email,
@@ -2260,9 +2263,11 @@
               onboarding_step: 1
             };
             localStorage.setItem('sheetstore_auth_user', JSON.stringify(authUser));
+            sessionStorage.setItem('sheetstore_logged_in', 'true');
+            sessionStorage.setItem('sheetstore_current_order', cleanOrderId);
 
             setTimeout(() => {
-              window.location.href = `dashboard.html?order_id=${orderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+              window.location.href = `dashboard.html?order_id=${cleanOrderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
             }, 1400);
           }
         } catch (err) {

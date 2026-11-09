@@ -47,6 +47,7 @@ class MainActivity : Activity() {
     private var dashboardData: DashboardResponse? = null
 
     private lateinit var ordersAdapter: OrdersAdapter
+    private var ordersRecyclerView: RecyclerView? = null
     private lateinit var productsAdapter: ProductsAdapter
     private lateinit var authBtn: Button
     private lateinit var headerNichePill: TextView
@@ -211,12 +212,31 @@ class MainActivity : Activity() {
         super.onNewIntent(intent)
         setIntent(intent)
         handleIntentTab(intent)
+        if (isOnboardingCompleted() && isSheetVerified()) {
+            fetchDashboard()
+        }
     }
 
     private fun handleIntentTab(intent: Intent?) {
         val tab = intent?.getIntExtra("open_tab", -1) ?: -1
         if (tab >= 0) {
             switchTab(tab)
+        } else {
+            switchTab(0)
+        }
+        val targetOrderId = intent?.getStringExtra("order_id")
+        if (!targetOrderId.isNullOrEmpty()) {
+            val cleanTarget = targetOrderId.replace("#", "").trim()
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(350)
+                ordersRecyclerView?.let { rv ->
+                    val orders = dashboardData?.orders ?: emptyList()
+                    val idx = orders.indexOfFirst { it.orderId.replace("#", "").trim().equals(cleanTarget, ignoreCase = true) }
+                    if (idx != -1) {
+                        rv.smoothScrollToPosition(idx)
+                    }
+                }
+            }
         }
     }
 
@@ -1049,6 +1069,7 @@ class MainActivity : Activity() {
         val rv = RecyclerView(this).apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
+        ordersRecyclerView = rv
         ordersAdapter = OrdersAdapter(dashboardData?.orders ?: emptyList()) { order ->
             approveOrder(order)
         }
@@ -1075,25 +1096,31 @@ class MainActivity : Activity() {
         val url = getSheetUrl()
         if (url.isEmpty()) return
 
-        Toast.makeText(this, "Approving ${order.orderId}...", Toast.LENGTH_SHORT).show()
+        val cleanOrderId = order.orderId.replace("#", "").trim()
+        val cleanUtr = order.utr.trim()
+        Toast.makeText(this, "Approving $cleanOrderId...", Toast.LENGTH_SHORT).show()
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val call = ApiClient.service.approveOrder(
                     fullUrl = url,
-                    orderId = order.orderId
+                    orderId = cleanOrderId,
+                    utr = cleanUtr
                 )
                 val response = call.execute()
+                val body = response.body()
 
                 withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
+                    val isSuccess = response.isSuccessful && (body?.success == true || (body?.error.isNullOrEmpty() && body?.message != null))
+                    if (isSuccess) {
                         order.status = "PAID"
                         order.verified = true
                         ordersAdapter.notifyDataSetChanged()
                         fetchDashboard()
-                        Toast.makeText(this@MainActivity, "Order ${order.orderId} Approved! ✓", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Order $cleanOrderId Approved! ✓", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this@MainActivity, "Approval failed", Toast.LENGTH_SHORT).show()
+                        val errMsg = body?.error ?: "Approval failed"
+                        Toast.makeText(this@MainActivity, errMsg, Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -1107,28 +1134,32 @@ class MainActivity : Activity() {
     private fun approveOrderByUtr(utr: String) {
         val url = getSheetUrl()
         if (url.isEmpty()) return
+        val cleanUtr = utr.trim()
 
-        Toast.makeText(this, "Approving UTR $utr in Google Sheet...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Approving UTR $cleanUtr in Google Sheet...", Toast.LENGTH_SHORT).show()
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val call = ApiClient.service.approveOrderByUtr(
                     fullUrl = url,
-                    utr = utr
+                    utr = cleanUtr
                 )
                 val response = call.execute()
+                val body = response.body()
 
                 withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
-                        dashboardData?.orders?.find { it.utr == utr }?.let { order ->
+                    val isSuccess = response.isSuccessful && (body?.success == true || (body?.error.isNullOrEmpty() && body?.message != null))
+                    if (isSuccess) {
+                        dashboardData?.orders?.find { it.utr.trim() == cleanUtr }?.let { order ->
                             order.status = "PAID"
                             order.verified = true
                         }
                         ordersAdapter.notifyDataSetChanged()
                         fetchDashboard()
-                        Toast.makeText(this@MainActivity, "🎉 UTR $utr Marked as PAID! ✓", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@MainActivity, "🎉 UTR $cleanUtr Marked as PAID! ✓", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(this@MainActivity, "Approval failed or UTR not found", Toast.LENGTH_SHORT).show()
+                        val errMsg = body?.error ?: "Approval failed or UTR not found"
+                        Toast.makeText(this@MainActivity, errMsg, Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -2229,9 +2260,13 @@ class MainActivity : Activity() {
     }
 
     private fun triggerLocalOrderNotification(order: Order) {
+        val cleanId = order.orderId.replace("#", "").trim()
         val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            action = "com.sheetstore.admin.ACTION_OPEN_ORDERS"
+            data = Uri.parse("sheetstore://orders/$cleanId")
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("open_tab", 0)
+            putExtra("order_id", cleanId)
         }
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -2240,7 +2275,7 @@ class MainActivity : Activity() {
         }
         val pendingIntent = PendingIntent.getActivity(
             this,
-            order.orderId.hashCode(),
+            cleanId.hashCode(),
             intent,
             flags
         )
@@ -2260,7 +2295,7 @@ class MainActivity : Activity() {
             .build()
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(order.orderId.hashCode(), notification)
+        manager.notify(cleanId.hashCode(), notification)
     }
 
     private fun startAutoPolling() {

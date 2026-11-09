@@ -260,7 +260,7 @@ function handleCreateOrder(ss, params) {
  * 2. Check Order Status (Website polls this every 3 seconds)
  */
 function handleCheckOrderStatus(ss, params) {
-  var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
+  var orderId = params.order_id ? String(params.order_id).replace(/#/g, '').trim().toUpperCase() : "";
   var utr = params.utr ? String(params.utr).trim() : "";
   var rawPhone = params.phone || params.customer_phone || "";
   var cleanPhone = String(rawPhone).trim().replace(/\D/g, '');
@@ -278,23 +278,69 @@ function handleCheckOrderStatus(ss, params) {
 
   var data = ordersSheet.getDataRange().getValues();
   // Headers: [0: Order ID, 1: Date, 2: Name, 3: Phone, 4: Product, 5: Amount, 6: UTR, 7: Status, 8: Verified]
-  // Iterate newest orders first
+
+  // CASE 1: If specific Order ID is requested, search specifically for that Order ID!
+  if (orderId) {
+    for (var i = data.length - 1; i >= 1; i--) {
+      var row = data[i];
+      var rowOrderId = String(row[0]).replace(/#/g, '').trim().toUpperCase();
+      if (rowOrderId === orderId) {
+        var rowStatus = String(row[7]).trim().toUpperCase();
+        var isVerified = (row[8] === true || String(row[8]).toUpperCase() === "TRUE");
+
+        if (isVerified && rowStatus !== "PAID") {
+          ordersSheet.getRange(i + 1, 8).setValue("PAID");
+          ordersSheet.getRange(i + 1, 8).setFontColor("#10B981").setFontWeight("bold");
+          SpreadsheetApp.flush();
+          rowStatus = "PAID";
+        }
+
+        var isPaid = (rowStatus === "PAID" || isVerified);
+        if (isPaid) {
+          var userAcc = autoProvisionUserOnPaymentSuccess(ss, row[2], row[3], params.email || "");
+          return returnJsonResponse({
+            success: true,
+            order_id: row[0],
+            status: "PAID",
+            is_paid: true,
+            customer_name: row[2],
+            customer_phone: row[3],
+            product: row[4],
+            amount: row[5],
+            login_identifier: userAcc.login_id,
+            default_password: "123456"
+          });
+        } else {
+          return returnJsonResponse({
+            success: true,
+            order_id: row[0],
+            status: "PENDING",
+            is_paid: false,
+            customer_name: row[2],
+            product: row[4],
+            amount: row[5]
+          });
+        }
+      }
+    }
+  }
+
+  // CASE 2: No Order ID (or not found by ID), check by UTR / Phone
+  // First pass: Prioritize finding an order that is PAID!
+  var pendingCandidate = null;
   for (var i = data.length - 1; i >= 1; i--) {
     var row = data[i];
-    var rowOrderId = String(row[0]).trim().toUpperCase();
     var rowPhone = String(row[3]).trim().replace(/\D/g, '');
     if (rowPhone.length > 10) rowPhone = rowPhone.slice(-10);
     var rowUtr = String(row[6]).trim();
     var rowStatus = String(row[7]).trim().toUpperCase();
     var isVerified = (row[8] === true || String(row[8]).toUpperCase() === "TRUE");
 
-    var match = false;
-    if (orderId && rowOrderId === orderId) match = true;
-    if (utr && rowUtr === utr) match = true;
-    if (cleanPhone && rowPhone && rowPhone === cleanPhone) match = true;
+    var matches = false;
+    if (utr && rowUtr === utr) matches = true;
+    else if (cleanPhone && rowPhone && rowPhone === cleanPhone) matches = true;
 
-    if (match) {
-      // If admin tapped the Checkbox in Google Sheets mobile app, update Status column to PAID (Green)
+    if (matches) {
       if (isVerified && rowStatus !== "PAID") {
         ordersSheet.getRange(i + 1, 8).setValue("PAID");
         ordersSheet.getRange(i + 1, 8).setFontColor("#10B981").setFontWeight("bold");
@@ -317,8 +363,8 @@ function handleCheckOrderStatus(ss, params) {
           login_identifier: userAcc.login_id,
           default_password: "123456"
         });
-      } else {
-        return returnJsonResponse({
+      } else if (!pendingCandidate) {
+        pendingCandidate = {
           success: true,
           order_id: row[0],
           status: "PENDING",
@@ -326,9 +372,13 @@ function handleCheckOrderStatus(ss, params) {
           customer_name: row[2],
           product: row[4],
           amount: row[5]
-        });
+        };
       }
     }
+  }
+
+  if (pendingCandidate) {
+    return returnJsonResponse(pendingCandidate);
   }
 
   return returnJsonResponse({ success: false, status: "NOT_FOUND", is_paid: false, message: "Order not found" });
@@ -338,7 +388,7 @@ function handleCheckOrderStatus(ss, params) {
  * 3. Mark Order as Paid (Manual Approval from Admin App or Web)
  */
 function handleMarkPaid(ss, params) {
-  var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
+  var orderId = params.order_id ? String(params.order_id).replace(/#/g, '').trim().toUpperCase() : "";
   var utr = params.utr ? String(params.utr).trim() : "";
   if (!orderId && !utr) {
     return returnJsonResponse({ error: "Missing order_id or utr" });
@@ -349,9 +399,13 @@ function handleMarkPaid(ss, params) {
 
   var data = ordersSheet.getDataRange().getValues();
   for (var i = data.length - 1; i >= 1; i--) {
-    var rOrderId = String(data[i][0]).trim().toUpperCase();
+    var rOrderId = String(data[i][0]).replace(/#/g, '').trim().toUpperCase();
     var rUtr = String(data[i][6]).trim();
-    if ((orderId && rOrderId === orderId) || (utr && rUtr === utr)) {
+    var match = false;
+    if (orderId && rOrderId === orderId) match = true;
+    else if (utr && rUtr === utr) match = true;
+
+    if (match) {
       ordersSheet.getRange(i + 1, 8).setValue("PAID").setFontColor("#10B981").setFontWeight("bold");
       ordersSheet.getRange(i + 1, 9).setValue(true);
       SpreadsheetApp.flush();
@@ -375,7 +429,7 @@ function handleMarkPaid(ss, params) {
  * Check User Payment Guard (Protects Dashboard Access)
  */
 function handleCheckUserPayment(ss, params) {
-  var orderId = params.order_id ? String(params.order_id).trim().toUpperCase() : "";
+  var orderId = params.order_id ? String(params.order_id).replace(/#/g, '').trim().toUpperCase() : "";
   var utr = params.utr ? String(params.utr).trim() : "";
   var rawPhone = params.phone || "";
   var cleanPhone = String(rawPhone).trim().replace(/\D/g, '');
@@ -386,9 +440,10 @@ function handleCheckUserPayment(ss, params) {
   var ordersSheet = ss.getSheetByName("Orders");
   if (ordersSheet) {
     var oData = ordersSheet.getDataRange().getValues();
+    var pendingRow = null;
     for (var i = oData.length - 1; i >= 1; i--) {
       var row = oData[i];
-      var rOrderId = String(row[0]).trim().toUpperCase();
+      var rOrderId = String(row[0]).replace(/#/g, '').trim().toUpperCase();
       var rPhone = String(row[3]).trim().replace(/\D/g, '');
       if (rPhone.length > 10) rPhone = rPhone.slice(-10);
       var rUtr = String(row[6]).trim();
@@ -397,22 +452,38 @@ function handleCheckUserPayment(ss, params) {
 
       var match = false;
       if (orderId && rOrderId === orderId) match = true;
-      if (utr && rUtr === utr) match = true;
-      if (cleanPhone && rPhone && rPhone === cleanPhone) match = true;
+      else if (!orderId && utr && rUtr === utr) match = true;
+      else if (!orderId && cleanPhone && rPhone && rPhone === cleanPhone) match = true;
 
       if (match) {
         var isPaid = (rStatus === "PAID" || rVerified);
-        return returnJsonResponse({
-          success: true,
-          is_paid: isPaid,
-          status: isPaid ? "PAID" : "PENDING",
-          order_id: row[0],
-          customer_name: row[2],
-          customer_phone: row[3],
-          amount: row[5],
-          utr: row[6]
-        });
+        if (isPaid) {
+          return returnJsonResponse({
+            success: true,
+            is_paid: true,
+            status: "PAID",
+            order_id: row[0],
+            customer_name: row[2],
+            customer_phone: row[3],
+            amount: row[5],
+            utr: row[6]
+          });
+        } else if (!pendingRow) {
+          pendingRow = {
+            success: true,
+            is_paid: false,
+            status: "PENDING",
+            order_id: row[0],
+            customer_name: row[2],
+            customer_phone: row[3],
+            amount: row[5],
+            utr: row[6]
+          };
+        }
       }
+    }
+    if (pendingRow) {
+      return returnJsonResponse(pendingRow);
     }
   }
 
@@ -1024,7 +1095,8 @@ function handleLogin(ss, params) {
             website_live_url: row[7],
             sheet_url: row[8],
             onboarding_step: Number(row[9]) || 1,
-            status: row[10] || "ACTIVE"
+            status: row[10] || "ACTIVE",
+            is_paid: (row[10] || "ACTIVE") === "ACTIVE"
           }
         });
       } else {
