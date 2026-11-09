@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -146,6 +148,10 @@ class MainActivity : Activity() {
     private var activeHubLogoPreview: ImageView? = null
 
     // Site Customizer Input Views
+    private val pendingSettings = mutableMapOf<String, String>()
+    private var liveLogoPreview: ImageView? = null
+    private var liveBannerPreview: ImageView? = null
+
     private lateinit var brandNameInput: EditText
     private lateinit var taglineInput: EditText
     private lateinit var logoUrlInput: EditText
@@ -699,7 +705,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.1.0 • Secure Admin Portal",
+            text = "🚀 v1.2.0 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -734,7 +740,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.1.0)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.0)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -853,7 +859,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.1.0",
+            text = "⚡ SheetStore Admin v1.2.0",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -2160,142 +2166,111 @@ class MainActivity : Activity() {
     }
 
     // ==========================================
-    // TAB 2: SITE CUSTOMIZER (FULL CMS FOR EVERY THEME PART)
+    // 5-BUTTON WEBSITE CMS & STUDIO SUB-TABS
     // ==========================================
-    private fun createWebsiteCustomizerTab(): View {
-        val scroll = ScrollView(this)
+
+    // SUB-TAB 1: SITE MAIN DETAILS
+    private fun createSiteMainDetailsSubTab(): View {
+        val scroll = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        }
         val form = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 40))
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
         }
 
-        // Header Title & Subtitle
-        val heading = TextView(this).apply {
-            text = "🎨 Store Builder & Theme Customizer"
-            textSize = 17f
+        val headerBox = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+        val title = TextView(this).apply {
+            text = "🏢 Site Main Details"
+            textSize = 18f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 4))
         }
-        form.addView(heading)
-
-        val subtext = TextView(this).apply {
-            text = "Website ke sabhi parts ko yahan se real-time change karein. Sab data Google Sheet me live sync hota hai:"
+        val sub = TextView(this).apply {
+            text = "Apni website ka Brand Name, Tagline aur Live Store Link yahan se manage karein:"
             textSize = 12f
             setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 18))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
         }
-        form.addView(subtext)
+        headerBox.addView(title)
+        headerBox.addView(sub)
+        form.addView(headerBox)
 
-        // 1. BRANDING & LOGO SECTION
-        val (brandCard, brandBody) = UiKit.createSectionContainer(this, "🏢 1. Brand Identity & Logo", "Core")
+        val (brandCard, brandBody) = UiKit.createSectionContainer(this, "🏢 Brand Identity", "Core")
         brandBody.addView(UiKit.createFieldLabel(this, "Store / Brand Name:"))
-        brandNameInput = UiKit.createStyledInput(this, "e.g. SheetStore Pro", "")
+        val initialBrand = pendingSettings["brand_name"] ?: dashboardData?.settings?.get("brand_name") ?: ""
+        brandNameInput = UiKit.createStyledInput(this, "e.g. SheetStore Pro", initialBrand)
         brandBody.addView(brandNameInput)
 
         brandBody.addView(UiKit.createFieldLabel(this, "Brand Tagline:"))
-        taglineInput = UiKit.createStyledInput(this, "e.g. 100% Free Google Sheet Store", "")
+        val initialTagline = pendingSettings["brand_tagline"] ?: dashboardData?.settings?.get("brand_tagline") ?: ""
+        taglineInput = UiKit.createStyledInput(this, "e.g. 100% Free Google Sheet Store", initialTagline)
         brandBody.addView(taglineInput)
 
         brandBody.addView(UiKit.createFieldLabel(this, "Custom Logo Image URL:"))
-        logoUrlInput = UiKit.createStyledInput(this, "https://example.com/logo.png", "")
+        val initialLogo = pendingSettings["logo_url"] ?: dashboardData?.settings?.get("logo_url") ?: ""
+        logoUrlInput = UiKit.createStyledInput(this, "https://example.com/logo.png", initialLogo)
         brandBody.addView(logoUrlInput)
 
-        val pickLogoBtn = UiKit.createSecondaryButton(this, "🖼️ Phone Gallery Se Logo Photo Chunein", "#38BDF8") {
-            openImagePicker(REQUEST_PICK_LOGO)
+        val openImgUpdaterBtn = UiKit.createSecondaryButton(this, "🖼️ Open Image Updater (Upload Logo 300x300)", "#38BDF8") {
+            designSubTabIndex = 4
+            refreshCurrentTab()
         }
-        brandBody.addView(pickLogoBtn)
+        brandBody.addView(openImgUpdaterBtn)
         form.addView(brandCard)
 
-        // 2. HERO SHOWCASE & HEADLINES SECTION
-        val (heroCard, heroBody) = UiKit.createSectionContainer(this, "🚀 2. Hero Showcase & Headlines", "High Impact")
-        heroBody.addView(UiKit.createFieldLabel(this, "Hero Main Headline:"))
-        heroTitleInput = UiKit.createStyledInput(this, "Main headline on website", "", singleLine = false)
-        heroBody.addView(heroTitleInput)
-
-        heroBody.addView(UiKit.createFieldLabel(this, "Hero Subtitle / Description:"))
-        heroSubtitleInput = UiKit.createStyledInput(this, "Secondary explanation text", "", singleLine = false)
-        heroBody.addView(heroSubtitleInput)
-
-        heroBody.addView(UiKit.createFieldLabel(this, "Hero Badge Text (e.g. ⚡ 50% OFF TODAY):"))
-        heroBadgeInput = UiKit.createStyledInput(this, "Badge label text", "")
-        heroBody.addView(heroBadgeInput)
-
-        heroBody.addView(UiKit.createFieldLabel(this, "Call-to-Action (CTA) Button Text:"))
-        ctaTextInput = UiKit.createStyledInput(this, "e.g. Shop Collection / Buy Now", "")
-        heroBody.addView(ctaTextInput)
-
-        heroBody.addView(UiKit.createFieldLabel(this, "Hero Banner / Product Showcase Image URL:"))
-        bannerUrlInput = UiKit.createStyledInput(this, "https://example.com/banner.jpg", "")
-        heroBody.addView(bannerUrlInput)
-
-        val pickBannerBtn = UiKit.createSecondaryButton(this, "🖼️ Phone Gallery Se Banner Photo Chunein", "#38BDF8") {
-            openImagePicker(REQUEST_PICK_BANNER)
-        }
-        heroBody.addView(pickBannerBtn)
-        form.addView(heroCard)
-
-        // 3. ANNOUNCEMENT BAR SECTION
-        val (annCard, annBody) = UiKit.createSectionContainer(this, "📢 3. Top Announcement Bar", "Promotions")
-        announcementSwitch = Switch(this).apply {
-            text = "Show Top Announcement Bar"
-            setTextColor(Color.WHITE)
+        // Live Website Store Links Card
+        val (webCard, webBody) = UiKit.createSectionContainer(this, "🌐 Live Website Store Links", "Online")
+        val webUrl = "https://ayush131102.github.io/sheetstore/"
+        val urlBox = TextView(this).apply {
+            text = "🔗 $webUrl"
             textSize = 12.5f
-            typeface = Typeface.DEFAULT_BOLD
-            isChecked = true
-            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 10))
+            typeface = Typeface.MONOSPACE
+            setTextColor(Color.parseColor("#38BDF8"))
+            background = UiKit.cardDrawable(Color.parseColor("#080D1A"), Color.parseColor("#1E293B"), 1, 8f, this@MainActivity)
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
         }
-        annBody.addView(announcementSwitch)
+        webBody.addView(urlBox)
 
-        annBody.addView(UiKit.createFieldLabel(this, "Announcement Bar Text:"))
-        announcementInput = UiKit.createStyledInput(this, "e.g. Diwali Dhamaka! Flat 50% OFF on all items", "")
-        annBody.addView(announcementInput)
-        form.addView(annCard)
-
-        // 4. DESIGN, FONTS & COLORS SECTION
-        val (styleCard, styleBody) = UiKit.createSectionContainer(this, "🎨 4. Fonts & Custom Colors", "Visuals")
-        styleBody.addView(UiKit.createFieldLabel(this, "Heading Font Family (Tap Chip to Apply):"))
-        fontFamilyInput = UiKit.createStyledInput(this, "Outfit", "")
-        styleBody.addView(fontFamilyInput)
-
-        val fontChips = createFontChips { fontName, label ->
-            fontFamilyInput.setText(fontName)
-            Toast.makeText(this, "Selected font: $label", Toast.LENGTH_SHORT).show()
+        val rowBtns = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                topMargin = UiKit.dp(this@MainActivity, 10)
+            }
         }
-        styleBody.addView(fontChips)
+        val openWebBtn = UiKit.createSecondaryButton(this, "🌐 Open Store", "#00F0FF") {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(webUrl)))
+            } catch (e: Exception) {
+                Toast.makeText(this, "Browser open karne me error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                rightMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        val copyWebBtn = UiKit.createSecondaryButton(this, "📋 Copy Link", "#A78BFA") {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Website URL", webUrl)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(this, "Website URL clipboard par copy ho gaya! 📋", Toast.LENGTH_SHORT).show()
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                leftMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        rowBtns.addView(openWebBtn)
+        rowBtns.addView(copyWebBtn)
+        webBody.addView(rowBtns)
+        form.addView(webCard)
 
-        styleBody.addView(UiKit.createFieldLabel(this, "Header Background Color Hex:"))
-        headerColorInput = UiKit.createStyledInput(this, "#080C1A", "")
-        styleBody.addView(headerColorInput)
-        styleBody.addView(createColorChips { hex, name ->
-            headerColorInput.setText(hex)
-            Toast.makeText(this, "Header: $name", Toast.LENGTH_SHORT).show()
-        })
-
-        styleBody.addView(UiKit.createFieldLabel(this, "Footer Background Color Hex:"))
-        footerColorInput = UiKit.createStyledInput(this, "#050811", "")
-        styleBody.addView(footerColorInput)
-        styleBody.addView(createColorChips { hex, name ->
-            footerColorInput.setText(hex)
-            Toast.makeText(this, "Footer: $name", Toast.LENGTH_SHORT).show()
-        })
-        form.addView(styleCard)
-
-        // 5. CONTACT & PAYMENTS SECTION
-        val (payCard, payBody) = UiKit.createSectionContainer(this, "💳 5. WhatsApp & UPI Payments", "Revenue")
-        payBody.addView(UiKit.createFieldLabel(this, "WhatsApp Order Mobile Number (with 91):"))
-        waNumberInput = UiKit.createStyledInput(this, "e.g. 919876543210", "")
-        payBody.addView(waNumberInput)
-
-        payBody.addView(UiKit.createFieldLabel(this, "UPI ID (Where Payments Are Received):"))
-        upiIdInput = UiKit.createStyledInput(this, "e.g. merchant@okaxis", "")
-        payBody.addView(upiIdInput)
-        form.addView(payCard)
-
-        // Big Save Changes Button
+        // Save Button
         val saveBtn = UiKit.createPrimaryButton(
             context = this,
-            btnText = "🚀 Update Website Live (Push To Google Sheet)",
+            btnText = "🚀 Save Site Details Live",
             startColor = "#2563EB",
             endColor = "#00F0FF"
         ) {
@@ -2303,7 +2278,355 @@ class MainActivity : Activity() {
         }
         form.addView(saveBtn)
 
-        populateSettingsFields()
+        scroll.addView(form)
+        return scroll
+    }
+
+    // SUB-TAB 3: OTHER DETAILS (WhatsApp, UPI, Announcement Bar, CTA)
+    private fun createOtherDetailsSubTab(): View {
+        val scroll = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        }
+        val form = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
+        }
+
+        val headerBox = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+        val title = TextView(this).apply {
+            text = "📋 Other Store Details"
+            textSize = 18f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+        }
+        val sub = TextView(this).apply {
+            text = "WhatsApp number, UPI ID, top announcement bar aur action buttons yahan se set karein:"
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        headerBox.addView(title)
+        headerBox.addView(sub)
+        form.addView(headerBox)
+
+        // 1. WhatsApp & UPI Payments
+        val (payCard, payBody) = UiKit.createSectionContainer(this, "💳 WhatsApp & Payments", "Revenue")
+        payBody.addView(UiKit.createFieldLabel(this, "WhatsApp Order Mobile Number (with 91):"))
+        val initialWa = pendingSettings["whatsapp_number"] ?: dashboardData?.settings?.get("whatsapp_number") ?: ""
+        waNumberInput = UiKit.createStyledInput(this, "e.g. 919876543210", initialWa)
+        payBody.addView(waNumberInput)
+
+        val waHelp = TextView(this).apply {
+            text = "💡 Website se aane wale naye orders ka WhatsApp message is number par prapt hoga."
+            textSize = 11f
+            setTextColor(Color.parseColor("#64748B"))
+            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, UiKit.dp(this@MainActivity, 10))
+        }
+        payBody.addView(waHelp)
+
+        payBody.addView(UiKit.createFieldLabel(this, "UPI ID (Where Payments Are Received):"))
+        val initialUpi = pendingSettings["upi_id"] ?: dashboardData?.settings?.get("upi_id") ?: ""
+        upiIdInput = UiKit.createStyledInput(this, "e.g. merchant@okaxis", initialUpi)
+        payBody.addView(upiIdInput)
+
+        val upiHelp = TextView(this).apply {
+            text = "💡 Customer checkout ke dauran QR scan karke is UPI ID par seedha payment karenge."
+            textSize = 11f
+            setTextColor(Color.parseColor("#64748B"))
+            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
+        }
+        payBody.addView(upiHelp)
+        form.addView(payCard)
+
+        // 2. Announcement Bar
+        val (annCard, annBody) = UiKit.createSectionContainer(this, "📢 Top Announcement Bar", "Promotions")
+        announcementSwitch = Switch(this).apply {
+            text = "Show Top Announcement Bar"
+            setTextColor(Color.WHITE)
+            textSize = 12.5f
+            typeface = Typeface.DEFAULT_BOLD
+            val showAnn = pendingSettings["show_announcement"] ?: dashboardData?.settings?.get("show_announcement") ?: "true"
+            isChecked = showAnn.equals("true", ignoreCase = true)
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 10))
+        }
+        annBody.addView(announcementSwitch)
+
+        annBody.addView(UiKit.createFieldLabel(this, "Announcement Bar Text:"))
+        val initialAnn = pendingSettings["announcement_text"] ?: dashboardData?.settings?.get("announcement_text") ?: ""
+        announcementInput = UiKit.createStyledInput(this, "e.g. Diwali Dhamaka! Flat 50% OFF on all items", initialAnn)
+        annBody.addView(announcementInput)
+        form.addView(annCard)
+
+        // 3. CTA Button
+        val (ctaCard, ctaBody) = UiKit.createSectionContainer(this, "🎯 Store Action & CTA", "Conversion")
+        ctaBody.addView(UiKit.createFieldLabel(this, "Call-to-Action (CTA) Button Text:"))
+        val initialCta = pendingSettings["cta_text"] ?: dashboardData?.settings?.get("cta_text") ?: ""
+        ctaTextInput = UiKit.createStyledInput(this, "e.g. Shop Collection / Buy Now", initialCta)
+        ctaBody.addView(ctaTextInput)
+        form.addView(ctaCard)
+
+        // Save Button
+        val saveBtn = UiKit.createPrimaryButton(
+            context = this,
+            btnText = "🚀 Save Other Details Live",
+            startColor = "#2563EB",
+            endColor = "#00F0FF"
+        ) {
+            saveWebsiteSettings()
+        }
+        form.addView(saveBtn)
+
+        scroll.addView(form)
+        return scroll
+    }
+
+    // SUB-TAB 4: FONTS & OTHER INFORMATION
+    private fun createFontsAndInfoSubTab(): View {
+        val scroll = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        }
+        val form = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
+        }
+
+        val headerBox = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+        val title = TextView(this).apply {
+            text = "🔤 Fonts & Other Information"
+            textSize = 18f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+        }
+        val sub = TextView(this).apply {
+            text = "Heading fonts, website color themes aur hero headlines ko customise karein:"
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        headerBox.addView(title)
+        headerBox.addView(sub)
+        form.addView(headerBox)
+
+        // 1. Fonts & Custom Colors
+        val (styleCard, styleBody) = UiKit.createSectionContainer(this, "🎨 Fonts & Colors", "Visuals")
+        styleBody.addView(UiKit.createFieldLabel(this, "Heading Font Family (Tap Chip to Apply):"))
+        val initialFont = pendingSettings["font_family"] ?: dashboardData?.settings?.get("font_family") ?: "Outfit"
+        fontFamilyInput = UiKit.createStyledInput(this, "Outfit", initialFont)
+        styleBody.addView(fontFamilyInput)
+
+        val fontChips = createFontChips { fontName, label ->
+            fontFamilyInput.setText(fontName)
+            pendingSettings["font_family"] = fontName
+            Toast.makeText(this, "Selected font: $label", Toast.LENGTH_SHORT).show()
+        }
+        styleBody.addView(fontChips)
+
+        styleBody.addView(UiKit.createFieldLabel(this, "Header Background Color Hex:"))
+        val initialHeaderColor = pendingSettings["header_color"] ?: dashboardData?.settings?.get("header_color") ?: "#080C1A"
+        headerColorInput = UiKit.createStyledInput(this, "#080C1A", initialHeaderColor)
+        styleBody.addView(headerColorInput)
+        styleBody.addView(createColorChips { hex, name ->
+            headerColorInput.setText(hex)
+            pendingSettings["header_color"] = hex
+            Toast.makeText(this, "Header: $name", Toast.LENGTH_SHORT).show()
+        })
+
+        styleBody.addView(UiKit.createFieldLabel(this, "Footer Background Color Hex:"))
+        val initialFooterColor = pendingSettings["footer_color"] ?: dashboardData?.settings?.get("footer_color") ?: "#050811"
+        footerColorInput = UiKit.createStyledInput(this, "#050811", initialFooterColor)
+        styleBody.addView(footerColorInput)
+        styleBody.addView(createColorChips { hex, name ->
+            footerColorInput.setText(hex)
+            pendingSettings["footer_color"] = hex
+            Toast.makeText(this, "Footer: $name", Toast.LENGTH_SHORT).show()
+        })
+        form.addView(styleCard)
+
+        // 2. Hero Headlines & Content
+        val (heroCard, heroBody) = UiKit.createSectionContainer(this, "🚀 Hero Headlines & Content", "Showcase")
+        heroBody.addView(UiKit.createFieldLabel(this, "Hero Main Headline:"))
+        val initialHeroTitle = pendingSettings["hero_title"] ?: dashboardData?.settings?.get("hero_title") ?: ""
+        heroTitleInput = UiKit.createStyledInput(this, "Main headline on website", initialHeroTitle, singleLine = false)
+        heroBody.addView(heroTitleInput)
+
+        heroBody.addView(UiKit.createFieldLabel(this, "Hero Subtitle / Description:"))
+        val initialHeroSub = pendingSettings["hero_subtitle"] ?: dashboardData?.settings?.get("hero_subtitle") ?: ""
+        heroSubtitleInput = UiKit.createStyledInput(this, "Secondary explanation text", initialHeroSub, singleLine = false)
+        heroBody.addView(heroSubtitleInput)
+
+        heroBody.addView(UiKit.createFieldLabel(this, "Hero Badge Text (e.g. ⚡ 50% OFF TODAY):"))
+        val initialHeroBadge = pendingSettings["hero_badge"] ?: dashboardData?.settings?.get("hero_badge") ?: ""
+        heroBadgeInput = UiKit.createStyledInput(this, "Badge label text", initialHeroBadge)
+        heroBody.addView(heroBadgeInput)
+        form.addView(heroCard)
+
+        // Save Button
+        val saveBtn = UiKit.createPrimaryButton(
+            context = this,
+            btnText = "🚀 Save Fonts & Info Live",
+            startColor = "#2563EB",
+            endColor = "#00F0FF"
+        ) {
+            saveWebsiteSettings()
+        }
+        form.addView(saveBtn)
+
+        scroll.addView(form)
+        return scroll
+    }
+
+    // SUB-TAB 5: WHOLE WEBSITE IMAGE UPDATER
+    private fun createImageUpdaterSubTab(): View {
+        val scroll = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        }
+        val form = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 36))
+        }
+
+        val headerBox = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+        }
+        val title = TextView(this).apply {
+            text = "🖼️ Whole Website Image Updater"
+            textSize = 18f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+        }
+        val sub = TextView(this).apply {
+            text = "Website ke Brand Logo aur Hero Banner photos ko gallery se upload karein ya direct URL update karein (Dimensions mentioned):"
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            setPadding(0, UiKit.dp(this@MainActivity, 4), 0, 0)
+        }
+        headerBox.addView(title)
+        headerBox.addView(sub)
+        form.addView(headerBox)
+
+        // 1. Logo Updater
+        val (logoCard, logoBody) = UiKit.createSectionContainer(this, "🖼️ 1. Store Brand Logo", "Square 300x300")
+
+        val logoSizeBadge = TextView(this).apply {
+            text = "📐 Perfect Dimensions: 300 x 300 px (Square PNG / JPG)\nWebsite ke header aur footer me crisp & clear dikhega."
+            textSize = 11.5f
+            setTextColor(Color.parseColor("#38BDF8"))
+            background = UiKit.cardDrawable(Color.parseColor("#0C2038"), Color.parseColor("#1D4ED8"), 1, 8f, this@MainActivity)
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 8))
+        }
+        logoBody.addView(logoSizeBadge)
+
+        logoBody.addView(UiKit.createFieldLabel(this, "Logo Image URL (ya niche Gallery se chunein):"))
+        val initialLogo = pendingSettings["logo_url"] ?: dashboardData?.settings?.get("logo_url") ?: ""
+        logoUrlInput = UiKit.createStyledInput(this, "https://example.com/logo.png", initialLogo)
+        logoBody.addView(logoUrlInput)
+
+        liveLogoPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 90), UiKit.dp(this@MainActivity, 90)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 8)
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#0C2038"), Color.parseColor("#1D4ED8"), 1, 10f, this@MainActivity)
+            setPadding(UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 6))
+        }
+        if (initialLogo.startsWith("data:image")) {
+            try {
+                val b64 = initialLogo.substringAfter("base64,")
+                val decoded = Base64.decode(b64, Base64.DEFAULT)
+                val bmp = BitmapFactory.decodeByteArray(decoded, 0, decoded.size)
+                liveLogoPreview?.setImageBitmap(bmp)
+            } catch (_: Exception) {}
+        }
+        logoBody.addView(liveLogoPreview)
+
+        val pickLogoBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se Logo Chunein (300x300 px)", "#38BDF8") {
+            openImagePicker(REQUEST_PICK_LOGO)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 44)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        logoBody.addView(pickLogoBtn)
+        form.addView(logoCard)
+
+        // 2. Banner Updater
+        val (bannerCard, bannerBody) = UiKit.createSectionContainer(this, "🖼️ 2. Hero Banner Showcase", "Landscape 1200x500")
+
+        val bannerSizeBadge = TextView(this).apply {
+            text = "📐 Perfect Dimensions: 1200 x 500 px (Landscape Banner)\nHero section me top products & offers showcase karne ke liye."
+            textSize = 11.5f
+            setTextColor(Color.parseColor("#A78BFA"))
+            background = UiKit.cardDrawable(Color.parseColor("#1E1138"), Color.parseColor("#6D28D9"), 1, 8f, this@MainActivity)
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 8))
+        }
+        bannerBody.addView(bannerSizeBadge)
+
+        bannerBody.addView(UiKit.createFieldLabel(this, "Hero Banner Image URL (ya niche Gallery se chunein):"))
+        val initialBanner = pendingSettings["banner_url"] ?: dashboardData?.settings?.get("banner_url") ?: ""
+        bannerUrlInput = UiKit.createStyledInput(this, "https://example.com/banner.jpg", initialBanner)
+        bannerBody.addView(bannerUrlInput)
+
+        liveBannerPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 120)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 8)
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#1E1138"), Color.parseColor("#6D28D9"), 1, 10f, this@MainActivity)
+        }
+        if (initialBanner.startsWith("data:image")) {
+            try {
+                val b64 = initialBanner.substringAfter("base64,")
+                val decoded = Base64.decode(b64, Base64.DEFAULT)
+                val bmp = BitmapFactory.decodeByteArray(decoded, 0, decoded.size)
+                liveBannerPreview?.setImageBitmap(bmp)
+            } catch (_: Exception) {}
+        }
+        bannerBody.addView(liveBannerPreview)
+
+        val pickBannerBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se Banner Chunein (1200x500 px)", "#A78BFA") {
+            openImagePicker(REQUEST_PICK_BANNER)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 44)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        bannerBody.addView(pickBannerBtn)
+        form.addView(bannerCard)
+
+        // 3. UPI QR Code Info
+        val (qrCard, qrBody) = UiKit.createSectionContainer(this, "💳 3. Payment QR Code", "Auto-Generated")
+        val upiId = pendingSettings["upi_id"] ?: dashboardData?.settings?.get("upi_id") ?: "Not Set"
+        val qrInfo = TextView(this).apply {
+            text = "📲 UPI ID: $upiId\nWebsite checkout ke samay customer ko auto-generated dynamic UPI QR dikhaya jata hai jisse instant payment hoti hai."
+            textSize = 12f
+            setTextColor(Color.parseColor("#94A3B8"))
+            background = UiKit.cardDrawable(Color.parseColor("#080D1A"), Color.parseColor("#1E293B"), 1, 8f, this@MainActivity)
+            setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 10))
+        }
+        qrBody.addView(qrInfo)
+        form.addView(qrCard)
+
+        // Save Button
+        val saveBtn = UiKit.createPrimaryButton(
+            context = this,
+            btnText = "🚀 Save All Website Images Live",
+            startColor = "#2563EB",
+            endColor = "#00F0FF"
+        ) {
+            saveWebsiteSettings()
+        }
+        form.addView(saveBtn)
+
         scroll.addView(form)
         return scroll
     }
@@ -2412,24 +2735,106 @@ class MainActivity : Activity() {
         return container
     }
 
+    private fun syncVisibleInputsToPending() {
+        if (::brandNameInput.isInitialized && brandNameInput.isAttachedToWindow) {
+            pendingSettings["brand_name"] = brandNameInput.text.toString().trim()
+        }
+        if (::taglineInput.isInitialized && taglineInput.isAttachedToWindow) {
+            pendingSettings["brand_tagline"] = taglineInput.text.toString().trim()
+        }
+        if (::logoUrlInput.isInitialized && logoUrlInput.isAttachedToWindow) {
+            pendingSettings["logo_url"] = logoUrlInput.text.toString().trim()
+        }
+        if (::bannerUrlInput.isInitialized && bannerUrlInput.isAttachedToWindow) {
+            pendingSettings["banner_url"] = bannerUrlInput.text.toString().trim()
+        }
+        if (::fontFamilyInput.isInitialized && fontFamilyInput.isAttachedToWindow) {
+            pendingSettings["font_family"] = fontFamilyInput.text.toString().trim()
+        }
+        if (::headerColorInput.isInitialized && headerColorInput.isAttachedToWindow) {
+            pendingSettings["header_color"] = headerColorInput.text.toString().trim()
+        }
+        if (::footerColorInput.isInitialized && footerColorInput.isAttachedToWindow) {
+            pendingSettings["footer_color"] = footerColorInput.text.toString().trim()
+        }
+        if (::heroBadgeInput.isInitialized && heroBadgeInput.isAttachedToWindow) {
+            pendingSettings["hero_badge"] = heroBadgeInput.text.toString().trim()
+        }
+        if (::heroTitleInput.isInitialized && heroTitleInput.isAttachedToWindow) {
+            pendingSettings["hero_title"] = heroTitleInput.text.toString().trim()
+        }
+        if (::heroSubtitleInput.isInitialized && heroSubtitleInput.isAttachedToWindow) {
+            pendingSettings["hero_subtitle"] = heroSubtitleInput.text.toString().trim()
+        }
+        if (::ctaTextInput.isInitialized && ctaTextInput.isAttachedToWindow) {
+            pendingSettings["cta_text"] = ctaTextInput.text.toString().trim()
+        }
+        if (::announcementInput.isInitialized && announcementInput.isAttachedToWindow) {
+            pendingSettings["announcement_text"] = announcementInput.text.toString().trim()
+        }
+        if (::announcementSwitch.isInitialized && announcementSwitch.isAttachedToWindow) {
+            pendingSettings["show_announcement"] = if (announcementSwitch.isChecked) "true" else "false"
+        }
+        if (::waNumberInput.isInitialized && waNumberInput.isAttachedToWindow) {
+            pendingSettings["whatsapp_number"] = waNumberInput.text.toString().trim()
+        }
+        if (::upiIdInput.isInitialized && upiIdInput.isAttachedToWindow) {
+            pendingSettings["upi_id"] = upiIdInput.text.toString().trim()
+        }
+    }
+
     private fun populateSettingsFields() {
         val s = dashboardData?.settings ?: return
-        if (::brandNameInput.isInitialized) {
-            brandNameInput.setText(s["brand_name"] ?: "")
-            taglineInput.setText(s["brand_tagline"] ?: "")
-            logoUrlInput.setText(s["logo_url"] ?: "")
-            bannerUrlInput.setText(s["banner_url"] ?: "")
-            fontFamilyInput.setText(s["font_family"] ?: "")
-            headerColorInput.setText(s["header_color"] ?: "")
-            footerColorInput.setText(s["footer_color"] ?: "")
-            heroBadgeInput.setText(s["hero_badge"] ?: "")
-            heroTitleInput.setText(s["hero_title"] ?: "")
-            heroSubtitleInput.setText(s["hero_subtitle"] ?: "")
-            ctaTextInput.setText(s["cta_text"] ?: "")
-            announcementInput.setText(s["announcement_text"] ?: "")
-            announcementSwitch.isChecked = (s["show_announcement"] ?: "true").equals("true", ignoreCase = true)
-            waNumberInput.setText(s["whatsapp_number"] ?: "")
-            upiIdInput.setText(s["upi_id"] ?: "")
+        for ((k, v) in s) {
+            if (!pendingSettings.containsKey(k)) {
+                pendingSettings[k] = v
+            }
+        }
+        if (::brandNameInput.isInitialized && brandNameInput.isAttachedToWindow) {
+            brandNameInput.setText(pendingSettings["brand_name"] ?: s["brand_name"] ?: "")
+        }
+        if (::taglineInput.isInitialized && taglineInput.isAttachedToWindow) {
+            taglineInput.setText(pendingSettings["brand_tagline"] ?: s["brand_tagline"] ?: "")
+        }
+        if (::logoUrlInput.isInitialized && logoUrlInput.isAttachedToWindow) {
+            logoUrlInput.setText(pendingSettings["logo_url"] ?: s["logo_url"] ?: "")
+        }
+        if (::bannerUrlInput.isInitialized && bannerUrlInput.isAttachedToWindow) {
+            bannerUrlInput.setText(pendingSettings["banner_url"] ?: s["banner_url"] ?: "")
+        }
+        if (::fontFamilyInput.isInitialized && fontFamilyInput.isAttachedToWindow) {
+            fontFamilyInput.setText(pendingSettings["font_family"] ?: s["font_family"] ?: "")
+        }
+        if (::headerColorInput.isInitialized && headerColorInput.isAttachedToWindow) {
+            headerColorInput.setText(pendingSettings["header_color"] ?: s["header_color"] ?: "")
+        }
+        if (::footerColorInput.isInitialized && footerColorInput.isAttachedToWindow) {
+            footerColorInput.setText(pendingSettings["footer_color"] ?: s["footer_color"] ?: "")
+        }
+        if (::heroBadgeInput.isInitialized && heroBadgeInput.isAttachedToWindow) {
+            heroBadgeInput.setText(pendingSettings["hero_badge"] ?: s["hero_badge"] ?: "")
+        }
+        if (::heroTitleInput.isInitialized && heroTitleInput.isAttachedToWindow) {
+            heroTitleInput.setText(pendingSettings["hero_title"] ?: s["hero_title"] ?: "")
+        }
+        if (::heroSubtitleInput.isInitialized && heroSubtitleInput.isAttachedToWindow) {
+            heroSubtitleInput.setText(pendingSettings["hero_subtitle"] ?: s["hero_subtitle"] ?: "")
+        }
+        if (::ctaTextInput.isInitialized && ctaTextInput.isAttachedToWindow) {
+            ctaTextInput.setText(pendingSettings["cta_text"] ?: s["cta_text"] ?: "")
+        }
+        if (::announcementInput.isInitialized && announcementInput.isAttachedToWindow) {
+            announcementInput.setText(pendingSettings["announcement_text"] ?: s["announcement_text"] ?: "")
+        }
+        if (::announcementSwitch.isInitialized && announcementSwitch.isAttachedToWindow) {
+            val show = pendingSettings["show_announcement"] ?: s["show_announcement"] ?: "true"
+            announcementSwitch.isChecked = show.equals("true", ignoreCase = true)
+        }
+        if (::waNumberInput.isInitialized && waNumberInput.isAttachedToWindow) {
+            waNumberInput.setText(pendingSettings["whatsapp_number"] ?: s["whatsapp_number"] ?: "")
+        }
+        if (::upiIdInput.isInitialized && upiIdInput.isAttachedToWindow) {
+            upiIdInput.setText(pendingSettings["upi_id"] ?: s["upi_id"] ?: "")
         }
     }
 
@@ -2440,24 +2845,18 @@ class MainActivity : Activity() {
             return
         }
 
-        val body = mapOf(
-            "action" to "updateSettings",
-            "brand_name" to brandNameInput.text.toString().trim(),
-            "brand_tagline" to taglineInput.text.toString().trim(),
-            "logo_url" to logoUrlInput.text.toString().trim(),
-            "banner_url" to bannerUrlInput.text.toString().trim(),
-            "font_family" to fontFamilyInput.text.toString().trim(),
-            "header_color" to headerColorInput.text.toString().trim(),
-            "footer_color" to footerColorInput.text.toString().trim(),
-            "hero_badge" to heroBadgeInput.text.toString().trim(),
-            "hero_title" to heroTitleInput.text.toString().trim(),
-            "hero_subtitle" to heroSubtitleInput.text.toString().trim(),
-            "cta_text" to ctaTextInput.text.toString().trim(),
-            "announcement_text" to announcementInput.text.toString().trim(),
-            "show_announcement" to if (announcementSwitch.isChecked) "true" else "false",
-            "whatsapp_number" to waNumberInput.text.toString().trim(),
-            "upi_id" to upiIdInput.text.toString().trim()
-        )
+        syncVisibleInputsToPending()
+
+        val s = dashboardData?.settings ?: emptyMap()
+        val body = mutableMapOf<String, String>()
+        body["action"] = "updateSettings"
+        body.putAll(s)
+        body.putAll(pendingSettings)
+
+        // Default fallbacks for safety
+        if (!body.containsKey("brand_name") || body["brand_name"].isNullOrEmpty()) {
+            body["brand_name"] = "SheetStore Pro"
+        }
 
         Toast.makeText(this, "Updating website...", Toast.LENGTH_SHORT).show()
 
@@ -2469,8 +2868,9 @@ class MainActivity : Activity() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
                         Toast.makeText(this@MainActivity, "Website updated live successfully! 🎉", Toast.LENGTH_LONG).show()
+                        fetchDashboard(silent = true)
                     } else {
-                        Toast.makeText(this@MainActivity, "Update failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Update failed: HTTP ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -2676,7 +3076,7 @@ class MainActivity : Activity() {
     }
 
     // ==========================================
-    // COMBINED THEME & CUSTOM CMS TAB
+    // WEBSITE CMS & STUDIO TAB (5 DEDICATED BUTTONS)
     // ==========================================
     private fun createWebsiteDesignAndCustomTab(): View {
         val root = LinearLayout(this).apply {
@@ -2684,98 +3084,93 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.parseColor("#0B0F19"))
         }
 
-        // Sub-segment switcher at top of tab
-        val subTabRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
+        // Horizontal scrollable 5-button top dock
+        val subTabScroll = HorizontalScrollView(this).apply {
+            isHorizontalScrollBarEnabled = false
             setBackgroundColor(Color.parseColor("#0F172A"))
-            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8))
+            setPadding(UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 8))
             elevation = UiKit.dp(this@MainActivity, 4).toFloat()
         }
 
-        val btnThemes = TextView(this).apply {
-            text = "🎨 Website Themes"
-            textSize = 12f
-            typeface = Typeface.DEFAULT_BOLD
-            gravity = Gravity.CENTER
-            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                rightMargin = UiKit.dp(this@MainActivity, 6)
-            }
+        val subTabRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
         }
 
-        val btnCustom = TextView(this).apply {
-            text = "🛠️ Store Styling CMS"
-            textSize = 12f
-            typeface = Typeface.DEFAULT_BOLD
-            gravity = Gravity.CENTER
-            setPadding(0, UiKit.dp(this@MainActivity, 10), 0, UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                leftMargin = UiKit.dp(this@MainActivity, 6)
-            }
-        }
+        val tabs = listOf(
+            Pair("🏢 Site Main Details", 0),
+            Pair("🎨 Theme Selection", 1),
+            Pair("📋 Other Details", 2),
+            Pair("🔤 Fonts & Other Info", 3),
+            Pair("🖼️ Image Updater", 4)
+        )
+
+        val tabButtons = mutableListOf<TextView>()
 
         val subContentContainer = FrameLayout(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f)
         }
 
         fun updateSubTabStyles() {
-            if (designSubTabIndex == 0) {
-                btnThemes.setTextColor(Color.WHITE)
-                btnThemes.background = UiKit.cardDrawable(
-                    bgColor = Color.parseColor("#152846"),
-                    strokeColor = Color.parseColor("#00F0FF"),
-                    strokeWidthDp = 1,
-                    radiusDp = 10f,
-                    context = this@MainActivity
-                )
-                btnCustom.setTextColor(Color.parseColor("#94A3B8"))
-                btnCustom.background = UiKit.cardDrawable(
-                    bgColor = Color.parseColor("#121826"),
-                    strokeColor = Color.parseColor("#1E2D48"),
-                    strokeWidthDp = 1,
-                    radiusDp = 10f,
-                    context = this@MainActivity
-                )
-            } else {
-                btnCustom.setTextColor(Color.WHITE)
-                btnCustom.background = UiKit.cardDrawable(
-                    bgColor = Color.parseColor("#152846"),
-                    strokeColor = Color.parseColor("#00F0FF"),
-                    strokeWidthDp = 1,
-                    radiusDp = 10f,
-                    context = this@MainActivity
-                )
-                btnThemes.setTextColor(Color.parseColor("#94A3B8"))
-                btnThemes.background = UiKit.cardDrawable(
-                    bgColor = Color.parseColor("#121826"),
-                    strokeColor = Color.parseColor("#1E2D48"),
-                    strokeWidthDp = 1,
-                    radiusDp = 10f,
-                    context = this@MainActivity
-                )
+            tabButtons.forEachIndexed { idx, btn ->
+                val isActive = (designSubTabIndex == idx)
+                if (isActive) {
+                    btn.setTextColor(Color.WHITE)
+                    btn.background = UiKit.cardDrawable(
+                        bgColor = Color.parseColor("#152846"),
+                        strokeColor = Color.parseColor("#00F0FF"),
+                        strokeWidthDp = 1,
+                        radiusDp = 10f,
+                        context = this@MainActivity
+                    )
+                } else {
+                    btn.setTextColor(Color.parseColor("#94A3B8"))
+                    btn.background = UiKit.cardDrawable(
+                        bgColor = Color.parseColor("#121826"),
+                        strokeColor = Color.parseColor("#1E2D48"),
+                        strokeWidthDp = 1,
+                        radiusDp = 10f,
+                        context = this@MainActivity
+                    )
+                }
             }
         }
 
         fun renderSubContent() {
+            syncVisibleInputsToPending()
             subContentContainer.removeAllViews()
-            val view = if (designSubTabIndex == 0) createNicheAndThemesTab() else createWebsiteCustomizerTab()
+            val view = when (designSubTabIndex) {
+                0 -> createSiteMainDetailsSubTab()
+                1 -> createNicheAndThemesTab()
+                2 -> createOtherDetailsSubTab()
+                3 -> createFontsAndInfoSubTab()
+                4 -> createImageUpdaterSubTab()
+                else -> createSiteMainDetailsSubTab()
+            }
             subContentContainer.addView(view)
             updateSubTabStyles()
         }
 
-        btnThemes.setOnClickListener {
-            designSubTabIndex = 0
-            renderSubContent()
+        tabs.forEach { (title, idx) ->
+            val btn = TextView(this).apply {
+                text = title
+                textSize = 11.5f
+                typeface = Typeface.DEFAULT_BOLD
+                gravity = Gravity.CENTER
+                setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 8))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    setMargins(UiKit.dp(this@MainActivity, 4), 0, UiKit.dp(this@MainActivity, 4), 0)
+                }
+                setOnClickListener {
+                    designSubTabIndex = idx
+                    renderSubContent()
+                }
+            }
+            tabButtons.add(btn)
+            subTabRow.addView(btn)
         }
 
-        btnCustom.setOnClickListener {
-            designSubTabIndex = 1
-            renderSubContent()
-        }
-
-        subTabRow.addView(btnThemes)
-        subTabRow.addView(btnCustom)
-        root.addView(subTabRow)
+        subTabScroll.addView(subTabRow)
+        root.addView(subTabScroll)
 
         renderSubContent()
         root.addView(subContentContainer)
@@ -2794,7 +3189,7 @@ class MainActivity : Activity() {
             elevation = UiKit.dp(this@MainActivity, 8).toFloat()
 
             addView(createNavItem("🛒 Orders", 0))
-            addView(createNavItem("🎨 Customize", 1))
+            addView(createNavItem("🛠️ Site Studio", 1))
             addView(createNavItem("📦 Products", 2))
         }
     }
@@ -4036,15 +4431,25 @@ class MainActivity : Activity() {
                             val scaled = scaleBitmap(originalBitmap, 300, 300)
                             val base64 = bitmapToBase64(scaled)
                             val dataUrl = "data:image/jpeg;base64,$base64"
-                            logoUrlInput.setText(dataUrl)
+                            pendingSettings["logo_url"] = dataUrl
+                            if (::logoUrlInput.isInitialized && logoUrlInput.isAttachedToWindow) {
+                                logoUrlInput.setText(dataUrl)
+                            }
+                            liveLogoPreview?.setImageBitmap(scaled)
+                            liveLogoPreview?.visibility = View.VISIBLE
                             Toast.makeText(this, "Logo photo chuni gayi! (300x300 px)", Toast.LENGTH_SHORT).show()
                         }
                         REQUEST_PICK_BANNER -> {
-                            val scaled = scaleBitmap(originalBitmap, 800, 400)
+                            val scaled = scaleBitmap(originalBitmap, 1200, 500)
                             val base64 = bitmapToBase64(scaled)
                             val dataUrl = "data:image/jpeg;base64,$base64"
-                            bannerUrlInput.setText(dataUrl)
-                            Toast.makeText(this, "Banner photo chuni gayi! (800x400 px)", Toast.LENGTH_SHORT).show()
+                            pendingSettings["banner_url"] = dataUrl
+                            if (::bannerUrlInput.isInitialized && bannerUrlInput.isAttachedToWindow) {
+                                bannerUrlInput.setText(dataUrl)
+                            }
+                            liveBannerPreview?.setImageBitmap(scaled)
+                            liveBannerPreview?.visibility = View.VISIBLE
+                            Toast.makeText(this, "Banner photo chuni gayi! (1200x500 px)", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
