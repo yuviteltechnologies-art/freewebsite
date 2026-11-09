@@ -206,7 +206,7 @@ class MainActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        if (isUserLoggedIn() && isOnboardingCompleted()) {
+        if (isUserLoggedIn()) {
             fetchDashboard(silent = true)
         }
     }
@@ -214,7 +214,7 @@ class MainActivity : Activity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
-        if (isUserLoggedIn() && isOnboardingCompleted()) {
+        if (isUserLoggedIn()) {
             topBarView.visibility = View.VISIBLE
             navBar.visibility = View.VISIBLE
             handleIntentTab(intent)
@@ -723,8 +723,6 @@ class MainActivity : Activity() {
     private fun checkAuthAndNavigate() {
         if (!isUserLoggedIn()) {
             showFullScreenLoginScreen()
-        } else if (!isOnboardingCompleted()) {
-            showFullScreenSegmentSelection()
         } else {
             showDashboardHome()
         }
@@ -935,11 +933,7 @@ class MainActivity : Activity() {
                     if (success) {
                         val prefs = getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
                         prefs.edit().putBoolean("is_sheet_verified", true).apply()
-                        if (!isOnboardingCompleted()) {
-                            showFullScreenSegmentSelection()
-                        } else {
-                            showDashboardHome()
-                        }
+                        showDashboardHome()
                     } else {
                         Toast.makeText(this@MainActivity, "❌ $errMsg", Toast.LENGTH_LONG).show()
                     }
@@ -2570,29 +2564,23 @@ class MainActivity : Activity() {
             addView(createNavItem("🎯 Themes", 1))
             addView(createNavItem("🛠️ Custom", 2))
             addView(createNavItem("📦 Products", 3))
-            addView(createNavItem("⚙️ Settings", 4))
         }
     }
 
     private fun createNavItem(label: String, index: Int): Button {
         return Button(this).apply {
             text = label
-            textSize = 10f
+            textSize = 10.5f
             typeface = Typeface.DEFAULT_BOLD
             setBackgroundColor(Color.TRANSPARENT)
             setPadding(UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6), UiKit.dp(this@MainActivity, 2), UiKit.dp(this@MainActivity, 6))
             setTextColor(if (currentTab == index) Color.parseColor("#00F0FF") else Color.parseColor("#94A3B8"))
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             setOnClickListener {
-                if (!isOnboardingCompleted()) {
-                    contentContainer.removeAllViews()
-                    contentContainer.addView(createOnboardingView())
-                } else if (!isSheetVerified()) {
+                if (!isSheetVerified()) {
                     Toast.makeText(this@MainActivity, "Pehle Google Sheet verify karein! 🔒", Toast.LENGTH_SHORT).show()
-                    switchTab(index)
-                } else {
-                    switchTab(index)
                 }
+                switchTab(index)
             }
         }
     }
@@ -2802,7 +2790,7 @@ class MainActivity : Activity() {
         autoPollJob = CoroutineScope(Dispatchers.Main).launch {
             while (isActive) {
                 delay(20_000) // Poll Google Sheet every 20 seconds
-                if (isOnboardingCompleted() && isSheetVerified()) {
+                if (isUserLoggedIn() && isSheetVerified()) {
                     fetchDashboard(silent = true)
                 }
             }
