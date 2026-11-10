@@ -353,6 +353,464 @@
     .faq details[open] summary::after { transform: rotate(45deg); }
     .faq details p { color: var(--muted); padding-bottom: 22px; max-width: 66ch; }
 
+    /* ---------- plotter & video guide ---------- */
+    .plotter-sec { padding-block: 40px 60px; }
+    .video-tutorial-container {
+      background: rgba(16, 18, 43, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: clamp(18px, 3vw, 28px);
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+    .video-screen-wrap {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      max-height: 480px;
+      width: 100%;
+      background: #060714;
+      border: 1px solid rgba(233, 180, 76, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-block: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    #tutorial-video-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .video-overlay-bar {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(to top, rgba(6, 7, 20, 0.95), rgba(6, 7, 20, 0.4), transparent);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .video-timeline-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .video-timeline-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--saffron));
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+    .video-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .video-btn {
+      background: rgba(233, 180, 76, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 5px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font: 600 0.88rem var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .video-btn:hover {
+      background: var(--gold);
+      color: var(--night);
+    }
+    .video-chapter-pill {
+      font-size: 0.82rem;
+      color: var(--gold-light);
+      font-weight: 500;
+      background: rgba(10, 11, 31, 0.7);
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    .video-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .video-step-card {
+      background: rgba(23, 26, 58, 0.6);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .video-step-card.active {
+      border-color: var(--gold);
+      background: rgba(233, 180, 76, 0.08);
+    }
+    .video-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--night);
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .video-step-text h4 {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .video-step-text p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* Plotter Workspace Layout */
+    .plotter-workspace {
+      display: grid;
+      grid-template-columns: minmax(320px, 380px) 1fr;
+      gap: 24px;
+      align-items: stretch;
+      background: rgba(16, 18, 43, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: clamp(16px, 2.5vw, 24px);
+      box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+    @media (max-width: 960px) {
+      .plotter-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+    .plotter-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: rgba(23, 26, 58, 0.7);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .plotter-panel-title {
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      font-family: var(--font-display);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+    .plotter-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .plotter-field-group label {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .plotter-field-group label span.unit {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .plotter-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .plotter-input-row input {
+      flex: 1;
+      background: rgba(10, 11, 31, 0.9);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 9px 12px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .plotter-step-btn {
+      width: 34px;
+      height: 38px;
+      background: rgba(10, 11, 31, 0.8);
+      border: 1px solid var(--line);
+      color: var(--gold);
+      font-size: 1.1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.2s;
+    }
+    .plotter-step-btn:hover {
+      border-color: var(--gold);
+      background: rgba(233, 180, 76, 0.15);
+    }
+    .preset-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .preset-pill {
+      font-size: 0.76rem;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-pill:hover, .preset-pill.active {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(233, 180, 76, 0.1);
+    }
+
+    /* Rotary slider */
+    .degree-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .degree-slider {
+      flex: 1;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .degree-badge {
+      min-width: 54px;
+      text-align: center;
+      background: rgba(233, 180, 76, 0.18);
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* Toggles Grid */
+    .toggles-section {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .toggle-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .toggle-label {
+      font-size: 0.88rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-label span.badge {
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: rgba(10, 11, 31, 0.6);
+      padding: 1px 6px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+    }
+    .custom-switch {
+      position: relative;
+      width: 38px;
+      height: 20px;
+    }
+    .custom-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: rgba(255, 255, 255, 0.12);
+      transition: .3s;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+    }
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--muted);
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .switch-slider {
+      background-color: var(--gold);
+      border-color: var(--gold);
+    }
+    input:checked + .switch-slider:before {
+      transform: translateX(18px);
+      background-color: var(--night);
+    }
+
+    /* Coordinate Canvas / SVG Stage */
+    .plotter-stage-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+    .plotter-stage {
+      position: relative;
+      width: 100%;
+      height: 540px;
+      background: #07091B;
+      border: 1px solid rgba(233, 180, 76, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.7);
+    }
+    #plotter-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .plotter-info-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: rgba(23, 26, 58, 0.6);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+    }
+    .plotter-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+    }
+    .plotter-stats b {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+    .plotter-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .plotter-btn {
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .plotter-btn.primary {
+      background: var(--gold);
+      color: var(--night);
+    }
+    .plotter-btn:hover {
+      background: var(--gold);
+      color: var(--night);
+    }
+
+    /* Live Hover Tooltip */
+    #plot-tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(10, 11, 31, 0.94);
+      border: 1px solid var(--gold);
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+      display: none;
+      z-index: 50;
+      max-width: 260px;
+    }
+    #plot-tooltip h5 {
+      margin: 0 0 2px 0;
+      font-size: 0.92rem;
+      color: var(--gold-light);
+    }
+    #plot-tooltip p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    /* GeoGebra-style Coordinate Axis Grid */
+    .geo-grid-line { stroke: rgba(236, 214, 170, 0.08); stroke-width: 0.8; }
+    .geo-axis-line { stroke: rgba(233, 180, 76, 0.5); stroke-width: 1.5; }
+    .geo-axis-text { fill: rgba(233, 180, 76, 0.7); font-size: 11px; font-family: monospace; }
+    .plot-rect { stroke: var(--gold); stroke-width: 2.5; fill: rgba(23, 26, 58, 0.6); }
+    .plot-dim-text { fill: var(--gold-light); font-size: 13px; font-weight: 600; text-anchor: middle; }
+    .brahma-center-rect { fill: rgba(233, 180, 76, 0.22); stroke: var(--gold); stroke-dasharray: 4 3; stroke-width: 1.2; }
+    .zone-ray { stroke-width: 1; stroke-dasharray: 3 3; }
+    .zone-sector-poly { opacity: 0.14; cursor: pointer; transition: opacity 0.2s; }
+    .zone-sector-poly:hover { opacity: 0.42; }
+    .zone-label-text { font-size: 10px; font-weight: 600; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .devta-point-label { font-size: 9px; fill: var(--gold-light); text-anchor: middle; pointer-events: none; font-family: var(--font-deva); }
+    .room-overlay-rect { stroke-width: 1.2; rx: 4; cursor: pointer; }
+
     /* ---------- contact ---------- */
     .contact { position: relative; margin-top: 70px; border: 1px solid var(--line); background: linear-gradient(160deg, rgba(75, 63, 160, .26), rgba(10, 11, 31, .8)); padding: clamp(28px, 5vw, 64px); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-radius: 8px; }
     .contact > * { min-width: 0; position: relative; }
@@ -403,6 +861,8 @@
       वास्तु ब्रह्मांड
     </a>
     <nav class="links" aria-label="भाग">
+      <a href="#plotter">📐 प्लॉट व डिग्री मैप</a>
+      <a href="#video-guide">🎬 वीडियो गाइड</a>
       <a href="#process">तरीका</a>
       <a href="#audit">खुद जाँचें</a>
       <a href="#science">वास्तु व विज्ञान</a>
@@ -456,7 +916,280 @@
     </div>
   </section>
 
-  <!-- SECTION: self-audit tool -->
+  <!-- SECTION: Video Guide & GeoGebra-style Vastu Plotter -->
+  <section id="plotter" class="plotter-sec">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">जियो-प्लॉटर और दिशा चक्र (GeoGebra 2D Engine)</p>
+      <h2>प्लॉट साइज़ और कंपास डिग्री से सटीक वास्तु नक्शा</h2>
+      <p class="lead">स्टेप १: प्लॉट की लंबाई-चौड़ाई नापें। स्टेप २: घर के ठीक केंद्र (ब्रह्मस्थान) में खड़े होकर कंपास डिग्री दर्ज करें। नीचे का लाइव टूल आपके प्लॉट पर १६ ज़ोन, ४५ देवता और कमरों की सही स्थिति का सटीक नक्शा तुरंत तैयार करेगा।</p>
+    </div>
+
+    <!-- Video Explainer Guide -->
+    <div class="video-tutorial-container" id="video-guide" data-reveal>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div>
+          <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase;">🎬 वीडियो ट्यूटोरियल व गाइड</span>
+          <h3 style="font-size: 1.35rem; color: var(--gold-light); margin-top: 2px;">इसको कैसे उपयोग करें? (How to use - Live Video Guide)</h3>
+          <p style="font-size: 0.9rem; color: var(--muted); margin: 0;">घर के केंद्र में खड़े होकर डिग्री नापने और अपने प्लॉट का वैज्ञानिक वास्तु चक्र तैयार करने का वीडियो गाइड।</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="preset-pill active" id="btn-tab-sim">🎥 एनीमेशन गाइड</button>
+          <button type="button" class="preset-pill" id="btn-tab-ext">📺 वीडियो लिंक (MP4 / YT)</button>
+        </div>
+      </div>
+
+      <!-- Simulator Canvas View -->
+      <div id="sim-view" class="video-screen-wrap">
+        <canvas id="tutorial-video-canvas" width="800" height="450" aria-label="वास्तु ट्यूटोरियल एनीमेशन"></canvas>
+        <div class="video-overlay-bar">
+          <div class="video-timeline-bar" id="vidProgressTrack" title="क्लिक करके आगे-पीछे करें">
+            <div class="video-timeline-fill" id="vidProgressFill"></div>
+          </div>
+          <div class="video-controls-row">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button type="button" class="video-btn" id="btnVidPlayPause">⏸ रोकें</button>
+              <button type="button" class="video-btn" id="btnVidReplay">↺ पुनः देखें</button>
+              <span id="vidTime">00:00 / 00:24</span>
+            </div>
+            <div class="video-chapter-pill" id="videoSceneBadge">स्टेप १: प्लॉट साइज़ नापें</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- External Video Player View (Custom URL / YouTube embed option) -->
+      <div id="ext-view" class="video-screen-wrap" style="display: none; padding: 20px; align-items: center; justify-content: center;">
+        <div style="width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 14px; text-align: center;">
+          <p style="color: var(--gold); font-size: 0.95rem; margin: 0;">🔗 अपना यूट्यूब वीडियो या MP4 लिंक यहाँ दर्ज करें:</p>
+          <div style="display: flex; gap: 8px;">
+            <input type="url" id="customVideoUrl" placeholder="https://www.youtube.com/embed/... या MP4 लिंक" style="flex: 1; padding: 8px 12px; background: rgba(10,11,31,0.9); border: 1px solid var(--line); border-radius: 4px; color: #fff; font-size: 0.9rem;" value="https://www.youtube.com/embed/dQw4w9WgXcQ">
+            <button type="button" class="video-btn" id="btnLoadCustomVid" style="background: var(--gold); color: var(--night);">चलाएं</button>
+          </div>
+          <div id="customVidFrameContainer" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.88rem;">
+            यहाँ आपका वीडियो एम्बेड होगा
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Step Interactive Badges under the Video -->
+      <div class="video-steps-grid">
+        <div class="video-step-card active" data-step="0">
+          <div class="video-step-num">१</div>
+          <div class="video-step-text">
+            <h4>१. प्लॉट साइज़ नापें</h4>
+            <p>फीट में प्लॉट की चौड़ाई (Width) और लंबाई (Length) नापकर टूल में दर्ज करें।</p>
+          </div>
+        </div>
+        <div class="video-step-card" data-step="1">
+          <div class="video-step-num">२</div>
+          <div class="video-step-text">
+            <h4>२. घर के केंद्र में खड़े हों</h4>
+            <p>घर या प्लॉट के दोनों कोनों को जोड़कर ब्रह्मस्थान (Center) निकालें और वहाँ खड़े हों।</p>
+          </div>
+        </div>
+        <div class="video-step-card" data-step="2">
+          <div class="video-step-num">३</div>
+          <div class="video-step-text">
+            <h4>३. कंपास से डिग्री मापें</h4>
+            <p>मोबाइल कंपास को समतल रखकर मुख्य द्वार या उत्तर की सटीक डिग्री (0°–360°) नोट करें।</p>
+          </div>
+        </div>
+        <div class="video-step-card" data-step="3">
+          <div class="video-step-num">४</div>
+          <div class="video-step-text">
+            <h4>४. टूल में लाइव नक्शा देखें</h4>
+            <p>डिग्री भरते ही १६ ज़ोन, ४५ देवता और सही कमरों की दिशा तुरंत स्क्रीन पर दिखेगी।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GeoGebra-style 2D Plotter Workspace -->
+    <div class="plotter-workspace" data-reveal>
+      <!-- Left Panel: Controls & Inputs -->
+      <div class="plotter-panel">
+        <div class="plotter-panel-title">
+          <span>📐</span> इनपुट पैरामीटर्स (Plot & Degree)
+        </div>
+
+        <div class="plotter-field-group">
+          <label for="plotWidth">चौड़ाई / Width <span class="unit">(feet)</span></label>
+          <div class="plotter-input-row">
+            <input type="number" id="plotWidth" value="30" min="5" max="300" step="1">
+            <button type="button" class="plotter-step-btn" data-step-for="plotWidth" data-delta="-5" title="-5 ft">−</button>
+            <button type="button" class="plotter-step-btn" data-step-for="plotWidth" data-delta="5" title="+5 ft">+</button>
+          </div>
+        </div>
+
+        <div class="plotter-field-group">
+          <label for="plotLength">लंबाई / Length <span class="unit">(feet)</span></label>
+          <div class="plotter-input-row">
+            <input type="number" id="plotLength" value="40" min="5" max="300" step="1">
+            <button type="button" class="plotter-step-btn" data-step-for="plotLength" data-delta="-5" title="-5 ft">−</button>
+            <button type="button" class="plotter-step-btn" data-step-for="plotLength" data-delta="5" title="+5 ft">+</button>
+          </div>
+        </div>
+
+        <div class="plotter-field-group">
+          <label for="plotDegree">कंपास डिग्री / Degree <span class="unit">(0° - 359°)</span></label>
+          <div class="degree-slider-wrap">
+            <input type="range" class="degree-slider" id="degSlider" min="0" max="359" value="0">
+            <div class="degree-badge" id="degBadge">0°</div>
+          </div>
+          <div class="preset-pills" id="degPresets">
+            <button type="button" class="preset-pill active" data-deg="0">N 0°</button>
+            <button type="button" class="preset-pill" data-deg="45">NE 45°</button>
+            <button type="button" class="preset-pill" data-deg="90">E 90°</button>
+            <button type="button" class="preset-pill" data-deg="135">SE 135°</button>
+            <button type="button" class="preset-pill" data-deg="180">S 180°</button>
+            <button type="button" class="preset-pill" data-deg="225">SW 225°</button>
+            <button type="button" class="preset-pill" data-deg="270">W 270°</button>
+            <button type="button" class="preset-pill" data-deg="315">NW 315°</button>
+          </div>
+        </div>
+
+        <!-- GeoGebra Toggles -->
+        <div class="toggles-section">
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
+            जियोजेब्रा लेयर्स (GeoGebra Layers)
+          </div>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>plot</span>
+              <span class="badge">प्लॉट सीमा A-B-C-D</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkPlot" checked>
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>16 zones</span>
+              <span class="badge">१६ ऊर्जा क्षेत्र चक्र</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkZones" checked>
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>grid</span>
+              <span class="badge">९×९ वास्तु पद ग्रिड</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkGrid">
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>45 Devta</span>
+              <span class="badge">४५ वैदिक देवता मंडल</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkDevta">
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>display</span>
+              <span class="badge">दिशा व डिग्री लेबल्स</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkDisplay" checked>
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>Extra</span>
+              <span class="badge">कमरों के शुभ सुझाव</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkExtra">
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+
+          <label class="toggle-item">
+            <div class="toggle-label">
+              <span>Brahmasthan</span>
+              <span class="badge">ब्रह्मस्थान केंद्र ॐ</span>
+            </div>
+            <div class="custom-switch">
+              <input type="checkbox" id="chkBrahma" checked>
+              <span class="switch-slider"></span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Quick Standard Dimension Presets -->
+        <div style="border-top: 1px solid var(--line); padding-top: 12px;">
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
+            मानक प्लॉट प्रीसेट्स
+          </div>
+          <div class="preset-pills" id="dimPresets">
+            <button type="button" class="preset-pill active" data-w="30" data-l="40">30×40 (1200 ft²)</button>
+            <button type="button" class="preset-pill" data-w="40" data-l="60">40×60 (2400 ft²)</button>
+            <button type="button" class="preset-pill" data-w="20" data-l="50">20×50 (1000 ft²)</button>
+            <button type="button" class="preset-pill" data-w="35" data-l="50">35×50 (1750 ft²)</button>
+            <button type="button" class="preset-pill" data-w="50" data-l="50">50×50 (2500 ft²)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: SVG Stage & Info Bar -->
+      <div class="plotter-stage-wrap">
+        <div class="plotter-stage" id="plotterStage">
+          <svg id="plotter-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="vastuGeoGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" class="geo-grid-line"/>
+              </pattern>
+              <pattern id="vastuGeoGridMajor" width="100" height="100" patternUnits="userSpaceOnUse">
+                <rect width="100" height="100" fill="url(#vastuGeoGrid)"/>
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(233, 180, 76, 0.15)" stroke-width="1.2"/>
+              </pattern>
+            </defs>
+
+            <!-- Coordinate Background Grid -->
+            <rect width="100%" height="100%" fill="url(#vastuGeoGridMajor)"/>
+
+            <!-- Scene Dynamic Group -->
+            <g id="plotSceneG"></g>
+          </svg>
+
+          <!-- Floating Hover Tooltip -->
+          <div id="plot-tooltip">
+            <h5 id="tipTitle">ईशान (NE)</h5>
+            <p id="tipDesc">जल तत्व • ईश्वर व ध्यान</p>
+          </div>
+        </div>
+
+        <!-- Info & Export Bar -->
+        <div class="plotter-info-bar">
+          <div class="plotter-stats">
+            <span>क्षेत्रफल: <b id="statArea">1,200 sq.ft</b></span>
+            <span>अनुपात: <b id="statRatio">1 : 1.33</b></span>
+            <span>दिशा: <b id="statFacing">उत्तर (0°)</b></span>
+            <span>केंद्र (ब्रह्मस्थान): <b id="statCenter">(15, 20) ft</b></span>
+          </div>
+          <div class="plotter-actions">
+            <button type="button" class="plotter-btn primary" id="btnExportMap">📷 नक्शा सेव करें</button>
+            <button type="button" class="plotter-btn" id="btnShareConsult">📲 व्हाट्सएप पर भेजें</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section id="audit">
     <div class="sec-head" data-reveal>
       <p class="eyebrow">खुद जाँचें</p>
@@ -928,6 +1661,904 @@
     note.innerHTML = 'अनुरोध तैयार! WhatsApp पर भेजा जा रहा है... 🚀';
     window.open(waUrl, '_blank');
   });
+
+  /* ---------- Video Tutorial Animator (How to use) ---------- */
+  (function initVideoTutorial() {
+    var canvas = document.getElementById('tutorial-video-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var isPlaying = true;
+    var duration = 24000; // 24 seconds total (4 scenes x 6s)
+    var currentTime = 0;
+    var lastTimestamp = null;
+    var animFrameId = null;
+
+    var scenes = [
+      { start: 0, end: 6000, title: 'स्टेप १: प्लॉट साइज़ नापें (Width & Length)', desc: 'अपने प्लॉट या फ्लैट की कुल चौड़ाई (Width) और लंबाई (Length) नापें।' },
+      { start: 6000, end: 12000, title: 'स्टेप २: घर के ठीक केंद्र (Center / ब्रह्मस्थान) में खड़े हों', desc: 'दोनों विकर्णों (Diagonals) को मिलाकर ब्रह्मस्थान का ठीक केंद्र ढूंढें और वहाँ खड़े हों।' },
+      { start: 12000, end: 18000, title: 'स्टेप ३: कंपास से डिग्री मापें (Compass Degree)', desc: 'मोबाइल कंपास को फर्श के समानांतर रखकर मुख्य द्वार / उत्तर की सटीक डिग्री (0°–360°) मापें।' },
+      { start: 18000, end: 24000, title: 'स्टेप ४: टूल में लाइव नक्शा देखें (16 Zones & 45 Devtas)', desc: 'डिग्री भरते ही १६ ज़ोन, ४५ देवता और आदर्श कमरों का वैज्ञानिक वास्तु चक्र तैयार!' }
+    ];
+
+    var btnPlayPause = document.getElementById('btnVidPlayPause');
+    var btnReplay = document.getElementById('btnVidReplay');
+    var timeEl = document.getElementById('vidTime');
+    var progressFill = document.getElementById('vidProgressFill');
+    var progressTrack = document.getElementById('vidProgressTrack');
+    var sceneBadge = document.getElementById('videoSceneBadge');
+    var stepCards = [].slice.call(document.querySelectorAll('.video-step-card'));
+
+    // Tab switcher (Sim vs External Video)
+    var tabSim = document.getElementById('btn-tab-sim');
+    var tabExt = document.getElementById('btn-tab-ext');
+    var simView = document.getElementById('sim-view');
+    var extView = document.getElementById('ext-view');
+
+    if (tabSim && tabExt && simView && extView) {
+      tabSim.addEventListener('click', function() {
+        tabSim.classList.add('active'); tabExt.classList.remove('active');
+        simView.style.display = 'flex'; extView.style.display = 'none';
+        if (!isPlaying) togglePlay();
+      });
+      tabExt.addEventListener('click', function() {
+        tabExt.classList.add('active'); tabSim.classList.remove('active');
+        simView.style.display = 'none'; extView.style.display = 'flex';
+        if (isPlaying) togglePlay();
+      });
+    }
+
+    var btnLoadCustomVid = document.getElementById('btnLoadCustomVid');
+    if (btnLoadCustomVid) {
+      btnLoadCustomVid.addEventListener('click', function() {
+        var url = (document.getElementById('customVideoUrl').value || '').trim();
+        var cont = document.getElementById('customVidFrameContainer');
+        if (!url) return;
+        if (url.indexOf('youtube.com') > -1 || url.indexOf('youtu.be') > -1) {
+          var ytid = '';
+          if (url.indexOf('embed/') > -1) ytid = url.split('embed/')[1].split('?')[0];
+          else if (url.indexOf('v=') > -1) ytid = url.split('v=')[1].split('&')[0];
+          else if (url.indexOf('youtu.be/') > -1) ytid = url.split('youtu.be/')[1].split('?')[0];
+          cont.innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + ytid + '?autoplay=1" title="Vastu Video Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border:none;"></iframe>';
+        } else {
+          cont.innerHTML = '<video width="100%" height="100%" controls autoplay style="object-fit:cover;"><source src="' + url + '">आपका ब्राउज़र वीडियो टैग सपोर्ट नहीं करता।</video>';
+        }
+      });
+    }
+
+    function formatTime(ms) {
+      var s = Math.floor(ms / 1000);
+      var min = Math.floor(s / 60);
+      var sec = s % 60;
+      return (min < 10 ? '0' : '') + min + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    function updateStepCards(activeIdx) {
+      stepCards.forEach(function(card, idx) {
+        if (idx === activeIdx) card.classList.add('active');
+        else card.classList.remove('active');
+      });
+    }
+
+    stepCards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        var step = parseInt(card.getAttribute('data-step') || '0', 10);
+        currentTime = step * 6000;
+        if (!isPlaying) togglePlay();
+      });
+    });
+
+    if (btnPlayPause) {
+      btnPlayPause.addEventListener('click', togglePlay);
+    }
+    if (btnReplay) {
+      btnReplay.addEventListener('click', function() {
+        currentTime = 0;
+        if (!isPlaying) togglePlay();
+      });
+    }
+    if (progressTrack) {
+      progressTrack.addEventListener('click', function(e) {
+        var rect = progressTrack.getBoundingClientRect();
+        var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        currentTime = pct * duration;
+      });
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      if (btnPlayPause) btnPlayPause.textContent = isPlaying ? '⏸ रोकें' : '▶ चलाएं';
+      if (isPlaying) {
+        lastTimestamp = performance.now();
+        animFrameId = requestAnimationFrame(renderLoop);
+      } else {
+        cancelAnimationFrame(animFrameId);
+      }
+    }
+
+    function render(timeMs) {
+      var w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Background blueprint dark gradient
+      var bgGrad = ctx.createRadialGradient(w/2, h/2, 50, w/2, h/2, w/2);
+      bgGrad.addColorStop(0, '#0c102a');
+      bgGrad.addColorStop(1, '#050612');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Faint CAD grid
+      ctx.strokeStyle = 'rgba(233, 180, 76, 0.08)';
+      ctx.lineWidth = 1;
+      for (var x = 0; x < w; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (var y = 0; y < h; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      var sceneIdx = Math.min(3, Math.floor(timeMs / 6000));
+      var scene = scenes[sceneIdx];
+      var sceneLocal = (timeMs % 6000) / 6000; // 0 to 1
+
+      if (sceneBadge) sceneBadge.textContent = scene.title;
+      updateStepCards(sceneIdx);
+
+      // Top title bar inside video canvas
+      ctx.save();
+      ctx.fillStyle = '#E9B44C';
+      ctx.font = 'bold 15px "Hind", sans-serif';
+      ctx.fillText(scene.title, 24, 34);
+
+      ctx.fillStyle = 'rgba(237, 230, 255, 0.8)';
+      ctx.font = '13px "Hind", sans-serif';
+      ctx.fillText(scene.desc, 24, 56);
+      ctx.restore();
+
+      var cx = w / 2;
+      var cy = h / 2 + 10;
+      var plotW = 280;
+      var plotH = 200;
+
+      if (sceneIdx === 0) {
+        // SCENE 1: Measure Length & Width
+        var animProgress = Math.min(1, sceneLocal * 1.4);
+        var curW = plotW * animProgress;
+        var curH = plotH * animProgress;
+        var px = cx - plotW / 2;
+        var py = cy - plotH / 2;
+
+        // Draw Plot Boundary
+        ctx.save();
+        ctx.strokeStyle = '#E9B44C';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(px, py, curW, curH);
+        ctx.fillStyle = 'rgba(233, 180, 76, 0.07)';
+        ctx.fillRect(px, py, curW, curH);
+
+        // Origin A(0,0) Marker
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath(); ctx.arc(px, py + curH, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 12px monospace';
+        ctx.fillText('A (0,0)', px - 45, py + curH + 18);
+
+        // Measuring Tape Animation (Width)
+        if (animProgress > 0.3) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(px, py + curH + 20);
+          ctx.lineTo(px + curW, py + curH + 20);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = 'bold 14px "Hind", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('↔ चौड़ाई / Width = 30 Feet', px + curW/2, py + curH + 40);
+        }
+
+        // Measuring Tape Animation (Length)
+        if (animProgress > 0.6) {
+          ctx.strokeStyle = '#a855f7';
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(px + curW + 20, py);
+          ctx.lineTo(px + curW + 20, py + curH);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = '#a855f7';
+          ctx.textAlign = 'left';
+          ctx.font = 'bold 14px "Hind", sans-serif';
+          ctx.fillText('↕ लंबाई / Length = 40 Feet', px + curW + 26, py + curH/2);
+        }
+        ctx.restore();
+
+      } else if (sceneIdx === 1) {
+        // SCENE 2: Stand at Center / Brahmasthan
+        var px = cx - plotW / 2;
+        var py = cy - plotH / 2;
+
+        ctx.save();
+        ctx.strokeStyle = '#E9B44C';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(px, py, plotW, plotH);
+        ctx.fillStyle = 'rgba(233, 180, 76, 0.05)';
+        ctx.fillRect(px, py, plotW, plotH);
+
+        // Diagonals crossing at center
+        var diagProg = Math.min(1, sceneLocal * 2);
+        ctx.strokeStyle = 'rgba(233, 180, 76, 0.5)';
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.moveTo(px, py); ctx.lineTo(px + plotW * diagProg, py + plotH * diagProg);
+        ctx.moveTo(px + plotW, py); ctx.lineTo(px + plotW * (1 - diagProg), py + plotH * diagProg);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Golden Brahmasthan Aura Pulsing
+        var pulse = 18 + Math.sin(sceneLocal * Math.PI * 6) * 6;
+        var auraGrad = ctx.createRadialGradient(cx, cy, 2, cx, cy, pulse * 2);
+        auraGrad.addColorStop(0, 'rgba(246, 213, 142, 0.8)');
+        auraGrad.addColorStop(0.5, 'rgba(233, 180, 76, 0.3)');
+        auraGrad.addColorStop(1, 'rgba(233, 180, 76, 0)');
+        ctx.fillStyle = auraGrad;
+        ctx.beginPath(); ctx.arc(cx, cy, pulse * 2, 0, Math.PI * 2); ctx.fill();
+
+        // Brahmasthan Central Square & ॐ
+        ctx.strokeStyle = '#F6D58E';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cx - 30, cy - 22, 60, 44);
+        ctx.fillStyle = '#F6D58E';
+        ctx.font = 'bold 16px "Tiro Devanagari Hindi", serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ॐ ब्रह्मस्थान', cx, cy - 32);
+
+        // Person Standing Icon
+        ctx.fillStyle = '#fff';
+        // Head
+        ctx.beginPath(); ctx.arc(cx, cy - 10, 7, 0, Math.PI * 2); ctx.fill();
+        // Body
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - 3); ctx.lineTo(cx, cy + 12);
+        ctx.moveTo(cx - 10, cy + 3); ctx.lineTo(cx + 10, cy + 3);
+        ctx.moveTo(cx, cy + 12); ctx.lineTo(cx - 7, cy + 24);
+        ctx.moveTo(cx, cy + 12); ctx.lineTo(cx + 7, cy + 24);
+        ctx.stroke();
+
+        ctx.fillStyle = '#E9B44C';
+        ctx.font = 'bold 13px "Hind", sans-serif';
+        ctx.fillText('आप यहाँ खड़े हैं (Center Point)', cx, cy + 42);
+        ctx.restore();
+
+      } else if (sceneIdx === 2) {
+        // SCENE 3: Read Compass Degree
+        var px = cx - plotW / 2;
+        var py = cy - plotH / 2;
+
+        ctx.save();
+        ctx.strokeStyle = 'rgba(233, 180, 76, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(px, py, plotW, plotH);
+
+        // Person at center
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.arc(cx, cy - 4, 6, 0, Math.PI * 2); ctx.fill();
+
+        // Phone Compass Graphic
+        var compX = cx + 90;
+        var compY = cy - 20;
+        var compR = 55;
+
+        // Connection beam from person to compass
+        ctx.strokeStyle = 'rgba(233, 180, 76, 0.6)';
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(compX, compY); ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Compass Outer Ring
+        ctx.fillStyle = '#080a1c';
+        ctx.beginPath(); ctx.arc(compX, compY, compR, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#E9B44C';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Degree dial ticks
+        for (var a = 0; a < 360; a += 30) {
+          var rad = (a - 90) * Math.PI / 180;
+          var x1 = compX + Math.cos(rad) * (compR - 4);
+          var y1 = compY + Math.sin(rad) * (compR - 4);
+          var x2 = compX + Math.cos(rad) * (compR - 10);
+          var y2 = compY + Math.sin(rad) * (compR - 10);
+          ctx.strokeStyle = (a === 0) ? '#ef4444' : 'rgba(255,255,255,0.4)';
+          ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        }
+
+        // Animated Rotating Needle settling on 35 deg (North-East tilt)
+        var curAngle = (Math.sin(sceneLocal * Math.PI * 3) * 45 + 35) * Math.PI / 180;
+        ctx.save();
+        ctx.translate(compX, compY);
+        ctx.rotate(curAngle);
+
+        // North Red Needle
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(0, -compR + 12); ctx.lineTo(6, 0); ctx.lineTo(-6, 0); ctx.closePath();
+        ctx.fill();
+        // South White Needle
+        ctx.fillStyle = '#e2e8f0';
+        ctx.beginPath();
+        ctx.moveTo(0, compR - 12); ctx.lineTo(6, 0); ctx.lineTo(-6, 0); ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+
+        // Compass Center Cap
+        ctx.fillStyle = '#E9B44C';
+        ctx.beginPath(); ctx.arc(compX, compY, 4, 0, Math.PI * 2); ctx.fill();
+
+        // Digital Degree Badge
+        var degVal = Math.round(curAngle * 180 / Math.PI);
+        ctx.fillStyle = '#E9B44C';
+        ctx.font = 'bold 15px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('35° NNE', compX, compY + compR + 24);
+
+        ctx.fillStyle = 'rgba(237, 230, 255, 0.9)';
+        ctx.font = '12px "Hind", sans-serif';
+        ctx.fillText('मुख्य द्वार / उत्तर की डिग्री', compX, compY + compR + 42);
+        ctx.restore();
+
+      } else {
+        // SCENE 4: 16 Zones & 45 Devtas Result
+        var px = cx - plotW / 2;
+        var py = cy - plotH / 2;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        var rotAngle = -35 * Math.PI / 180; // 35 deg tilt
+        ctx.rotate(rotAngle);
+
+        // Draw Plot Boundary
+        ctx.strokeStyle = '#E9B44C';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(-plotW/2, -plotH/2, plotW, plotH);
+
+        // Draw 16 Colored Shakti Chakra Sectors
+        var zoneColors = [
+          '#2563eb', '#0284c7', '#06b6d4', '#10b981',
+          '#16a34a', '#84cc16', '#f97316', '#ea580c',
+          '#dc2626', '#d97706', '#b45309', '#64748b',
+          '#94a3b8', '#8b5cf6', '#6366f1', '#3b82f6'
+        ];
+        var radR = 140;
+        for (var i = 0; i < 16; i++) {
+          var aStart = (i * 22.5 - 11.25 - 90) * Math.PI / 180;
+          var aEnd = ((i + 1) * 22.5 - 11.25 - 90) * Math.PI / 180;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, radR, aStart, aEnd);
+          ctx.closePath();
+          ctx.fillStyle = zoneColors[i];
+          ctx.globalAlpha = 0.25;
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1.0;
+
+        // Central Brahmasthan
+        ctx.fillStyle = 'rgba(246, 213, 142, 0.4)';
+        ctx.fillRect(-25, -20, 50, 40);
+        ctx.strokeStyle = '#E9B44C';
+        ctx.strokeRect(-25, -20, 50, 40);
+
+        // Room Overlays (NE, SE, SW, NW)
+        ctx.font = 'bold 11px "Hind", sans-serif';
+        ctx.textAlign = 'center';
+
+        // NE (Pooja)
+        ctx.fillStyle = '#06b6d4';
+        ctx.fillText('🙏 पूजा (NE)', 80, -55);
+        // SE (Kitchen)
+        ctx.fillStyle = '#f97316';
+        ctx.fillText('🔥 रसोई (SE)', 80, 55);
+        // SW (Master Bed)
+        ctx.fillStyle = '#b45309';
+        ctx.fillText('👑 मास्टर बेडरूम (SW)', -70, 55);
+        // NW (Guest)
+        ctx.fillStyle = '#6366f1';
+        ctx.fillText('🛋️ बैठक (NW)', -70, -55);
+
+        ctx.restore();
+
+        // Success Badge
+        ctx.save();
+        ctx.fillStyle = '#10b981';
+        ctx.font = 'bold 14px "Hind", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('✓ १६ ज़ोन व ४५ देवताओं का वैज्ञानिक संतुलन तैयार!', cx, cy + 120);
+        ctx.restore();
+      }
+
+      // Bottom Progress Line inside overlay
+      if (progressFill) {
+        var pct = (timeMs / duration) * 100;
+        progressFill.style.width = pct.toFixed(1) + '%';
+      }
+      if (timeEl) {
+        timeEl.textContent = formatTime(timeMs) + ' / ' + formatTime(duration);
+      }
+    }
+
+    function renderLoop(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      var dt = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      currentTime = (currentTime + dt) % duration;
+      render(currentTime);
+
+      if (isPlaying) {
+        animFrameId = requestAnimationFrame(renderLoop);
+      }
+    }
+
+    // Initial render
+    render(0);
+    animFrameId = requestAnimationFrame(renderLoop);
+  })();
+
+  /* ---------- GeoGebra-style Vastu Plotter Engine ---------- */
+  (function initGeoGebraPlotter() {
+    var plotWidthInput = document.getElementById('plotWidth');
+    var plotLengthInput = document.getElementById('plotLength');
+    var degSlider = document.getElementById('degSlider');
+    var degBadge = document.getElementById('degBadge');
+    var sceneG = document.getElementById('plotSceneG');
+    var tooltip = document.getElementById('plot-tooltip');
+    var tipTitle = document.getElementById('tipTitle');
+    var tipDesc = document.getElementById('tipDesc');
+    var svg = document.getElementById('plotter-svg');
+
+    var chkPlot = document.getElementById('chkPlot');
+    var chkZones = document.getElementById('chkZones');
+    var chkGrid = document.getElementById('chkGrid');
+    var chkDevta = document.getElementById('chkDevta');
+    var chkDisplay = document.getElementById('chkDisplay');
+    var chkExtra = document.getElementById('chkExtra');
+    var chkBrahma = document.getElementById('chkBrahma');
+
+    var statArea = document.getElementById('statArea');
+    var statRatio = document.getElementById('statRatio');
+    var statFacing = document.getElementById('statFacing');
+    var statCenter = document.getElementById('statCenter');
+
+    if (!plotWidthInput || !plotLengthInput || !degSlider || !sceneG) return;
+
+    // 16 Zones Definitions (Degree ranges, colors, Sanskrit names, elements, ideal rooms, remedies)
+    var VASTU_ZONES_16 = [
+      { id: 'N', name: 'उत्तर (North)', ang: 0, element: 'जल (Water)', devta: 'कुबेर / सोम', color: '#2563eb', room: 'तिजोरी, मुख्य प्रवेश, अध्ययन', bad: 'शौचालय, रसोई, लाल रंग' },
+      { id: 'NNE', name: 'उत्तर-उत्तर-पूर्व (NNE)', ang: 22.5, element: 'जल (Water)', devta: 'दिति / आप', color: '#0284c7', room: 'दवाइयाँ, स्वास्थ्य कक्ष, जल भंडारण', bad: 'कचरा, भारी सीढ़ियाँ' },
+      { id: 'NE', name: 'ईशान (North-East)', ang: 45, element: 'जल/ईश्वर', devta: 'ईश्वर / शिव / शिखी', color: '#06b6d4', room: 'पूजा घर, ध्यान केंद्र, खुला आँगन', bad: 'शौचालय, रसोई, भारी अलमारी' },
+      { id: 'ENE', name: 'पूर्व-उत्तर-पूर्व (ENE)', ang: 67.5, element: 'वायु/काष्ठ', devta: 'पर्जन्य / जयंत', color: '#10b981', room: 'मनोरंजन, बच्चों का खेल कक्ष, लिविंग', bad: 'स्टोर रूम, भारी सामान' },
+      { id: 'E', name: 'पूर्व (East)', ang: 90, element: 'वायु (Air)', devta: 'इंद्र / सूर्य', color: '#16a34a', room: 'बैठक, मुख्य द्वार, बालकनी', bad: 'टॉयलेट, गंदगी' },
+      { id: 'ESE', name: 'पूर्व-दक्षिण-पूर्व (ESE)', ang: 112.5, element: 'वायु (Air)', devta: 'सत्य / भृश', color: '#84cc16', room: 'मंथन, अध्ययन, वॉशिंग मशीन', bad: 'बेडरूम, पूजा स्थल' },
+      { id: 'SE', name: 'आग्नेय (South-East)', ang: 135, element: 'अग्नि (Fire)', devta: 'अग्नि / पूषा', color: '#f97316', room: 'रसोई (Kitchen), इनवर्टर, मीटर', bad: 'जल स्रोत, नीला रंग, बोरिंग' },
+      { id: 'SSE', name: 'दक्षिण-दक्षिण-पूर्व (SSE)', ang: 157.5, element: 'अग्नि (Fire)', devta: 'वितथ / गृहक्षत', color: '#ea580c', room: 'व्यायामशाला (Gym), शक्ति कक्ष', bad: 'टॉयलेट, पूजा स्थल' },
+      { id: 'S', name: 'दक्षिण (South)', ang: 180, element: 'अग्नि/यम', devta: 'यमराज / गंधर्व', color: '#dc2626', room: 'विश्राम, बेडरूम, यश व सम्मान', bad: 'भूमिगत पानी टंकी, मुख्य द्वार' },
+      { id: 'SSW', name: 'दक्षिण-दक्षिण-पश्चिम (SSW)', ang: 202.5, element: 'पृथ्वी (Earth)', devta: 'भृंगराज / मृग', color: '#d97706', room: 'विसर्जन (Disposal), टॉयलेट, डस्टबिन', bad: 'पूजा घर, बेडरूम, तिजोरी' },
+      { id: 'SW', name: 'नैऋत्य (South-West)', ang: 225, element: 'पृथ्वी/पितृ', devta: 'पितृ / दौवारिक', color: '#b45309', room: 'मास्टर बेडरूम, मुखिया का कमरा', bad: 'बोरिंग, मुख्य द्वार, हल्का खुलापन' },
+      { id: 'WSW', name: 'पश्चिम-दक्षिण-पश्चिम (WSW)', ang: 247.5, element: 'आकाश/धातु', devta: 'सुग्रीव / पुष्पवंत', color: '#64748b', room: 'विद्याभ्यास, बच्चों की पढ़ाई, बचत', bad: 'शौचालय, हरा रंग' },
+      { id: 'W', name: 'पश्चिम (West)', ang: 270, element: 'आकाश/वरुण', devta: 'वरुण / असुर', color: '#94a3b8', room: 'डाइनिंग रूम, लाभ प्राप्ति, तिजोरी', bad: 'जल स्रोत, हल्कापन' },
+      { id: 'WNW', name: 'पश्चिम-उत्तर-पश्चिम (WNW)', ang: 292.5, element: 'आकाश (Space)', devta: 'शोष / पापयक्ष्मा', color: '#8b5cf6', room: 'डिटॉक्स, रोना/अवसाद मुक्ति कक्ष', bad: 'मास्टर बेडरूम, पूजा घर' },
+      { id: 'NW', name: 'वायव्य (North-West)', ang: 315, element: 'वायु/चंद्र', devta: 'रोग / मारुत / वायु', color: '#6366f1', room: 'अतिथि कक्ष (Guest Room), बैंक सपोर्ट', bad: 'मास्टर बेडरूम, भारी सामान' },
+      { id: 'NNW', name: 'उत्तर-उत्तर-पश्चिम (NNW)', ang: 337.5, element: 'जल (Water)', devta: 'नाग / मुख्य', color: '#3b82f6', room: 'दाम्पत्य आकर्षण, ड्रेसिंग रूम', bad: 'अग्नि, लाल रंग' }
+    ];
+
+    // 45 Devtas in Vedic Vastu Purusha Mandala
+    var DEVTA_PADA_45 = [
+      { name: 'शिखी (Shikhi)', x: 0.9, y: 0.9, type: 'outer' },
+      { name: 'पर्जन्य (Parjanya)', x: 0.9, y: 0.78, type: 'outer' },
+      { name: 'जयंत (Jayanta)', x: 0.9, y: 0.67, type: 'outer' },
+      { name: 'इंद्र (Indra)', x: 0.9, y: 0.55, type: 'outer' },
+      { name: 'सूर्य (Surya)', x: 0.9, y: 0.45, type: 'outer' },
+      { name: 'सत्य (Satya)', x: 0.9, y: 0.33, type: 'outer' },
+      { name: 'भृश (Bhrisha)', x: 0.9, y: 0.22, type: 'outer' },
+      { name: 'आकाश (Antariksha)', x: 0.9, y: 0.1, type: 'outer' },
+      { name: 'अग्नि (Agni)', x: 0.9, y: 0.05, type: 'outer' },
+      { name: 'पूषा (Pusha)', x: 0.78, y: 0.05, type: 'outer' },
+      { name: 'वितथ (Vitatha)', x: 0.67, y: 0.05, type: 'outer' },
+      { name: 'गृहक्षत (Gruhakshat)', x: 0.55, y: 0.05, type: 'outer' },
+      { name: 'यम (Yama)', x: 0.45, y: 0.05, type: 'outer' },
+      { name: 'गंधर्व (Gandharva)', x: 0.33, y: 0.05, type: 'outer' },
+      { name: 'भृंगराज (Bhrangraj)', x: 0.22, y: 0.05, type: 'outer' },
+      { name: 'मृग (Mriga)', x: 0.1, y: 0.05, type: 'outer' },
+      { name: 'पितृ (Pitru)', x: 0.05, y: 0.05, type: 'outer' },
+      { name: 'दौवारिक (Dauvarik)', x: 0.05, y: 0.22, type: 'outer' },
+      { name: 'सुग्रीव (Sugriva)', x: 0.05, y: 0.33, type: 'outer' },
+      { name: 'पुष्पदंत (Pushpadanta)', x: 0.05, y: 0.45, type: 'outer' },
+      { name: 'वरुण (Varun)', x: 0.05, y: 0.55, type: 'outer' },
+      { name: 'असुर (Asura)', x: 0.05, y: 0.67, type: 'outer' },
+      { name: 'शोष (Sosha)', x: 0.05, y: 0.78, type: 'outer' },
+      { name: 'पापयक्ष्मा (Papayakshma)', x: 0.05, y: 0.9, type: 'outer' },
+      { name: 'रोग (Roga)', x: 0.1, y: 0.95, type: 'outer' },
+      { name: 'नाग (Naga)', x: 0.22, y: 0.95, type: 'outer' },
+      { name: 'मुख्य (Mukhya)', x: 0.33, y: 0.95, type: 'outer' },
+      { name: 'भल्लाट (Bhallata)', x: 0.45, y: 0.95, type: 'outer' },
+      { name: 'सोम (Soma)', x: 0.55, y: 0.95, type: 'outer' },
+      { name: 'भुजंग (Bhujanga)', x: 0.67, y: 0.95, type: 'outer' },
+      { name: 'अदिति (Aditi)', x: 0.78, y: 0.95, type: 'outer' },
+      { name: 'दिति (Diti)', x: 0.9, y: 0.95, type: 'outer' },
+      // Inner Deities
+      { name: 'ब्रह्मा (Brahma)', x: 0.5, y: 0.5, type: 'center' },
+      { name: 'अर्यमा (Aryama)', x: 0.75, y: 0.5, type: 'inner' },
+      { name: 'विवस्वान (Vivaswan)', x: 0.5, y: 0.25, type: 'inner' },
+      { name: 'मित्र (Mitra)', x: 0.25, y: 0.5, type: 'inner' },
+      { name: 'भूधर (Bhudhara)', x: 0.5, y: 0.75, type: 'inner' }
+    ];
+
+    function getDirectionName(deg) {
+      var d = (deg % 360 + 360) % 360;
+      if (d >= 337.5 || d < 22.5) return 'उत्तर (North @ ' + d + '°)';
+      if (d < 67.5) return 'ईशान (North-East @ ' + d + '°)';
+      if (d < 112.5) return 'पूर्व (East @ ' + d + '°)';
+      if (d < 157.5) return 'आग्नेय (South-East @ ' + d + '°)';
+      if (d < 202.5) return 'दक्षिण (South @ ' + d + '°)';
+      if (d < 247.5) return 'नैऋत्य (South-West @ ' + d + '°)';
+      if (d < 292.5) return 'पश्चिम (West @ ' + d + '°)';
+      return 'वायव्य (North-West @ ' + d + '°)';
+    }
+
+    function renderPlot() {
+      var W = Math.max(5, Math.min(300, parseFloat(plotWidthInput.value) || 30));
+      var L = Math.max(5, Math.min(300, parseFloat(plotLengthInput.value) || 40));
+      var deg = ((parseInt(degSlider.value, 10) || 0) % 360 + 360) % 360;
+
+      degBadge.textContent = deg + '°';
+
+      // Update Live Stats
+      var area = W * L;
+      var ratio = (L / W).toFixed(2);
+      statArea.textContent = area.toLocaleString() + ' sq.ft';
+      statRatio.textContent = '1 : ' + ratio + (ratio >= 1 && ratio <= 1.5 ? ' (शुभ)' : ' (मध्यम)');
+      statFacing.textContent = getDirectionName(deg);
+      statCenter.textContent = '(' + (W / 2).toFixed(1) + ', ' + (L / 2).toFixed(1) + ') ft';
+
+      // Update Preset pill highlights
+      [].slice.call(document.querySelectorAll('#degPresets .preset-pill')).forEach(function(pill) {
+        var pDeg = parseInt(pill.getAttribute('data-deg'), 10);
+        if (pDeg === deg) pill.classList.add('active');
+        else pill.classList.remove('active');
+      });
+      [].slice.call(document.querySelectorAll('#dimPresets .preset-pill')).forEach(function(pill) {
+        var pw = parseInt(pill.getAttribute('data-w'), 10);
+        var pl = parseInt(pill.getAttribute('data-l'), 10);
+        if (pw === W && pl === L) pill.classList.add('active');
+        else pill.classList.remove('active');
+      });
+
+      // SVG stage dimensions: 800 x 600
+      var svgW = 800, svgH = 600;
+      var originX = 110;
+      var originY = 510;
+
+      // Coordinate scaling
+      var maxPlotSpan = Math.max(W, L);
+      var availW = 620, availH = 430;
+      var scale = Math.min(availW / (maxPlotSpan * 1.3), availH / (maxPlotSpan * 1.3));
+      scale = Math.max(2.5, Math.min(18, scale));
+
+      var plotPixW = W * scale;
+      var plotPixL = L * scale;
+
+      // Center of plot in SVG coordinates
+      var centerSvgX = originX + plotPixW / 2;
+      var centerSvgY = originY - plotPixL / 2;
+
+      var svgContent = '';
+
+      // 1. GeoGebra-style Coordinate Axes (X and Y) with distance ticks
+      svgContent += '<g id="geoAxesGroup">';
+      // X Axis
+      svgContent += '<line x1="' + (originX - 30) + '" y1="' + originY + '" x2="770" y2="' + originY + '" class="geo-axis-line" />';
+      // Y Axis
+      svgContent += '<line x1="' + originX + '" y1="' + (originY + 30) + '" x2="' + originX + '" y2="30" class="geo-axis-line" />';
+      
+      // Arrow heads
+      svgContent += '<polygon points="770,' + originY + ' 760,' + (originY - 5) + ' 760,' + (originY + 5) + '" fill="#E9B44C" />';
+      svgContent += '<polygon points="' + originX + ',30 ' + (originX - 5) + ',40 ' + (originX + 5) + ',40" fill="#E9B44C" />';
+
+      // X Axis Ticks (feet)
+      var tickInterval = W > 80 ? 20 : (W > 40 ? 10 : 5);
+      for (var tx = 0; tx <= Math.ceil(640 / scale); tx += tickInterval) {
+        var px = originX + tx * scale;
+        if (px > 750) break;
+        svgContent += '<line x1="' + px + '" y1="' + originY + '" x2="' + px + '" y2="' + (originY + 6) + '" class="geo-axis-line" />';
+        svgContent += '<text x="' + px + '" y="' + (originY + 20) + '" class="geo-axis-text" text-anchor="middle">' + tx + '</text>';
+      }
+
+      // Y Axis Ticks (feet)
+      for (var ty = 0; ty <= Math.ceil(460 / scale); ty += tickInterval) {
+        var py = originY - ty * scale;
+        if (py < 40) break;
+        svgContent += '<line x1="' + originX + '" y1="' + py + '" x2="' + (originX - 6) + '" y2="' + py + '" class="geo-axis-line" />';
+        if (ty > 0) {
+          svgContent += '<text x="' + (originX - 12) + '" y="' + (py + 4) + '" class="geo-axis-text" text-anchor="end">' + ty + '</text>';
+        }
+      }
+      svgContent += '</g>';
+
+      // 2. 16 Vastu Zones (Shakti Chakra) radiating from Center
+      if (chkZones && chkZones.checked) {
+        svgContent += '<g id="shaktiChakraGroup" transform="translate(' + centerSvgX + ',' + centerSvgY + ') rotate(' + (-deg) + ')">';
+        var maxRadius = Math.max(plotPixW, plotPixL) * 0.95;
+
+        VASTU_ZONES_16.forEach(function(zone, idx) {
+          var a1 = (idx * 22.5 - 11.25 - 90) * Math.PI / 180;
+          var a2 = ((idx + 1) * 22.5 - 11.25 - 90) * Math.PI / 180;
+          var x1 = maxRadius * Math.cos(a1);
+          var y1 = maxRadius * Math.sin(a1);
+          var x2 = maxRadius * Math.cos(a2);
+          var y2 = maxRadius * Math.sin(a2);
+
+          // Sector wedge
+          svgContent += '<path d="M 0 0 L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + maxRadius.toFixed(1) + ' ' + maxRadius.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" ' +
+            'fill="' + zone.color + '" class="zone-sector-poly" ' +
+            'data-zone="' + zone.id + '" data-name="' + zone.name + '" data-elem="' + zone.element + '" data-devta="' + zone.devta + '" data-room="' + zone.room + '" data-bad="' + zone.bad + '" />';
+
+          // Ray dividing lines
+          svgContent += '<line x1="0" y1="0" x2="' + x1.toFixed(1) + '" y2="' + y1.toFixed(1) + '" stroke="' + zone.color + '" class="zone-ray" opacity="0.6" />';
+
+          // Label inside sector
+          if (chkDisplay && chkDisplay.checked) {
+            var midAngle = (idx * 22.5 - 90) * Math.PI / 180;
+            var lblRadius = maxRadius * 0.78;
+            var lx = lblRadius * Math.cos(midAngle);
+            var ly = lblRadius * Math.sin(midAngle);
+            svgContent += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" fill="#EDE6FF" class="zone-label-text">' + zone.id + '</text>';
+          }
+        });
+        svgContent += '</g>';
+      }
+
+      // 3. 9x9 Vastu Purusha Mandala Grid (81 Padas)
+      if (chkGrid && chkGrid.checked) {
+        svgContent += '<g id="vastuGrid9x9">';
+        var cellW = plotPixW / 9;
+        var cellH = plotPixL / 9;
+        for (var gx = 1; gx < 9; gx++) {
+          var lx = originX + gx * cellW;
+          svgContent += '<line x1="' + lx + '" y1="' + (originY - plotPixL) + '" x2="' + lx + '" y2="' + originY + '" stroke="rgba(233,180,76,0.3)" stroke-dasharray="3 3" />';
+        }
+        for (var gy = 1; gy < 9; gy++) {
+          var ly = originY - gy * cellH;
+          svgContent += '<line x1="' + originX + '" y1="' + ly + '" x2="' + (originX + plotPixW) + '" y2="' + ly + '" stroke="rgba(233,180,76,0.3)" stroke-dasharray="3 3" />';
+        }
+        svgContent += '</g>';
+      }
+
+      // 4. Plot Boundary (Rectangle ABCD)
+      if (chkPlot && chkPlot.checked) {
+        svgContent += '<g id="plotRectGroup">';
+        svgContent += '<rect x="' + originX + '" y="' + (originY - plotPixL) + '" width="' + plotPixW + '" height="' + plotPixL + '" class="plot-rect" />';
+
+        // Corner Points
+        // A(0,0) Origin
+        svgContent += '<circle cx="' + originX + '" cy="' + originY + '" r="6" fill="#ef4444" stroke="#fff" stroke-width="2" />';
+        svgContent += '<text x="' + (originX - 18) + '" y="' + (originY + 18) + '" fill="#ef4444" font-weight="bold" font-size="12">A (0,0)</text>';
+
+        // B(W, 0)
+        svgContent += '<circle cx="' + (originX + plotPixW) + '" cy="' + originY + '" r="5" fill="#E9B44C" />';
+        svgContent += '<text x="' + (originX + plotPixW + 8) + '" y="' + (originY + 16) + '" fill="#E9B44C" font-weight="bold" font-size="11">B (' + W + ',0)</text>';
+
+        // C(W, L)
+        svgContent += '<circle cx="' + (originX + plotPixW) + '" cy="' + (originY - plotPixL) + '" r="5" fill="#E9B44C" />';
+        svgContent += '<text x="' + (originX + plotPixW + 8) + '" y="' + (originY - plotPixL - 6) + '" fill="#E9B44C" font-weight="bold" font-size="11">C (' + W + ',' + L + ')</text>';
+
+        // D(0, L)
+        svgContent += '<circle cx="' + originX + '" cy="' + (originY - plotPixL) + '" r="5" fill="#E9B44C" />';
+        svgContent += '<text x="' + (originX - 18) + '" y="' + (originY - plotPixL - 6) + '" fill="#E9B44C" font-weight="bold" font-size="11">D (0,' + L + ')</text>';
+
+        // Dimension Callouts
+        svgContent += '<text x="' + (originX + plotPixW / 2) + '" y="' + (originY + 28) + '" class="plot-dim-text">चौड़ाई: ' + W + ' ft</text>';
+        svgContent += '<text x="' + (originX + plotPixW + 28) + '" y="' + (originY - plotPixL / 2) + '" class="plot-dim-text" transform="rotate(-90 ' + (originX + plotPixW + 28) + ' ' + (originY - plotPixL / 2) + ')">लंबाई: ' + L + ' ft</text>';
+        svgContent += '</g>';
+      }
+
+      // 5. Brahmasthan (Center ॐ and Golden Pulse)
+      if (chkBrahma && chkBrahma.checked) {
+        var bW = plotPixW / 3;
+        var bL = plotPixL / 3;
+        var bx = originX + (plotPixW - bW) / 2;
+        var by = originY - (plotPixL + bL) / 2;
+
+        svgContent += '<g id="brahmaGroup">';
+        // Central 1/9th zone rect
+        svgContent += '<rect x="' + bx + '" y="' + by + '" width="' + bW + '" height="' + bL + '" class="brahma-center-rect" />';
+        // Diagonals crossing
+        svgContent += '<line x1="' + originX + '" y1="' + originY + '" x2="' + (originX + plotPixW) + '" y2="' + (originY - plotPixL) + '" stroke="rgba(233,180,76,0.35)" stroke-dasharray="4 4" />';
+        svgContent += '<line x1="' + originX + '" y1="' + (originY - plotPixL) + '" x2="' + (originX + plotPixW) + '" y2="' + originY + '" stroke="rgba(233,180,76,0.35)" stroke-dasharray="4 4" />';
+        // Center OM icon
+        svgContent += '<circle cx="' + centerSvgX + '" cy="' + centerSvgY + '" r="16" fill="rgba(246, 213, 142, 0.25)" stroke="#F6D58E" stroke-width="1.2" />';
+        svgContent += '<text x="' + centerSvgX + '" y="' + (centerSvgY + 5) + '" fill="#F6D58E" font-size="14" font-weight="bold" text-anchor="middle" font-family="\'Tiro Devanagari Hindi\', serif">ॐ</text>';
+        svgContent += '<text x="' + centerSvgX + '" y="' + (centerSvgY + 28) + '" fill="#F6D58E" font-size="10" text-anchor="middle">ब्रह्मस्थान</text>';
+        svgContent += '</g>';
+      }
+
+      // 6. 45 Devtas Overlay
+      if (chkDevta && chkDevta.checked) {
+        svgContent += '<g id="devtasGroup">';
+        DEVTA_PADA_45.forEach(function(devta) {
+          var dx = originX + devta.x * plotPixW;
+          var dy = (originY - plotPixL) + (1 - devta.y) * plotPixL;
+          svgContent += '<circle cx="' + dx.toFixed(1) + '" cy="' + dy.toFixed(1) + '" r="2.5" fill="#E9B44C" />';
+          if (devta.type === 'inner' || devta.type === 'center') {
+            svgContent += '<text x="' + dx.toFixed(1) + '" y="' + (dy - 5).toFixed(1) + '" class="devta-point-label" font-weight="bold">' + devta.name.split(' ')[0] + '</text>';
+          }
+        });
+        svgContent += '</g>';
+      }
+
+      // 7. Extra: Recommended Room Overlays
+      if (chkExtra && chkExtra.checked) {
+        svgContent += '<g id="roomExtraGroup">';
+        var rooms = [
+          { name: 'पूजा घर', icon: '🙏', x: originX + plotPixW * 0.78, y: originY - plotPixL * 0.85, col: '#06b6d4' },
+          { name: 'रसोई', icon: '🔥', x: originX + plotPixW * 0.78, y: originY - plotPixL * 0.25, col: '#f97316' },
+          { name: 'मास्टर बेडरूम', icon: '👑', x: originX + plotPixW * 0.22, y: originY - plotPixL * 0.25, col: '#b45309' },
+          { name: 'बैठक / गेस्ट', icon: '🛋️', x: originX + plotPixW * 0.22, y: originY - plotPixL * 0.85, col: '#6366f1' },
+          { name: 'तिजोरी / धन', icon: '💰', x: originX + plotPixW * 0.5, y: originY - plotPixL * 0.9, col: '#2563eb' }
+        ];
+
+        rooms.forEach(function(rm) {
+          svgContent += '<g transform="translate(' + rm.x + ',' + rm.y + ')">';
+          svgContent += '<rect x="-42" y="-16" width="84" height="32" rx="6" fill="rgba(10, 11, 31, 0.85)" stroke="' + rm.col + '" stroke-width="1.2" />';
+          svgContent += '<text x="0" y="4" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">' + rm.icon + ' ' + rm.name + '</text>';
+          svgContent += '</g>';
+        });
+        svgContent += '</g>';
+      }
+
+      // 8. Compass Rose at top-right
+      svgContent += '<g id="compassRose" transform="translate(730, 80)">';
+      svgContent += '<circle cx="0" cy="0" r="32" fill="#080a1c" stroke="#E9B44C" stroke-width="1.5" />';
+      svgContent += '<g transform="rotate(' + (-deg) + ')">';
+      // Red North pointer
+      svgContent += '<polygon points="0,-26 5,-4 -5,-4" fill="#ef4444" />';
+      // South pointer
+      svgContent += '<polygon points="0,26 5,4 -5,4" fill="#e2e8f0" />';
+      svgContent += '<text x="0" y="-10" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">N</text>';
+      svgContent += '</g>';
+      svgContent += '<circle cx="0" cy="0" r="3" fill="#E9B44C" />';
+      svgContent += '<text x="0" y="44" fill="#E9B44C" font-size="10" font-weight="bold" text-anchor="middle">' + deg + '°</text>';
+      svgContent += '</g>';
+
+      sceneG.innerHTML = svgContent;
+    }
+
+    // Event Listeners for inputs
+    plotWidthInput.addEventListener('input', renderPlot);
+    plotLengthInput.addEventListener('input', renderPlot);
+    degSlider.addEventListener('input', renderPlot);
+
+    // Step +/- buttons
+    [].slice.call(document.querySelectorAll('.plotter-step-btn')).forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var targetId = btn.getAttribute('data-step-for');
+        var delta = parseInt(btn.getAttribute('data-delta') || '0', 10);
+        var input = document.getElementById(targetId);
+        if (input) {
+          var val = Math.max(5, Math.min(300, (parseFloat(input.value) || 0) + delta));
+          input.value = val;
+          renderPlot();
+        }
+      });
+    });
+
+    // Degree Presets
+    [].slice.call(document.querySelectorAll('#degPresets .preset-pill')).forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        degSlider.value = btn.getAttribute('data-deg');
+        renderPlot();
+      });
+    });
+
+    // Dimension Presets
+    [].slice.call(document.querySelectorAll('#dimPresets .preset-pill')).forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        plotWidthInput.value = btn.getAttribute('data-w');
+        plotLengthInput.value = btn.getAttribute('data-l');
+        renderPlot();
+      });
+    });
+
+    // Layer Checkboxes
+    [chkPlot, chkZones, chkGrid, chkDevta, chkDisplay, chkExtra, chkBrahma].forEach(function(chk) {
+      if (chk) chk.addEventListener('change', renderPlot);
+    });
+
+    // Hover Tooltip on 16 Zones
+    svg.addEventListener('mousemove', function(e) {
+      var target = e.target;
+      if (target && target.classList.contains('zone-sector-poly')) {
+        var name = target.getAttribute('data-name');
+        var elem = target.getAttribute('data-elem');
+        var devta = target.getAttribute('data-devta');
+        var room = target.getAttribute('data-room');
+        var bad = target.getAttribute('data-bad');
+
+        tipTitle.textContent = name;
+        tipDesc.innerHTML = '<strong>तत्व:</strong> ' + elem + ' • <strong>देवता:</strong> ' + devta + '<br><strong>शुभ:</strong> ' + room + '<br><span style="color:#ef4444;"><strong>वर्जित:</strong> ' + bad + '</span>';
+
+        var stageRect = document.getElementById('plotterStage').getBoundingClientRect();
+        var x = e.clientX - stageRect.left + 15;
+        var y = e.clientY - stageRect.top + 15;
+
+        // Keep inside bounds
+        if (x + 240 > stageRect.width) x = stageRect.width - 250;
+        if (y + 120 > stageRect.height) y = stageRect.height - 130;
+
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = y + 'px';
+        tooltip.style.display = 'block';
+      } else {
+        tooltip.style.display = 'none';
+      }
+    });
+
+    svg.addEventListener('mouseleave', function() {
+      tooltip.style.display = 'none';
+    });
+
+    // Action: Export SVG Map
+    var btnExport = document.getElementById('btnExportMap');
+    if (btnExport) {
+      btnExport.addEventListener('click', function() {
+        var svgEl = document.getElementById('plotter-svg');
+        if (!svgEl) return;
+        var serializer = new XMLSerializer();
+        var source = serializer.serializeToString(svgEl);
+        if (!source.match(/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/)) {
+          source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+        }
+        var blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'vastu-plot-' + plotWidthInput.value + 'x' + plotLengthInput.value + '-' + degSlider.value + 'deg.svg';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    // Action: Share on WhatsApp
+    var btnShare = document.getElementById('btnShareConsult');
+    if (btnShare) {
+      btnShare.addEventListener('click', function() {
+        var w = plotWidthInput.value;
+        var l = plotLengthInput.value;
+        var deg = degSlider.value;
+        var facing = getDirectionName(deg);
+        var area = (parseFloat(w) * parseFloat(l)).toLocaleString();
+
+        var text = 'नमस्ते वास्तु विशेषज्ञ जी! 🙏\n\n' +
+          'मैंने वास्तु ब्रह्मांड जियो-प्लॉटर में अपने प्लॉट की गणना की है:\n' +
+          '• प्लॉट साइज़: ' + w + ' ft × ' + l + ' ft\n' +
+          '• कुल क्षेत्रफल: ' + area + ' sq.ft\n' +
+          '• कंपास डिग्री: ' + deg + '° (' + facing + ')\n\n' +
+          'कृपया मुझे इस नक्शे के आधार पर कमरों की सही स्थिति और वास्तु मार्गदर्शन प्रदान करें।';
+
+        var waUrl = 'https://wa.me/919876543210?text=' + encodeURIComponent(text);
+        window.open(waUrl, '_blank');
+      });
+    }
+
+    // Initial render
+    renderPlot();
+  })();
 
   /* ---------- Scroll reveal ---------- */
   if (!reduced && 'IntersectionObserver' in window) {
