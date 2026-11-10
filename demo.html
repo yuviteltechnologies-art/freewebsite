@@ -43,32 +43,313 @@
 
   <style>
     /* ========================================================
-       5 READY-MADE THEME DEFINITIONS & CSS ENGINE
+       15 E-COMMERCE THEME SYSTEMS (GitHub Open-Source Inspired)
        ======================================================== */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--theme-bg, #070B18); }
     ::-webkit-scrollbar-thumb { background: var(--theme-accent, #2563EB); border-radius: 4px; }
 
-    /* DEFAULT / THEME 1: Modern Cyber Blue */
-    :root, [data-theme="modern-blue"] {
+    /* DEFAULT & 1: Electronics & Smart Gadgets (Cyber Blue / Cyan) */
+    :root, [data-theme="modern-blue"], [data-theme="electronics"] {
       --theme-bg: #070B18;
       --theme-bg-alt: #0B1124;
-      --theme-header-bg: rgba(7, 11, 24, 0.92);
-      --theme-card-bg: rgba(15, 23, 42, 0.78);
-      --theme-card-border: rgba(59, 130, 246, 0.22);
-      --theme-card-hover: rgba(59, 130, 246, 0.55);
+      --theme-header-bg: rgba(7, 11, 24, 0.94);
+      --theme-card-bg: rgba(15, 23, 42, 0.82);
+      --theme-card-border: rgba(0, 240, 255, 0.22);
+      --theme-card-hover: rgba(0, 240, 255, 0.65);
       --theme-text-primary: #F8FAFC;
       --theme-text-secondary: #94A3B8;
-      --theme-accent: #2563EB;
+      --theme-accent: #00F0FF;
       --theme-accent-light: #38BDF8;
-      --theme-title-grad: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #1D4ED8 100%);
-      --theme-btn-grad: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-      --theme-banner-grad: linear-gradient(to right, #1D4ED8, #4F46E5, #1D4ED8);
-      --theme-glow: rgba(59, 130, 246, 0.35);
+      --theme-btn-text: #020617;
+      --theme-title-grad: linear-gradient(135deg, #00F0FF 0%, #3B82F6 50%, #6366F1 100%);
+      --theme-btn-grad: linear-gradient(135deg, #00F0FF 0%, #2563EB 100%);
+      --theme-banner-grad: linear-gradient(to right, #0F172A, #1E3A8A, #0F172A);
+      --theme-glow: rgba(0, 240, 255, 0.35);
+      --theme-font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    /* 2: Fashion & Apparel (Editorial Rose Pink & Luxe Noir) */
+    [data-theme="fashion"] {
+      --theme-bg: #0E070B;
+      --theme-bg-alt: #180D15;
+      --theme-header-bg: rgba(14, 7, 11, 0.95);
+      --theme-card-bg: rgba(24, 13, 21, 0.88);
+      --theme-card-border: rgba(244, 63, 94, 0.28);
+      --theme-card-hover: rgba(244, 63, 94, 0.7);
+      --theme-text-primary: #FFF1F2;
+      --theme-text-secondary: #FECDD3;
+      --theme-accent: #F43F5E;
+      --theme-accent-light: #FB7185;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #FFE4E6 0%, #FB7185 50%, #E11D48 100%);
+      --theme-btn-grad: linear-gradient(135deg, #E11D48 0%, #9F1239 100%);
+      --theme-banner-grad: linear-gradient(to right, #4C0519, #881337, #4C0519);
+      --theme-glow: rgba(244, 63, 94, 0.4);
+      --theme-font-heading: 'Cinzel', serif;
+    }
+
+    /* 3: Health & Medical (Clinical Mint Teal & Emerald) */
+    [data-theme="health_medical"], [data-theme="emerald-pro"] {
+      --theme-bg: #031714;
+      --theme-bg-alt: #062420;
+      --theme-header-bg: rgba(3, 23, 20, 0.95);
+      --theme-card-bg: rgba(6, 36, 32, 0.85);
+      --theme-card-border: rgba(16, 185, 129, 0.3);
+      --theme-card-hover: rgba(52, 211, 153, 0.7);
+      --theme-text-primary: #F0FDF4;
+      --theme-text-secondary: #A7F3D0;
+      --theme-accent: #10B981;
+      --theme-accent-light: #6EE7B7;
+      --theme-btn-text: #022C22;
+      --theme-title-grad: linear-gradient(135deg, #6EE7B7 0%, #10B981 50%, #059669 100%);
+      --theme-btn-grad: linear-gradient(135deg, #10B981 0%, #047857 100%);
+      --theme-banner-grad: linear-gradient(to right, #022C22, #065F46, #022C22);
+      --theme-glow: rgba(16, 185, 129, 0.35);
+      --theme-font-heading: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* 4: Beauty & Personal Care (Petal Blush & Rose Gold) */
+    [data-theme="beauty_personal_care"] {
+      --theme-bg: #15060D;
+      --theme-bg-alt: #220B16;
+      --theme-header-bg: rgba(21, 6, 13, 0.95);
+      --theme-card-bg: rgba(34, 11, 22, 0.86);
+      --theme-card-border: rgba(251, 113, 133, 0.32);
+      --theme-card-hover: rgba(251, 113, 133, 0.7);
+      --theme-text-primary: #FFF1F2;
+      --theme-text-secondary: #FBCFE8;
+      --theme-accent: #FB7185;
+      --theme-accent-light: #F472B6;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #FDE8E8 0%, #FB7185 50%, #DB2777 100%);
+      --theme-btn-grad: linear-gradient(135deg, #FB7185 0%, #DB2777 100%);
+      --theme-banner-grad: linear-gradient(to right, #500724, #831843, #500724);
+      --theme-glow: rgba(251, 113, 133, 0.4);
+      --theme-font-heading: 'Cinzel', serif;
+    }
+
+    /* 5: Home & Kitchen (Warm Terracotta & Brass Amber) */
+    [data-theme="home_kitchen"] {
+      --theme-bg: #140B06;
+      --theme-bg-alt: #20130A;
+      --theme-header-bg: rgba(20, 11, 6, 0.95);
+      --theme-card-bg: rgba(32, 19, 10, 0.86);
+      --theme-card-border: rgba(245, 158, 11, 0.32);
+      --theme-card-hover: rgba(251, 191, 36, 0.7);
+      --theme-text-primary: #FFFBEB;
+      --theme-text-secondary: #FDE68A;
+      --theme-accent: #F59E0B;
+      --theme-accent-light: #FBBF24;
+      --theme-btn-text: #1C1917;
+      --theme-title-grad: linear-gradient(135deg, #FEF3C7 0%, #F59E0B 50%, #D97706 100%);
+      --theme-btn-grad: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
+      --theme-banner-grad: linear-gradient(to right, #451A03, #78350F, #451A03);
+      --theme-glow: rgba(245, 158, 11, 0.4);
       --theme-font-heading: 'Outfit', sans-serif;
     }
 
-    /* THEME 2: Royal Vedic Gold (Vastu / Astrology / Luxury) */
+    /* 6: Grocery & Food (Supermarket Lime Green & Harvest) */
+    [data-theme="grocery_food"] {
+      --theme-bg: #06170A;
+      --theme-bg-alt: #0C2312;
+      --theme-header-bg: rgba(6, 23, 10, 0.95);
+      --theme-card-bg: rgba(12, 35, 18, 0.86);
+      --theme-card-border: rgba(132, 204, 22, 0.32);
+      --theme-card-hover: rgba(163, 230, 53, 0.7);
+      --theme-text-primary: #F7FEE7;
+      --theme-text-secondary: #D9F99D;
+      --theme-accent: #84CC16;
+      --theme-accent-light: #A3E635;
+      --theme-btn-text: #14532D;
+      --theme-title-grad: linear-gradient(135deg, #ECFCCB 0%, #84CC16 50%, #4D7C0F 100%);
+      --theme-btn-grad: linear-gradient(135deg, #84CC16 0%, #4D7C0F 100%);
+      --theme-banner-grad: linear-gradient(to right, #14532D, #166534, #14532D);
+      --theme-glow: rgba(132, 204, 22, 0.4);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* 7: Automotive & Accessories (Carbon Fiber & Racing Red) */
+    [data-theme="automotive_accessories"] {
+      --theme-bg: #0D0E12;
+      --theme-bg-alt: #161820;
+      --theme-header-bg: rgba(13, 14, 18, 0.95);
+      --theme-card-bg: rgba(22, 24, 32, 0.88);
+      --theme-card-border: rgba(239, 68, 68, 0.32);
+      --theme-card-hover: rgba(248, 113, 113, 0.7);
+      --theme-text-primary: #FEF2F2;
+      --theme-text-secondary: #FECACA;
+      --theme-accent: #EF4444;
+      --theme-accent-light: #F87171;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #FEE2E2 0%, #EF4444 50%, #B91C1C 100%);
+      --theme-btn-grad: linear-gradient(135deg, #EF4444 0%, #991B1B 100%);
+      --theme-banner-grad: linear-gradient(to right, #450A0A, #7F1D1D, #450A0A);
+      --theme-glow: rgba(239, 68, 68, 0.4);
+      --theme-font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    /* 8: Industrial Supplies (Heavy Gunmetal & Caution Yellow) */
+    [data-theme="industrial_supplies"] {
+      --theme-bg: #0A0F17;
+      --theme-bg-alt: #131C2B;
+      --theme-header-bg: rgba(10, 15, 23, 0.95);
+      --theme-card-bg: rgba(19, 28, 43, 0.88);
+      --theme-card-border: rgba(234, 179, 8, 0.35);
+      --theme-card-hover: rgba(250, 204, 21, 0.7);
+      --theme-text-primary: #FEFCE8;
+      --theme-text-secondary: #CBD5E1;
+      --theme-accent: #EAB308;
+      --theme-accent-light: #FACC15;
+      --theme-btn-text: #0F172A;
+      --theme-title-grad: linear-gradient(135deg, #FEF08A 0%, #EAB308 50%, #CA8A04 100%);
+      --theme-btn-grad: linear-gradient(135deg, #EAB308 0%, #A16207 100%);
+      --theme-banner-grad: linear-gradient(to right, #1E293B, #334155, #1E293B);
+      --theme-glow: rgba(234, 179, 8, 0.4);
+      --theme-font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    /* 9: Books & Stationery (Classic Indigo & Parchment Amber) */
+    [data-theme="books_stationery"] {
+      --theme-bg: #0A0D18;
+      --theme-bg-alt: #131728;
+      --theme-header-bg: rgba(10, 13, 24, 0.95);
+      --theme-card-bg: rgba(19, 23, 40, 0.86);
+      --theme-card-border: rgba(139, 92, 246, 0.32);
+      --theme-card-hover: rgba(167, 139, 250, 0.7);
+      --theme-text-primary: #F5F3FF;
+      --theme-text-secondary: #DDD6FE;
+      --theme-accent: #8B5CF6;
+      --theme-accent-light: #A78BFA;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #EDE9FE 0%, #8B5CF6 50%, #6D28D9 100%);
+      --theme-btn-grad: linear-gradient(135deg, #8B5CF6 0%, #5B21B6 100%);
+      --theme-banner-grad: linear-gradient(to right, #2E1065, #4C1D95, #2E1065);
+      --theme-glow: rgba(139, 92, 246, 0.38);
+      --theme-font-heading: 'Cinzel', serif;
+    }
+
+    /* 10: Sports & Fitness (Electric Volt Cyan & Athletic Orange) */
+    [data-theme="sports_fitness"] {
+      --theme-bg: #060E18;
+      --theme-bg-alt: #0C1A2E;
+      --theme-header-bg: rgba(6, 14, 24, 0.95);
+      --theme-card-bg: rgba(12, 26, 46, 0.88);
+      --theme-card-border: rgba(6, 182, 212, 0.32);
+      --theme-card-hover: rgba(34, 211, 238, 0.7);
+      --theme-text-primary: #ECFEFF;
+      --theme-text-secondary: #A5F3FC;
+      --theme-accent: #06B6D4;
+      --theme-accent-light: #22D3EE;
+      --theme-btn-text: #082F49;
+      --theme-title-grad: linear-gradient(135deg, #CFFAFE 0%, #06B6D4 50%, #0891B2 100%);
+      --theme-btn-grad: linear-gradient(135deg, #06B6D4 0%, #0369A1 100%);
+      --theme-banner-grad: linear-gradient(to right, #082F49, #0E7490, #082F49);
+      --theme-glow: rgba(6, 182, 212, 0.4);
+      --theme-font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    /* 11: Baby & Kids (Cotton Candy Pastel & Sky Blue) */
+    [data-theme="baby_kids"] {
+      --theme-bg: #120A1A;
+      --theme-bg-alt: #1E112A;
+      --theme-header-bg: rgba(18, 10, 26, 0.95);
+      --theme-card-bg: rgba(30, 17, 42, 0.86);
+      --theme-card-border: rgba(244, 114, 182, 0.35);
+      --theme-card-hover: rgba(244, 114, 182, 0.75);
+      --theme-text-primary: #FDF2F8;
+      --theme-text-secondary: #FBCFE8;
+      --theme-accent: #F472B6;
+      --theme-accent-light: #FBCFE8;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #FDF2F8 0%, #F472B6 50%, #DB2777 100%);
+      --theme-btn-grad: linear-gradient(135deg, #F472B6 0%, #BE185D 100%);
+      --theme-banner-grad: linear-gradient(to right, #4A044E, #701A75, #4A044E);
+      --theme-glow: rgba(244, 114, 182, 0.4);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* 12: Agriculture & Farming (Fertile Earth & Monsoon Green) */
+    [data-theme="agriculture_farming"] {
+      --theme-bg: #071509;
+      --theme-bg-alt: #0D2411;
+      --theme-header-bg: rgba(7, 21, 9, 0.95);
+      --theme-card-bg: rgba(13, 36, 17, 0.86);
+      --theme-card-border: rgba(34, 197, 94, 0.32);
+      --theme-card-hover: rgba(74, 222, 128, 0.7);
+      --theme-text-primary: #F0FDF4;
+      --theme-text-secondary: #BBF7D0;
+      --theme-accent: #22C55E;
+      --theme-accent-light: #4ADE80;
+      --theme-btn-text: #052E16;
+      --theme-title-grad: linear-gradient(135deg, #DCFCE7 0%, #22C55E 50%, #15803D 100%);
+      --theme-btn-grad: linear-gradient(135deg, #22C55E 0%, #15803D 100%);
+      --theme-banner-grad: linear-gradient(to right, #052E16, #14532D, #052E16);
+      --theme-glow: rgba(34, 197, 94, 0.4);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* 13: Pet Supplies (Playful Sunset Bark & Orange) */
+    [data-theme="pet_supplies"] {
+      --theme-bg: #140C07;
+      --theme-bg-alt: #21150D;
+      --theme-header-bg: rgba(20, 12, 7, 0.95);
+      --theme-card-bg: rgba(33, 21, 13, 0.86);
+      --theme-card-border: rgba(249, 115, 22, 0.35);
+      --theme-card-hover: rgba(251, 146, 60, 0.75);
+      --theme-text-primary: #FFF7ED;
+      --theme-text-secondary: #FED7AA;
+      --theme-accent: #F97316;
+      --theme-accent-light: #FB923C;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #FFEDD5 0%, #F97316 50%, #C2410C 100%);
+      --theme-btn-grad: linear-gradient(135deg, #F97316 0%, #9A3412 100%);
+      --theme-banner-grad: linear-gradient(to right, #431407, #7C2D12, #431407);
+      --theme-glow: rgba(249, 115, 22, 0.4);
+      --theme-font-heading: 'Outfit', sans-serif;
+    }
+
+    /* 14: Furniture & Home Decor (Velvet Violet & Teak Gold) */
+    [data-theme="furniture_home_decor"] {
+      --theme-bg: #100A18;
+      --theme-bg-alt: #1A1125;
+      --theme-header-bg: rgba(16, 10, 24, 0.95);
+      --theme-card-bg: rgba(26, 17, 37, 0.86);
+      --theme-card-border: rgba(168, 85, 247, 0.35);
+      --theme-card-hover: rgba(192, 132, 252, 0.75);
+      --theme-text-primary: #FAF5FF;
+      --theme-text-secondary: #E9D5FF;
+      --theme-accent: #A855F7;
+      --theme-accent-light: #C084FC;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #F3E8FF 0%, #A855F7 50%, #7E22CE 100%);
+      --theme-btn-grad: linear-gradient(135deg, #A855F7 0%, #6B21A8 100%);
+      --theme-banner-grad: linear-gradient(to right, #3B0764, #581C87, #3B0764);
+      --theme-glow: rgba(168, 85, 247, 0.4);
+      --theme-font-heading: 'Cinzel', serif;
+    }
+
+    /* 15: B2B Wholesale (Corporate Navy & Bullion Gold) */
+    [data-theme="b2b_wholesale"] {
+      --theme-bg: #070E1C;
+      --theme-bg-alt: #0D1930;
+      --theme-header-bg: rgba(7, 14, 28, 0.95);
+      --theme-card-bg: rgba(13, 25, 48, 0.88);
+      --theme-card-border: rgba(59, 130, 246, 0.35);
+      --theme-card-hover: rgba(96, 165, 250, 0.75);
+      --theme-text-primary: #EFF6FF;
+      --theme-text-secondary: #BFDBFE;
+      --theme-accent: #3B82F6;
+      --theme-accent-light: #60A5FA;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #DBEAFE 0%, #3B82F6 50%, #1D4ED8 100%);
+      --theme-btn-grad: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+      --theme-banner-grad: linear-gradient(to right, #1E3A8A, #1E40AF, #1E3A8A);
+      --theme-glow: rgba(59, 130, 246, 0.4);
+      --theme-font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    /* LEGACY ALIASES & STYLES */
     [data-theme="vedic-gold"] {
       --theme-bg: #090510;
       --theme-bg-alt: #130722;
@@ -80,6 +361,7 @@
       --theme-text-secondary: #E5D5B8;
       --theme-accent: #F59E0B;
       --theme-accent-light: #FDE68A;
+      --theme-btn-text: #1C1917;
       --theme-title-grad: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
       --theme-btn-grad: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
       --theme-banner-grad: linear-gradient(to right, #92400E, #D97706, #78350F);
@@ -87,7 +369,6 @@
       --theme-font-heading: 'Cinzel', serif;
     }
 
-    /* THEME 3: Clean Minimal Light (Modern D2C Store) */
     [data-theme="minimal-light"] {
       --theme-bg: #F8FAFC;
       --theme-bg-alt: #F1F5F9;
@@ -99,6 +380,7 @@
       --theme-text-secondary: #64748B;
       --theme-accent: #059669;
       --theme-accent-light: #10B981;
+      --theme-btn-text: #FFFFFF;
       --theme-title-grad: linear-gradient(135deg, #0F172A 0%, #059669 60%, #047857 100%);
       --theme-btn-grad: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
       --theme-banner-grad: linear-gradient(to right, #0F172A, #1E293B, #0F172A);
@@ -106,7 +388,6 @@
       --theme-font-heading: 'Outfit', sans-serif;
     }
 
-    /* THEME 4: Cyberpunk Neon Violet (Gaming / Creator Store) */
     [data-theme="neon-violet"] {
       --theme-bg: #030107;
       --theme-bg-alt: #0C0318;
@@ -118,6 +399,7 @@
       --theme-text-secondary: #D8B4FE;
       --theme-accent: #8B5CF6;
       --theme-accent-light: #F472B6;
+      --theme-btn-text: #FFFFFF;
       --theme-title-grad: linear-gradient(135deg, #F472B6 0%, #A855F7 50%, #6366F1 100%);
       --theme-btn-grad: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
       --theme-banner-grad: linear-gradient(to right, #6D28D9, #BE185D, #4C1D95);
@@ -125,26 +407,6 @@
       --theme-font-heading: 'Space Grotesk', sans-serif;
     }
 
-    /* THEME 5: Emerald Business Pro (High-Trust Finance / Agency) */
-    [data-theme="emerald-pro"] {
-      --theme-bg: #03140F;
-      --theme-bg-alt: #06231B;
-      --theme-header-bg: rgba(3, 20, 15, 0.94);
-      --theme-card-bg: rgba(8, 36, 28, 0.84);
-      --theme-card-border: rgba(16, 185, 129, 0.3);
-      --theme-card-hover: rgba(52, 211, 153, 0.65);
-      --theme-text-primary: #F0FDF4;
-      --theme-text-secondary: #A7F3D0;
-      --theme-accent: #10B981;
-      --theme-accent-light: #6EE7B7;
-      --theme-title-grad: linear-gradient(135deg, #6EE7B7 0%, #10B981 50%, #047857 100%);
-      --theme-btn-grad: linear-gradient(135deg, #10B981 0%, #047857 100%);
-      --theme-banner-grad: linear-gradient(to right, #065F46, #047857, #064E3B);
-      --theme-glow: rgba(16, 185, 129, 0.4);
-      --theme-font-heading: 'Outfit', sans-serif;
-    }
-
-    /* THEME 6: NOOLAM Royal Kanchipuram (Luxury Silk & Saree Showcase) */
     [data-theme="noolam-saree"] {
       --theme-bg: #140204;
       --theme-bg-alt: #200407;
@@ -156,6 +418,7 @@
       --theme-text-secondary: #EAD8B1;
       --theme-accent: #D4AF37;
       --theme-accent-light: #F5DE7A;
+      --theme-btn-text: #FFFFFF;
       --theme-title-grad: linear-gradient(135deg, #F5DE7A 0%, #D4AF37 50%, #B45309 100%);
       --theme-btn-grad: linear-gradient(135deg, #500A13 0%, #3A080E 100%);
       --theme-banner-grad: linear-gradient(to right, #250409, #500A13, #250409);
@@ -194,6 +457,12 @@
       -webkit-text-fill-color: transparent !important;
     }
 
+    .btn-theme {
+      background: var(--theme-btn-grad) !important;
+      color: var(--theme-btn-text, #ffffff) !important;
+      box-shadow: 0 10px 25px -5px var(--theme-glow) !important;
+    }
+
     /* THEME 3 LIGHT OVERRIDES */
     [data-theme="minimal-light"] .text-slate-100,
     [data-theme="minimal-light"] .text-slate-200,
@@ -223,22 +492,79 @@
       background-color: #0F172A !important;
     }
 
-    /* THEME 2 VEDIC GOLD ACCENTS */
+    /* ACCENT COLOR DYNAMIC MAPPER */
+    [data-theme="electronics"] .text-blue-400,
+    [data-theme="electronics"] .text-blue-500 { color: #00F0FF !important; }
+    [data-theme="electronics"] .bg-blue-600 { background-color: #2563EB !important; }
+
+    [data-theme="fashion"] .text-blue-400,
+    [data-theme="fashion"] .text-blue-500 { color: #F43F5E !important; }
+    [data-theme="fashion"] .bg-blue-600 { background-color: #E11D48 !important; }
+
+    [data-theme="health_medical"] .text-blue-400,
+    [data-theme="health_medical"] .text-blue-500 { color: #10B981 !important; }
+    [data-theme="health_medical"] .bg-blue-600 { background-color: #059669 !important; }
+
+    [data-theme="beauty_personal_care"] .text-blue-400,
+    [data-theme="beauty_personal_care"] .text-blue-500 { color: #FB7185 !important; }
+    [data-theme="beauty_personal_care"] .bg-blue-600 { background-color: #DB2777 !important; }
+
+    [data-theme="home_kitchen"] .text-blue-400,
+    [data-theme="home_kitchen"] .text-blue-500 { color: #F59E0B !important; }
+    [data-theme="home_kitchen"] .bg-blue-600 { background-color: #D97706 !important; }
+
+    [data-theme="grocery_food"] .text-blue-400,
+    [data-theme="grocery_food"] .text-blue-500 { color: #84CC16 !important; }
+    [data-theme="grocery_food"] .bg-blue-600 { background-color: #65A30D !important; }
+
+    [data-theme="automotive_accessories"] .text-blue-400,
+    [data-theme="automotive_accessories"] .text-blue-500 { color: #EF4444 !important; }
+    [data-theme="automotive_accessories"] .bg-blue-600 { background-color: #DC2626 !important; }
+
+    [data-theme="industrial_supplies"] .text-blue-400,
+    [data-theme="industrial_supplies"] .text-blue-500 { color: #EAB308 !important; }
+    [data-theme="industrial_supplies"] .bg-blue-600 { background-color: #CA8A04 !important; }
+
+    [data-theme="books_stationery"] .text-blue-400,
+    [data-theme="books_stationery"] .text-blue-500 { color: #8B5CF6 !important; }
+    [data-theme="books_stationery"] .bg-blue-600 { background-color: #7C3AED !important; }
+
+    [data-theme="sports_fitness"] .text-blue-400,
+    [data-theme="sports_fitness"] .text-blue-500 { color: #06B6D4 !important; }
+    [data-theme="sports_fitness"] .bg-blue-600 { background-color: #0891B2 !important; }
+
+    [data-theme="baby_kids"] .text-blue-400,
+    [data-theme="baby_kids"] .text-blue-500 { color: #F472B6 !important; }
+    [data-theme="baby_kids"] .bg-blue-600 { background-color: #DB2777 !important; }
+
+    [data-theme="agriculture_farming"] .text-blue-400,
+    [data-theme="agriculture_farming"] .text-blue-500 { color: #22C55E !important; }
+    [data-theme="agriculture_farming"] .bg-blue-600 { background-color: #16A34A !important; }
+
+    [data-theme="pet_supplies"] .text-blue-400,
+    [data-theme="pet_supplies"] .text-blue-500 { color: #F97316 !important; }
+    [data-theme="pet_supplies"] .bg-blue-600 { background-color: #EA580C !important; }
+
+    [data-theme="furniture_home_decor"] .text-blue-400,
+    [data-theme="furniture_home_decor"] .text-blue-500 { color: #A855F7 !important; }
+    [data-theme="furniture_home_decor"] .bg-blue-600 { background-color: #9333EA !important; }
+
+    [data-theme="b2b_wholesale"] .text-blue-400,
+    [data-theme="b2b_wholesale"] .text-blue-500 { color: #3B82F6 !important; }
+    [data-theme="b2b_wholesale"] .bg-blue-600 { background-color: #1D4ED8 !important; }
+
     [data-theme="vedic-gold"] .text-blue-400,
     [data-theme="vedic-gold"] .text-blue-500 { color: #F59E0B !important; }
     [data-theme="vedic-gold"] .bg-blue-600 { background-color: #D97706 !important; }
 
-    /* THEME 4 NEON VIOLET ACCENTS */
     [data-theme="neon-violet"] .text-blue-400,
     [data-theme="neon-violet"] .text-blue-500 { color: #C084FC !important; }
     [data-theme="neon-violet"] .bg-blue-600 { background-color: #8B5CF6 !important; }
 
-    /* THEME 5 EMERALD PRO ACCENTS */
     [data-theme="emerald-pro"] .text-blue-400,
     [data-theme="emerald-pro"] .text-blue-500 { color: #34D399 !important; }
     [data-theme="emerald-pro"] .bg-blue-600 { background-color: #059669 !important; }
 
-    /* THEME 6 NOOLAM SAREE ACCENTS */
     [data-theme="noolam-saree"] .text-blue-400,
     [data-theme="noolam-saree"] .text-blue-500 { color: #D4AF37 !important; }
     [data-theme="noolam-saree"] .bg-blue-600 { background-color: #500A13 !important; }
@@ -247,60 +573,97 @@
 
 <body class="bg-[#070B18] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
-  <!-- TOP DEMO NOTICE BAR -->
-  <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-700 text-white text-xs sm:text-sm font-semibold py-2 px-4 flex items-center justify-between shadow-md">
-    <div class="flex items-center gap-2">
-      <span class="inline-block px-2 py-0.5 bg-black text-blue-300 rounded text-[11px] uppercase tracking-wider font-extrabold">LIVE DEMO 1 OF 2</span>
-      <span class="hidden sm:inline">⚡ Digital Products Storefront (100% Google Sheet Powered)</span>
+  <!-- TOP PROMO ANNOUNCEMENT & CONTACT HOTLINE STRIP -->
+  <div id="topAnnouncementBar" class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white text-xs py-2 px-3 sm:px-6 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 shadow-md">
+    <div class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10.5px] font-extrabold uppercase tracking-wider shrink-0">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+        <span>OFFER</span>
+      </span>
+      <span id="announcementTextSpan" class="font-medium text-slate-200 text-xs truncate max-w-[280px] sm:max-w-md">
+        🔥 Special Offer! Flat 50% OFF on all items | Direct UPI & WhatsApp Orders
+      </span>
     </div>
-    <div class="flex items-center gap-2">
-      <button onclick="openDemoSelectorModal()" class="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/30 active:scale-95">
-        <span>🔄 Switch Demo (Saree / Fashion)</span>
-        <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+
+    <!-- Quick Hotlines & Channel Strip -->
+    <div class="flex items-center gap-3 sm:gap-4 text-[11px] font-medium text-slate-300 ml-auto shrink-0">
+      <a id="topHelplineLink" href="tel:1800123456" class="hidden md:inline-flex items-center gap-1 hover:text-white transition">
+        <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <span>Helpline: <strong id="topHelplineText" class="text-white">1800-123-456</strong></span>
+      </a>
+
+      <a id="topAltPhoneLink" href="tel:919811223344" class="hidden lg:inline-flex items-center gap-1 hover:text-white transition">
+        <i data-lucide="phone" class="w-3.5 h-3.5 text-blue-400"></i>
+        <span id="topAltPhoneText">Alt: 919811223344</span>
+      </a>
+
+      <a id="topEmailLink" href="mailto:support@mystore.com" class="hidden sm:inline-flex items-center gap-1 hover:text-white transition">
+        <i data-lucide="mail" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <span id="topEmailText" class="truncate max-w-[140px]">support@mystore.com</span>
+      </a>
+
+      <button onclick="openDemoSelectorModal()" class="px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white text-[11px] font-bold transition flex items-center gap-1 border border-white/20 active:scale-95">
+        <span id="currentThemeBadge">🎨 15 E-Commerce Themes</span>
+        <i data-lucide="chevron-down" class="w-3 h-3"></i>
       </button>
-      <a href="index.html" class="underline font-bold hover:text-blue-200 transition text-xs ml-2">&larr; Main Site</a>
+
+      <a href="index.html" class="underline text-blue-300 hover:text-white transition text-[11px]">&larr; Home</a>
     </div>
   </div>
 
-  <!-- NAVIGATION -->
+  <!-- NAVIGATION HEADER -->
   <header class="sticky top-0 z-40 bg-[#070B18]/90 backdrop-blur-md border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div id="brandLogoContainer" class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-heading font-black text-xl shadow-lg shadow-blue-500/25 group-hover:scale-105 transition overflow-hidden">
-          <i data-lucide="layers" class="w-6 h-6"></i>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <!-- Logo & Brand Name -->
+      <a href="#" class="flex items-center gap-3 group min-w-0">
+        <div id="brandLogoContainer" class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-heading font-black text-xl shadow-lg shadow-blue-500/25 group-hover:scale-105 transition overflow-hidden shrink-0 border border-white/10">
+          <i data-lucide="shopping-bag" class="w-6 h-6"></i>
         </div>
-        <div>
-          <span id="brandNameText" class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white flex items-center gap-1">
-            Digital<span class="text-blue-500">Hub</span>
+        <div class="min-w-0">
+          <span id="brandNameText" class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white flex items-center gap-1 truncate">
+            Sheet<span class="text-blue-500">Store</span>
           </span>
-          <p id="brandTaglineText" class="text-[10px] text-blue-300 tracking-widest uppercase font-semibold">Ready-to-Use Digital Goods</p>
+          <p id="brandTaglineText" class="text-[10px] text-blue-300 tracking-widest uppercase font-semibold truncate">
+            Direct UPI &amp; WhatsApp Powered E-Commerce
+          </p>
         </div>
       </a>
 
       <!-- Desktop Nav Links -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="#products" class="hover:text-blue-400 transition">Digital Products</a>
-        <a href="#features" class="hover:text-blue-400 transition">Features</a>
-        <a href="#how-it-works" class="hover:text-blue-400 transition">How It Works</a>
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#products" class="hover:text-blue-400 transition">Catalog</a>
+        <a href="#features" class="hover:text-blue-400 transition">Highlights</a>
+        <a href="#contact-directory" class="hover:text-blue-400 transition flex items-center gap-1">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Store Locator</span>
+        </a>
+        <a href="#contact-directory" class="hover:text-blue-400 transition">Contact &amp; Help</a>
         <a href="#faq" class="hover:text-blue-400 transition">FAQs</a>
       </nav>
 
-      <!-- CTA Button -->
-      <div class="flex items-center gap-3">
-        <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20DigitalStore%20products%20ke%20bare%20me%20puchna%20hai" 
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <!-- Click to Call Helpline Pill -->
+        <a id="headerHelplinePill" href="tel:1800123456" 
+           class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-700/80 hover:border-emerald-500/50 text-slate-200 text-xs font-semibold transition">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span id="headerHelplinePillText">Call Helpline</span>
+        </a>
+
+        <!-- Primary WhatsApp CTA -->
+        <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20Store%20products%20ke%20bare%20me%20jaankari%20chahiye" 
            target="_blank"
            id="headerWaBtn"
-           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm transition shadow-lg shadow-emerald-900/30">
-          <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">WhatsApp Help</span>
+           class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm transition shadow-lg shadow-emerald-900/30 active:scale-95">
+          <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+          <span class="font-bold">WhatsApp Order</span>
         </a>
       </div>
     </div>
   </header>
 
   <!-- HERO SECTION -->
-  <section class="relative pt-12 pb-20 overflow-hidden">
+  <section id="heroSection" class="relative pt-12 pb-20 overflow-hidden transition-all duration-500">
     <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-600/15 blur-[130px] pointer-events-none rounded-full"></div>
     <div class="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-indigo-600/15 blur-[120px] pointer-events-none rounded-full"></div>
 
@@ -326,13 +689,13 @@
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white font-bold text-base shadow-xl shadow-blue-600/25 hover:scale-105 active:scale-95 transition">
+          <a id="heroPrimaryCtaBtn" href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white font-bold text-base shadow-xl shadow-blue-600/25 hover:scale-105 active:scale-95 transition">
             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-            <span>Browse Digital Products</span>
+            <span id="heroCtaText">Browse Catalog</span>
           </a>
-          <a href="index.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-semibold text-base border border-slate-700 hover:border-blue-400/40 transition">
-            <i data-lucide="arrow-left" class="w-5 h-5 text-blue-400"></i>
-            <span>Aisa Store Khud Banayein (₹499)</span>
+          <a id="heroSecondaryWaBtn" href="https://wa.me/919999999999" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-semibold text-base border border-slate-700 hover:border-emerald-400/50 transition">
+            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-400"></i>
+            <span>Chat &amp; Order on WhatsApp</span>
           </a>
         </div>
 
@@ -510,23 +873,368 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="bg-[#040711] border-t border-slate-800 py-12 text-slate-400 text-xs sm:text-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-        <div>
-          <span id="footerBrandName" class="font-heading font-bold text-lg text-white">Digital<span class="text-blue-500">Hub</span> Store</span>
-          <p id="footerBrandTagline" class="text-slate-500 text-xs mt-1">High quality digital goods & templates powered by Google Sheets.</p>
+  <!-- STORE CONTACT & DIRECTORY SECTION (Dynamic Google Map + 6 Support Cards + Interactive Lead Form) -->
+  <section id="contact-directory" class="py-20 relative bg-[#060A16] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-4">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>
+          <span>Official Store Directory &amp; Help Desk</span>
         </div>
-        <div class="flex items-center gap-6">
-          <a href="#products" class="hover:text-blue-400">Products</a>
-          <a href="#how-it-works" class="hover:text-blue-400">Process</a>
-          <a href="#faq" class="hover:text-blue-400">FAQ</a>
-          <a href="#" onclick="openConfigModal(); return false;" class="text-blue-400 hover:text-blue-300 underline">Sheet Settings</a>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight">
+          Humein Sampark Karein &amp; Store Visit Karein
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400 mt-3 leading-relaxed">
+          Customer support, wholesale bulk deals, showroom visits aur direct UPI payments ke liye verified official channels.
+        </p>
+      </div>
+
+      <!-- 6 Contact & Support Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+        
+        <!-- CARD 1: WhatsApp Support -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-emerald-500/30 hover:border-emerald-500/70 transition shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-28 h-28 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xl shadow-inner">
+                <i data-lucide="message-circle" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[10.5px] font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>Active 24/7</span>
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">WhatsApp Fast Desk</h3>
+            <p class="text-xs text-slate-400 mb-3">Orders, stock updates aur instant photos ke liye WhatsApp par judiye.</p>
+            <p id="dirWaNum" class="text-sm font-mono font-bold text-emerald-400 mb-4">+91 99999 99999</p>
+          </div>
+          <a id="dirWaBtn" href="https://wa.me/919999999999" target="_blank" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow active:scale-95">
+            <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+            <span>Chat on WhatsApp &rarr;</span>
+          </a>
+        </div>
+
+        <!-- CARD 2: Customer Helpline -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-blue-500/30 hover:border-blue-500/70 transition shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-28 h-28 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xl shadow-inner">
+                <i data-lucide="phone-call" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30 text-[10.5px] font-bold">
+                Toll-Free / Support
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Customer Helpline</h3>
+            <p class="text-xs text-slate-400 mb-3">Order queries, return/replacement aur phone help ke liye call karein.</p>
+            <p id="dirHelplineNum" class="text-sm font-mono font-bold text-blue-400 mb-4">1800-123-4567</p>
+          </div>
+          <a id="dirHelplineBtn" href="tel:1800123456" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow active:scale-95">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>Call Helpline Now &rarr;</span>
+          </a>
+        </div>
+
+        <!-- CARD 3: Alternative Phone -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-purple-500/30 hover:border-purple-500/70 transition shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-28 h-28 bg-purple-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xl shadow-inner">
+                <i data-lucide="phone-forwarded" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30 text-[10.5px] font-bold">
+                Backup Line
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Alternative Contact</h3>
+            <p class="text-xs text-slate-400 mb-3">Helpline busy hone par direct secondary store line par sampark karein.</p>
+            <p id="dirAltPhoneNum" class="text-sm font-mono font-bold text-purple-300 mb-4">+91 98112 23344</p>
+          </div>
+          <a id="dirAltPhoneBtn" href="tel:919811223344" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow active:scale-95">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>Call Alternative No. &rarr;</span>
+          </a>
+        </div>
+
+        <!-- CARD 4: Official Email -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-cyan-500/30 hover:border-cyan-500/70 transition shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-28 h-28 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xl shadow-inner">
+                <i data-lucide="mail" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10.5px] font-bold">
+                Official Desk
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Business Email</h3>
+            <p class="text-xs text-slate-400 mb-3">B2B quotations, invoices aur official inquiries ke liye mail karein.</p>
+            <p id="dirEmail" class="text-sm font-mono font-bold text-cyan-300 mb-4 truncate">support@mystore.com</p>
+          </div>
+          <a id="dirEmailBtn" href="mailto:support@mystore.com" class="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow active:scale-95">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Send Email &rarr;</span>
+          </a>
+        </div>
+
+        <!-- CARD 5: Store Physical Address -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-amber-500/30 hover:border-amber-500/70 transition shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-28 h-28 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xl shadow-inner">
+                <i data-lucide="map-pin" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10.5px] font-bold">
+                Physical Shop
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Store / Warehouse Address</h3>
+            <p id="dirAddress" class="text-xs text-slate-300 mb-4 leading-relaxed line-clamp-3">
+              Shop No. 12, Main Market Road, Near Central Plaza, Sector 18, City Center - 110001
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="copyStoreAddress()" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-[11px] flex items-center justify-center gap-1 border border-slate-700 transition">
+              <i data-lucide="copy" class="w-3 h-3 text-amber-400"></i>
+              <span id="copyAddrText">Copy Address</span>
+            </button>
+            <a id="dirDirectionsBtn" href="https://maps.google.com" target="_blank" class="flex-1 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-black text-[11px] flex items-center justify-center gap-1 transition shadow">
+              <i data-lucide="navigation" class="w-3 h-3"></i>
+              <span>Navigate &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- CARD 6: Direct UPI Payment Desk -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-teal-500/30 hover:border-teal-500/70 transition shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-28 h-28 bg-teal-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold text-xl shadow-inner">
+                <i data-lucide="qr-code" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-teal-500/15 text-teal-300 border border-teal-500/30 text-[10.5px] font-bold">
+                0% Gateway Fee
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Direct UPI QR Station</h3>
+            <p class="text-xs text-slate-400 mb-2">GPay, PhonePe, Paytm, BHIM ya CRED se direct merchant payment karein.</p>
+            <p id="dirUpiId" class="text-sm font-mono font-bold text-teal-300 mb-3 truncate">payments@upi</p>
+          </div>
+          <button onclick="copyDemoUpiId()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow active:scale-95">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>Copy Store UPI ID</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 2-COLUMN: INTERACTIVE INQUIRY FORM + LIVE GOOGLE MAPS EMBED -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT: Interactive Inquiry Lead Form (7 Cols) -->
+        <div id="contactFormContainer" class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl relative">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+              <i data-lucide="send" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-xl text-white">Send Us An Inquiry</h3>
+              <p class="text-xs text-slate-400">Direct WhatsApp message ya instant callback ke liye details bharein.</p>
+            </div>
+          </div>
+
+          <form id="siteInquiryForm" onsubmit="handleInquirySubmit(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Aapka Naam <span class="text-rose-400">*</span></label>
+                <input type="text" id="inquiryName" required placeholder="Jaise: Rajesh Kumar" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:border-emerald-400 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">WhatsApp / Mobile Number <span class="text-rose-400">*</span></label>
+                <input type="tel" id="inquiryPhone" required placeholder="10-digit number" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:border-emerald-400 focus:outline-none" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Email Address</label>
+                <input type="email" id="inquiryEmail" placeholder="yourname@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:border-emerald-400 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Inquiry Topic</label>
+                <select id="inquiryTopic" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:border-emerald-400 focus:outline-none">
+                  <option value="Product Details & Pricing">Product Details &amp; Pricing</option>
+                  <option value="Wholesale Bulk Quotation">Wholesale Bulk Quotation (B2B)</option>
+                  <option value="Order Tracking & Status">Order Tracking &amp; Delivery</option>
+                  <option value="Custom Order / Sample">Custom Requirement / Sample</option>
+                  <option value="Payment / UPI Help">Payment &amp; UPI Help</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Message / Requirement <span class="text-rose-400">*</span></label>
+              <textarea id="inquiryMessage" required rows="3" placeholder="Apna sawaal ya required product quantity yahan likhein..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:border-emerald-400 focus:outline-none"></textarea>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+              <button type="button" onclick="sendInquiryViaWhatsApp()" class="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition active:scale-95">
+                <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+                <span>Send via WhatsApp</span>
+              </button>
+              <button type="submit" class="sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm flex items-center justify-center gap-2 border border-slate-700 transition active:scale-95">
+                <i data-lucide="send" class="w-4 h-4 text-blue-400"></i>
+                <span>Submit Form</span>
+              </button>
+            </div>
+
+            <div id="inquirySuccessAlert" class="hidden p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-medium text-center">
+              🎉 Aapka inquiry message receive ho gaya hai! Team jaldi aapse WhatsApp/Phone par judegi.
+            </div>
+          </form>
+        </div>
+
+        <!-- RIGHT: Live Google Maps Embed Container (5 Cols) -->
+        <div id="googleMapCard" class="lg:col-span-5 glass-card rounded-3xl p-6 border border-slate-700/80 shadow-2xl flex flex-col h-full">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
+                <i data-lucide="navigation" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-heading font-bold text-lg text-white">Live Store Location</h3>
+                <p class="text-xs text-slate-400">Interactive Google Maps GPS Navigation</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md text-[11px] font-bold border border-emerald-500/30 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Open</span>
+            </span>
+          </div>
+
+          <!-- Responsive Map Frame -->
+          <div class="relative w-full h-[280px] sm:h-[310px] rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 mb-4 shadow-inner">
+            <iframe id="googleMapIframe" 
+                    title="Store Location"
+                    src="https://maps.google.com/maps?q=Connaught+Place+New+Delhi&output=embed" 
+                    class="w-full h-full border-0" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <div class="space-y-2 mt-auto">
+            <p id="directoryMapAddressSnippet" class="text-xs text-slate-300 flex items-start gap-1.5">
+              <i data-lucide="map-pin" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+              <span id="directoryMapAddressText">Shop No. 12, Main Market Road, Near Central Plaza, Sector 18, City Center - 110001</span>
+            </p>
+            <a id="googleMapDirectionsLink" 
+               href="https://maps.google.com/?q=Connaught+Place+New+Delhi" 
+               target="_blank" 
+               class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 transition active:scale-95">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>Google Maps App Me Navigate Karein</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#040711] border-t border-slate-800 py-14 text-slate-400 text-xs sm:text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-left">
+        <!-- Col 1: Brand Info -->
+        <div class="md:col-span-1 space-y-3">
+          <div class="flex items-center gap-2.5">
+            <div id="footerLogoContainer" class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold overflow-hidden shrink-0">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            </div>
+            <span id="footerBrandName" class="font-heading font-black text-lg text-white">SheetStore</span>
+          </div>
+          <p id="footerBrandTagline" class="text-slate-500 text-xs leading-relaxed">
+            Direct UPI &amp; WhatsApp E-Commerce Store powered 100% by Google Sheet.
+          </p>
+          <div class="pt-2">
+            <p id="footerAddressText" class="text-xs text-slate-400 flex items-start gap-1.5">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5"></i>
+              <span>Connaught Place, New Delhi, India</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Col 2: Navigation Links -->
+        <div class="space-y-2">
+          <p class="font-bold text-white text-xs uppercase tracking-wider mb-2">Explore Store</p>
+          <ul class="space-y-1.5 text-xs text-slate-400">
+            <li><a href="#products" class="hover:text-white transition">Product Catalog</a></li>
+            <li><a href="#features" class="hover:text-white transition">Store Highlights</a></li>
+            <li><a href="#contact-directory" class="hover:text-white transition">Store Locator &amp; Map</a></li>
+            <li><a href="#faq" class="hover:text-white transition">Frequently Asked Questions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Direct Helplines -->
+        <div class="space-y-2">
+          <p class="font-bold text-white text-xs uppercase tracking-wider mb-2">Official Helplines</p>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a id="footerHelplineLink" href="tel:1800123456" class="hover:text-white transition flex items-center gap-1.5 text-slate-300">
+                <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span id="footerHelplineText">1800-123-4567</span>
+              </a>
+            </li>
+            <li>
+              <a id="footerAltPhoneLink" href="tel:919811223344" class="hover:text-white transition flex items-center gap-1.5 text-slate-300">
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-purple-400"></i>
+                <span id="footerAltPhoneText">+91 98112 23344</span>
+              </a>
+            </li>
+            <li>
+              <a id="footerEmailLink" href="mailto:support@mystore.com" class="hover:text-white transition flex items-center gap-1.5 text-slate-300">
+                <i data-lucide="mail" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span id="footerEmailText">support@mystore.com</span>
+              </a>
+            </li>
+            <li>
+              <a id="footerWaLink" href="https://wa.me/919999999999" target="_blank" class="hover:text-white transition flex items-center gap-1.5 text-emerald-400 font-semibold">
+                <i data-lucide="message-circle" class="w-3.5 h-3.5 fill-current"></i>
+                <span>Direct WhatsApp Support</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Payment Acceptance Badges -->
+        <div class="space-y-3">
+          <p class="font-bold text-white text-xs uppercase tracking-wider mb-2">Instant UPI Accepted</p>
+          <p class="text-xs text-slate-400">0% transaction charge. Direct bank-to-bank UPI verification.</p>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300">PhonePe</span>
+            <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300">Google Pay</span>
+            <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300">Paytm</span>
+            <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300">BHIM UPI</span>
+            <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300">CRED</span>
+          </div>
+          <p class="text-[11px] text-blue-400">
+            <a href="#" onclick="openConfigModal(); return false;" class="underline hover:text-blue-300">⚙️ Store Sheet Settings</a>
+          </p>
         </div>
       </div>
-      <div class="border-t border-slate-800/60 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-        <p>&copy; 2026 DigitalHub. All Rights Reserved. Powered by SheetStore Pro.</p>
+
+      <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 SheetStore Pro. Powered 100% by Google Sheet Backend.</p>
         <p><a href="index.html" class="text-blue-400 hover:underline">Get This Store Template for ₹499 &rarr;</a></p>
       </div>
     </div>
@@ -800,142 +1508,1227 @@
 
   <!-- SCRIPT LOGIC -->
   <script>
-    // ==========================================
-    // 1. DEFAULT DIGITAL PRODUCTS (Tailored to FreeWebsite / Digital Store)
-    // ==========================================
-    const DEFAULT_PRODUCTS = [
-      {
-        id: "prod-portfolio-template",
-        title: "Modern 1-Page Portfolio Website Template (.ZIP)",
-        category: "website",
-        badge: "Best Seller",
-        price_original: "999",
-        price_selling: "299",
-        thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
-        description: "Super fast, responsive portfolio template built with Tailwind CSS. Perfect for developers, designers & freelancers.",
-        features: "100% Responsive, Dark & Light Mode, 1-Click Deploy to GitHub, Lifetime Updates",
-        is_active: "TRUE"
-      },
-      {
-        id: "prod-finance-tracker",
-        title: "Automated Financial & Income Tracker (Google Sheet)",
-        category: "sheet",
-        badge: "Essential",
-        price_original: "599",
-        price_selling: "199",
-        thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
-        description: "Track monthly expenses, freelancing earnings, investments, and savings goals automatically with visual charts.",
-        features: "Automated Monthly Dashboards, Expense Categorizer, Savings Calculator, Mobile App Ready",
-        is_active: "TRUE"
-      },
-      {
-        id: "prod-canva-reels-bundle",
-        title: "500+ Viral Reels & Social Media Canva Templates Pack",
-        category: "bundle",
-        badge: "Mega Saver",
-        price_original: "1999",
-        price_selling: "399",
-        thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
-        description: "Ready-to-post aesthetic Instagram posts, carousel guides, and viral reel hooks in Canva. Drag-and-drop editable.",
-        features: "500+ Editable Canva Designs, Trending Business & Growth Niche, High Engagement Layouts, Commercial License",
-        is_active: "TRUE"
-      },
-      {
-        id: "prod-sheetstore-master-kit",
-        title: "SheetStore Pro Ultimate E-Commerce Website Builder Kit",
-        category: "website",
-        badge: "80% OFF",
-        price_original: "2499",
-        price_selling: "499",
-        thumbnail: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=600&q=80",
-        description: "Launch your own digital goods store with Google Sheet backend. Zero hosting and zero domain required.",
-        features: "Zero Monthly Fees, WhatsApp & UPI Checkout, Meta Ads Ready, 2-Minute Setup Video",
-        is_active: "TRUE"
-      },
-      {
-        id: "prod-freelance-contract-kit",
-        title: "Freelancer Client Proposal & Legal Contract Kit (Docx/PDF)",
-        category: "bundle",
-        badge: "High Value",
-        price_original: "799",
-        price_selling: "199",
-        thumbnail: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80",
-        description: "Client service agreements, payment milestone contracts, nondisclosure agreements, and invoices.",
-        features: "10+ Legal Agreements, 100% Word & Google Docs Editable, Avoid Payment Delays, Lawyer Reviewed",
-        is_active: "TRUE"
-      },
-      {
-        id: "prod-ai-prompt-playbook",
-        title: "1000+ High-Converting ChatGPT & Midjourney Prompts",
-        category: "sheet",
-        badge: "Top Rated",
-        price_original: "499",
-        price_selling: "99",
-        thumbnail: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80",
-        description: "Copy-paste prompts for copywriting, sales email funnels, Facebook ads headlines, and photorealistic AI art.",
-        features: "Categorized Notion & Sheet Database, Tested for Maximum Response, Marketing & Business Focus",
-        is_active: "TRUE"
-      }
-    ];
+    // ========================================================
+    // 1. 15 E-COMMERCE SAMPLE CATALOGS (GitHub & D2C Store Archetypes)
+    // ========================================================
+    const INDUSTRY_CATALOGS = {
+      electronics: [
+        {
+          id: "elec-1",
+          title: "UltraSlim Pro 14 OLED Laptop (16GB/512GB)",
+          category: "laptops",
+          badge: "Best Seller",
+          price_original: "69999",
+          price_selling: "54999",
+          thumbnail: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80",
+          description: "Intel Core i7 13th Gen, 2.8K OLED Display, 16-Hour Battery Life & Thunderbolt 4.",
+          features: "1-Yr Official Brand Warranty, Free Laptop Sleeve, 0% Fee Instant UPI, Express 24h Shipping",
+          is_active: "TRUE"
+        },
+        {
+          id: "elec-2",
+          title: "Aura ANC Wireless Noise-Cancelling Headphones",
+          category: "audio",
+          badge: "40% OFF",
+          price_original: "5999",
+          price_selling: "2499",
+          thumbnail: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+          description: "40mm Deep Bass Drivers, 50-Hour Playtime, Hybrid ANC 35dB, & Ultra-soft Protein Leather Earpads.",
+          features: "Bluetooth 5.3 Multi-Point, Fast Type-C Charge, 7-Day Replacement, Verified OEM Product",
+          is_active: "TRUE"
+        },
+        {
+          id: "elec-3",
+          title: "Apex Horizon 1.96 AMOLED Smartwatch with GPS",
+          category: "wearables",
+          badge: "Hot Deal",
+          price_original: "3999",
+          price_selling: "1999",
+          thumbnail: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+          description: "Always-On AMOLED, Bluetooth HD Calling, 120+ Sports Modes, SPO2 & Heart Rate Tracker.",
+          features: "IP68 Water Resistant, Metal Alloy Casing, 10-Day Battery, Compatible with iOS & Android",
+          is_active: "TRUE"
+        },
+        {
+          id: "elec-4",
+          title: "65W GaN Fast Dual-Port Charger & Braided Cable",
+          category: "accessories",
+          badge: "Essential",
+          price_original: "1999",
+          price_selling: "899",
+          thumbnail: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+          description: "Ultra-compact Gallium Nitride (GaN) fast charger. Charges Laptops, iPads & Mobiles at full speed.",
+          features: "Surge & Overheat Protection, Type-C + USB-A, 100W Cable Included, BIS Certified",
+          is_active: "TRUE"
+        }
+      ],
 
-    // ==========================================
-    // 2. CONFIGURATION & STATE
-    // ==========================================
-    let currentProducts = [...DEFAULT_PRODUCTS];
+      fashion: [
+        {
+          id: "fash-1",
+          title: "Pure Kanchipuram Gold Zari Silk Saree (Crimson Red)",
+          category: "ethnic",
+          badge: "Handloom",
+          price_original: "8999",
+          price_selling: "4999",
+          thumbnail: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80",
+          description: "Pure mulberry silk with real gold zari weave, contrast rich brocade pallu & matching blouse piece.",
+          features: "Silk Mark Certified, Free Shipping Across India, Cash/UPI on Delivery, Video Call Inspection",
+          is_active: "TRUE"
+        },
+        {
+          id: "fash-2",
+          title: "Chanderi Embroidered Festive Kurta & Palazzo Set",
+          category: "women",
+          badge: "Trending",
+          price_original: "2999",
+          price_selling: "1599",
+          thumbnail: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80",
+          description: "Intricate threadwork & zari border on breathable chanderi silk fabric with matching chiffon dupatta.",
+          features: "Available S/M/L/XL/XXL, Dry Clean Recommended, 7-Day Easy Exchange, Style on WhatsApp",
+          is_active: "TRUE"
+        },
+        {
+          id: "fash-3",
+          title: "Handcrafted Italian Leather Everyday Tote Bag",
+          category: "bags",
+          badge: "Top Seller",
+          price_original: "2499",
+          price_selling: "1299",
+          thumbnail: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80",
+          description: "Spacious everyday genuine leather shoulder tote with gold-tone hardware and secure zip compartment.",
+          features: "Holds 14-inch Laptop, Water-Resistant Lining, Detachable Crossbody Strap, Handcrafted",
+          is_active: "TRUE"
+        },
+        {
+          id: "fash-4",
+          title: "Pure French Linen Casual Long-Sleeve Summer Shirt",
+          category: "men",
+          badge: "Eco Luxury",
+          price_original: "1799",
+          price_selling: "899",
+          thumbnail: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80",
+          description: "100% natural pure linen woven fabric. Pre-shrunk, ultra-soft and effortlessly comfortable in summer.",
+          features: "Mother-of-Pearl Buttons, Tailored Modern Fit, Breathable Weave, Color Fast Guaranteed",
+          is_active: "TRUE"
+        }
+      ],
+
+      health_medical: [
+        {
+          id: "med-1",
+          title: "Clinical Digital Upper Arm Blood Pressure Monitor",
+          category: "devices",
+          badge: "Doctor Approved",
+          price_original: "2499",
+          price_selling: "1299",
+          thumbnail: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80",
+          description: "WHO classification indicator, irregular heartbeat detector, large backlit LCD & memory for 2 users.",
+          features: "ISO & CE Certified, Free Batteries + Carrying Case, 2-Year Replacement Warranty, Simple 1-Button Op",
+          is_active: "TRUE"
+        },
+        {
+          id: "med-2",
+          title: "Ayurvedic Daily Ashwagandha & Shilajit Vitality Capsules",
+          category: "ayurveda",
+          badge: "100% Pure",
+          price_original: "999",
+          price_selling: "499",
+          thumbnail: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80",
+          description: "Standardized KSM-66 Ashwagandha with purified Himalayan Shilajit for natural stamina & stress relief.",
+          features: "GMP & Ayush Certified, 60 Vegetarian Capsules, Zero Added Preservatives, Lab Tested Batch",
+          is_active: "TRUE"
+        },
+        {
+          id: "med-3",
+          title: "Emergency Multi-Layer Medical First Aid Box Kit",
+          category: "emergency",
+          badge: "Must Have",
+          price_original: "1299",
+          price_selling: "699",
+          thumbnail: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=600&q=80",
+          description: "Fully stocked trauma emergency kit with antiseptic sprays, sterile gauze, burn gel, bandages & shears.",
+          features: "Over 80 Medical Essentials, Waterproof Hard Case, Home & Car Suitable, Medical Guide Included",
+          is_active: "TRUE"
+        },
+        {
+          id: "med-4",
+          title: "Complete Daily Multivitamins & Minerals with Zinc (90 Tabs)",
+          category: "supplements",
+          badge: "Daily Vital",
+          price_original: "799",
+          price_selling: "399",
+          thumbnail: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=600&q=80",
+          description: "Essential vitamins A, B-Complex, C, D3, E, Zinc & Biotin for daily energy, bone strength & immunity.",
+          features: "100% RDA Compliant, Easy to Swallow, FSSAI Licensed, 3-Month Complete Supply",
+          is_active: "TRUE"
+        }
+      ],
+
+      beauty_personal_care: [
+        {
+          id: "beauty-1",
+          title: "24K Gold Radiant Youth Glow Face Serum (30ml)",
+          category: "skincare",
+          badge: "Viral Hit",
+          price_original: "1299",
+          price_selling: "699",
+          thumbnail: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
+          description: "Pure 24K gold flakes suspended in cold-pressed Rosehip oil & Hyaluronic acid for glass-skin glow.",
+          features: "Dermatologically Tested, Paraben & Cruelty-Free, For All Skin Types, Visible Glow in 7 Days",
+          is_active: "TRUE"
+        },
+        {
+          id: "beauty-2",
+          title: "Gentle Vitamin C & Papaya Brightening Face Wash",
+          category: "cleansers",
+          badge: "Natural",
+          price_original: "699",
+          price_selling: "349",
+          thumbnail: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
+          description: "Sulfate-free foaming cleanser with deep-cleaning silicone brush head to remove tanning and dark spots.",
+          features: "Enriched with Pure Vitamin C, pH 5.5 Balanced, Built-in Brush Head, Non-Drying Formula",
+          is_active: "TRUE"
+        },
+        {
+          id: "beauty-3",
+          title: "Velvet Matte Non-Drying Long-Wear Lipstick Trio",
+          category: "makeup",
+          badge: "Combo Deal",
+          price_original: "1199",
+          price_selling: "599",
+          thumbnail: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80",
+          description: "Trio of universally flattering nude shades with nourishing Vitamin E and 12-hour waterproof wear.",
+          features: "Smudge-Proof & Transfer-Proof, Ultra Pigmented, Lightweight Velvet Finish, 100% Vegan",
+          is_active: "TRUE"
+        },
+        {
+          id: "beauty-4",
+          title: "Cold-Pressed Rosemary, Bhringraj & Red Onion Hair Oil",
+          category: "haircare",
+          badge: "Hair Regrowth",
+          price_original: "899",
+          price_selling: "449",
+          thumbnail: "https://images.unsplash.com/photo-1608248597359-2ff924976a1d?auto=format&fit=crop&w=600&q=80",
+          description: "Ancient Ayurvedic blend of rosemary essential oil, methi, castor and bhringraj to stop hair fall.",
+          features: "Zero Mineral Oil, Root Comb Applicator, Promotes New Baby Hairs, Traditional Slow-Heat Extraction",
+          is_active: "TRUE"
+        }
+      ],
+
+      home_kitchen: [
+        {
+          id: "home-1",
+          title: "Tri-Ply Stainless Steel Heavy Cookware Set (3 Pcs)",
+          category: "cookware",
+          badge: "Induction Friendly",
+          price_original: "4999",
+          price_selling: "2799",
+          thumbnail: "https://images.unsplash.com/photo-1584990347449-399676774421?auto=format&fit=crop&w=600&q=80",
+          description: "Kadhai with SS Lid (2.5L), Fry Pan (24cm) & Saucepan (1.5L). 3-layer steel-aluminum-steel construction.",
+          features: "Zero Toxin 100% Food Safe, Lifetime Rust-Free Guarantee, Works on Gas & Induction, Dishwasher Safe",
+          is_active: "TRUE"
+        },
+        {
+          id: "home-2",
+          title: "Smart Digital Rapid Air Fryer 4.5L with 8 Presets",
+          category: "appliances",
+          badge: "90% Less Oil",
+          price_original: "6999",
+          price_selling: "3499",
+          thumbnail: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
+          description: "360° rapid air circulation technology. Crispy samosas, fries, and cakes with up to 90% less oil.",
+          features: "Non-Stick Detachable Basket, Touch Screen LED, 1400W Power, Recipe Book Included",
+          is_active: "TRUE"
+        },
+        {
+          id: "home-3",
+          title: "Artisanal Handcrafted Ceramic Dinner Set (18 Pcs)",
+          category: "dining",
+          badge: "Handmade",
+          price_original: "3499",
+          price_selling: "1899",
+          thumbnail: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=600&q=80",
+          description: "Stoneware plates, side plates and bowls with speckle matte finish. Crafted by rural artisans.",
+          features: "Microwave & Oven Safe, Lead & Cadmium Free, Chip Resistant, Safely Box Packed",
+          is_active: "TRUE"
+        },
+        {
+          id: "home-4",
+          title: "Professional Stainless Steel 6-Piece Chef Knife Set",
+          category: "kitchen_tools",
+          badge: "Razor Sharp",
+          price_original: "2199",
+          price_selling: "1199",
+          thumbnail: "https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&w=600&q=80",
+          description: "High-carbon stainless steel blades with ergonomic rosewood block and kitchen shears included.",
+          features: "Laser-Tested Sharpness, Rust-Resistant Coating, Ergonomic Grip, Chef Recommended",
+          is_active: "TRUE"
+        }
+      ],
+
+      grocery_food: [
+        {
+          id: "groc-1",
+          title: "Royal Aged Daawat Traditional Basmati Rice (5 Kg)",
+          category: "staples",
+          badge: "Aged 2 Years",
+          price_original: "650",
+          price_selling: "499",
+          thumbnail: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+          description: "Extra-long pearl grain basmati rice with rich royal aroma and fluffy non-sticky texture.",
+          features: "100% Adulteration Free, Naturally Aged, Air-Tight Bag Packaging, Express Slot Delivery",
+          is_active: "TRUE"
+        },
+        {
+          id: "groc-2",
+          title: "Pure Cold-Pressed Kachi Ghani Mustard Oil (2 Litres)",
+          category: "oils",
+          badge: "Wood Pressed",
+          price_original: "450",
+          price_selling: "360",
+          thumbnail: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80",
+          description: "Traditional wooden kolhu pressed pungent mustard oil with high smoke point and zero chemicals.",
+          features: "Rich in Omega-3 & Vitamin E, Zero Trans Fats, Traditional Flavor, Food Grade Can",
+          is_active: "TRUE"
+        },
+        {
+          id: "groc-3",
+          title: "Premium California Jumbo Badam / Almonds (1 Kg)",
+          category: "dry_fruits",
+          badge: "Vacuum Packed",
+          price_original: "1199",
+          price_selling: "799",
+          thumbnail: "https://images.unsplash.com/photo-1508061252224-414871e27a69?auto=format&fit=crop&w=600&q=80",
+          description: "100% natural, crisp and crunch jumbo almonds directly imported from California orchards.",
+          features: "High in Protein & Dietary Fiber, Zero Preservatives, Zip-Lock Fresh Pouch, Lab Tested Quality",
+          is_active: "TRUE"
+        },
+        {
+          id: "groc-4",
+          title: "High-Altitude Darjeeling Whole Leaf Muscatel Black Tea (500g)",
+          category: "beverages",
+          badge: "GI Tagged",
+          price_original: "650",
+          price_selling: "450",
+          thumbnail: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80",
+          description: "Handpicked tender two leaves and a bud. Golden amber liquor with natural floral muscatel notes.",
+          features: "Single-Estate Sourced, 100% Pure Orthodox Leaf, Antioxidant Rich, Aroma Foil Pack",
+          is_active: "TRUE"
+        }
+      ],
+
+      automotive_accessories: [
+        {
+          id: "auto-1",
+          title: "TurboBlast 120W LED Projector Headlight Bulbs (Pair)",
+          category: "lighting",
+          badge: "Ultra Bright",
+          price_original: "2999",
+          price_selling: "1499",
+          thumbnail: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+          description: "12,000 Lumens 6500K diamond white light with built-in copper heat pipe cooling & turbo fan.",
+          features: "Plug & Play Fitment (H4/H7), IP68 Waterproof, 50,000 Hours Life, 2-Year Warranty",
+          is_active: "TRUE"
+        },
+        {
+          id: "auto-2",
+          title: "Real-Time Anti-Theft GPS Tracker for Car & Bike",
+          category: "security",
+          badge: "Live Tracking",
+          price_original: "3499",
+          price_selling: "1799",
+          thumbnail: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+          description: "Real-time Google Maps live GPS tracking with remote engine cut-off, geo-fence and speed alerts.",
+          features: "Android & iOS App, 1-Year Free SIM Data, Waterproof Encasing, Instant Theft Siren",
+          is_active: "TRUE"
+        },
+        {
+          id: "auto-3",
+          title: "All-Weather Heavy Duty 5-Layer Waterproof Bike Cover",
+          category: "covers",
+          badge: "UV Proof",
+          price_original: "1199",
+          price_selling: "599",
+          thumbnail: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80",
+          description: "Heavy oxford fabric with soft fleece interior lining to protect motorcycle paint from scratches.",
+          features: "Mirror Pockets & Buckle Strap, Windproof Lock Hole, Heat Resistant Exhaust Patch, Free Carry Bag",
+          is_active: "TRUE"
+        },
+        {
+          id: "auto-4",
+          title: "Tubeless Tire Emergency Repair Kit & Portable Mini Inflator",
+          category: "tools",
+          badge: "Highway Safe",
+          price_original: "1499",
+          price_selling: "849",
+          thumbnail: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=600&q=80",
+          description: "Heavy-duty T-handle spiral probe and insert tools with 15 self-vulcanizing puncture strips.",
+          features: "Compact Storage Pouch, Solid Zinc Alloy Tools, Quick 3-Minute Fix, Works on Cars & Bikes",
+          is_active: "TRUE"
+        }
+      ],
+
+      industrial_supplies: [
+        {
+          id: "ind-1",
+          title: "20V Cordless Brushless Impact Drill & 32-Piece Bit Set",
+          category: "power_tools",
+          badge: "Industrial Grade",
+          price_original: "6999",
+          price_selling: "3999",
+          thumbnail: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80",
+          description: "60Nm high torque, 2-speed metal gearbox with hammer drilling mode and 2x 20V 2.0Ah Li-ion batteries.",
+          features: "Brushless Motor 2X Longer Life, Heavy Duty Blow Mold Case, GST Invoicing, 1-Yr Warranty",
+          is_active: "TRUE"
+        },
+        {
+          id: "ind-2",
+          title: "ISI Certified Industrial Safety Helmet & Level-5 Cut Gloves",
+          category: "safety",
+          badge: "ISI Certified",
+          price_original: "1199",
+          price_selling: "599",
+          thumbnail: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80",
+          description: "High-density polymer shell with 6-point suspension harness + Kevlar blended cut-proof hand gloves.",
+          features: "Electrical Shock Tested up to 2000V, Sweat Absorbing Chin Strap, Heavy Work Approved, Bulk Pricing",
+          is_active: "TRUE"
+        },
+        {
+          id: "ind-3",
+          title: "High-Precision 150mm Stainless Steel Digital Vernier Caliper",
+          category: "instruments",
+          badge: "±0.01mm Accuracy",
+          price_original: "1799",
+          price_selling: "899",
+          thumbnail: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+          description: "Hardened stainless steel frame with thumb roller, locking screw and large high-contrast LCD.",
+          features: "Metric / Inch / Fractions Conversion, Depth Measuring Blade, Hard Plastic Storage Case Included",
+          is_active: "TRUE"
+        },
+        {
+          id: "ind-4",
+          title: "Heavy-Duty Pure Copper Inverter & Welding Cable (10 Meters)",
+          category: "cables",
+          badge: "100% Copper",
+          price_original: "2499",
+          price_selling: "1299",
+          thumbnail: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
+          description: "High-flexibility oil-resistant rubber insulated 25 sq mm pure electrolytic annealed copper cable.",
+          features: "Flame Retardant, High Conductivity, Zero Power Loss, Industrial Machine Ready",
+          is_active: "TRUE"
+        }
+      ],
+
+      books_stationery: [
+        {
+          id: "book-1",
+          title: "Master Your Focus & Productivity 3-Book Collector Set",
+          category: "books",
+          badge: "Top Seller",
+          price_original: "1499",
+          price_selling: "799",
+          thumbnail: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80",
+          description: "Hardcover boxset containing bestselling guides on atomic habits, deep focus, and financial independence.",
+          features: "Premium Matte Hardcover, Ribbon Bookmarks, Gold Foil Embossed, Acid-Free Paper",
+          is_active: "TRUE"
+        },
+        {
+          id: "book-2",
+          title: "Vintage Top-Grain Leather Executive Refillable Journal",
+          category: "stationery",
+          badge: "Handbound",
+          price_original: "1199",
+          price_selling: "649",
+          thumbnail: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=600&q=80",
+          description: "Distressed genuine buffalo leather cover with 240 pages of bleed-resistant 120 GSM handmade deckle paper.",
+          features: "Brass C-Clasp Closure, Works with Fountain Pens, Refillable 6-Ring Binder, Gift Box Packed",
+          is_active: "TRUE"
+        },
+        {
+          id: "book-3",
+          title: "German Steel Tip Calligraphy & Fountain Pen Set",
+          category: "pens",
+          badge: "Artisanal",
+          price_original: "999",
+          price_selling: "499",
+          thumbnail: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=600&q=80",
+          description: "Brass weighted body with 3 interchangeable nibs (Fine, Medium, 1.5mm Calligraphy) + ink converter.",
+          features: "Smooth Scratch-Free Writing, 6 Black/Blue Cartridges Included, Velvet Lined Gift Box",
+          is_active: "TRUE"
+        },
+        {
+          id: "book-4",
+          title: "2026 Daily Goal Planner & Habit Tracker Organizer",
+          category: "planners",
+          badge: "Life Changing",
+          price_original: "799",
+          price_selling: "399",
+          thumbnail: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80",
+          description: "Scientifically structured undated planner with hourly schedule, quarterly goals, and habit charts.",
+          features: "Thick 100 GSM Ivory Paper, Pen Loop & Elastic Band, 3 Sticker Sheets Included",
+          is_active: "TRUE"
+        }
+      ],
+
+      sports_fitness: [
+        {
+          id: "sport-1",
+          title: "100% Pure Whey Protein Isolate (1 Kg, Chocolate Fudge)",
+          category: "nutrition",
+          badge: "27g Protein",
+          price_original: "2999",
+          price_selling: "1899",
+          thumbnail: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=600&q=80",
+          description: "Ultra-filtered whey isolate delivering 27g protein, 6.2g BCAAs and zero added sugar per scoop.",
+          features: "Labdoor Certified Authenticity, Instant Cold-Water Mixability, DigeZyme Digestive Enzymes, 30 Servings",
+          is_active: "TRUE"
+        },
+        {
+          id: "sport-2",
+          title: "Quick-Select Adjustable Dumbbell Pair (20 Kg Total)",
+          category: "equipment",
+          badge: "Space Saver",
+          price_original: "7999",
+          price_selling: "4499",
+          thumbnail: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=600&q=80",
+          description: "Turn the dial to instantly switch from 2.5 kg to 10 kg per dumbbell. Replaces 10 individual weights.",
+          features: "Heavy-Duty Cast Iron Plates, Anti-Slip Textured Grip, Storage Trays Included, 2-Year Warranty",
+          is_active: "TRUE"
+        },
+        {
+          id: "sport-3",
+          title: "Extra-Thick 8mm Non-Slip Eco TPE Yoga & Exercise Mat",
+          category: "yoga",
+          badge: "Joint Friendly",
+          price_original: "1499",
+          price_selling: "799",
+          thumbnail: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80",
+          description: "Double-sided non-slip texture with body alignment lines to maintain correct yoga posture.",
+          features: "100% Non-Toxic Biodegradable TPE, Sweat Resistant & Washable, Free Carry Strap & Bag",
+          is_active: "TRUE"
+        },
+        {
+          id: "sport-4",
+          title: "5-Level Heavy-Duty Natural Latex Loop Resistance Bands Kit",
+          category: "accessories",
+          badge: "Workout Anywhere",
+          price_original: "999",
+          price_selling: "499",
+          thumbnail: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80",
+          description: "Color-coded resistance bands ranging from X-Light (5 lbs) to X-Heavy (40 lbs) for full-body strength.",
+          features: "Snap-Proof 100% Malaysian Latex, Waterproof Carry Pouch, Workout Exercise Guide Booklet",
+          is_active: "TRUE"
+        }
+      ],
+
+      baby_kids: [
+        {
+          id: "baby-1",
+          title: "Anti-Colic BPA-Free Newborn Feeding Bottles (Set of 3)",
+          category: "feeding",
+          badge: "BPA Free",
+          price_original: "1199",
+          price_selling: "649",
+          thumbnail: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80",
+          description: "Medical-grade silicone nipple mimicking natural breastfeeding with dual-vent anti-colic air valve.",
+          features: "Sterilizer Safe, Non-Toxic Glass-Grade PP, Ergonomic Grip for Tiny Hands, 150ml + 240ml Combo",
+          is_active: "TRUE"
+        },
+        {
+          id: "baby-2",
+          title: "Natural Wooden Montessori Cognitive Sensory Puzzle Set",
+          category: "toys",
+          badge: "Non-Toxic",
+          price_original: "1499",
+          price_selling: "799",
+          thumbnail: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=600&q=80",
+          description: "Handcrafted smooth beech wood shapes and colors sorting board. Develops fine motor skills in toddlers.",
+          features: "Water-Based Organic Paints, Smooth Rounded Edges, Zero Plastic, Age 1 to 5 Years",
+          is_active: "TRUE"
+        },
+        {
+          id: "baby-3",
+          title: "100% Organic Cotton Breathable Baby Rompers (Pack of 4)",
+          category: "clothing",
+          badge: "GOTS Certified",
+          price_original: "1699",
+          price_selling: "899",
+          thumbnail: "https://images.unsplash.com/photo-1522771930-78848d9293e8?auto=format&fit=crop&w=600&q=80",
+          description: "Super soft combed organic cotton onesies with nickel-free crotch snap buttons for effortless diaper changes.",
+          features: "Hypoallergenic Dye, Expandable Lap Shoulders, Machine Washable, For 0-6 Months & 6-12 Months",
+          is_active: "TRUE"
+        },
+        {
+          id: "baby-4",
+          title: "Tear-Free Gentle Oat & Chamomile Baby Wash & Lotion (400ml)",
+          category: "babycare",
+          badge: "Pediatrician Tested",
+          price_original: "799",
+          price_selling: "449",
+          thumbnail: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=80",
+          description: "Ultra-gentle head-to-toe foaming wash infused with organic colloidal oatmeal and calming chamomile.",
+          features: "Zero Sulfates / Parabens / Toxins, pH 5.5 Tear-Free, Dermatologically Certified Safe for Newborns",
+          is_active: "TRUE"
+        }
+      ],
+
+      agriculture_farming: [
+        {
+          id: "agro-1",
+          title: "Certified High-Yield Hybrid Mustard Seeds (2 Kg Pouch)",
+          category: "seeds",
+          badge: "Government Certified",
+          price_original: "800",
+          price_selling: "550",
+          thumbnail: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80",
+          description: "High oil content (42%), frost and aphid resistant hybrid seeds with excellent branching & pod count.",
+          features: "Germination Rate > 90%, 125-130 Days Maturity, Direct Kisan Support on WhatsApp, Bulk Farm Dispatch",
+          is_active: "TRUE"
+        },
+        {
+          id: "agro-2",
+          title: "Enriched Organic Vermicompost with Trichoderma (25 Kg Bag)",
+          category: "fertilizers",
+          badge: "100% Organic",
+          price_original: "750",
+          price_selling: "499",
+          thumbnail: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=600&q=80",
+          description: "Nutrient-rich earthworm bio-fertilizer packed with active microbes, nitrogen, phosphorus & potash.",
+          features: "Boosts Soil Water Retention, Protects Against Root Rot, Odor-Free Granules, Organic Certified",
+          is_active: "TRUE"
+        },
+        {
+          id: "agro-3",
+          title: "Complete Micro Drip Irrigation Kit for 50 Garden Plants",
+          category: "irrigation",
+          badge: "Saves 70% Water",
+          price_original: "2199",
+          price_selling: "1299",
+          thumbnail: "https://images.unsplash.com/photo-1592417817098-8f3d69102a56?auto=format&fit=crop&w=600&q=80",
+          description: "Includes 50m mainline pipe, 50 adjustable drippers, tee connectors, tap adapter & hole punch tool.",
+          features: "UV-Resistant Virgin Plastic, Simple DIY 15-Minute Setup, Prevents Soil Erosion, Even Water Supply",
+          is_active: "TRUE"
+        },
+        {
+          id: "agro-4",
+          title: "Solar-Powered Agricultural Insect & Pest Trap",
+          category: "pest_control",
+          badge: "Zero Chemical",
+          price_original: "2800",
+          price_selling: "1699",
+          thumbnail: "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=600&q=80",
+          description: "Attracts harmful agricultural moths, fruit flies, and bugs using UV light and automatically traps them.",
+          features: "Auto Day/Night Sensor, Weatherproof Solar Panel, Covers 1 Acre Farm, Protects Crops Naturally",
+          is_active: "TRUE"
+        }
+      ],
+
+      pet_supplies: [
+        {
+          id: "pet-1",
+          title: "High-Protein Real Chicken & Veggies Adult Dog Food (3 Kg)",
+          category: "dog_food",
+          badge: "Vet Approved",
+          price_original: "1599",
+          price_selling: "999",
+          thumbnail: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=600&q=80",
+          description: "Real farm chicken with sweet potatoes, flaxseed & glucosamine for joint health and shiny fur coat.",
+          features: "No Corn / Wheat / Soy Fillers, 26% Crude Protein, Promotes Healthy Digestion, Sealed Freshness",
+          is_active: "TRUE"
+        },
+        {
+          id: "pet-2",
+          title: "Orthopedic Memory Foam Calming Pet Bed (Large Size)",
+          category: "beds",
+          badge: "Super Soft",
+          price_original: "2399",
+          price_selling: "1299",
+          thumbnail: "https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?auto=format&fit=crop&w=600&q=80",
+          description: "High-density orthopedic memory foam with plush faux-fur bolster rim to relieve pet joint stiffness.",
+          features: "Removable & Machine Washable Cover, Anti-Slip Water-Resistant Base, Suitable for Dogs up to 35 Kg",
+          is_active: "TRUE"
+        },
+        {
+          id: "pet-3",
+          title: "Automatic Interactive Laser & Feather Toy for Cats & Dogs",
+          category: "toys",
+          badge: "Endless Fun",
+          price_original: "1199",
+          price_selling: "599",
+          thumbnail: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&w=600&q=80",
+          description: "Random 360-degree rotating laser trajectories and feather wobble to keep pets active and playful.",
+          features: "USB Rechargeable Battery, 15-Minute Auto Sleep Timer, 3 Speed Modes, Durable ABS Plastic",
+          is_active: "TRUE"
+        },
+        {
+          id: "pet-4",
+          title: "Ayurvedic Herbal Anti-Tick & Flea Pet Shampoo (300ml)",
+          category: "grooming",
+          badge: "Herbal Neem",
+          price_original: "599",
+          price_selling: "349",
+          thumbnail: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=600&q=80",
+          description: "Pure extracts of Neem, Eucalyptus & Aloe Vera to repel ticks, fleas & soothe irritated itchy skin.",
+          features: "Chemical-Free pH Balanced for Pets, Pleasant Natural Citrus Scent, Conditioning Formula",
+          is_active: "TRUE"
+        }
+      ],
+
+      furniture_home_decor: [
+        {
+          id: "furn-1",
+          title: "Mid-Century Modern 3-Seater Velvet Sofa (Emerald Green)",
+          category: "living",
+          badge: "Luxury Comfort",
+          price_original: "28999",
+          price_selling: "18999",
+          thumbnail: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80",
+          description: "Solid Sal wood frame with 32-density high resilience foam, tapered brass legs & stain-resistant velvet.",
+          features: "5-Year Frame Warranty, Free Home Delivery & Assembly, Tested for 350 Kg Load, Dimensions 82x34x32 In",
+          is_active: "TRUE"
+        },
+        {
+          id: "furn-2",
+          title: "Solid Sheesham Wood Center Coffee Table (Walnut Finish)",
+          category: "tables",
+          badge: "Pure Teak/Sheesham",
+          price_original: "7999",
+          price_selling: "4499",
+          thumbnail: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80",
+          description: "100% seasoned Sheesham rosewood table with dual storage drawers and natural grain warm polish.",
+          features: "Termite & Borer Resistant, Smooth Edges, Zero Particle Board, Ready Assembled",
+          is_active: "TRUE"
+        },
+        {
+          id: "furn-3",
+          title: "Ergonomic High-Back Breathable Mesh Office Chair",
+          category: "office",
+          badge: "Spine Support",
+          price_original: "6999",
+          price_selling: "3999",
+          thumbnail: "https://images.unsplash.com/photo-1580481077194-c7447470c6a5?auto=format&fit=crop&w=600&q=80",
+          description: "Adjustable 2D lumbar support, pneumatic seat height lift, 135° recline lock and 360° nylon casters.",
+          features: "BIFMA Certified Gas Lift, Heavy-Duty Chrome Base, Relieves Lower Back Strain, 3-Yr Warranty",
+          is_active: "TRUE"
+        },
+        {
+          id: "furn-4",
+          title: "Minimalist Nordic Arc Floor Lamp with Warm Edison Bulb",
+          category: "lighting",
+          badge: "Aesthetic",
+          price_original: "3999",
+          price_selling: "2199",
+          thumbnail: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80",
+          description: "Brushed matte black steel arch with heavy marble base and natural linen drum shade.",
+          features: "Includes Warm White LED Bulb, Foot Tap Switch, 6-Foot Heavy Cord, Perfect Reading Light",
+          is_active: "TRUE"
+        }
+      ],
+
+      b2b_wholesale: [
+        {
+          id: "b2b-1",
+          title: "Combed Bio-Washed Cotton T-Shirts (Lot of 100 Pcs)",
+          category: "apparel_bulk",
+          badge: "MOQ 100 Pcs",
+          price_original: "18000",
+          price_selling: "9999",
+          thumbnail: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
+          description: "180 GSM 100% super combed cotton plain round neck t-shirts ready for screen printing & brand labeling.",
+          features: "Assorted S/M/L/XL Sizes, 12 Available Colors, GST Tax Invoice Provided, Commercial Freight Shipping",
+          is_active: "TRUE"
+        },
+        {
+          id: "b2b-2",
+          title: "9W High-Lumen Energy Saver LED Bulbs (Carton of 50 Pcs)",
+          category: "electrical_bulk",
+          badge: "Wholesale Carton",
+          price_original: "5500",
+          price_selling: "2999",
+          thumbnail: "https://images.unsplash.com/photo-1550524514-9b21f98502f1?auto=format&fit=crop&w=600&q=80",
+          description: "BIS certified 9W B22 LED bulbs with 4KV surge protection, 900 lumens & 25,000 burning hours.",
+          features: "1-Year Over-The-Counter Replacement Guarantee, Factory Direct Price, Dealer Margins > 40%",
+          is_active: "TRUE"
+        },
+        {
+          id: "b2b-3",
+          title: "3-Ply Strong Corrugated Shipping Boxes (Bundle of 200 Pcs)",
+          category: "packaging_bulk",
+          badge: "Eco Kraft",
+          price_original: "3200",
+          price_selling: "1899",
+          thumbnail: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=600&q=80",
+          description: "Universal e-commerce courier boxes (8x6x4 inches) crafted from virgin kraft paper for safe deliveries.",
+          features: "150 GSM Kraft Paper, High Bursting Factor, Flat Packed for Easy Storage, Custom Print Available",
+          is_active: "TRUE"
+        },
+        {
+          id: "b2b-4",
+          title: "Commercial 2-Ply Soft Restroom Tissue Rolls (Pack of 48)",
+          category: "hospitality_bulk",
+          badge: "Hotel Pack",
+          price_original: "2100",
+          price_selling: "1299",
+          thumbnail: "https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=600&q=80",
+          description: "100% virgin pulp ultra-absorbent 300-sheet rolls designed for hotels, corporate offices, and hospitals.",
+          features: "Rapid Dissolve Septic Safe, Embossed Texture, Bulk Case Packaging, Regular Monthly Supply Option",
+          is_active: "TRUE"
+        }
+      ]
+    };
+
+    // ========================================================
+    // 2. THEME DEFINITIONS & PRESET CONFIGS (15 Themes + Aliases)
+    // ========================================================
+    const THEME_CONFIGS = {
+      electronics: {
+        title: "📱 Electronics & Smart Gadgets",
+        badge: "⚡ High-Tech Electronics & Smart Gadgets Store",
+        heroTitle: "Next-Gen Tech & Electronics <span class=\"text-gradient block mt-2\">At Genuine Direct Prices</span>",
+        heroSubtitle: "Original brand warranties, fastest EMI & 0% fee UPI checkout. Dispatched directly from verified tech warehouses.",
+        ctaText: "Browse Tech Catalog",
+        icon: "📱",
+        categoryTag: "electronics",
+        catalog: INDUSTRY_CATALOGS.electronics
+      },
+      fashion: {
+        title: "👗 Fashion & Apparel Showcase",
+        badge: "✨ Curated Designer Wear & Fashion Lookbook",
+        heroTitle: "Handcrafted Luxury Fashion <span class=\"text-gradient block mt-2\">Woven For Elegance</span>",
+        heroSubtitle: "Pure mulberry silks, bespoke festive ensembles, designer leather totes and breathable linen shirts.",
+        ctaText: "Explore Collection",
+        icon: "👗",
+        categoryTag: "fashion",
+        catalog: INDUSTRY_CATALOGS.fashion
+      },
+      health_medical: {
+        title: "💊 Health & Medical Pharmacy",
+        badge: "🏥 Certified Healthcare & Wellness Store",
+        heroTitle: "Verified Health & Medical Essentials <span class=\"text-gradient block mt-2\">Delivered To Your Doorstep</span>",
+        heroSubtitle: "Clinical medical devices, pure Ayurvedic formulations, trauma kits and doctor-formulated daily vitamins.",
+        ctaText: "Shop Healthcare",
+        icon: "💊",
+        categoryTag: "health_medical",
+        catalog: INDUSTRY_CATALOGS.health_medical
+      },
+      beauty_personal_care: {
+        title: "💄 Beauty & Personal Care",
+        badge: "🌸 Clean Ingredients & Glowing Beauty Edits",
+        heroTitle: "Radiant Glow & Skin Rituals <span class=\"text-gradient block mt-2\">Formulated With Nature</span>",
+        heroSubtitle: "24K Gold serums, gentle foaming cleansers, velvet matte lip trios and nourishing Ayurvedic hair oils.",
+        ctaText: "Discover Beauty",
+        icon: "💄",
+        categoryTag: "beauty_personal_care",
+        catalog: INDUSTRY_CATALOGS.beauty_personal_care
+      },
+      home_kitchen: {
+        title: "🍳 Home & Kitchen Appliances",
+        badge: "🍳 Heavy-Duty Cookware & Smart Dining",
+        heroTitle: "Modern Culinary Cookware & Home <span class=\"text-gradient block mt-2\">Built For A Lifetime</span>",
+        heroSubtitle: "Tri-ply stainless steel pots, rapid air fryers, artisanal ceramic dinnerware and professional chef knives.",
+        ctaText: "Shop Kitchen Range",
+        icon: "🍳",
+        categoryTag: "home_kitchen",
+        catalog: INDUSTRY_CATALOGS.home_kitchen
+      },
+      grocery_food: {
+        title: "🛒 Grocery & Fresh Food",
+        badge: "🥦 Fresh Staples & Farm Produce",
+        heroTitle: "Farm-Fresh Grocery & Daily Staples <span class=\"text-gradient block mt-2\">Delivered In 30 Minutes</span>",
+        heroSubtitle: "Aged Basmati rice, cold-pressed wood kolhu oils, crunchy California almonds and single-estate Darjeeling teas.",
+        ctaText: "Order Daily Grocery",
+        icon: "🛒",
+        categoryTag: "grocery_food",
+        catalog: INDUSTRY_CATALOGS.grocery_food
+      },
+      automotive_accessories: [
+        /* will be mapped below */
+      ],
+      automotive_accessories: {
+        title: "🚗 Automotive & Bike Accessories",
+        badge: "🏎️ High Performance Auto Parts & Care",
+        heroTitle: "Heavy-Duty Auto Parts & Accessories <span class=\"text-gradient block mt-2\">Built For The Open Highway</span>",
+        heroSubtitle: "12,000 LM projector LED headlights, real-time anti-theft GPS trackers, 5-layer bike covers & tire repair kits.",
+        ctaText: "Equip Your Ride",
+        icon: "🚗",
+        categoryTag: "automotive_accessories",
+        catalog: INDUSTRY_CATALOGS.automotive_accessories
+      },
+      industrial_supplies: {
+        title: "🏭 Industrial Supplies & Tools",
+        badge: "⚙️ Heavy Machinery & Certified Safety Tools",
+        heroTitle: "B2B Hardware & Industrial Supplies <span class=\"text-gradient block mt-2\">Direct Tier Pricing</span>",
+        heroSubtitle: "20V brushless hammer drills, ISI safety helmets & Kevlar gloves, digital calipers & heavy inverter cables.",
+        ctaText: "Request B2B Quote",
+        icon: "🏭",
+        categoryTag: "industrial_supplies",
+        catalog: INDUSTRY_CATALOGS.industrial_supplies
+      },
+      books_stationery: {
+        title: "📚 Books & Premium Stationery",
+        badge: "📖 Master Your Craft & Thoughtful Reading",
+        heroTitle: "Literary Classics & Leather Journals <span class=\"text-gradient block mt-2\">For Visionaries & Creators</span>",
+        heroSubtitle: "Hardcover life master sets, top-grain leather journals, German calligraphy pens and daily habit planners.",
+        ctaText: "Browse Books & Pens",
+        icon: "📚",
+        categoryTag: "books_stationery",
+        catalog: INDUSTRY_CATALOGS.books_stationery
+      },
+      sports_fitness: {
+        title: "⚽ Sports & Athletic Fitness",
+        badge: "🏋️ High-Octane Gym Gear & Nutrition",
+        heroTitle: "Peak Performance Gear & Isolate Whey <span class=\"text-gradient block mt-2\">Crush Every Workout</span>",
+        heroSubtitle: "100% whey isolate, quick-select adjustable dumbbells, eco-friendly thick yoga mats and resistance loop bands.",
+        ctaText: "Start Training",
+        icon: "⚽",
+        categoryTag: "sports_fitness",
+        catalog: INDUSTRY_CATALOGS.sports_fitness
+      },
+      baby_kids: {
+        title: "👶 Baby & Kids Care",
+        badge: "🧸 Non-Toxic Certified Baby Essentials",
+        heroTitle: "Safe, Gentle & Playful Baby Care <span class=\"text-gradient block mt-2\">Loved By Modern Parents</span>",
+        heroSubtitle: "Anti-colic BPA-free feeding bottles, organic beechwood Montessori puzzles, cotton rompers & tear-free washes.",
+        ctaText: "Shop Baby Essentials",
+        icon: "👶",
+        categoryTag: "baby_kids",
+        catalog: INDUSTRY_CATALOGS.baby_kids
+      },
+      agriculture_farming: {
+        title: "🌾 Agriculture & Farming",
+        badge: "🌱 Kisan Seva & Certified Farm Inputs",
+        heroTitle: "High-Yield Certified Seeds & Bio-Inputs <span class=\"text-gradient block mt-2\">Direct Kisan Support</span>",
+        heroSubtitle: "High-yield hybrid mustard seeds, pure vermicompost, micro drip irrigation kits and solar insect traps.",
+        ctaText: "Order Farm Supplies",
+        icon: "🌾",
+        categoryTag: "agriculture_farming",
+        catalog: INDUSTRY_CATALOGS.agriculture_farming
+      },
+      pet_supplies: {
+        title: "🐾 Pet Supplies & Nutrition",
+        badge: "🐶 Tail-Wagging Pet Nutrition & Toys",
+        heroTitle: "Wholesome Pet Care & Comfy Beds <span class=\"text-gradient block mt-2\">For Your Furry Family</span>",
+        heroSubtitle: "Real chicken protein kibble, orthopedic memory foam beds, interactive automatic toys and Ayurvedic shampoos.",
+        ctaText: "Treat Your Pet",
+        icon: "🐾",
+        categoryTag: "pet_supplies",
+        catalog: INDUSTRY_CATALOGS.pet_supplies
+      },
+      furniture_home_decor: {
+        title: "🛋️ Furniture & Living Decor",
+        badge: "🪵 Solid Teak Wood & Velvet Living Showroom",
+        heroTitle: "Architectural Living & Teak Furniture <span class=\"text-gradient block mt-2\">Handcrafted Comfort</span>",
+        heroSubtitle: "Scandinavian 3-seater sofas, solid Sheesham coffee tables, ergonomic high-back chairs & Nordic arc floor lamps.",
+        ctaText: "Explore Furniture",
+        icon: "🛋️",
+        categoryTag: "furniture_home_decor",
+        catalog: INDUSTRY_CATALOGS.furniture_home_decor
+      },
+      b2b_wholesale: {
+        title: "📦 B2B Wholesale & Bulk Orders",
+        badge: "💼 Factory Direct Bulk Lots & GST Invoicing",
+        heroTitle: "Commercial Wholesale & Bulk Orders <span class=\"text-gradient block mt-2\">Best Factory Rates</span>",
+        heroSubtitle: "Combed cotton t-shirts (100 pcs lot), industrial 9W LED cartons, 3-ply shipping boxes & hospitality tissues.",
+        ctaText: "Request Wholesale Quotation",
+        icon: "📦",
+        categoryTag: "b2b_wholesale",
+        catalog: INDUSTRY_CATALOGS.b2b_wholesale
+      },
+      // Aliases for backward compatibility
+      'modern-blue': {
+        title: "⚡ Modern Cyber Blue",
+        badge: "⚡ Curated Digital Kits, Spreadsheets & Templates",
+        heroTitle: "Download Premium Digital Assets <span class=\"text-gradient block mt-2\">Instantly & Ready-to-Use</span>",
+        heroSubtitle: "Supercharge your business with ready website kits, Google Sheet dashboards & Canva designs.",
+        ctaText: "Browse Digital Products",
+        icon: "⚡",
+        categoryTag: "electronics",
+        catalog: INDUSTRY_CATALOGS.electronics
+      },
+      'noolam-saree': {
+        title: "🥻 NOOLAM Kanchipuram Silk",
+        badge: "✨ Authentic Pure Silk Saree Heritage",
+        heroTitle: "Divine Kanchipuram Silk Sarees <span class=\"text-gradient block mt-2\">Woven with Pure 24K Gold Zari</span>",
+        heroSubtitle: "Heritage bridal collections, real gold zari weave, and temple motifs direct from traditional weaver looms.",
+        ctaText: "Explore Saree Studio",
+        icon: "🥻",
+        categoryTag: "fashion",
+        catalog: INDUSTRY_CATALOGS.fashion
+      },
+      'emerald-pro': {
+        title: "🌿 Emerald Business Pro",
+        badge: "🏥 Certified Healthcare & Clinical Wellness",
+        heroTitle: "Verified Health & Medical Essentials <span class=\"text-gradient block mt-2\">Delivered Direct</span>",
+        heroSubtitle: "Clinical devices, pure wellness herbs, medical trauma kits and certified vitamins.",
+        ctaText: "Shop Healthcare",
+        icon: "🌿",
+        categoryTag: "health_medical",
+        catalog: INDUSTRY_CATALOGS.health_medical
+      },
+      'vedic-gold': {
+        title: "🕉️ Royal Vedic Gold",
+        badge: "🔱 Authentic Vedic Vastu & Spiritual Store",
+        heroTitle: "Sacred Vedic Energy & Vastu Tools <span class=\"text-gradient block mt-2\">Energized For Abundance</span>",
+        heroSubtitle: "Certified Parad Shivalingams, Bhojpatra Yantras, and pure brass Vastu remedies verified by astrologers.",
+        ctaText: "Explore Spiritual Tools",
+        icon: "🕉️",
+        categoryTag: "fashion",
+        catalog: INDUSTRY_CATALOGS.fashion
+      },
+      'minimal-light': {
+        title: "🛍️ Clean Minimal Light",
+        badge: "✨ Modern Minimalist D2C Store",
+        heroTitle: "Curated Daily Essentials <span class=\"text-gradient block mt-2\">Minimal, Pure & High Quality</span>",
+        heroSubtitle: "Clean modern essentials designed for simple, organized and productive everyday living.",
+        ctaText: "Shop Collection",
+        icon: "🛍️",
+        categoryTag: "home_kitchen",
+        catalog: INDUSTRY_CATALOGS.home_kitchen
+      },
+      'neon-violet': {
+        title: "👾 Cyberpunk Neon Violet",
+        badge: "🎮 Creator & Gaming Gear Haven",
+        heroTitle: "Futuristic Gadgets & Digital Assets <span class=\"text-gradient block mt-2\">Level Up Your Universe</span>",
+        heroSubtitle: "RGB gaming audio, streaming gear, developer templates and creator automation suites.",
+        ctaText: "Level Up Now",
+        icon: "👾",
+        categoryTag: "electronics",
+        catalog: INDUSTRY_CATALOGS.electronics
+      }
+    };
+
+    // ========================================================
+    // 3. CONFIGURATION & STATE
+    // ========================================================
+    let currentProducts = [...INDUSTRY_CATALOGS.electronics];
     let selectedProduct = null;
     let activeFilter = 'all';
+    window.hasLoadedSheetProducts = false;
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('wa')) localStorage.setItem('store_wa_num', urlParams.get('wa'));
     if (urlParams.get('upi')) localStorage.setItem('store_upi_id', urlParams.get('upi'));
     if (urlParams.get('sheet')) localStorage.setItem('store_sheet_url', urlParams.get('sheet'));
+    if (urlParams.get('theme')) localStorage.setItem('store_active_template', urlParams.get('theme'));
 
     const storeConfig = {
       whatsappNumber: localStorage.getItem('store_wa_num') || "919999999999",
       upiId: localStorage.getItem('store_upi_id') || "payments@upi",
-      sheetUrl: localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec"
+      sheetUrl: localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec",
+      brandName: "SheetStore",
+      brandTagline: "Direct UPI & WhatsApp Powered E-Commerce",
+      logoUrl: "",
+      helplineNumber: "1800-123-4567",
+      altPhone: "+91 98112 23344",
+      businessEmail: "support@mystore.com",
+      businessAddress: "Shop No. 12, Main Market Road, Near Central Plaza, Sector 18, City Center - 110001",
+      mapUrl: "https://maps.google.com/?q=Connaught+Place+New+Delhi",
+      qrCodeUrl: "",
+      showContactForm: "true",
+      showAnnouncement: "true",
+      announcementText: "🔥 Special Offer! Flat 50% OFF on all items | Direct UPI & WhatsApp Orders",
+      ctaText: "Browse Catalog",
+      heroBannerUrl: "",
+      activeTheme: localStorage.getItem('store_active_template') || "electronics"
     };
 
+    // ========================================================
+    // 4. APPLY ALL SETTINGS DYNAMICALLY (From App & Sheet)
+    // ========================================================
     function applySiteSettings(s) {
       if (!s) return;
-      if (s.brand_name) {
-        const brandEls = [document.getElementById('brandNameText'), document.getElementById('footerBrandName')];
-        brandEls.forEach(el => { if (el) el.innerHTML = s.brand_name; });
-        document.title = s.brand_name + " | Digital Goods & Templates";
-      }
-      if (s.brand_tagline) {
-        const tagEls = [document.getElementById('brandTaglineText'), document.getElementById('footerBrandTagline')];
-        tagEls.forEach(el => { if (el) el.innerText = s.brand_tagline; });
-      }
-      if (s.logo_url && s.logo_url.trim()) {
-        const logoContainer = document.getElementById('brandLogoContainer');
-        if (logoContainer) logoContainer.innerHTML = `<img src="${s.logo_url}" alt="Logo" class="w-full h-full object-cover rounded-xl" />`;
-      }
-      if (s.hero_badge) {
-        const el = document.getElementById('heroBadgeText');
-        if (el) el.innerText = s.hero_badge;
-      }
-      if (s.hero_title) {
-        const el = document.getElementById('heroTitleText');
-        if (el) el.innerHTML = s.hero_title;
-      }
-      if (s.hero_subtitle) {
-        const el = document.getElementById('heroSubtitleText');
-        if (el) el.innerHTML = s.hero_subtitle;
-      }
-      if (s.whatsapp_number) {
-        storeConfig.whatsappNumber = s.whatsapp_number;
-        localStorage.setItem('store_wa_num', s.whatsapp_number);
-      }
-      if (s.upi_id) {
-        storeConfig.upiId = s.upi_id;
-        localStorage.setItem('store_upi_id', s.upi_id);
-      }
-      // Dynamic Website Template (5 Ready-made Themes)
-      const themeId = s.template_id || s.theme || localStorage.getItem('store_active_template') || 'modern-blue';
-      applyTemplateTheme(themeId);
 
-      // Custom Font Style
+      // 1. Brand Name
+      if (s.brand_name && s.brand_name.trim()) {
+        storeConfig.brandName = s.brand_name.trim();
+        const brandEls = [document.getElementById('brandNameText'), document.getElementById('footerBrandName')];
+        brandEls.forEach(el => { if (el) el.innerHTML = storeConfig.brandName; });
+        document.title = storeConfig.brandName + " | Official Store";
+      }
+
+      // 2. Brand Tagline
+      if (s.brand_tagline && s.brand_tagline.trim()) {
+        storeConfig.brandTagline = s.brand_tagline.trim();
+        const tagEls = [document.getElementById('brandTaglineText'), document.getElementById('footerBrandTagline')];
+        tagEls.forEach(el => { if (el) el.innerText = storeConfig.brandTagline; });
+      }
+
+      // 3. Logo URL
+      if (s.logo_url && s.logo_url.trim()) {
+        storeConfig.logoUrl = s.logo_url.trim();
+        const logoContainers = [document.getElementById('brandLogoContainer'), document.getElementById('footerLogoContainer')];
+        logoContainers.forEach(container => {
+          if (container) {
+            container.innerHTML = `<img src="${storeConfig.logoUrl}" alt="Logo" class="w-full h-full object-cover rounded-xl" />`;
+          }
+        });
+      }
+
+      // 4. WhatsApp Number
+      if (s.whatsapp_number && s.whatsapp_number.trim()) {
+        storeConfig.whatsappNumber = s.whatsapp_number.trim();
+        localStorage.setItem('store_wa_num', storeConfig.whatsappNumber);
+      }
+
+      // 5. Customer Care Helpline
+      const helpNum = s.helpline_number || s.helpline_phone;
+      if (helpNum && helpNum.trim()) {
+        storeConfig.helplineNumber = helpNum.trim();
+        const cleanHelp = storeConfig.helplineNumber.replace(/[^0-9+]/g, '');
+        const topH = document.getElementById('topHelplineText');
+        if (topH) topH.innerText = storeConfig.helplineNumber;
+        const topHLink = document.getElementById('topHelplineLink');
+        if (topHLink) topHLink.href = `tel:${cleanHelp}`;
+        const dirHNum = document.getElementById('dirHelplineNum');
+        if (dirHNum) dirHNum.innerText = storeConfig.helplineNumber;
+        const dirHBtn = document.getElementById('dirHelplineBtn');
+        if (dirHBtn) dirHBtn.href = `tel:${cleanHelp}`;
+        const pillText = document.getElementById('headerHelplinePillText');
+        if (pillText) pillText.innerText = storeConfig.helplineNumber;
+        const pillLink = document.getElementById('headerHelplinePill');
+        if (pillLink) pillLink.href = `tel:${cleanHelp}`;
+        const ftrH = document.getElementById('footerHelplineText');
+        if (ftrH) ftrH.innerText = storeConfig.helplineNumber;
+        const ftrHLink = document.getElementById('footerHelplineLink');
+        if (ftrHLink) ftrHLink.href = `tel:${cleanHelp}`;
+      }
+
+      // 6. Alternative Contact Number
+      if (s.alt_phone && s.alt_phone.trim()) {
+        storeConfig.altPhone = s.alt_phone.trim();
+        const cleanAlt = storeConfig.altPhone.replace(/[^0-9+]/g, '');
+        const topAlt = document.getElementById('topAltPhoneText');
+        if (topAlt) topAlt.innerText = `Alt: ${storeConfig.altPhone}`;
+        const topAltLink = document.getElementById('topAltPhoneLink');
+        if (topAltLink) topAltLink.href = `tel:${cleanAlt}`;
+        const dirAltNum = document.getElementById('dirAltPhoneNum');
+        if (dirAltNum) dirAltNum.innerText = storeConfig.altPhone;
+        const dirAltBtn = document.getElementById('dirAltPhoneBtn');
+        if (dirAltBtn) dirAltBtn.href = `tel:${cleanAlt}`;
+        const ftrAlt = document.getElementById('footerAltPhoneText');
+        if (ftrAlt) ftrAlt.innerText = storeConfig.altPhone;
+        const ftrAltLink = document.getElementById('footerAltPhoneLink');
+        if (ftrAltLink) ftrAltLink.href = `tel:${cleanAlt}`;
+      }
+
+      // 7. Official Business Email
+      const email = s.business_email || s.contact_email;
+      if (email && email.trim()) {
+        storeConfig.businessEmail = email.trim();
+        const topMail = document.getElementById('topEmailText');
+        if (topMail) topMail.innerText = storeConfig.businessEmail;
+        const topMailLink = document.getElementById('topEmailLink');
+        if (topMailLink) topMailLink.href = `mailto:${storeConfig.businessEmail}`;
+        const dirMail = document.getElementById('dirEmail');
+        if (dirMail) dirMail.innerText = storeConfig.businessEmail;
+        const dirMailBtn = document.getElementById('dirEmailBtn');
+        if (dirMailBtn) dirMailBtn.href = `mailto:${storeConfig.businessEmail}`;
+        const ftrMail = document.getElementById('footerEmailText');
+        if (ftrMail) ftrMail.innerText = storeConfig.businessEmail;
+        const ftrMailLink = document.getElementById('footerEmailLink');
+        if (ftrMailLink) ftrMailLink.href = `mailto:${storeConfig.businessEmail}`;
+      }
+
+      // 8. Physical Store Address
+      const address = s.business_address || s.store_address;
+      if (address && address.trim()) {
+        storeConfig.businessAddress = address.trim();
+        const dirAddr = document.getElementById('dirAddress');
+        if (dirAddr) dirAddr.innerText = storeConfig.businessAddress;
+        const dirMapAddr = document.getElementById('directoryMapAddressText');
+        if (dirMapAddr) dirMapAddr.innerText = storeConfig.businessAddress;
+        const ftrAddr = document.getElementById('footerAddressText');
+        if (ftrAddr) ftrAddr.innerHTML = `<i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5"></i><span>${storeConfig.businessAddress}</span>`;
+      }
+
+      // 9. Google Maps Location & Embed
+      const mapLink = s.map_url || s.google_map_embed;
+      if (mapLink && mapLink.trim()) {
+        storeConfig.mapUrl = mapLink.trim();
+      }
+      applyGoogleMapsEmbed();
+
+      // 10. Store UPI ID
+      if (s.upi_id && s.upi_id.trim()) {
+        storeConfig.upiId = s.upi_id.trim();
+        localStorage.setItem('store_upi_id', storeConfig.upiId);
+        const upiTxt = document.getElementById('upiIdDisplay');
+        if (upiTxt) upiTxt.innerText = `UPI ID: ${storeConfig.upiId}`;
+        const dirUpi = document.getElementById('dirUpiId');
+        if (dirUpi) dirUpi.innerText = storeConfig.upiId;
+      }
+
+      // 11. Store UPI QR Code Photo
+      const qrPhoto = s.qr_code_url || s.upi_qr_url;
+      if (qrPhoto && qrPhoto.trim()) {
+        storeConfig.qrCodeUrl = qrPhoto.trim();
+      }
+
+      // 12. Interactive Contact Form Switch
+      if (s.show_contact_form !== undefined && s.show_contact_form !== null) {
+        storeConfig.showContactForm = String(s.show_contact_form).toLowerCase();
+        const formBox = document.getElementById('contactFormContainer');
+        if (formBox) {
+          if (storeConfig.showContactForm === 'false') {
+            formBox.classList.add('hidden');
+          } else {
+            formBox.classList.remove('hidden');
+          }
+        }
+      }
+
+      // 13. Top Announcement Bar Strip
+      if (s.show_announcement !== undefined && s.show_announcement !== null) {
+        storeConfig.showAnnouncement = String(s.show_announcement).toLowerCase();
+        const annBar = document.getElementById('topAnnouncementBar');
+        if (annBar) {
+          if (storeConfig.showAnnouncement === 'false') {
+            annBar.classList.add('hidden');
+          } else {
+            annBar.classList.remove('hidden');
+          }
+        }
+      }
+      if (s.announcement_text && s.announcement_text.trim()) {
+        storeConfig.announcementText = s.announcement_text.trim();
+        const annText = document.getElementById('announcementTextSpan');
+        if (annText) annText.innerText = storeConfig.announcementText;
+      }
+
+      // 14. Primary Call to Action Button Text
+      if (s.cta_text && s.cta_text.trim()) {
+        storeConfig.ctaText = s.cta_text.trim();
+        const ctaBtn = document.getElementById('heroCtaText');
+        if (ctaBtn) ctaBtn.innerText = storeConfig.ctaText;
+      }
+
+      // 15. Hero Headline & Badges
+      if (s.hero_badge && s.hero_badge.trim()) {
+        const el = document.getElementById('heroBadgeText');
+        if (el) el.innerText = s.hero_badge.trim();
+      }
+      if (s.hero_title && s.hero_title.trim()) {
+        const el = document.getElementById('heroTitleText');
+        if (el) el.innerHTML = s.hero_title.trim();
+      }
+      if (s.hero_subtitle && s.hero_subtitle.trim()) {
+        const el = document.getElementById('heroSubtitleText');
+        if (el) el.innerHTML = s.hero_subtitle.trim();
+      }
+
+      // 16. Hero Banner Background Image
+      if (s.hero_banner_url && s.hero_banner_url.trim()) {
+        storeConfig.heroBannerUrl = s.hero_banner_url.trim();
+        const heroEl = document.getElementById('heroSection');
+        if (heroEl) {
+          heroEl.style.backgroundImage = `linear-gradient(rgba(7, 11, 24, 0.88), rgba(7, 11, 24, 0.94)), url('${storeConfig.heroBannerUrl}')`;
+          heroEl.style.backgroundSize = 'cover';
+          heroEl.style.backgroundPosition = 'center';
+        }
+      }
+
+      // 17. Custom Font Style
       if (s.font_family && String(s.font_family).trim()) {
         const fontName = String(s.font_family).trim();
         document.documentElement.style.setProperty('--theme-font-heading', `"${fontName}", sans-serif`);
@@ -944,67 +2737,208 @@
         });
       }
 
-      // Custom Header Color
+      // 18. Custom Header Color
       if (s.header_color && String(s.header_color).trim()) {
         const hdr = document.querySelector('header');
         if (hdr) hdr.style.backgroundColor = s.header_color;
       }
 
-      // Custom Footer Color
+      // 19. Custom Footer Color
       if (s.footer_color && String(s.footer_color).trim()) {
         const ftr = document.querySelector('footer');
         if (ftr) ftr.style.backgroundColor = s.footer_color;
       }
 
+      // 20. E-Commerce Theme Engine
+      const themeId = s.ecommerce_theme || s.template_id || s.theme || localStorage.getItem('store_active_template') || 'electronics';
+      applyTemplateTheme(themeId, false);
+
       applyContactDetails();
+      lucide.createIcons();
     }
 
-    const THEME_NAMES = {
-      'modern-blue': '⚡ Modern Cyber Blue',
-      'vedic-gold': '🕉️ Royal Vedic Gold',
-      'minimal-light': '🛍️ Clean Minimal Light',
-      'neon-violet': '👾 Cyberpunk Neon Violet',
-      'emerald-pro': '🌿 Emerald Business Pro',
-      'noolam-saree': '🥻 NOOLAM Kanchipuram Silk'
-    };
+    // ========================================================
+    // 5. GOOGLE MAPS EMBED ENGINE
+    // ========================================================
+    function applyGoogleMapsEmbed() {
+      const mapIframe = document.getElementById('googleMapIframe');
+      const directionsLink = document.getElementById('googleMapDirectionsLink');
+      const dirDirectionsBtn = document.getElementById('dirDirectionsBtn');
 
-    function applyTemplateTheme(id) {
-      if (!id) id = 'modern-blue';
+      let query = storeConfig.businessAddress || 'Connaught Place New Delhi India';
+      let navUrl = `https://maps.google.com/?q=${encodeURIComponent(query)}`;
+
+      if (storeConfig.mapUrl && storeConfig.mapUrl.trim()) {
+        const raw = storeConfig.mapUrl.trim();
+        navUrl = raw;
+        if (raw.includes('output=embed') || raw.includes('/maps/embed')) {
+          if (mapIframe) mapIframe.src = raw;
+        } else if (raw.includes('maps.google.com') && raw.includes('q=')) {
+          const match = raw.match(/q=([^&]+)/);
+          if (match && match[1]) {
+            if (mapIframe) mapIframe.src = `https://maps.google.com/maps?q=${match[1]}&output=embed`;
+          } else {
+            if (mapIframe) mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(raw)}&output=embed`;
+          }
+        } else {
+          if (mapIframe) mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(raw)}&output=embed`;
+        }
+      } else {
+        if (mapIframe) mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+      }
+
+      if (directionsLink) directionsLink.href = navUrl;
+      if (dirDirectionsBtn) dirDirectionsBtn.href = navUrl;
+    }
+
+    // ========================================================
+    // 6. APPLY E-COMMERCE THEME (Colors, Copy & Catalog)
+    // ========================================================
+    function applyTemplateTheme(id, switchCatalog = true) {
+      if (!id) id = 'electronics';
       id = id.trim().toLowerCase();
-      if (!THEME_NAMES[id]) id = 'modern-blue';
+      if (!THEME_CONFIGS[id]) id = 'electronics';
+
+      const conf = THEME_CONFIGS[id];
+      storeConfig.activeTheme = id;
 
       document.documentElement.setAttribute('data-theme', id);
       document.body.setAttribute('data-theme', id);
       localStorage.setItem('store_active_template', id);
 
-      const labelEl = document.getElementById('currentThemeLabel');
-      if (labelEl) labelEl.innerText = THEME_NAMES[id];
+      const badgeEl = document.getElementById('currentThemeBadge');
+      if (badgeEl) badgeEl.innerText = `${conf.icon} ${conf.title}`;
 
-      document.querySelectorAll('.theme-switcher-btn').forEach(btn => {
-        if (btn.getAttribute('data-theme-id') === id) {
-          btn.classList.add('ring-2', 'ring-amber-400', 'scale-110');
-        } else {
-          btn.classList.remove('ring-2', 'ring-amber-400', 'scale-110');
+      // Update Defaults if not overridden by custom sheet settings
+      const cached = localStorage.getItem('store_cached_settings');
+      let customSettings = {};
+      try { if (cached) customSettings = JSON.parse(cached); } catch (e) {}
+
+      if (!customSettings.hero_badge) {
+        const el = document.getElementById('heroBadgeText');
+        if (el) el.innerText = conf.badge;
+      }
+      if (!customSettings.hero_title) {
+        const el = document.getElementById('heroTitleText');
+        if (el) el.innerHTML = conf.heroTitle;
+      }
+      if (!customSettings.hero_subtitle) {
+        const el = document.getElementById('heroSubtitleText');
+        if (el) el.innerHTML = conf.heroSubtitle;
+      }
+      if (!customSettings.cta_text) {
+        const el = document.getElementById('heroCtaText');
+        if (el) el.innerText = conf.ctaText;
+      }
+
+      // If user has not loaded custom products from their Google Sheet, adopt industry sample products
+      if (switchCatalog && (!window.hasLoadedSheetProducts || currentProducts.length === 0)) {
+        if (conf.catalog && Array.isArray(conf.catalog)) {
+          currentProducts = [...conf.catalog];
+          renderProducts(currentProducts);
         }
-      });
+      }
+
+      lucide.createIcons();
     }
 
+    // ========================================================
+    // 7. CONTACT & INQUIRY FORM HELPERS
+    // ========================================================
     function applyContactDetails() {
+      const waNumber = storeConfig.whatsappNumber || "919999999999";
+      const cleanWa = waNumber.replace(/[^0-9]/g, '');
+      const waMsg = encodeURIComponent(`Namaste! Mujhe ${storeConfig.brandName} products ke bare me jaankari chahiye.`);
+      const waLink = `https://wa.me/${cleanWa}?text=${waMsg}`;
+
       const headerWa = document.getElementById('headerWaBtn');
       const floatingWa = document.getElementById('floatingWaBtn');
-      const upiDisplay = document.getElementById('upiIdDisplay');
-
-      const waMsg = encodeURIComponent("Namaste! Mujhe DigitalStore products ke bare me jaankari chahiye.");
-      const waLink = `https://wa.me/${storeConfig.whatsappNumber}?text=${waMsg}`;
+      const heroWa = document.getElementById('heroSecondaryWaBtn');
+      const dirWa = document.getElementById('dirWaBtn');
+      const ftrWa = document.getElementById('footerWaLink');
 
       if (headerWa) headerWa.href = waLink;
       if (floatingWa) floatingWa.href = waLink;
+      if (heroWa) heroWa.href = waLink;
+      if (dirWa) dirWa.href = waLink;
+      if (ftrWa) ftrWa.href = waLink;
+
+      const dirWaNum = document.getElementById('dirWaNum');
+      if (dirWaNum) dirWaNum.innerText = `+${cleanWa}`;
+
+      const upiDisplay = document.getElementById('upiIdDisplay');
       if (upiDisplay) upiDisplay.innerText = `UPI ID: ${storeConfig.upiId}`;
+      const dirUpi = document.getElementById('dirUpiId');
+      if (dirUpi) dirUpi.innerText = storeConfig.upiId;
     }
 
-    // ==========================================
-    // 3. FETCH PRODUCTS FROM GOOGLE SHEET
-    // ==========================================
+    function sendInquiryViaWhatsApp() {
+      const name = document.getElementById('inquiryName').value.trim();
+      const phone = document.getElementById('inquiryPhone').value.trim();
+      const email = document.getElementById('inquiryEmail').value.trim();
+      const topic = document.getElementById('inquiryTopic').value;
+      const msg = document.getElementById('inquiryMessage').value.trim();
+
+      if (!name) {
+        alert("Kripya apna Naam enter karein.");
+        document.getElementById('inquiryName').focus();
+        return;
+      }
+      if (!phone || phone.length < 10) {
+        alert("Kripya 10-digit WhatsApp / Mobile number enter karein.");
+        document.getElementById('inquiryPhone').focus();
+        return;
+      }
+
+      let text = `Namaste! New Website Inquiry for *${storeConfig.brandName}*:\n\n`;
+      text += `👤 *Customer Name:* ${name}\n`;
+      text += `📱 *Phone:* ${phone}\n`;
+      if (email) text += `✉️ *Email:* ${email}\n`;
+      text += `📌 *Topic:* ${topic}\n`;
+      if (msg) text += `💬 *Message:* ${msg}\n`;
+
+      const cleanWa = storeConfig.whatsappNumber.replace(/[^0-9]/g, '');
+      const waUrl = `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    function handleInquirySubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('inquiryName').value.trim();
+      const phone = document.getElementById('inquiryPhone').value.trim();
+      const email = document.getElementById('inquiryEmail').value.trim();
+      const topic = document.getElementById('inquiryTopic').value;
+      const msg = document.getElementById('inquiryMessage').value.trim();
+
+      // Show Success Alert
+      const alertBox = document.getElementById('inquirySuccessAlert');
+      if (alertBox) alertBox.classList.remove('hidden');
+
+      // Optional: Ping Google Sheet in background
+      if (storeConfig.sheetUrl && storeConfig.sheetUrl.trim() !== '') {
+        try {
+          const pingUrl = `${storeConfig.sheetUrl}?action=recordInquiry&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}&topic=${encodeURIComponent(topic)}&message=${encodeURIComponent(msg)}`;
+          fetch(pingUrl, { mode: 'no-cors' }).catch(e => console.log(e));
+        } catch (e) {}
+      }
+
+      setTimeout(() => {
+        document.getElementById('siteInquiryForm').reset();
+      }, 3000);
+    }
+
+    function copyStoreAddress() {
+      const addr = storeConfig.businessAddress || 'Shop No. 12, Main Market Road, City Center - 110001';
+      navigator.clipboard.writeText(addr).then(() => {
+        const textSpan = document.getElementById('copyAddrText');
+        if (textSpan) {
+          textSpan.innerText = "Address Copied! ✅";
+          setTimeout(() => { textSpan.innerText = "Copy Address"; }, 2500);
+        }
+      }).catch(() => {
+        prompt("Store address copy karein:", addr);
+      });
+    }
     async function fetchProductsFromSheet() {
       const syncStatus = document.getElementById('syncStatus');
       
@@ -1035,6 +2969,7 @@
 
         if (products.length > 0) {
           currentProducts = products.filter(p => !p.is_active || String(p.is_active).toUpperCase() === "TRUE");
+          window.hasLoadedSheetProducts = true;
           syncStatus.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i><span class="text-emerald-400 font-medium">Live Synced with Google Sheet</span>`;
         } else {
           throw new Error("Empty product list");
@@ -1187,7 +3122,13 @@
       const btnMob = document.getElementById('demoMobileUpiBtn');
       if (btnMob) btnMob.href = upiUrl;
       const upiQr = document.getElementById('upiQrImage');
-      if (upiQr) upiQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+      if (upiQr) {
+        if (storeConfig.qrCodeUrl && storeConfig.qrCodeUrl.trim() !== '') {
+          upiQr.src = storeConfig.qrCodeUrl;
+        } else {
+          upiQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+        }
+      }
       const upiTxt = document.getElementById('upiIdDisplay');
       if (upiTxt) upiTxt.innerText = `UPI ID: ${storeConfig.upiId}`;
       const copyTxt = document.getElementById('demoCopyUpiText');
@@ -1457,75 +3398,271 @@
     }
   </script>
 
-  <!-- LIVE DEMO SELECTOR MODAL -->
-  <div id="demoSelectorModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
+  <!-- LIVE DEMO SELECTOR MODAL (15 E-Commerce Themes + Saree Studio) -->
+  <div id="demoSelectorModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-4xl w-full p-5 sm:p-7 relative shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
       <!-- Decorative Glow -->
       <div class="absolute -top-24 -left-24 w-60 h-60 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Close Button -->
-      <button onclick="closeDemoSelectorModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+      <button onclick="closeDemoSelectorModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition z-20">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
       <!-- Modal Title -->
-      <div class="text-center mb-6 relative z-10">
-        <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block mb-2">
-          ✨ Live Store Demos
+      <div class="text-center mb-4 relative z-10 shrink-0">
+        <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold inline-block mb-1.5">
+          ✨ 15 E-Commerce Industry Themes
         </span>
-        <h3 class="font-heading font-black text-2xl sm:text-3xl text-white">Kaunsa Store Demo Dekhna Chahte Hain?</h3>
+        <h3 class="font-heading font-black text-xl sm:text-2xl text-white">Chunein Apna Store Theme Design</h3>
         <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">
-          SheetStore Pro se aap kisi bhi category ka 100% Google Sheet powered e-commerce store bana sakte hain.
+          Kisi bhi theme par click karein aur dekhein website live kaise transform hoti hai:
         </p>
       </div>
 
-      <!-- 2 Demo Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+      <!-- Scrollable 15 Themes Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 overflow-y-auto pr-1 py-1 relative z-10 flex-1">
         
-        <!-- Option 1: Digital Products Store -->
-        <div class="bg-slate-950/80 rounded-2xl p-5 border border-blue-500/40 hover:border-blue-400 flex flex-col justify-between transition group shadow-lg">
+        <!-- 1. Electronics -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-cyan-500/30 hover:border-cyan-400 flex flex-col justify-between transition group shadow">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg">⚡</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">5 Color Presets</span>
+              <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-base">📱</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 font-bold">Tech &amp; Gadgets</span>
             </div>
-            <h4 class="font-heading font-bold text-base text-white group-hover:text-blue-400 transition">Digital Products &amp; SaaS Store</h4>
-            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-              Software, Ebooks, Notion kits, AI Prompts &amp; Web Templates. Direct UPI QR + instant download link.
-            </p>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-cyan-300 transition">Electronics</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Laptops, audio gear, smartwatches aur tech accessories.</p>
           </div>
-          <div class="mt-4 pt-4 border-t border-slate-800">
-            <a href="demo.html" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
-              <span>Digital Store Kholein (Active) ➔</span>
-            </a>
-          </div>
+          <button onclick="applyTemplateTheme('electronics', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
         </div>
 
-        <!-- Option 2: NOOLAM Saree Showcase -->
-        <div class="bg-gradient-to-b from-[#200407] to-[#140204] rounded-2xl p-5 border border-[#D4AF37]/40 hover:border-[#D4AF37] flex flex-col justify-between transition group shadow-lg">
+        <!-- 2. Fashion -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-rose-500/30 hover:border-rose-400 flex flex-col justify-between transition group shadow">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="w-10 h-10 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold text-lg">🥻</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#F5DE7A] border border-[#D4AF37]/30 font-bold">Luxury Studio</span>
+              <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-base">👗</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 font-bold">Clothing &amp; Style</span>
             </div>
-            <h4 class="font-heading font-bold text-base text-[#F5DE7A] group-hover:text-white transition">NOOLAM Kanchipuram Saree</h4>
-            <p class="text-xs text-[#E5D5B8] mt-1 leading-relaxed">
-              Ethnic wear, 6 Moods archive, "Try the Look" bundle with 10% off, real clothes rail ("The Rack"), &amp; 3D tilt silk arc.
-            </p>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-rose-300 transition">Fashion &amp; Apparel</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Sarees, ethnic suits, designer totes aur linen shirts.</p>
           </div>
-          <div class="mt-4 pt-4 border-t border-white/10">
-            <a href="saree-demo.html" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-bold text-xs flex items-center justify-center gap-1.5 transition shadow font-cinzel">
-              <span>Saree Showcase Studio ➔</span>
-            </a>
+          <button onclick="applyTemplateTheme('fashion', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 3. Health & Medical -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-emerald-500/30 hover:border-emerald-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-base">💊</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-bold">Pharmacy &amp; Care</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-emerald-300 transition">Health &amp; Medical</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">BP monitors, Ayurveda vitality, first aid &amp; vitamins.</p>
           </div>
+          <button onclick="applyTemplateTheme('health_medical', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 4. Beauty & Personal Care -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-pink-500/30 hover:border-pink-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-base">💄</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500/15 text-pink-300 font-bold">Cosmetics &amp; Glow</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-pink-300 transition">Beauty &amp; Personal Care</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">24K gold serums, foaming facewash &amp; herbal hair oils.</p>
+          </div>
+          <button onclick="applyTemplateTheme('beauty_personal_care', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 5. Home & Kitchen -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-amber-500/30 hover:border-amber-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-base">🍳</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 font-bold">Cookware &amp; Dining</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-300 transition">Home &amp; Kitchen</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Tri-ply cookware, digital air fryers &amp; ceramic sets.</p>
+          </div>
+          <button onclick="applyTemplateTheme('home_kitchen', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 6. Grocery & Food -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-lime-500/30 hover:border-lime-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-lime-500/20 text-lime-400 flex items-center justify-center font-bold text-base">🛒</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-lime-500/15 text-lime-300 font-bold">Daily Essentials</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-lime-300 transition">Grocery &amp; Food</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Aged basmati rice, mustard oils, almonds &amp; tea.</p>
+          </div>
+          <button onclick="applyTemplateTheme('grocery_food', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-lime-600 hover:bg-lime-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 7. Automotive -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-red-500/30 hover:border-red-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-base">🚗</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-300 font-bold">Auto Parts &amp; Care</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-red-300 transition">Automotive &amp; Accessories</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">LED headlights, GPS live trackers &amp; repair kits.</p>
+          </div>
+          <button onclick="applyTemplateTheme('automotive_accessories', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 8. Industrial Supplies -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-yellow-500/30 hover:border-yellow-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-base">🏭</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-300 font-bold">Tools &amp; Hardware</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-yellow-300 transition">Industrial Supplies</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Cordless drills, ISI safety helmets &amp; digital calipers.</p>
+          </div>
+          <button onclick="applyTemplateTheme('industrial_supplies', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 9. Books & Stationery -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-purple-500/30 hover:border-purple-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-base">📚</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 font-bold">Office &amp; Reading</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-purple-300 transition">Books &amp; Stationery</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Collector booksets, leather journals &amp; planners.</p>
+          </div>
+          <button onclick="applyTemplateTheme('books_stationery', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 10. Sports & Fitness -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-cyan-500/30 hover:border-cyan-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-base">⚽</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 font-bold">Gym &amp; Athletics</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-cyan-300 transition">Sports &amp; Fitness</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Whey isolate, adjustable dumbbells &amp; yoga mats.</p>
+          </div>
+          <button onclick="applyTemplateTheme('sports_fitness', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 11. Baby & Kids -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-rose-400/30 hover:border-rose-300 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-rose-400/20 text-rose-300 flex items-center justify-center font-bold text-base">👶</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-400/15 text-rose-300 font-bold">Toys &amp; Baby Care</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-rose-300 transition">Baby &amp; Kids</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">BPA-free bottles, wooden puzzles &amp; rompers.</p>
+          </div>
+          <button onclick="applyTemplateTheme('baby_kids', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 12. Agriculture & Farming -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-green-500/30 hover:border-green-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-base">🌾</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/15 text-green-300 font-bold">Seeds &amp; Agro Tools</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-green-300 transition">Agriculture &amp; Farming</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Hybrid seeds, organic compost &amp; drip irrigation.</p>
+          </div>
+          <button onclick="applyTemplateTheme('agriculture_farming', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-green-600 hover:bg-green-500 text-slate-950 font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 13. Pet Supplies -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-orange-500/30 hover:border-orange-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-base">🐾</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-orange-500/15 text-orange-300 font-bold">Dogs, Pets &amp; Care</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-orange-300 transition">Pet Supplies</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Real chicken food, orthopedic beds &amp; tick shampoo.</p>
+          </div>
+          <button onclick="applyTemplateTheme('pet_supplies', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 14. Furniture & Home Decor -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-purple-500/30 hover:border-purple-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-base">🛋️</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 font-bold">Living &amp; Interior</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-purple-300 transition">Furniture &amp; Home Decor</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Scandinavian sofas, Sheesham tables &amp; floor lamps.</p>
+          </div>
+          <button onclick="applyTemplateTheme('furniture_home_decor', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
+        </div>
+
+        <!-- 15. B2B Wholesale -->
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-blue-500/30 hover:border-blue-400 flex flex-col justify-between transition group shadow">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-base">📦</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 font-bold">Bulk Order &amp; Trade</span>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-white group-hover:text-blue-300 transition">B2B Wholesale</h4>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">T-shirt bulk lots, industrial LED cartons &amp; boxes.</p>
+          </div>
+          <button onclick="applyTemplateTheme('b2b_wholesale', true); closeDemoSelectorModal();" class="mt-3 w-full py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition">
+            Apply Theme ➔
+          </button>
         </div>
 
       </div>
 
-      <!-- Footer Note -->
-      <div class="mt-5 text-center text-[11px] text-slate-500 relative z-10">
-        <span>Aap dono templates ko apne hisab se Google Sheet se customize kar sakte hain.</span>
+      <!-- Footer Note & Special Saree Showroom Link -->
+      <div class="mt-4 pt-3 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 shrink-0 relative z-10">
+        <div class="flex items-center gap-2">
+          <span>Dedicated Saree Studio Demo:</span>
+          <a href="saree-demo.html" class="text-[#D4AF37] hover:underline font-bold font-cinzel flex items-center gap-1">
+            <span>🥻 NOOLAM Kanchipuram Showroom</span>
+            <i data-lucide="external-link" class="w-3 h-3"></i>
+          </a>
+        </div>
+        <button onclick="closeDemoSelectorModal()" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">
+          Close Window
+        </button>
       </div>
 
     </div>
