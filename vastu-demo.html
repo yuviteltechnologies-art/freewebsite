@@ -932,8 +932,9 @@
           <h3 style="font-size: 1.35rem; color: var(--gold-light); margin-top: 2px;">इसको कैसे उपयोग करें? (How to use - Live Video Guide)</h3>
           <p style="font-size: 0.9rem; color: var(--muted); margin: 0;">घर के केंद्र में खड़े होकर डिग्री नापने और अपने प्लॉट का वैज्ञानिक वास्तु चक्र तैयार करने का वीडियो गाइड।</p>
         </div>
-        <div style="display: flex; gap: 8px;">
-          <button type="button" class="preset-pill active" id="btn-tab-sim">🎥 एनीमेशन गाइड</button>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="preset-pill active" id="btn-tab-sim">🎥 एनीमेशन सिमुलेटर</button>
+          <button type="button" class="preset-pill" id="btn-tab-gif">🖼️ आपकी GIF (ऑटोप्ले)</button>
           <button type="button" class="preset-pill" id="btn-tab-ext">📺 वीडियो लिंक (MP4 / YT)</button>
         </div>
       </div>
@@ -952,6 +953,40 @@
               <span id="vidTime">00:00 / 00:24</span>
             </div>
             <div class="video-chapter-pill" id="videoSceneBadge">स्टेप १: प्लॉट साइज़ नापें</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GIF Auto-Play View -->
+      <div id="gif-view" class="video-screen-wrap" style="display: none; padding: 14px; flex-direction: column; align-items: center; justify-content: center; background: #060714;">
+        <!-- Top Toolbar for GIF -->
+        <div style="width: 100%; max-width: 760px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; background: rgba(16,18,43,0.85); padding: 8px 14px; border-radius: 6px; border: 1px solid var(--line);">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <label for="gifFileInput" class="video-btn" style="cursor: pointer; background: var(--gold); color: var(--night); margin: 0; font-size: 0.85rem;">
+              📂 अपनी GIF फ़ाइल चुनें (Select GIF)
+            </label>
+            <input type="file" id="gifFileInput" accept="image/gif,video/mp4,image/*" style="display: none;">
+            <span id="gifFileName" style="font-size: 0.82rem; color: var(--gold-light);">assets/images/vastu-guide.gif</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.76rem; background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 8px; border-radius: 12px; font-weight: 600;">
+              ⚡ Auto-Play Continuous Loop
+            </span>
+          </div>
+        </div>
+
+        <!-- GIF Stage -->
+        <div style="width: 100%; max-width: 760px; aspect-ratio: 16/9; max-height: 420px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(233,180,76,0.35); background: #02030a; display: flex; align-items: center; justify-content: center; position: relative;">
+          <img id="userVastuGif" src="assets/images/vastu-guide.gif" alt="Vastu Guide Animation" style="width: 100%; height: 100%; object-fit: contain; display: block;" onerror="this.style.display='none'; document.getElementById('gifFallbackNotice').style.display='flex';">
+          <div id="gifFallbackNotice" style="display: none; position: absolute; inset: 0; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 20px; text-align: center; background: rgba(6,7,20,0.92);">
+            <div style="font-size: 2.2rem;">🖼️</div>
+            <p style="color: var(--gold); font-size: 0.95rem; font-weight: 600; margin: 0;">GIF ऑटोप्ले मोड (Auto-Play Mode)</p>
+            <p style="color: var(--muted); font-size: 0.84rem; max-width: 500px; margin: 0;">
+              अपनी बनाई GIF फ़ाइल को सीधे चलाने के लिए ऊपर <strong>"📂 अपनी GIF फ़ाइल चुनें"</strong> पर क्लिक करके फ़ाइल सेलेक्ट करें, या अपनी GIF फ़ाइल को <code>assets/images/vastu-guide.gif</code> नाम से प्रोजेक्ट में रखें।
+            </p>
+            <label for="gifFileInput" class="video-btn" style="cursor: pointer; background: var(--gold); color: var(--night); margin-top: 4px;">
+              यहाँ क्लिक करके अपनी GIF चुनें ➔
+            </label>
           </div>
         </div>
       </div>
@@ -1688,22 +1723,51 @@
     var sceneBadge = document.getElementById('videoSceneBadge');
     var stepCards = [].slice.call(document.querySelectorAll('.video-step-card'));
 
-    // Tab switcher (Sim vs External Video)
+    // Tab switcher (Sim vs GIF vs External Video)
     var tabSim = document.getElementById('btn-tab-sim');
+    var tabGif = document.getElementById('btn-tab-gif');
     var tabExt = document.getElementById('btn-tab-ext');
     var simView = document.getElementById('sim-view');
+    var gifView = document.getElementById('gif-view');
     var extView = document.getElementById('ext-view');
 
-    if (tabSim && tabExt && simView && extView) {
-      tabSim.addEventListener('click', function() {
-        tabSim.classList.add('active'); tabExt.classList.remove('active');
-        simView.style.display = 'flex'; extView.style.display = 'none';
+    function switchVideoTab(activeMode) {
+      if (tabSim) tabSim.classList.toggle('active', activeMode === 'sim');
+      if (tabGif) tabGif.classList.toggle('active', activeMode === 'gif');
+      if (tabExt) tabExt.classList.toggle('active', activeMode === 'ext');
+
+      if (simView) simView.style.display = activeMode === 'sim' ? 'flex' : 'none';
+      if (gifView) gifView.style.display = activeMode === 'gif' ? 'flex' : 'none';
+      if (extView) extView.style.display = activeMode === 'ext' ? 'flex' : 'none';
+
+      if (activeMode === 'sim') {
         if (!isPlaying) togglePlay();
-      });
-      tabExt.addEventListener('click', function() {
-        tabExt.classList.add('active'); tabSim.classList.remove('active');
-        simView.style.display = 'none'; extView.style.display = 'flex';
+      } else {
         if (isPlaying) togglePlay();
+      }
+    }
+
+    if (tabSim) tabSim.addEventListener('click', function() { switchVideoTab('sim'); });
+    if (tabGif) tabGif.addEventListener('click', function() { switchVideoTab('gif'); });
+    if (tabExt) tabExt.addEventListener('click', function() { switchVideoTab('ext'); });
+
+    // File input for custom user GIF / MP4
+    var gifFileInput = document.getElementById('gifFileInput');
+    var userVastuGif = document.getElementById('userVastuGif');
+    var gifFileName = document.getElementById('gifFileName');
+    var gifFallbackNotice = document.getElementById('gifFallbackNotice');
+
+    if (gifFileInput && userVastuGif) {
+      gifFileInput.addEventListener('change', function(e) {
+        var file = e.target.files && e.target.files[0];
+        if (file) {
+          var objectUrl = URL.createObjectURL(file);
+          userVastuGif.src = objectUrl;
+          userVastuGif.style.display = 'block';
+          if (gifFallbackNotice) gifFallbackNotice.style.display = 'none';
+          if (gifFileName) gifFileName.textContent = '✓ ' + file.name + ' (लाइव चल रही है)';
+          switchVideoTab('gif');
+        }
       });
     }
 
