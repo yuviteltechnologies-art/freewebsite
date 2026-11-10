@@ -8,10 +8,10 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Cinzel, Cormorant Garamond, Outfit, Playfair Display, Plus Jakarta Sans, Poppins, Space Grotesk -->
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Marcellus, Hind, Tiro Devanagari Hindi, Outfit, Playfair Display, Plus Jakarta Sans, Poppins, Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Hind:wght@400;500;600;700&family=Marcellus&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -28,6 +28,9 @@
             playfair: ['"Playfair Display"', 'serif'],
             poppins: ['"Poppins"', 'sans-serif'],
             cormorant: ['"Cormorant Garamond"', 'serif'],
+            marcellus: ['"Marcellus"', 'serif'],
+            hind: ['"Hind"', 'sans-serif'],
+            tiro: ['"Tiro Devanagari Hindi"', 'serif'],
           },
           colors: {
             store: {
@@ -380,6 +383,28 @@
       --theme-banner-grad: linear-gradient(to right, #0F172A, #1E40AF, #0F172A);
       --theme-glow: rgba(30, 64, 175, 0.2);
       --theme-font-heading: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* 16: Vastu Brahmand (Sacred Night Sky & Royal Gold - DARK) */
+    [data-theme="vastu"], [data-theme="vastu_brahmand"] {
+      --theme-bg: #0A0B1F;
+      --theme-bg-alt: #10122B;
+      --theme-header-bg: rgba(10, 11, 31, 0.96);
+      --theme-card-bg: rgba(23, 26, 58, 0.88);
+      --theme-card-border: rgba(233, 180, 76, 0.30);
+      --theme-card-hover: #E9B44C;
+      --theme-card-radius: 12px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(233, 180, 76, 0.22);
+      --theme-text-primary: #F3ECDD;
+      --theme-text-secondary: #B2AFCB;
+      --theme-accent: #E9B44C;
+      --theme-accent-light: #F08A3C;
+      --theme-btn-text: #0A0B1F;
+      --theme-title-grad: linear-gradient(135deg, #F3ECDD 0%, #E9B44C 50%, #F08A3C 100%);
+      --theme-btn-grad: linear-gradient(135deg, #E9B44C 0%, #F08A3C 100%);
+      --theme-banner-grad: linear-gradient(to right, #0A0B1F, #171A3A, #0A0B1F);
+      --theme-glow: rgba(233, 180, 76, 0.45);
+      --theme-font-heading: 'Marcellus', 'Tiro Devanagari Hindi', 'Cinzel', serif;
     }
 
     /* LEGACY ALIASES & STYLES */
@@ -2424,13 +2449,100 @@
           features: "Rapid Dissolve Septic Safe, Embossed Texture, Bulk Case Packaging, Regular Monthly Supply Option",
           is_active: "TRUE"
         }
+      ],
+      vastu: [
+        {
+          id: "vastu-1",
+          title: "घर की सम्पूर्ण वास्तु जाँच वर्कबुक (PDF · 64 पृष्ठ)",
+          category: "guides",
+          badge: "Best Seller",
+          price_original: "999",
+          price_selling: "499",
+          thumbnail: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=600&q=80",
+          description: "कमरा-दर-कमरा चेकलिस्ट, 81-पद वास्तु पुरुष मंडल और स्कोर शीट, ताकि आप पूरा घर खुद जाँच सकें।",
+          features: "64-पेज प्रिंटेबल वर्कबुक, 16-दिशा ग्रिड व्याख्या, बिना तोड़-फोड़ के सरल उपाय, लाइफटाइम डाउनलोड एक्सेस",
+          is_active: "TRUE"
+        },
+        {
+          id: "vastu-2",
+          title: "फैक्ट्री और दुकान वास्तु चेकलिस्ट व गाइड",
+          category: "commercial",
+          badge: "Industrial",
+          price_original: "1499",
+          price_selling: "799",
+          thumbnail: "https://images.unsplash.com/photo-1590402494587-44b71d7772f6?auto=format&fit=crop&w=600&q=80",
+          description: "गेट, भारी मशीनरी, कच्चा व तैयार माल, और गल्ला-तिजोरी दिशा के अनुसार रखने की प्रमाणित उद्योग गाइड।",
+          features: "इंडस्ट्रियल प्लांट लेआउट ब्लूप्रिंट, गल्ला व कैश काउंटर दिशा, स्टाफ सिटिंग अरेंजमेंट, आपातकालीन दोष निवारण",
+          is_active: "TRUE"
+        },
+        {
+          id: "vastu-3",
+          title: "दिशा कंपास शीट (A3 हाई-क्वालिटी प्रिंट शीट)",
+          category: "printables",
+          badge: "Printable",
+          price_original: "399",
+          price_selling: "199",
+          thumbnail: "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?auto=format&fit=crop&w=600&q=80",
+          description: "किसी भी घर, फ्लैट या प्लॉट के नक्शे पर रखकर सोलह क्षेत्र कुछ ही सेकंड में सटीक पहचानिए।",
+          features: "पारदर्शी A3 ओवरले डिज़ाइन, 16 दिशा-क्षेत्र मार्किंग, डिग्री व कोण विवरण, मोबाइल कंपास अनुकूल",
+          is_active: "TRUE"
+        },
+        {
+          id: "vastu-4",
+          title: "सिद्ध यंत्र वॉलपेपर पैक (12 चित्र · 4K Ultra HD)",
+          category: "digital",
+          badge: "4K Digital",
+          price_original: "599",
+          price_selling: "299",
+          thumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
+          description: "फ़ोन और डेस्कटॉप के लिए सिद्ध श्रीयंत्र, कुबेर यंत्र व वास्तु पुरुष के उच्च रिज़ॉल्यूशन पवित्र चित्र।",
+          features: "12 अल्ट्रा एचडी वॉलपेपर्स, मोबाइल व लैपटॉप स्क्रीन रेशियो, ऊर्जावान वैदिक ज्यामिति, त्वरित ईमेल डाउनलोड",
+          is_active: "TRUE"
+        },
+        {
+          id: "vastu-5",
+          title: "नक्शा पढ़ना सीखें (3 घंटे 20 मिनट मास्टरक्लास)",
+          category: "courses",
+          badge: "Video Course",
+          price_original: "2999",
+          price_selling: "1499",
+          thumbnail: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=600&q=80",
+          description: "नक्शा पढ़ना और उसके क्षेत्र चिह्नित करना, हल किए गए उदाहरणों और वास्तविक केस स्टडीज़ के साथ।",
+          features: "3+ घंटे HD वीडियो लेक्चर्स, 10 रियल-वर्ल्ड हाउस केस स्टडीज, प्रश्नोत्तरी व संशय समाधान, पूर्णता प्रमाणपत्र",
+          is_active: "TRUE"
+        },
+        {
+          id: "vastu-6",
+          title: "शुद्ध वैदिक वास्तु शांति मंत्र व विधि पुस्तिका (MP3)",
+          category: "audio",
+          badge: "Sacred Audio",
+          price_original: "699",
+          price_selling: "349",
+          thumbnail: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
+          description: "नए घर, दुकान या दफ़्तर के लिए शुद्ध वैदिक मंत्रोच्चार, साथ में विधि समझाने वाली विस्तृत ई-पुस्तिका।",
+          features: "स्टूडियो 320kbps MP3 ऑडियो, संस्कृत श्लोक व हिंदी अनुवाद, दैनिक पूजा क्रम निर्देशिका, तुरंत डाउनलोड",
+          is_active: "TRUE"
+        }
       ]
     };
 
     // ========================================================
-    // 2. THEME DEFINITIONS & PRESET CONFIGS (15 Themes + Aliases)
+    // 2. THEME DEFINITIONS & PRESET CONFIGS (15 Themes + Vastu + Aliases)
     // ========================================================
     const THEME_CONFIGS = {
+      vastu: {
+        title: "🕉️ वास्तु ब्रह्मांड (Vastu Shastra & Cosmic Grid)",
+        badge: "🕉️ प्रामाणिक वास्तु शास्त्र • खुद करें, खुद समझें",
+        heroTitle: "अपने घर का वास्तु <span class=\"text-gradient block mt-2\">अब आप खुद कीजिए</span>",
+        heroSubtitle: "कंपास, धूप और हवा जैसी नापी जा सकने वाली चीज़ों से अपने घर की दिशाएँ जाँचिए। 9x9 वास्तु पुरुष मंडल व सेल्फ-ऑडिट टूल के साथ।",
+        ctaText: "खुद जाँच शुरू करें",
+        icon: "🕉️",
+        categoryTag: "vastu",
+        mode: "dark",
+        fontHeading: "'Marcellus', 'Tiro Devanagari Hindi', 'Cinzel', serif",
+        cardRadius: "12px",
+        catalog: INDUSTRY_CATALOGS.vastu
+      },
       electronics: {
         title: "📱 Electronics & Smart Gadgets",
         badge: "⚡ High-Tech Electronics & Smart Gadgets Store",
@@ -2667,17 +2779,17 @@
         catalog: INDUSTRY_CATALOGS.health_medical
       },
       'vedic-gold': {
-        title: "🕉️ Royal Vedic Gold",
+        title: "🕉️ Royal Vedic Gold (Vastu & Spiritual)",
         badge: "🔱 Authentic Vedic Vastu & Spiritual Store",
         heroTitle: "Sacred Vedic Energy & Vastu Tools <span class=\"text-gradient block mt-2\">Energized For Abundance</span>",
         heroSubtitle: "Certified Parad Shivalingams, Bhojpatra Yantras, and pure brass Vastu remedies verified by astrologers.",
         ctaText: "Explore Spiritual Tools",
         icon: "🕉️",
-        categoryTag: "fashion",
+        categoryTag: "vastu",
         mode: "dark",
-        fontHeading: "'Cinzel', serif",
+        fontHeading: "'Marcellus', 'Tiro Devanagari Hindi', 'Cinzel', serif",
         cardRadius: "12px",
-        catalog: INDUSTRY_CATALOGS.fashion
+        catalog: INDUSTRY_CATALOGS.vastu
       },
       'minimal-light': {
         title: "🛍️ Clean Minimal Light",

@@ -1117,16 +1117,21 @@
         Chahe aap software, ebooks, courses ya digital goods bechte hon, ya traditional sarees, clothing aur boutique fashion — SheetStore Pro ke paas dono ke liye ready-made high-converting storefronts hain.
       </p>
 
-      <!-- 2 Live Demo Buttons -->
-      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+      <!-- 3 Live Demo Buttons -->
+      <div class="flex flex-wrap gap-2.5 mt-8">
         <button onclick="openDemoSelectorModal()" 
-                class="px-7 py-3.5 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-sm shadow-xl shadow-cyan-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+                class="px-5 py-3 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-xs shadow-xl shadow-cyan-500/25 transition active:scale-95 flex items-center justify-center gap-2">
           <i data-lucide="eye" class="w-4 h-4 stroke-[2.5]"></i>
-          <span>Dono Live Demos Kholein ➔</span>
+          <span>Live Store Demos ➔</span>
         </button>
         <a href="saree-demo.html" target="_blank"
-           class="px-5 py-3.5 rounded-xl bg-slate-900 border border-[#D4AF37]/50 hover:border-[#D4AF37] text-[#F5DE7A] font-poppins font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-          <span>🥻 NOOLAM Saree Studio</span>
+           class="px-4 py-3 rounded-xl bg-slate-900 border border-[#D4AF37]/50 hover:border-[#D4AF37] text-[#F5DE7A] font-poppins font-semibold text-xs flex items-center justify-center gap-1.5 transition">
+          <span>🥻 NOOLAM Saree</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </a>
+        <a href="vastu-demo.html" target="_blank"
+           class="px-4 py-3 rounded-xl bg-gradient-to-r from-[#171A3A] to-slate-900 border border-[#E9B44C]/60 hover:border-[#E9B44C] text-[#F6D58E] font-poppins font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow-lg">
+          <span>🕉️ वास्तु ब्रह्मांड</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
@@ -1772,7 +1777,7 @@
        13. DEMO SELECTOR MODAL
        ======================================================== -->
   <div id="demoSelectorModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-4xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
       <div class="absolute -top-24 -left-24 w-60 h-60 bg-cyan-600/20 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -1790,7 +1795,7 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
         
         <!-- Option 1: Digital Products Store -->
         <div class="bg-slate-950/80 rounded-2xl p-5 border border-cyan-500/40 hover:border-cyan-400 flex flex-col justify-between transition group shadow-lg">
@@ -1799,14 +1804,14 @@
               <span class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-lg">⚡</span>
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">5 Color Presets</span>
             </div>
-            <h4 class="font-poppins font-bold text-base text-white group-hover:text-cyan-400 transition">Digital Products &amp; SaaS Store</h4>
+            <h4 class="font-poppins font-bold text-base text-white group-hover:text-cyan-400 transition">Digital Products &amp; SaaS</h4>
             <p class="text-xs text-dimWhite mt-1 leading-relaxed">
               Software, Ebooks, Notion kits, AI Prompts &amp; Web Templates. Direct UPI QR + instant download link.
             </p>
           </div>
           <div class="mt-4 pt-4 border-t border-slate-800">
             <a href="demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-blue-gradient text-primary font-poppins font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
-              <span>Open Digital Store Demo ➔</span>
+              <span>Open Digital Store ➔</span>
             </a>
           </div>
         </div>
@@ -1818,14 +1823,33 @@
               <span class="w-10 h-10 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold text-lg">🥻</span>
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#F5DE7A] border border-[#D4AF37]/30 font-bold font-cinzel">Luxury Studio</span>
             </div>
-            <h4 class="font-poppins font-bold text-base text-[#F5DE7A] group-hover:text-white transition">NOOLAM Kanchipuram Saree</h4>
+            <h4 class="font-poppins font-bold text-base text-[#F5DE7A] group-hover:text-white transition">NOOLAM Saree Studio</h4>
             <p class="text-xs text-[#E5D5B8] mt-1 leading-relaxed">
-              Ethnic wear, 6 Moods archive, "Try the Look" bundle with 10% off, real clothes rail ("The Rack"), &amp; 3D tilt silk arc.
+              Ethnic wear, 6 Moods archive, "Try the Look" bundle with 10% off, real clothes rail ("The Rack"), &amp; 3D silk arc.
             </p>
           </div>
           <div class="mt-4 pt-4 border-t border-white/10">
             <a href="saree-demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5DE7A] hover:from-[#E5C158] hover:to-[#FFF0A0] text-[#200407] font-poppins font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
-              <span>Open Saree Showcase Studio ➔</span>
+              <span>Open Saree Studio ➔</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Option 3: वास्तु ब्रह्मांड (Vastu Brahmand) -->
+        <div class="bg-gradient-to-b from-[#171A3A] to-[#0A0B1F] rounded-2xl p-5 border border-[#E9B44C]/50 hover:border-[#E9B44C] flex flex-col justify-between transition group shadow-lg">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-10 h-10 rounded-xl bg-[#E9B44C]/20 text-[#E9B44C] flex items-center justify-center font-bold text-lg">🕉️</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#E9B44C]/15 text-[#F6D58E] border border-[#E9B44C]/30 font-bold">Vedic Hub</span>
+            </div>
+            <h4 class="font-poppins font-bold text-base text-[#F6D58E] group-hover:text-white transition">वास्तु ब्रह्मांड (Vastu)</h4>
+            <p class="text-xs text-[#B2AFCB] mt-1 leading-relaxed">
+              9x9 वास्तु पुरुष मंडल, 10-मिनट होम सेल्फ-ऑडिट स्कोर, वास्तु व विज्ञान और डिजिटल गाइड्स शॉप।
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-white/10">
+            <a href="vastu-demo.html" target="_blank" onclick="closeDemoSelectorModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#E9B44C] to-[#F08A3C] hover:from-[#F6D58E] hover:to-[#FFA050] text-[#0A0B1F] font-poppins font-bold text-xs flex items-center justify-center gap-1.5 transition shadow">
+              <span>Open Vastu Brahmand ➔</span>
             </a>
           </div>
         </div>
@@ -1833,7 +1857,7 @@
       </div>
 
       <div class="mt-5 text-center text-[11px] text-dimWhite relative z-10">
-        <span>Aap dono templates ko apne hisab se Google Sheet se customize kar sakte hain.</span>
+        <span>Aap in sabhi templates ko Google Sheet aur Android Admin App se live manage kar sakte hain.</span>
       </div>
     </div>
   </div>

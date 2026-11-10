@@ -48,15 +48,15 @@ object NicheCatalog {
         BusinessNiche(
             id = "vastu",
             emoji = "🕉️",
-            title = "Vastu, Astrology & Spiritual",
-            subtitle = "Kundli analysis, Vastu Shastra, gemstones, rudraksha & spiritual remedies",
-            recommendedThemeId = "vedic-gold",
-            recommendedThemeName = "Royal Vedic Gold",
-            features = listOf("Consultation Booking", "Vedic Remedies Catalog", "WhatsApp Kundli Sharing", "Sacred Temple Aesthetic"),
-            defaultHeroTitle = "Prachin Vedic Vastu Shastra & Jyotish Paramarsh",
-            defaultHeroSubtitle = "Apne ghar, aawas aur vyapar me sakaratmak urja, sukh aur samriddhi sthapit karein.",
-            defaultTagline = "Certified Vedic Vastu & Astrological Remedies",
-            defaultBadge = "🕉️ PRAN PRATISHTHIT & CERTIFIED REMEDIES"
+            title = "वास्तु ब्रह्मांड (Vastu & Spiritual)",
+            subtitle = "9x9 Mandala Grid, 10-Min Home Audit Score, Vastu Shastra & Remedies",
+            recommendedThemeId = "vastu_brahmand",
+            recommendedThemeName = "वास्तु ब्रह्मांड (Vastu Brahmand)",
+            features = listOf("9x9 Purusha Mandala", "10-Min Home Audit Score", "Sunlight & Airflow Science", "WhatsApp Consultations"),
+            defaultHeroTitle = "अपने घर का वास्तु, अब आप खुद कीजिए",
+            defaultHeroSubtitle = "कंपास, धूप और हवा जैसी नापी जा सकने वाली चीज़ों से अपने घर की दिशाएँ जाँचिए। 9x9 वास्तु पुरुष मंडल व सेल्फ-ऑडिट टूल।",
+            defaultTagline = "वैज्ञानिक व प्रामाणिक वैदिक वास्तु शास्त्र",
+            defaultBadge = "🕉️ प्रामाणिक वास्तु शास्त्र • खुद करें, खुद समझें"
         ),
         BusinessNiche(
             id = "linktree",

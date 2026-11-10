@@ -2010,6 +2010,17 @@ class MainActivity : Activity() {
             badge = "Bulk Order & Trade",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#3B82F6"
+        ),
+        WebsiteCategory(
+            id = "vastu",
+            icon = "🕉️",
+            title = "वास्तु ब्रह्मांड (Vastu Shastra)",
+            subtitle = "Self-Audit, 9x9 Mandala & Cosmic Grid Hub",
+            description = "Scientific and traditional Vastu Shastra with interactive 9x9 mandala grid, 10-minute home self-audit score, digital guides shop and WhatsApp consultations.",
+            bullets = listOf("9x9 Purusha Mandala", "10-Min Home Audit Score", "Sunlight & Airflow Science", "Digital Guides & Yantras"),
+            badge = "Vedic Hub",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/vastu-demo.html",
+            accentColor = "#E9B44C"
         )
     )
 
@@ -2024,11 +2035,19 @@ class MainActivity : Activity() {
 
     private val mainCategoryCatalog = listOf(
         MainCategoryItem(
+            id = "vastu",
+            icon = "🕉️",
+            title = "Vastu & Spiritual Hub",
+            subCountText = "4 Themes",
+            badgeText = "Vedic Vastu",
+            accentColor = "#E9B44C"
+        ),
+        MainCategoryItem(
             id = "ecommerce",
             icon = "🛒",
             title = "E-Commerce Online Store",
-            subCountText = "15 Themes",
-            badgeText = "15 Themes",
+            subCountText = "16 Themes",
+            badgeText = "16 Themes",
             accentColor = "#00F0FF"
         ),
         MainCategoryItem(
@@ -2363,10 +2382,58 @@ class MainActivity : Activity() {
         )
     )
 
+    private val vastuThemes = listOf(
+        WebsiteCategory(
+            id = "vastu_brahmand",
+            icon = "🕉️",
+            title = "वास्तु ब्रह्मांड (Vastu Brahmand)",
+            subtitle = "Self-Audit, 9x9 Mandala & Cosmic Grid Explorer",
+            description = "Scientific and traditional Vastu Shastra with interactive 9x9 mandala grid, 10-minute home self-audit score, digital guides shop and WhatsApp consultations.",
+            bullets = listOf("9x9 Purusha Mandala", "10-Min Home Audit Score", "Sunlight & Airflow Science", "Digital Guides & Yantras"),
+            badge = "Vedic Hub",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/vastu-demo.html",
+            accentColor = "#E9B44C"
+        ),
+        WebsiteCategory(
+            id = "vastu_consultation",
+            icon = "📜",
+            title = "Vastu Expert Consultation",
+            subtitle = "Home, Factory, Office & Plot Readings",
+            description = "Personalized map review for flats, factories, shops and upcoming plots with zero structural demolition remedies.",
+            bullets = listOf("Room-by-Room Report", "Zero-Demolition Fixes", "WhatsApp Drawing Review", "Commercial & Residential"),
+            badge = "Expert Reading",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/vastu-demo.html#expert",
+            accentColor = "#F08A3C"
+        ),
+        WebsiteCategory(
+            id = "vastu_shop",
+            icon = "🔱",
+            title = "Vedic Yantras & Sacred Remedies",
+            subtitle = "Bhojpatra Yantras, Pyramids, Shivalingams & Brass Rods",
+            description = "Prana-pratishthit spiritual tools, energised gemstones and brass Vastu energy rods with instant order on WhatsApp.",
+            bullets = listOf("Certified Parad Items", "Energised Brass Rods", "Direct UPI Payment", "1-Tap WhatsApp Order"),
+            badge = "Vedic Tools",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html?theme=vastu",
+            accentColor = "#F6D58E"
+        ),
+        WebsiteCategory(
+            id = "vastu_audit",
+            icon = "🧭",
+            title = "10-Minute Home Vastu Score Audit",
+            subtitle = "Interactive Score Calculator & Instant Advice",
+            description = "Audit tool assessing main entrance, kitchen, master bedroom, puja corner and toilet with immediate scoring and advice.",
+            bullets = listOf("Instant Score out of 12", "Color Gradient Meter", "Practical Room Fixes", "Compass Direction Guide"),
+            badge = "Self-Audit",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/vastu-demo.html#audit",
+            accentColor = "#6FD3A0"
+        )
+    )
+
     private var selectedMainCategoryForSubTab: String? = null
 
     private fun getSubThemesForCategory(catId: String): List<WebsiteCategory> {
         return when (catId.lowercase()) {
+            "vastu" -> vastuThemes
             "ecommerce" -> ecommerceThemes
             "portfolio" -> portfolioThemes
             "linktree" -> linktreeThemes
@@ -2379,7 +2446,7 @@ class MainActivity : Activity() {
     }
 
     private val websiteCategories: List<WebsiteCategory>
-        get() = ecommerceThemes + portfolioThemes + linktreeThemes + digitalThemes + blogThemes + shopThemes + showroomThemes
+        get() = ecommerceThemes + vastuThemes + portfolioThemes + linktreeThemes + digitalThemes + blogThemes + shopThemes + showroomThemes
 
     private fun applyWebsiteCategory(category: WebsiteCategory) {
         val url = getSheetUrl()
@@ -2391,7 +2458,8 @@ class MainActivity : Activity() {
         Toast.makeText(this, "Applying '${category.title}' to Live Website... ⏳", Toast.LENGTH_SHORT).show()
 
         val mainCatId = selectedMainCategoryForSubTab
-            ?: if (ecommerceThemes.any { it.id == category.id }) "ecommerce"
+            ?: if (vastuThemes.any { it.id == category.id } || category.id == "vastu") "vastu"
+            else if (ecommerceThemes.any { it.id == category.id }) "ecommerce"
             else if (portfolioThemes.any { it.id == category.id }) "portfolio"
             else if (linktreeThemes.any { it.id == category.id }) "linktree"
             else if (digitalThemes.any { it.id == category.id }) "digital_product"

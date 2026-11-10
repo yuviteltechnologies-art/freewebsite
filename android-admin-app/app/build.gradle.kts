@@ -11,8 +11,8 @@ android {
         applicationId = "com.sheetstore.admin"
         minSdk = 24
         targetSdk = 34
-        versionCode = 21
-        versionName = "1.2.9"
+        versionCode = 22
+        versionName = "1.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>वास्तु ब्रह्मांड | Vastu Brahmand - घर का वास्तु, अब आप खुद कीजिए</title>
+  <meta name="description" content="वैज्ञानिक व पारंपरिक वास्तु शास्त्र: 9x9 वास्तु पुरुष मंडल, 10-मिनट होम वास्तु स्कोर कैलकुलेटर, डिजिटल गाइड्स व विशेषज्ञ परामर्श। 100% Google Sheet powered.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Marcellus&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap">
+
+  <style>
+    /* ========================================================
+       VASTU BRAHMAND - SACRED VEDIC COSMIC DESIGN SYSTEM
+       ======================================================== */
+    :root {
+      --night: #0A0B1F;
+      --deep: #10122B;
+      --raise: #171A3A;
+      --line: rgba(236, 214, 170, 0.16);
+      --ink: #F3ECDD;
+      --muted: #B2AFCB;
+      --gold: #E9B44C;
+      --gold-light: #F6D58E;
+      --saffron: #F08A3C;
+      --nebula: #4B3FA0;
+      --ok: #6FD3A0;
+      --bad: #F0715A;
+      --font-display: 'Marcellus', 'Tiro Devanagari Hindi', Georgia, serif;
+      --font-body: 'Hind', 'Segoe UI', system-ui, sans-serif;
+      --font-deva: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+    body {
+      margin: 0;
+      background: var(--night);
+      color: var(--ink);
+      font: 400 17px/1.75 var(--font-body);
+      padding-block: 0;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+      z-index: 60; background: var(--night);
+    }
+    .nebula {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(60% 50% at 82% 8%, rgba(75, 63, 160, .38), transparent 70%),
+        radial-gradient(45% 40% at 8% 62%, rgba(240, 138, 60, .10), transparent 70%),
+        radial-gradient(70% 55% at 50% 112%, rgba(75, 63, 160, .30), transparent 70%);
+    }
+    /* Milky Way: tilted galactic band with warm core, blue/violet/pink haze and dust lanes */
+    .milkyway {
+      position: fixed; left: 50%; top: 50%; width: 190vmax; height: 50vmax; z-index: 0; pointer-events: none; opacity: .85;
+      transform: translate(-50%, -50%) rotate(-28deg);
+      background:
+        radial-gradient(ellipse 20% 38% at 63% 50%, rgba(255, 200, 130, .40), transparent 72%),
+        radial-gradient(ellipse 30% 34% at 41% 50%, rgba(240, 120, 175, .24), transparent 72%),
+        radial-gradient(ellipse 46% 40% at 56% 50%, rgba(110, 135, 255, .30), transparent 72%),
+        radial-gradient(ellipse 34% 26% at 24% 52%, rgba(70, 205, 225, .16), transparent 72%),
+        radial-gradient(ellipse 72% 48% at 50% 50%, rgba(105, 75, 205, .26), transparent 76%);
+      filter: blur(22px);
+      -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 28%, #000 72%, transparent 96%);
+      mask-image: linear-gradient(90deg, transparent 4%, #000 28%, #000 72%, transparent 96%);
+      animation: mwdrift 120s ease-in-out infinite alternate;
+    }
+    .milkyway i { position: absolute; display: block; border-radius: 50%; background: rgba(10, 11, 31, .62); filter: blur(14px); }
+    .milkyway .l1 { left: 32%; top: 41%; width: 30%; height: 7%; transform: rotate(4deg); }
+    .milkyway .l2 { left: 55%; top: 54%; width: 24%; height: 6%; transform: rotate(-6deg); }
+    .milkyway .l3 { left: 14%; top: 50%; width: 18%; height: 5%; transform: rotate(8deg); }
+    @keyframes mwdrift {
+      from { transform: translate(-50%, -50%) rotate(-28deg) translateX(-2%); }
+      to { transform: translate(-50%, -50%) rotate(-28deg) translateX(2%); }
+    }
+    @media (max-width: 700px) { .milkyway { opacity: .7; width: 240vmax; height: 70vmax; } }
+    #stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    main, header.nav, footer { position: relative; z-index: 1; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: 0; }
+    p { margin: 0; }
+
+    /* Top Demo Switcher Ribbon */
+    .top-ribbon {
+      background: linear-gradient(90deg, rgba(233, 180, 76, 0.15), rgba(75, 63, 160, 0.25), rgba(233, 180, 76, 0.15));
+      border-bottom: 1px solid var(--line);
+      padding: 6px 16px;
+      font-size: 0.84rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--gold-light);
+      position: relative;
+      z-index: 55;
+    }
+    .top-ribbon a {
+      color: #FFF;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    .top-ribbon a:hover {
+      color: var(--gold);
+    }
+
+    /* ---------- nav ---------- */
+    header.nav {
+      position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+      margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+      padding-inline: max(16px, env(safe-area-inset-left, 0px));
+      background: rgba(10, 11, 31, .88); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-in { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; gap: 12px 28px; flex-wrap: wrap; padding-block: 10px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-size: 1.35rem; margin-right: auto; color: var(--gold-light); }
+    .brand svg { width: 30px; height: 30px; }
+    .links { display: flex; gap: 22px; font-size: .98rem; color: var(--muted); }
+    .links a { text-decoration: none; padding-block: 4px; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+    .links a:hover { color: var(--ink); border-color: var(--gold); }
+    .cart-btn {
+      display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--ink);
+      border: 1px solid var(--line); padding: 7px 14px; font: 500 .95rem var(--font-body); cursor: pointer; border-radius: 4px;
+      transition: border-color .2s, background .2s;
+    }
+    .cart-btn:hover { border-color: var(--gold); background: rgba(233, 180, 76, .08); }
+    .cart-btn .count { min-width: 22px; height: 22px; padding-inline: 6px; display: inline-grid; place-items: center; background: var(--gold); color: var(--night); font-size: .78rem; font-weight: 700; border-radius: 11px; line-height: 1; }
+    @media (max-width: 760px) {
+      .links { order: 3; width: 100%; overflow-x: auto; gap: 20px; padding-bottom: 2px; }
+      .links a { white-space: nowrap; }
+    }
+
+    /* ---------- shared bits ---------- */
+    .eyebrow { font-size: .95rem; font-weight: 600; letter-spacing: .03em; color: var(--gold); }
+    .eyebrow .deva { font-family: var(--font-deva); font-size: 1.15rem; margin-right: 10px; }
+    section { padding-block: 84px 20px; }
+    .sec-head { display: grid; gap: 14px; max-width: 64ch; margin-bottom: 40px; }
+    .sec-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); line-height: 1.3; }
+    .lead { color: var(--muted); font-size: 1.08rem; max-width: 60ch; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 4px;
+      font: 600 1rem var(--font-body); text-decoration: none; cursor: pointer; border: 1px solid var(--gold);
+      transition: transform .2s, background .2s, color .2s, box-shadow .2s;
+    }
+    .btn.primary { background: var(--gold); color: var(--night); box-shadow: 0 0 0 0 rgba(233, 180, 76, .5); }
+    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -8px rgba(233, 180, 76, .55); background: var(--gold-light); }
+    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn.ghost:hover { border-color: var(--gold); background: rgba(233, 180, 76, .08); }
+    [data-reveal] { transition: opacity .8s ease, transform .8s ease; }
+    [data-reveal].pre { opacity: .35; transform: translateY(22px); }
+
+    /* ---------- hero ---------- */
+    .hero { padding-block: 56px 36px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
+    .hero > * { min-width: 0; }
+    .hero h1 { font-size: clamp(2.5rem, 5.6vw, 4.5rem); line-height: 1.22; margin-block: 18px 22px; }
+    .hero h1 em { font-style: normal; color: var(--gold); text-shadow: 0 0 25px rgba(233, 180, 76, 0.4); }
+    .hero .lead { font-size: 1.14rem; margin-bottom: 32px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 44px; }
+    .facts { display: flex; flex-wrap: wrap; gap: 14px 40px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .facts div { display: grid; gap: 2px; }
+    .facts b { font-family: var(--font-display); font-weight: 400; font-size: 2.2rem; color: var(--gold); line-height: 1.1; }
+    .facts span { font-size: .92rem; color: var(--muted); }
+    .mandala-wrap { position: relative; justify-self: center; width: 100%; max-width: 560px; }
+    .mandala-wrap::before {
+      content: ""; position: absolute; inset: 6%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(233, 180, 76, .26), rgba(75, 63, 160, .20) 45%, transparent 70%);
+      animation: breathe 7s ease-in-out infinite;
+    }
+    .mandala-wrap svg { position: relative; display: block; width: 100%; height: auto; max-width: 100%; }
+    @keyframes breathe { 0%, 100% { opacity: .55; transform: scale(.96); } 50% { opacity: 1; transform: scale(1.04); } }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 36px; }
+      .mandala-wrap { order: -1; max-width: 380px; }
+    }
+
+    /* mandala svg */
+    .ln { fill: none; stroke: var(--gold); stroke-width: 1; opacity: .55; }
+    .ln.faint { opacity: .25; }
+    .petal { fill: rgba(233, 180, 76, .04); opacity: .5; }
+    .spin { transform-origin: 300px 300px; animation: rot 150s linear infinite; }
+    .spin.rev { animation-duration: 210s; animation-direction: reverse; }
+    @keyframes rot { to { transform: rotate(360deg); } }
+    .sq { fill: rgba(10, 11, 31, .6); stroke: var(--gold); stroke-width: 1.6; }
+    .cell { stroke: var(--gold); stroke-width: .6; opacity: .35; }
+    .cell.macro { stroke-width: 1.4; opacity: .8; }
+    .brahma { fill: rgba(233, 180, 76, .22); animation: glow 4.5s ease-in-out infinite; }
+    @keyframes glow { 0%, 100% { fill: rgba(233, 180, 76, .14); } 50% { fill: rgba(233, 180, 76, .36); } }
+    .zone { fill: transparent; stroke: transparent; stroke-width: 2; cursor: pointer; transition: fill .2s, stroke .2s; }
+    .zone:hover, .zone.on { fill: rgba(233, 180, 76, .18); stroke: var(--gold); }
+    .zone:focus-visible { outline: none; stroke: var(--ink); }
+    .lab { fill: var(--ink); font: 600 15px var(--font-body); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .lab.om { font: 400 32px var(--font-deva); fill: var(--gold); }
+
+    /* ---------- marquee ---------- */
+    .marquee { margin-block: 56px 0; border-block: 1px solid var(--line); overflow: hidden; padding-block: 14px; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
+    .marquee-track { display: flex; width: max-content; animation: slide 48s linear infinite; }
+    .marquee-track span { font-family: var(--font-deva); font-size: 1.4rem; color: var(--muted); padding-inline: 22px; white-space: nowrap; }
+    .marquee-track span::after { content: "\25C6"; color: var(--gold); font-size: .6em; margin-left: 44px; vertical-align: middle; }
+    @keyframes slide { to { transform: translateX(-50%); } }
+
+    /* ---------- steps ---------- */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .step { padding: 28px 26px 28px 0; position: relative; min-width: 0; }
+    .step::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--line); }
+    .step::after { content: ""; position: absolute; top: -4px; left: 0; width: 9px; height: 9px; background: var(--gold); transform: rotate(45deg); }
+    .step small { display: block; margin-top: 16px; font-family: var(--font-deva); font-size: 1.4rem; color: var(--gold); line-height: 1.2; }
+    .step h3 { font-size: 1.35rem; margin-block: 6px 10px; line-height: 1.35; }
+    .step p { color: var(--muted); font-size: 1rem; }
+    @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+    /* ---------- self-audit tool ---------- */
+    .audit { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 40px; align-items: start; }
+    .fields { display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .field { display: grid; grid-template-columns: 1fr minmax(150px, 210px); gap: 6px 22px; align-items: center; padding-block: 18px; border-bottom: 1px solid var(--line); }
+    .field > * { min-width: 0; }
+    .field label { display: grid; gap: 2px; font-size: 1.05rem; color: var(--ink); }
+    .field label small { color: var(--muted); font-size: .9rem; line-height: 1.5; }
+    select, input, textarea {
+      width: 100%; background: rgba(10, 11, 31, .85); border: 1px solid var(--line); color: var(--ink); padding: 11px 12px; font: 400 1rem var(--font-body);
+      border-radius: 4px;
+    }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+    .sample { font-size: .92rem; color: var(--gold); margin-bottom: 16px; }
+    .result { position: sticky; top: 110px; border: 1px solid var(--line); background: rgba(23, 26, 58, .75); backdrop-filter: blur(8px); padding: 28px; display: grid; gap: 18px; border-radius: 6px; }
+    .score { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .score b { font-family: var(--font-display); font-weight: 400; font-size: 3.2rem; color: var(--gold); line-height: 1; font-variant-numeric: tabular-nums; }
+    .score span { color: var(--muted); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+    .verdict { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.4; color: var(--gold-light); }
+    .meter { height: 8px; background: rgba(255, 255, 255, .08); overflow: hidden; border-radius: 4px; }
+    .meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--bad), var(--gold), var(--ok)); background-size: 200px 100%; transition: width .6s ease; }
+    .rlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .rlist li { padding-block: 14px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
+    .rlist .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .rlist .nm { font-weight: 500; font-size: 1.05rem; }
+    .rlist .tip { color: var(--muted); font-size: .96rem; line-height: 1.6; }
+    .pill { font-size: .82rem; font-weight: 600; padding: 2px 12px; border-radius: 12px; border: 1px solid currentColor; white-space: nowrap; }
+    .pill.s2 { color: var(--ok); }
+    .pill.s1 { color: var(--gold); }
+    .pill.s0 { color: var(--bad); }
+    .fine { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+    @media (max-width: 900px) { .audit { grid-template-columns: 1fr; } .result { position: static; } }
+    @media (max-width: 520px) { .field { grid-template-columns: 1fr; } }
+
+    /* ---------- science strip ---------- */
+    .sci { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+    .sci article { padding: 28px 28px 28px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+    .sci article + article { padding-left: 28px; border-left: 1px solid var(--line); }
+    .sci h3 { font-size: 1.45rem; margin-block: 6px 12px; line-height: 1.35; color: var(--gold-light); }
+    .sci .tag { display: block; }
+    .sci p { color: var(--muted); }
+    .sci p + p { margin-top: 10px; }
+    .sci b { color: var(--ink); font-weight: 500; }
+    @media (max-width: 860px) {
+      .sci { grid-template-columns: 1fr; }
+      .sci article, .sci article + article { padding: 24px 0; border-left: 0; }
+    }
+    .tag { font-size: .9rem; color: var(--saffron); font-weight: 600; }
+
+    /* ---------- grid explorer ---------- */
+    .explorer { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 44px; align-items: center; }
+    .explorer .mandala-wrap { max-width: 600px; }
+    .panel { border: 1px solid var(--line); background: rgba(23, 26, 58, .7); backdrop-filter: blur(8px); padding: 30px; display: grid; gap: 18px; border-radius: 6px; }
+    .panel h3 { font-size: 2.3rem; line-height: 1.25; color: var(--gold-light); }
+    .panel .sk { font-family: var(--font-deva); color: var(--gold); font-size: 1.15rem; }
+    .panel dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 22px; margin: 0; padding-block: 16px; border-block: 1px solid var(--line); }
+    .panel dt { font-size: .92rem; color: var(--muted); padding-top: 1px; }
+    .panel dd { margin: 0; font-weight: 500; color: #FFF; }
+    .panel .tip { color: var(--ink); }
+    .note { font-size: .88rem; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+    .panel.swap { animation: swap .45s ease; }
+    @keyframes swap { from { opacity: .3; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 900px) { .explorer { grid-template-columns: 1fr; gap: 28px; } .panel { padding: 22px; } }
+
+    /* ---------- shop ---------- */
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .filters button {
+      background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 6px 18px; font: 500 .95rem var(--font-body);
+      cursor: pointer; border-radius: 4px; transition: all .2s;
+    }
+    .filters button:hover { color: var(--ink); border-color: var(--gold); }
+    .filters button[aria-pressed="true"] { background: var(--gold); color: var(--night); border-color: var(--gold); font-weight: 700; }
+    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+    .card { background: var(--raise); border: 1px solid var(--line); display: flex; flex-direction: column; min-width: 0; border-radius: 6px; overflow: hidden; transition: transform .3s, border-color .3s, box-shadow .3s; }
+    .card:hover { transform: translateY(-5px); border-color: rgba(233, 180, 76, .6); box-shadow: 0 18px 40px -20px rgba(233, 180, 76, .35); }
+    .cover { aspect-ratio: 4 / 3; max-width: 100%; display: block; overflow: hidden; border-bottom: 1px solid var(--line); position: relative; }
+    .cover svg { width: 100%; height: 100%; display: block; }
+    .cover svg .sp { transform-origin: 100px 75px; animation: rot 90s linear infinite; }
+    .c0 { background: linear-gradient(140deg, #1E1B4E, #0E1030); }
+    .c1 { background: linear-gradient(140deg, #3A1D3A, #120D26); }
+    .c2 { background: linear-gradient(140deg, #123A48, #0B1228); }
+    .c3 { background: linear-gradient(140deg, #4B2A18, #160F22); }
+    .c4 { background: linear-gradient(140deg, #2B2260, #0B0E2A); }
+    .c5 { background: linear-gradient(140deg, #14403A, #0C1226); }
+    .card .body { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .card .meta { font-size: .88rem; color: var(--saffron); font-weight: 600; }
+    .card h3 { font-size: 1.3rem; line-height: 1.45; color: var(--gold-light); }
+    .card p { color: var(--muted); font-size: .98rem; flex: 1; line-height: 1.65; }
+    .buy { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .price { font-family: var(--font-display); font-size: 1.5rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+    .add { background: transparent; color: var(--ink); border: 1px solid var(--gold); padding: 7px 16px; font: 600 .95rem var(--font-body); cursor: pointer; border-radius: 4px; transition: all .2s; }
+    .add:hover { background: var(--gold); color: var(--night); }
+    .add.in { background: rgba(233, 180, 76, .18); color: var(--gold-light); }
+
+    /* cart drawer */
+    .scrim { position: fixed; inset: 0; background: rgba(5, 6, 18, .7); z-index: 70; backdrop-filter: blur(4px); }
+    #drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%); z-index: 80; background: var(--deep); border-left: 1px solid var(--line);
+      display: flex; flex-direction: column; padding: calc(22px + env(safe-area-inset-top, 0px)) calc(22px + env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) 22px;
+      transform: translateX(100%); visibility: hidden; transition: transform .35s ease, visibility 0s linear .35s;
+    }
+    #drawer.open { transform: none; visibility: visible; transition: transform .35s ease; }
+    #drawer header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    #drawer h3 { font-size: 1.5rem; color: var(--gold-light); }
+    .x { background: none; border: 1px solid var(--line); color: var(--ink); width: 36px; height: 36px; cursor: pointer; font-size: 1.2rem; border-radius: 4px; }
+    .x:hover { border-color: var(--gold); color: var(--gold); }
+    #items { list-style: none; margin: 0; padding: 8px 0; flex: 1; overflow-y: auto; }
+    #items li { display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+    #items li b { font-weight: 500; color: #FFF; }
+    #items li small { color: var(--muted); }
+    #items li .rm { grid-column: 2; grid-row: 1 / span 2; align-self: center; background: none; border: 0; color: var(--bad); cursor: pointer; font: 500 .9rem var(--font-body); text-decoration: underline; }
+    #items li .rm:hover { color: #FFA39E; }
+    .empty { color: var(--muted); padding-block: 28px; }
+    .total { display: flex; justify-content: space-between; align-items: baseline; padding-block: 16px 14px; font-size: 1.05rem; }
+    .total b { font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--gold); font-variant-numeric: tabular-nums; }
+    #drawer .btn { width: 100%; justify-content: center; }
+    #drawer .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+    #co-note { font-size: .92rem; color: var(--muted); margin-top: 12px; min-height: 1.6em; text-align: center; }
+
+    /* ---------- expert help (services) ---------- */
+    .rows { border-top: 1px solid var(--line); }
+    .row { display: grid; grid-template-columns: .8fr 1.2fr; gap: 14px 48px; padding-block: 30px; border-bottom: 1px solid var(--line); position: relative; transition: background .3s; }
+    .row > * { min-width: 0; }
+    .row::before { content: ""; position: absolute; left: 0; top: -1px; height: 1px; width: 0; background: var(--gold); transition: width .5s ease; }
+    .row:hover::before { width: 100%; }
+    .row:hover { background: linear-gradient(90deg, rgba(233, 180, 76, .06), transparent 60%); }
+    .row h3 { font-size: 1.65rem; line-height: 1.35; margin-top: 4px; color: var(--gold-light); }
+    .row p { color: var(--muted); max-width: 60ch; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .chips span { font-size: .92rem; padding: 2px 12px; border: 1px solid var(--line); color: var(--ink); border-radius: 4px; background: rgba(10, 11, 31, 0.4); }
+    @media (max-width: 760px) { .row { grid-template-columns: 1fr; } }
+
+    /* ---------- faq ---------- */
+    .faq { border-top: 1px solid var(--line); max-width: 820px; }
+    .faq details { border-bottom: 1px solid var(--line); }
+    .faq summary { list-style: none; cursor: pointer; padding-block: 20px; font-family: var(--font-display); font-size: 1.3rem; line-height: 1.5; display: flex; justify-content: space-between; gap: 20px; align-items: center; color: var(--gold-light); }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--gold); font-size: 1.6rem; line-height: 1; transition: transform .3s; flex: none; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { color: var(--muted); padding-bottom: 22px; max-width: 66ch; }
+
+    /* ---------- contact ---------- */
+    .contact { position: relative; margin-top: 70px; border: 1px solid var(--line); background: linear-gradient(160deg, rgba(75, 63, 160, .26), rgba(10, 11, 31, .8)); padding: clamp(28px, 5vw, 64px); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-radius: 8px; }
+    .contact > * { min-width: 0; position: relative; }
+    .contact .ghost-deva { position: absolute; right: -2%; bottom: -14%; font-family: var(--font-deva); font-size: clamp(9rem, 22vw, 20rem); line-height: 1; color: rgba(233, 180, 76, .07); pointer-events: none; user-select: none; }
+    .contact h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); line-height: 1.3; margin-block: 14px 16px; color: var(--gold-light); }
+    form { display: grid; gap: 14px; }
+    form label { display: grid; gap: 6px; font-size: .95rem; color: var(--muted); }
+    textarea { min-height: 96px; resize: vertical; }
+    #form-note { font-size: .98rem; color: var(--gold); min-height: 1.6em; }
+    @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+
+    /* ---------- footer ---------- */
+    footer { margin-top: 90px; padding-block: 36px max(40px, env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; color: var(--muted); font-size: .96rem; }
+    footer .fine { max-width: 64ch; }
+    footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+    footer a { text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .spin, .marquee-track, .brahma, .mandala-wrap::before, .cover svg .sp, .panel.swap, .milkyway { animation: none !important; }
+      [data-reveal], .card, .btn, .meter i { transition: none !important; }
+      [data-reveal].pre { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top Navigation Ribbon -->
+<div class="top-ribbon">
+  <div>
+    <span>🕉️ <strong>वास्तु ब्रह्मांड</strong> • Live Interactive Vastu Shastra Storefront &amp; Audit Tool</span>
+  </div>
+  <div style="display:flex; gap: 14px;">
+    <a href="demos.html">← All Demos</a>
+    <a href="demo.html?theme=electronics">Electronics Demo →</a>
+  </div>
+</div>
+
+<div class="nebula" aria-hidden="true"></div>
+<div class="milkyway" aria-hidden="true"><i class="l1"></i><i class="l2"></i><i class="l3"></i></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top" aria-label="वास्तु ब्रह्मांड, मुखपृष्ठ">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#E9B44C" stroke-width="1.4"/><rect x="9" y="9" width="22" height="22" fill="none" stroke="#E9B44C" stroke-width="1.4"/><rect x="15" y="15" width="10" height="10" fill="#E9B44C"/></svg>
+      वास्तु ब्रह्मांड
+    </a>
+    <nav class="links" aria-label="भाग">
+      <a href="#process">तरीका</a>
+      <a href="#audit">खुद जाँचें</a>
+      <a href="#science">वास्तु व विज्ञान</a>
+      <a href="#grid">वास्तु ग्रिड</a>
+      <a href="#shop">डिजिटल शॉप</a>
+      <a href="#expert">विशेषज्ञ</a>
+      <a href="#faq">प्रश्न</a>
+      <a href="#contact">परामर्श</a>
+    </nav>
+    <button class="cart-btn" id="open-cart" type="button" aria-haspopup="dialog">कार्ट <span class="count" id="cart-count">0</span></button>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+
+  <!-- SECTION: hero -->
+  <div class="hero">
+    <div>
+      <p class="eyebrow"><span class="deva">वास्तु शास्त्र</span>खुद करें, खुद समझें</p>
+      <h1>अपने घर का वास्तु, अब आप <em>खुद</em> कीजिए।</h1>
+      <p class="lead">कंपास, धूप और हवा जैसी नापी जा सकने वाली चीज़ों से अपने घर की दिशाएँ जाँचिए। हर कदम सरल हिंदी में समझाया गया है, ताकि आप अंदाज़े पर नहीं, अपनी नाप पर भरोसा करें।</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#audit">खुद जाँच शुरू करें</a>
+        <a class="btn ghost" href="#shop">डिजिटल गाइड देखें</a>
+      </div>
+      <div class="facts">
+        <div><b>81</b><span>मंडल के पद</span></div>
+        <div><b>45</b><span>उस पर स्थित देवता</span></div>
+        <div><b>16</b><span>दिशा-क्षेत्र</span></div>
+      </div>
+    </div>
+    <div class="mandala-wrap" id="hero-mandala"></div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+
+  <!-- SECTION: process (DIY steps) -->
+  <section id="process">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">तरीका</p>
+      <h2>चार कदम में अपने घर की जाँच।</h2>
+      <p class="lead">न कोई महँगा उपकरण, न कोई जटिल गणित। एक कंपास, ग्राफ़ पेपर और थोड़ा समय काफ़ी है।</p>
+    </div>
+    <div class="steps" data-reveal>
+      <div class="step"><small>१</small><h3>कंपास से उत्तर निकालें</h3><p>घर के बीच में खड़े होकर उत्तर देखें। मोबाइल का कंपास ऐप चलेगा, पर उसे लोहे और बिजली के उपकरणों से दूर रखें।</p></div>
+      <div class="step"><small>२</small><h3>सीधा नक्शा बनाएँ</h3><p>ग्राफ़ पेपर पर घर का मोटा नक्शा बनाएँ और उत्तर को ऊपर रखें। सटीक माप ज़रूरी नहीं, कमरों की जगह सही हो।</p></div>
+      <div class="step"><small>३</small><h3>नौ हिस्सों में बाँटें</h3><p>नक्शे को ३ &times; ३ बराबर हिस्सों में बाँटें और देखें कि कौन-सा कमरा किस दिशा में आता है।</p></div>
+      <div class="step"><small>४</small><h3>जाँचें, फिर सुधारें</h3><p>नीचे के टूल में दिशाएँ भरें। पहले सबसे आसान बदलाव करें: सामान की जगह, रंग और रोशनी।</p></div>
+    </div>
+  </section>
+
+  <!-- SECTION: self-audit tool -->
+  <section id="audit">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">खुद जाँचें</p>
+      <h2>दस मिनट में अपने घर का वास्तु स्कोर।</h2>
+      <p class="lead">हर कमरे की दिशा चुनिए। नतीजा तुरंत दिखेगा, साथ में हर कमरे के लिए आसान सुधार।</p>
+    </div>
+    <div class="audit" data-reveal>
+      <div>
+        <p class="sample">उदाहरण के लिए कुछ दिशाएँ पहले से भरी हैं। अपने घर के हिसाब से बदलें।</p>
+        <div class="fields" id="fields"></div>
+      </div>
+      <div class="result" id="result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- SECTION: science strip -->
+  <section id="science">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">वास्तु और विज्ञान</p>
+      <h2>जो आप खुद नाप सकते हैं।</h2>
+      <p class="lead">वास्तु की कई सलाहें धूप, हवा और गर्मी जैसे असली कारणों से जुड़ी हैं। हम ऐसी बातें अलग दिखाते हैं जिन्हें आप खुद परख सकें, और परंपरा पर आधारित बातें अलग लिखते हैं।</p>
+    </div>
+    <div class="sci" data-reveal>
+      <article>
+        <span class="tag">नापें: सुबह की धूप</span>
+        <h3>कितने कमरों में धूप आती है?</h3>
+        <p>सुबह ७ से ९ बजे के बीच देखें कि किन कमरों में सीधी धूप पड़ती है और उसे लिख लें।</p>
+        <p><b>क्यों मायने रखता है:</b> सुबह की रोशनी शरीर की नींद-जागने की घड़ी को ठीक रखने में मदद करती है। पूर्व दिशा की सलाह का यह एक व्यावहारिक पक्ष है।</p>
+      </article>
+      <article>
+        <span class="tag">नापें: हवा का बहाव</span>
+        <h3>क्या हवा आर-पार निकलती है?</h3>
+        <p>आमने-सामने की दो खिड़कियाँ खोलकर देखें कि हवा कमरे से होकर गुज़रती है या नहीं।</p>
+        <p><b>क्यों मायने रखता है:</b> अच्छा हवा-बहाव नमी, सीलन और रसोई-शौचालय की गंध घटाता है। खुले केंद्र और खिड़कियों की सलाह इसी से जुड़ी है।</p>
+      </article>
+      <article>
+        <span class="tag">नापें: दोपहर की गर्मी</span>
+        <h3>कौन-सी दीवार सबसे गर्म है?</h3>
+        <p>दोपहर बाद हाथ लगाकर देखें कि कौन-सी दीवारें सबसे ज़्यादा तपती हैं।</p>
+        <p><b>क्यों मायने रखता है:</b> पश्चिम और दक्षिण-पश्चिम की मोटी दीवारें दोपहर बाद की गर्मी रोकती हैं। वास्तु के भारी निर्माण वाले नियम की यह एक संभावित व्यावहारिक वजह है।</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION: grid explorer -->
+  <section id="grid">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">वास्तु ग्रिड</p>
+      <h2>वास्तु पुरुष मंडल को पढ़ना सीखें।</h2>
+      <p class="lead">हर नक्शा ९ &times; ९ ग्रिड पर पढ़ा जाता है, जिसमें उत्तर ऊपर होता है। किसी भी क्षेत्र को चुनिए और देखिए कि उसका देवता, ग्रह और काम क्या माना जाता है। बीच का ब्रह्मस्थान खुला रखा जाता है।</p>
+    </div>
+    <div class="explorer" data-reveal>
+      <div class="mandala-wrap" id="explorer-mandala"></div>
+      <div>
+        <div class="panel" id="panel" aria-live="polite"></div>
+        <p class="note">ये पारंपरिक मान्यताएँ हैं और विद्वानों में कुछ बातों पर मतभेद है। इन्हें अपने नक्शे को परखने की शुरुआत मानें।</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: shop -->
+  <section id="shop">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">डिजिटल शॉप</p>
+      <h2>अपनी जाँच के लिए गाइड, प्रिंटेबल और ऑडियो।</h2>
+      <p class="lead">डाउनलोड होने वाली चीज़ें जो ग्रिड समझाती हैं, ताकि आप अपना घर, दुकान या फैक्ट्री खुद परख सकें।</p>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="उत्पाद छाँटें"></div>
+    <div class="products" id="products"></div>
+  </section>
+
+  <!-- SECTION: expert help -->
+  <section id="expert">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">विशेषज्ञ की मदद</p>
+      <h2>खुद न कर पाएँ, तो हम पढ़कर देंगे।</h2>
+      <p class="lead">आपके असली नक्शे पर कमरा-दर-कमरा रिपोर्ट, और बदलावों की सूची जो आसान से कठिन की ओर बढ़ती है।</p>
+    </div>
+    <div class="rows">
+      <article class="row" data-reveal>
+        <div><span class="tag">घर</span><h3>घर का वास्तु</h3></div>
+        <div>
+          <p>फ्लैट, मकान या विला को सोलह दिशाओं पर परखा जाता है। आपको निशान लगा नक्शा मिलता है और बदलाव सामान, रंग और रोशनी से शुरू होते हैं, तोड़-फोड़ से नहीं।</p>
+          <div class="chips"><span>मुख्य द्वार</span><span>रसोई</span><span>शयनकक्ष</span><span>पूजा स्थान</span></div>
+        </div>
+      </article>
+      <article class="row" data-reveal>
+        <div><span class="tag">उद्योग</span><h3>फैक्ट्री और औद्योगिक वास्तु</h3></div>
+        <div>
+          <p>गेट, मशीनरी, कच्चा माल, तैयार माल और मालिक का केबिन दिशा के अनुसार रखे जाते हैं, ताकि प्लांट का प्रवाह नक्शे के साथ चले।</p>
+          <div class="chips"><span>प्लांट लेआउट</span><span>मशीनरी</span><span>स्टोर</span><span>डिस्पैच</span></div>
+        </div>
+      </article>
+      <article class="row" data-reveal>
+        <div><span class="tag">व्यवसाय</span><h3>दुकान और ऑफिस वास्तु</h3></div>
+        <div>
+          <p>गल्ला, मालिक की कुर्सी, डिस्प्ले की दीवारें और स्टाफ की बैठक इस तरह रखी जाती हैं कि ग्राहकों का आना बना रहे और काम पर ध्यान रहे।</p>
+          <div class="chips"><span>गल्ला</span><span>बैठक व्यवस्था</span><span>डिस्प्ले</span><span>हिसाब की मेज़</span></div>
+        </div>
+      </article>
+      <article class="row" data-reveal>
+        <div><span class="tag">बनाने से पहले</span><h3>प्लॉट और नया निर्माण</h3></div>
+        <div>
+          <p>नींव की पहली रेखा खिंचने से पहले प्लॉट का आकार, ढलान, सड़क की स्थिति और कमरों का बँटवारा परखा जाता है।</p>
+          <div class="chips"><span>प्लॉट का आकार</span><span>सड़क और ढलान</span><span>कमरों का बँटवारा</span><span>भूमि पूजन का समय</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION: faq -->
+  <section id="faq">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">प्रश्न</p>
+      <h2>खरीदने या बुक करने से पहले।</h2>
+    </div>
+    <div class="faq" data-reveal>
+      <details open>
+        <summary>क्या यह वास्तु पूरी तरह वैज्ञानिक है?</summary>
+        <p>पूरी तरह वैज्ञानिक कहना सही नहीं होगा। वास्तु की कुछ सलाहें धूप, हवा और गर्मी जैसे नापने योग्य कारणों से जुड़ी हैं, और हम उन्हें अलग से बताते हैं। बाकी बातें परंपरा पर आधारित हैं, और उनके नतीजों की कोई गारंटी नहीं दी जा सकती।</p>
+      </details>
+      <details>
+        <summary>क्या दीवारें तोड़नी या कमरे बदलने पड़ेंगे?</summary>
+        <p>ज़्यादातर सुझाव जगह बदलने के होते हैं: कौन-सी चीज़ किस दिशा में रखी है, रंग, रोशनी और अव्यवस्था। ढाँचे में बदलाव तभी सुझाया जाता है जब कोई आसान रास्ता न बचे।</p>
+      </details>
+      <details>
+        <summary>अपने घर का उत्तर कैसे पता करूँ?</summary>
+        <p>नक्शे के बीच में खड़े होकर कंपास से उत्तर देखें। पहली जाँच के लिए मोबाइल का कंपास ऐप ठीक है। लोहे की चीज़ों और बिजली के उपकरणों से दूर रखकर दो बार नाप लें।</p>
+      </details>
+      <details>
+        <summary>क्या गाइड किसी विशेषज्ञ की जगह ले सकती हैं?</summary>
+        <p>गाइड आपको ग्रिड समझाती हैं ताकि आप अपनी जगह खुद परख सकें। विशेषज्ञ की रिपोर्ट आपके असली नक्शे पर वही नियम लगाती है, जिसमें अजीब आकार के प्लॉट और मिले-जुले उपयोग वाली इमारतें भी शामिल हैं।</p>
+      </details>
+      <details>
+        <summary>डिजिटल चीज़ें मुझे कैसे मिलेंगी?</summary>
+        <p>खरीद के बाद फ़ाइलें डाउनलोड लिंक के रूप में आपके ईमेल और व्हाट्सऐप पर भेजी जाएँगी, और आप उन्हें जब चाहें दोबारा डाउनलोड कर सकेंगे।</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- SECTION: contact -->
+  <section id="contact" style="padding-block: 0">
+    <div class="contact" data-reveal>
+      <div class="ghost-deva" aria-hidden="true">वास्तु</div>
+      <div>
+        <p class="eyebrow">विशेषज्ञ से पढ़वाएँ</p>
+        <h2>अपनी जगह के बारे में बताइए।</h2>
+        <p class="lead">जगह का प्रकार और आपकी परेशानी लिखें। हम अगले कदम और भेजने वाले कागज़ों के साथ जवाब देंगे।</p>
+      </div>
+      <form id="enquiry" novalidate>
+        <label for="f-name">नाम<input id="f-name" name="name" type="text" autocomplete="name" placeholder="आपका पूरा नाम" required></label>
+        <label for="f-phone">व्हाट्सऐप नंबर<input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required></label>
+        <label for="f-type">जगह का प्रकार
+          <select id="f-type" name="type">
+            <option>घर या फ्लैट</option>
+            <option>दुकान या ऑफिस</option>
+            <option>फैक्ट्री या औद्योगिक इकाई</option>
+            <option>प्लॉट या नया निर्माण</option>
+          </select>
+        </label>
+        <label for="f-msg">हम क्या देखें?<textarea id="f-msg" name="message" placeholder="उदाहरण: मुख्य द्वार दक्षिण में है, रसोई उत्तर-पूर्व में है..."></textarea></label>
+        <button class="btn primary" type="submit" style="justify-content:center">
+          <span>व्हाट्सऐप पर रीडिंग का अनुरोध करें</span>
+          <span>📲</span>
+        </button>
+        <p id="form-note" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div>
+    <div class="brand" style="margin-bottom:10px">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#E9B44C" stroke-width="1.4"/><rect x="9" y="9" width="22" height="22" fill="none" stroke="#E9B44C" stroke-width="1.4"/><rect x="15" y="15" width="10" height="10" fill="#E9B44C"/></svg>
+      वास्तु ब्रह्मांड
+    </div>
+    <p class="fine">वास्तु शास्त्र एक पारंपरिक डिज़ाइन पद्धति है। यहाँ की सलाह उसी परंपरा पर आधारित है और किसी निर्माण, कानूनी या चिकित्सा सलाह की जगह नहीं लेती। कोई भी सलाह भविष्य के नतीजों की गारंटी नहीं है।</p>
+  </div>
+  <nav aria-label="फ़ुटर">
+    <a href="#audit">खुद जाँचें</a>
+    <a href="#grid">वास्तु ग्रिड</a>
+    <a href="#shop">शॉप</a>
+    <a href="#contact">संपर्क</a>
+    <a href="demos.html">सभी थीम्स</a>
+  </nav>
+</footer>
+
+<!-- Cart drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+  <header>
+    <h3 id="cart-title">आपकी कार्ट</h3>
+    <button class="x" id="close-cart" type="button" aria-label="कार्ट बंद करें">&times;</button>
+  </header>
+  <ul id="items"></ul>
+  <div class="total">
+    <span>कुल</span>
+    <b id="total">&#8377;0</b>
+  </div>
+  <button class="btn primary" id="checkout" type="button" disabled>
+    <span>व्हाट्सऐप पर चेकआउट करें (Instant Order)</span>
+    <span>📲</span>
+  </button>
+  <p id="co-note" role="status"></p>
+</aside>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Retrieve WhatsApp number from settings or default
+  var defaultWhatsApp = '919876543210';
+  try {
+    var stored = localStorage.getItem('store_whatsapp');
+    if (stored) defaultWhatsApp = stored.replace(/[^0-9]/g, '');
+  } catch(e) {}
+
+  /* ---------- Vastu zone data (traditional associations) ---------- */
+  var ZONES = {
+    N:  { name: 'उत्तर',        sk: 'मुख्य दिशा',      deity: 'कुबेर',        planet: 'बुध',          focus: 'धन और अवसर',                 tip: 'खुला और हल्का रखें। मुख्य द्वार, तिजोरी या हिसाब-किताब की मेज़ के लिए ठीक।', basis: 'विज्ञान: उत्तर की रोशनी सीधी धूप के बिना स्थिर रहती है, इसलिए पढ़ने और हिसाब के काम में आँखों को आराम मिलता है।' },
+    NE: { name: 'उत्तर-पूर्व',  sk: 'ईशान्य कोण',     deity: 'ईशान (शिव)',   planet: 'बृहस्पति',     focus: 'स्पष्टता और पूजा',           tip: 'साफ़ और खाली रखें। पूजा या पानी की जगह ठीक। शौचालय और भारी सामान से बचें।', basis: 'विज्ञान: यहाँ सुबह की हल्की धूप आती है और दोपहर में कमरा अपेक्षाकृत ठंडा रहता है, जो शांत काम के लिए आरामदायक है।' },
+    E:  { name: 'पूर्व',        sk: 'मुख्य दिशा',      deity: 'इंद्र',        planet: 'सूर्य',        focus: 'स्वास्थ्य और सुबह की रोशनी', tip: 'खिड़कियाँ और खुली जगह रखें ताकि सुबह की रोशनी आए। बैठक और द्वार के लिए अच्छा।', basis: 'विज्ञान: सुबह की रोशनी नींद-जागने की शारीरिक घड़ी को ठीक रखने में मदद करती है।' },
+    SE: { name: 'दक्षिण-पूर्व', sk: 'आग्नेय कोण',     deity: 'अग्नि',        planet: 'शुक्र',        focus: 'अग्नि और ऊर्जा',             tip: 'रसोई की स्वाभाविक जगह। कारखाने में बॉयलर और बिजली के पैनल।', basis: 'विज्ञान: सुबह की धूप नमी घटाती है, और गर्मी पैदा करने वाले काम एक कोने में सीमित रहते हैं।' },
+    S:  { name: 'दक्षिण',       sk: 'मुख्य दिशा',      deity: 'यम',           planet: 'मंगल',         focus: 'स्थिरता और विश्राम',         tip: 'भारी फर्नीचर और ठोस दीवारें यहाँ ठीक रहती हैं। बड़े खुले हिस्से कम रखें।', basis: 'विज्ञान: दक्षिण की दीवार पर दोपहर की तेज़ धूप पड़ती है, मोटी दीवार से कमरा ठंडा रहता है।' },
+    SW: { name: 'दक्षिण-पश्चिम', sk: 'नैऋत्य कोण',    deity: 'निरृति',       planet: 'राहु',         focus: 'स्थिरता और स्वामित्व',       tip: 'मुख्य शयनकक्ष के लिए सबसे अच्छा। कारखाने में मालिक का केबिन और भारी स्टॉक।', basis: 'विज्ञान: दोपहर बाद की गर्मी यहाँ अक्सर सबसे ज़्यादा लगती है, मोटी दीवार और भारी सामान उसे रोकते हैं।' },
+    W:  { name: 'पश्चिम',       sk: 'मुख्य दिशा',      deity: 'वरुण',         planet: 'शनि',          focus: 'लाभ और अनुशासन',             tip: 'अध्ययन कक्ष, भोजन कक्ष और तैयार माल रखने के लिए ठीक।', basis: 'विज्ञान: शाम की तेज़ धूप यहीं से आती है, इसलिए छाया और परदे आराम बढ़ाते हैं।' },
+    NW: { name: 'उत्तर-पश्चिम', sk: 'वायव्य कोण',     deity: 'वायु',         planet: 'चंद्र',        focus: 'गति और बदलाव',               tip: 'अतिथि कक्ष, गैराज और डिस्पैच जैसे आने-जाने वाले कामों के लिए ठीक।', basis: 'परंपरा: यह बात परंपरा पर आधारित है।' },
+    C:  { name: 'केंद्र',       sk: 'ब्रह्मस्थान',     deity: 'ब्रह्मा',      planet: 'आकाश तत्व',    focus: 'घर का खुला केंद्र',          tip: 'खुला और रोशन रखें। खंभे, सीढ़ी और भारी फिक्स्चर से बचें।', basis: 'विज्ञान: खुला केंद्र पूरे घर में हवा और रोशनी का आना-जाना आसान बनाता है।' }
+  };
+  var GRID = [['NW', 'N', 'NE'], ['W', 'C', 'E'], ['SW', 'S', 'SE']];
+  var ABBR = { N: 'उ', NE: 'उ-पू', E: 'पू', SE: 'द-पू', S: 'द', SW: 'द-प', W: 'प', NW: 'उ-प' };
+
+  /* ---------- Mandala SVG ---------- */
+  function mandala(interactive) {
+    var c = 300, s = '', i, a, r1, r2, long;
+    s += '<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="वास्तु पुरुष मंडल: घूमते घेरों के भीतर ९ गुणा ९ का ग्रिड">';
+    s += '<g class="spin"><circle class="ln faint" cx="300" cy="300" r="288" stroke-dasharray="2 7"/>';
+    for (i = 0; i < 72; i++) {
+      a = i * 5 * Math.PI / 180; long = i % 6 === 0; r1 = long ? 260 : 268; r2 = 280;
+      s += '<line class="ln' + (long ? '' : ' faint') + '" x1="' + (c + r1 * Math.cos(a)).toFixed(1) + '" y1="' + (c + r1 * Math.sin(a)).toFixed(1) + '" x2="' + (c + r2 * Math.cos(a)).toFixed(1) + '" y2="' + (c + r2 * Math.sin(a)).toFixed(1) + '"/>';
+    }
+    s += '</g><g class="spin rev">';
+    for (i = 0; i < 16; i++) s += '<ellipse class="ln petal" cx="300" cy="78" rx="13" ry="34" transform="rotate(' + (i * 22.5) + ' 300 300)"/>';
+    s += '</g>';
+    s += '<circle class="ln" cx="300" cy="300" r="178" stroke-dasharray="4 6"/>';
+    var o = 174, cell = 28;
+    s += '<rect class="sq" x="' + o + '" y="' + o + '" width="252" height="252"/>';
+    s += '<rect class="brahma" x="' + (o + 84) + '" y="' + (o + 84) + '" width="84" height="84"/>';
+    for (i = 0; i <= 9; i++) {
+      var m = i % 3 === 0 ? ' macro' : '';
+      s += '<line class="cell' + m + '" x1="' + (o + i * cell) + '" y1="' + o + '" x2="' + (o + i * cell) + '" y2="' + (o + 252) + '"/>';
+      s += '<line class="cell' + m + '" x1="' + o + '" y1="' + (o + i * cell) + '" x2="' + (o + 252) + '" y2="' + (o + i * cell) + '"/>';
+    }
+    if (interactive) {
+      GRID.forEach(function (row, ry) {
+        row.forEach(function (k, cx) {
+          var x = o + cx * 84, y = o + ry * 84;
+          s += '<rect class="zone" data-z="' + k + '" x="' + (x + 1) + '" y="' + (y + 1) + '" width="82" height="82" tabindex="0" role="button" aria-label="' + ZONES[k].name + ' क्षेत्र"/>';
+          s += '<text class="lab' + (k === 'C' ? ' om' : '') + '" x="' + (x + 42) + '" y="' + (y + 42) + '">' + (k === 'C' ? 'ॐ' : ABBR[k]) + '</text>';
+        });
+      });
+    } else {
+      s += '<text class="lab om" x="300" y="302">ॐ</text>';
+    }
+    s += '</svg>';
+    return s;
+  }
+  document.getElementById('hero-mandala').innerHTML = mandala(false);
+  var ex = document.getElementById('explorer-mandala');
+  ex.innerHTML = mandala(true);
+
+  /* ---------- Grid explorer ---------- */
+  var panel = document.getElementById('panel');
+  function select(k, animate) {
+    var z = ZONES[k]; if (!z) return;
+    ex.querySelectorAll('.zone').forEach(function (r) { r.classList.toggle('on', r.getAttribute('data-z') === k); });
+    panel.innerHTML =
+      '<div><p class="sk">' + z.sk + '</p><h3>' + z.name + '</h3></div>' +
+      '<dl><dt>देवता</dt><dd>' + z.deity + '</dd><dt>ग्रह</dt><dd>' + z.planet + '</dd><dt>काम</dt><dd>' + z.focus + '</dd></dl>' +
+      '<p class="tip">' + z.tip + '</p><p class="fine">' + z.basis + '</p>';
+    if (animate && !reduced) { panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap'); }
+  }
+  function zoneOf(t) { return t && t.closest ? t.closest('.zone') : null; }
+  ex.addEventListener('click', function (e) { var z = zoneOf(e.target); if (z) select(z.getAttribute('data-z'), true); });
+  ex.addEventListener('mouseover', function (e) { var z = zoneOf(e.target); if (z && !z.classList.contains('on')) select(z.getAttribute('data-z'), true); });
+  ex.addEventListener('focusin', function (e) { var z = zoneOf(e.target); if (z) select(z.getAttribute('data-z'), true); });
+  ex.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { var z = zoneOf(e.target); if (z) { e.preventDefault(); select(z.getAttribute('data-z'), true); } }
+  });
+  select('NE', false);
+
+  /* ---------- Self-audit tool ---------- */
+  var DIRS = [['N', 'उत्तर'], ['NE', 'उत्तर-पूर्व'], ['E', 'पूर्व'], ['SE', 'दक्षिण-पूर्व'], ['S', 'दक्षिण'], ['SW', 'दक्षिण-पश्चिम'], ['W', 'पश्चिम'], ['NW', 'उत्तर-पश्चिम']];
+  var ROOMS = [
+    { id: 'door', name: 'मुख्य द्वार', q: 'मुख्य द्वार किस दिशा में है?', hint: 'बाहर खड़े होकर देखें कि द्वार किस तरफ़ खुलता है।', good: ['N', 'NE', 'E'], ok: ['NW', 'W', 'SE'], okTip: 'चल सकता है। द्वार पर अच्छी रोशनी रखें और सामने की जगह साफ़ रखें।', badTip: 'द्वार की दिशा बदलना कठिन है। बाहर साफ़ रोशनी, नेमप्लेट और द्वार के सामने खुली जगह रखें।', def: 'S' },
+    { id: 'kitchen', name: 'रसोई', q: 'रसोई किस दिशा में है?', hint: 'चूल्हा जिस कोने में है, वही दिशा लें।', good: ['SE'], ok: ['NW', 'E'], okTip: 'चल सकता है। खाना बनाते समय पूर्व की ओर मुँह रखें।', badTip: 'चूल्हा दक्षिण-पूर्व कोने के पास रखने की कोशिश करें और खाना बनाते समय पूर्व की ओर मुँह रखें।', def: 'SE' },
+    { id: 'bed', name: 'मुख्य शयनकक्ष', q: 'मुख्य शयनकक्ष किस दिशा में है?', hint: 'घर के मालिक जिस कमरे में सोते हैं।', good: ['SW'], ok: ['S', 'W', 'NW'], okTip: 'चल सकता है। भारी अलमारी दक्षिण-पश्चिम की दीवार पर लगाएँ।', badTip: 'सोते समय सिर दक्षिण या पश्चिम की ओर रखें और भारी अलमारी दक्षिण-पश्चिम की दीवार पर लगाएँ।', def: 'W' },
+    { id: 'puja', name: 'पूजा की जगह', q: 'पूजा की जगह किस दिशा में है?', hint: 'मंदिर या पूजा का कोना।', good: ['NE'], ok: ['E', 'N'], okTip: 'चल सकता है। जगह साफ़ और हल्की रखें।', badTip: 'पूजा की जगह उत्तर-पूर्व या पूर्व में बनाएँ। अलग कोना न हो तो छोटा मंदिर उसी दिशा की दीवार पर रखें।', def: 'NE' },
+    { id: 'toilet', name: 'शौचालय', q: 'शौचालय किस दिशा में है?', hint: 'एक से ज़्यादा हों तो मुख्य वाला चुनें।', good: ['NW', 'W'], ok: ['S'], okTip: 'चल सकता है। हवा निकासी रखें और सफ़ाई का ध्यान रखें।', badTip: 'उत्तर-पूर्व, पूर्व या केंद्र के पास हो तो दरवाज़ा बंद रखें, एग्ज़ॉस्ट लगाएँ और सफ़ाई सबसे ज़्यादा रखें।', def: 'NE' }
+  ];
+  var CENTRE = { id: 'centre', name: 'ब्रह्मस्थान (केंद्र)', q: 'घर का बीच का हिस्सा कैसा है?', hint: 'नक्शे के ठीक बीच का हिस्सा।', opts: [['open', 'खुला और रोशन'], ['some', 'थोड़ा सामान रखा है'], ['heavy', 'खंभा, सीढ़ी या शौचालय है']], tips: { 1: 'थोड़ा सामान हटाकर केंद्र को हल्का रखने की कोशिश करें।', 0: 'भारी चीज़ें हटाना संभव न हो तो आसपास रोशनी और हवा का रास्ता खुला रखें।' }, def: 'some' };
+
+  var fields = document.getElementById('fields');
+  var fh = '';
+  ROOMS.forEach(function (r) {
+    fh += '<div class="field"><label for="a-' + r.id + '">' + r.q + '<small>' + r.hint + '</small></label><select id="a-' + r.id + '" data-room="' + r.id + '"><option value="">पता नहीं</option>' +
+      DIRS.map(function (d) { return '<option value="' + d[0] + '"' + (d[0] === r.def ? ' selected' : '') + '>' + d[1] + '</option>'; }).join('') + '</select></div>';
+  });
+  fh += '<div class="field"><label for="a-centre">' + CENTRE.q + '<small>' + CENTRE.hint + '</small></label><select id="a-centre" data-room="centre"><option value="">पता नहीं</option>' +
+    CENTRE.opts.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === CENTRE.def ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></div>';
+  fields.innerHTML = fh;
+
+  var LAB = ['सुधार चाहिए', 'चल सकता है', 'अनुकूल'];
+  function evaluate() {
+    var total = 0, max = 0, rows = '';
+    ROOMS.forEach(function (r) {
+      var v = document.getElementById('a-' + r.id).value; if (!v) return;
+      var sc = r.good.indexOf(v) > -1 ? 2 : (r.ok.indexOf(v) > -1 ? 1 : 0);
+      total += sc; max += 2;
+      rows += '<li><div class="top"><span class="nm">' + r.name + '</span><span class="pill s' + sc + '">' + LAB[sc] + '</span></div>' +
+        (sc === 2 ? '' : '<p class="tip">' + (sc === 1 ? r.okTip : r.badTip) + '</p>') + '</li>';
+    });
+    var cv2 = document.getElementById('a-centre').value;
+    if (cv2) {
+      var cs = cv2 === 'open' ? 2 : (cv2 === 'some' ? 1 : 0);
+      total += cs; max += 2;
+      rows += '<li><div class="top"><span class="nm">' + CENTRE.name + '</span><span class="pill s' + cs + '">' + LAB[cs] + '</span></div>' + (cs === 2 ? '' : '<p class="tip">' + CENTRE.tips[cs] + '</p>') + '</li>';
+    }
+    var res = document.getElementById('result');
+    if (!max) { res.innerHTML = '<p class="verdict">ऊपर कम से कम एक दिशा चुनिए, नतीजा यहाँ दिखेगा।</p>'; return; }
+    var ratio = total / max;
+    var verdict = ratio >= 0.8 ? 'ज़्यादातर चीज़ें अनुकूल हैं।' : (ratio >= 0.5 ? 'कुछ सुधार की गुंजाइश है।' : 'कई चीज़ों में सुधार चाहिए।');
+    res.innerHTML = '<div class="score"><b>' + total + '</b><span>/ ' + max + ' अंक</span></div>' +
+      '<div class="meter" role="img" aria-label="स्कोर ' + total + ' में से ' + max + '"><i id="meter-fill"></i></div>' +
+      '<p class="verdict">' + verdict + '</p><ul class="rlist">' + rows + '</ul>' +
+      '<p class="fine">यह जाँच पारंपरिक नियमों पर आधारित है। यह किसी नतीजे या भविष्य का वादा नहीं करती।</p>';
+    var f = document.getElementById('meter-fill');
+    requestAnimationFrame(function () {
+      if (f) {
+        f.style.width = Math.round(ratio * 100) + '%';
+        f.style.backgroundSize = (100 / Math.max(ratio, 0.05)) + '% 100%';
+      }
+    });
+  }
+  fields.addEventListener('change', evaluate);
+  evaluate();
+
+  /* ---------- Marquee ---------- */
+  var words = ['ब्रह्मस्थान', 'ईशान्य', 'आग्नेय', 'नैऋत्य', 'वायव्य', 'कुबेर', 'इंद्र', 'यम', 'वरुण', 'पंचमहाभूत'];
+  var mq = document.getElementById('marquee');
+  mq.innerHTML = words.concat(words).concat(words).concat(words).map(function (w) { return '<span>' + w + '</span>'; }).join('');
+
+  /* ---------- Shop ---------- */
+  var PRODUCTS = [
+    { id: 'p1', cat: 'गाइड',      fmt: 'PDF · ६४ पेज',           title: 'घर की वास्तु जाँच वर्कबुक',        price: 499,  blurb: 'कमरा-दर-कमरा चेकलिस्ट और स्कोर शीट, ताकि आप पूरा घर खुद जाँच सकें।' },
+    { id: 'p2', cat: 'गाइड',      fmt: 'PDF · ३८ पेज',           title: 'फैक्ट्री और दुकान वास्तु चेकलिस्ट', price: 799,  blurb: 'गेट, मशीनरी, स्टॉक और गल्ला दिशा के अनुसार रखने की सूची।' },
+    { id: 'p3', cat: 'प्रिंटेबल', fmt: 'PDF · A3 प्रिंट',         title: 'दिशा कंपास शीट',                   price: 199,  blurb: 'किसी भी नक्शे पर रखकर सोलह क्षेत्र कुछ ही सेकंड में पहचानिए।' },
+    { id: 'p4', cat: 'प्रिंटेबल', fmt: '१२ चित्र · 4K',           title: 'यंत्र वॉलपेपर पैक',                price: 299,  blurb: 'फ़ोन और डेस्कटॉप के लिए श्रीयंत्र और वास्तु पुरुष के चित्र।' },
+    { id: 'p5', cat: 'कोर्स',     fmt: 'वीडियो · ३ घंटे २० मिनट', title: 'नक्शा पढ़ना सीखें',                price: 1499, blurb: 'नक्शा पढ़ना और उसके क्षेत्र चिह्नित करना, हल किए गए उदाहरणों के साथ कदम-दर-कदम।' },
+    { id: 'p6', cat: 'ऑडियो',     fmt: 'MP3 · ४५ मिनट',          title: 'वास्तु शांति मंत्र व विधि पुस्तिका',price: 349,  blurb: 'नए घर या दफ़्तर के लिए मंत्र, साथ में विधि समझाने वाली छोटी पुस्तिका।' }
+  ];
+  var cats = ['सभी'].concat(PRODUCTS.map(function (p) { return p.cat; }).filter(function (v, i, a) { return a.indexOf(v) === i; }));
+  var activeCat = 'सभी', cart = [];
+  function inr(n) { return '₹' + n.toLocaleString('en-IN'); }
+  function cover(i) {
+    var s = '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><g class="sp">';
+    for (var k = 0; k < 6; k++) {
+      var sz = 112 - k * 17;
+      s += '<rect x="' + (100 - sz / 2) + '" y="' + (75 - sz / 2) + '" width="' + sz + '" height="' + sz + '" fill="none" stroke="#E9B44C" stroke-width="' + (k === 0 ? 1.2 : .8) + '" opacity="' + (0.85 - k * 0.1).toFixed(2) + '" transform="rotate(' + (k * (9 + i * 3)) + ' 100 75)"/>';
+    }
+    s += '</g><circle cx="100" cy="75" r="62" fill="none" stroke="#E9B44C" stroke-width=".6" stroke-dasharray="2 5" opacity=".6"/><circle cx="100" cy="75" r="4" fill="#E9B44C"/></svg>';
+    return s;
+  }
+  function renderFilters() {
+    document.getElementById('filters').innerHTML = cats.map(function (c) { return '<button type="button" data-cat="' + c + '" aria-pressed="' + (c === activeCat) + '">' + c + '</button>'; }).join('');
+  }
+  function renderProducts() {
+    var list = PRODUCTS.filter(function (p) { return activeCat === 'सभी' || p.cat === activeCat; });
+    document.getElementById('products').innerHTML = list.map(function (p) {
+      var idx = PRODUCTS.indexOf(p), inCart = cart.indexOf(p.id) > -1;
+      return '<article class="card"><div class="cover c' + idx + '">' + cover(idx) + '</div><div class="body">' +
+        '<span class="meta">' + p.cat + ' &middot; ' + p.fmt + '</span><h3>' + p.title + '</h3><p>' + p.blurb + '</p>' +
+        '<div class="buy"><span class="price">' + inr(p.price) + '</span><button type="button" class="add' + (inCart ? ' in' : '') + '" data-id="' + p.id + '">' + (inCart ? '✓ कार्ट में है' : 'कार्ट में डालें') + '</button></div></div></article>';
+    }).join('');
+  }
+  document.getElementById('filters').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    activeCat = b.getAttribute('data-cat'); renderFilters(); renderProducts();
+  });
+  document.getElementById('products').addEventListener('click', function (e) {
+    var b = e.target.closest('.add'); if (!b) return;
+    var id = b.getAttribute('data-id');
+    if (cart.indexOf(id) > -1) { openCart(); return; }
+    cart.push(id); renderProducts(); renderCart(); openCart();
+  });
+
+  /* ---------- Cart ---------- */
+  var drawer = document.getElementById('drawer'), scrim = document.getElementById('scrim');
+  var lastFocus = null;
+  function renderCart() {
+    var items = document.getElementById('items'), total = 0;
+    document.getElementById('cart-count').textContent = cart.length;
+    if (!cart.length) {
+      items.innerHTML = '<li class="empty" style="display:block">आपकी कार्ट खाली है। शुरू करने के लिए शॉप से कोई गाइड चुनें।</li>';
+    } else {
+      items.innerHTML = cart.map(function (id) {
+        var p = PRODUCTS.filter(function (x) { return x.id === id; })[0]; total += p.price;
+        return '<li><b>' + p.title + '</b><button type="button" class="rm" data-rm="' + id + '">हटाएँ</button><small>' + p.fmt + ' &middot; ' + inr(p.price) + '</small></li>';
+      }).join('');
+    }
+    document.getElementById('total').textContent = inr(total);
+    document.getElementById('checkout').disabled = !cart.length;
+    document.getElementById('co-note').textContent = '';
+  }
+  function openCart() { lastFocus = document.activeElement; scrim.hidden = false; drawer.classList.add('open'); document.getElementById('close-cart').focus(); }
+  function closeCart() { scrim.hidden = true; drawer.classList.remove('open'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  document.getElementById('open-cart').addEventListener('click', openCart);
+  document.getElementById('close-cart').addEventListener('click', closeCart);
+  scrim.addEventListener('click', closeCart);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && drawer.classList.contains('open')) closeCart(); });
+  document.getElementById('items').addEventListener('click', function (e) {
+    var b = e.target.closest('.rm'); if (!b) return;
+    cart = cart.filter(function (id) { return id !== b.getAttribute('data-rm'); }); renderCart(); renderProducts();
+  });
+
+  // Direct WhatsApp Checkout
+  document.getElementById('checkout').addEventListener('click', function () {
+    if (!cart.length) return;
+    var cartItems = cart.map(function(id) {
+      var p = PRODUCTS.filter(function(x) { return x.id === id; })[0];
+      return '• ' + p.title + ' (' + p.fmt + ') - ' + inr(p.price);
+    }).join('\n');
+    var totalAmount = document.getElementById('total').textContent;
+
+    var waMessage = 'नमस्ते! मुझे वास्तु ब्रह्मांड से निम्नलिखित गाइड/सामग्री ऑर्डर करनी है:\n\n' +
+      cartItems + '\n\nकुल राशि: ' + totalAmount + '\n\nकृपया भुगतान UPI ID व डाउनलोड लिंक साझा करें।';
+
+    var waUrl = 'https://wa.me/' + defaultWhatsApp + '?text=' + encodeURIComponent(waMessage);
+    window.open(waUrl, '_blank');
+    document.getElementById('co-note').textContent = 'WhatsApp खुल रहा है... कृपया संदेश भेजें! ✓';
+  });
+
+  renderFilters(); renderProducts(); renderCart();
+
+  /* ---------- Expert Enquiry form ---------- */
+  document.getElementById('enquiry').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var n = document.getElementById('f-name').value.trim();
+    var ph = document.getElementById('f-phone').value.trim();
+    var type = document.getElementById('f-type').value;
+    var msg = document.getElementById('f-msg').value.trim();
+    var note = document.getElementById('form-note');
+
+    if (!n || !ph) {
+      note.textContent = '⚠️ कृपया अपना नाम और व्हाट्सऐप नंबर भरें।';
+      return;
+    }
+
+    var waMessage = 'नमस्ते वास्तु विशेषज्ञ! मुझे अपनी जगह का वास्तु विश्लेषण करवाना है:\n\n' +
+      '👤 नाम: ' + n + '\n' +
+      '📱 व्हाट्सऐप: ' + ph + '\n' +
+      '🏠 जगह का प्रकार: ' + type + '\n' +
+      '📝 विवरण: ' + (msg || 'नक्शा चेक करवाएं') + '\n\n' +
+      'कृपया अगले कदम व परामर्श शुल्क बताएं।';
+
+    var waUrl = 'https://wa.me/' + defaultWhatsApp + '?text=' + encodeURIComponent(waMessage);
+    note.innerHTML = 'अनुरोध तैयार! WhatsApp पर भेजा जा रहा है... 🚀';
+    window.open(waUrl, '_blank');
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  if (!reduced && 'IntersectionObserver' in window) {
+    var els = [].slice.call(document.querySelectorAll('[data-reveal]'));
+    els.forEach(function (el) { if (el.getBoundingClientRect().top > innerHeight * 0.95) el.classList.add('pre'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove('pre'); io.unobserve(en.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(function (el) { if (el.classList.contains('pre')) io.observe(el); });
+  }
+
+  /* ---------- Starfield + Milky Way star band ---------- */
+  var cv = document.getElementById('stars'), ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = 1, stars = [], shoot = null, nextShoot = 3000;
+  function build() {
+    var n = Math.min(320, Math.round(W * H / 6500));
+    stars = [];
+    for (var i = 0; i < n; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.15 + 0.25, p: Math.random() * 6.28, s: 0.5 + Math.random() * 1.6, d: 0.2 + Math.random() * 0.8, g: Math.random() < 0.12 });
+    var m = Math.min(900, Math.round(W * H / 1500)), ang = -28 * Math.PI / 180, L = Math.max(W, H) * 1.5, sig = Math.min(W, H) * 0.11;
+    var cols = ['#CFE0FF', '#E9D8FF', '#FFD9E6', '#FFE9B8', '#BFEFFF'];
+    for (var j = 0; j < m; j++) {
+      var along = (Math.random() - 0.5) * L, perp = (Math.random() + Math.random() + Math.random() - 1.5) * 2 * sig;
+      stars.push({ x: W / 2 + along * Math.cos(ang) - perp * Math.sin(ang), y: H / 2 + along * Math.sin(ang) + perp * Math.cos(ang), r: Math.random() * 0.7 + 0.18, p: Math.random() * 6.28, s: 0.4 + Math.random() * 1.4, d: 0.02, c: cols[j % cols.length] });
+    }
+  }
+  function resize() {
+    var nw = innerWidth, nh = innerHeight;
+    if (nw === W && Math.abs(nh - H) < 140) return;
+    W = nw; H = nh; dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); build();
+  }
+  function frame(t) {
+    ctx.clearRect(0, 0, W, H);
+    var sy = window.scrollY || 0;
+    for (var i = 0; i < stars.length; i++) {
+      var st = stars[i], y = ((st.y - sy * st.d * 0.18) % H + H) % H;
+      var al = reduced ? 0.7 : 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t / 1000 * st.s + st.p));
+      ctx.globalAlpha = al; ctx.fillStyle = st.c ? st.c : (st.g ? '#F6D58E' : '#EDE6FF');
+      ctx.beginPath(); ctx.arc(st.x, y, st.r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!reduced) {
+      if (!shoot && t > nextShoot) {
+        shoot = { x: Math.random() * W * 0.8 + W * 0.1, y: Math.random() * H * 0.35, vx: 7 + Math.random() * 3, vy: 3.5 + Math.random() * 2, life: 0 };
+      }
+      if (shoot) {
+        shoot.x += shoot.vx; shoot.y += shoot.vy; shoot.life++;
+        var g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x - shoot.vx * 12, shoot.y - shoot.vy * 12);
+        g.addColorStop(0, 'rgba(255,236,190,' + Math.max(0, 1 - shoot.life / 60) + ')'); g.addColorStop(1, 'rgba(255,236,190,0)');
+        ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x - shoot.vx * 12, shoot.y - shoot.vy * 12); ctx.stroke();
+        if (shoot.life > 60) { shoot = null; nextShoot = t + 5000 + Math.random() * 6000; }
+      }
+      requestAnimationFrame(frame);
+    }
+  }
+  resize();
+  addEventListener('resize', function () { resize(); if (reduced) requestAnimationFrame(frame); });
+  if (reduced) { addEventListener('scroll', function () { requestAnimationFrame(frame); }, { passive: true }); }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
