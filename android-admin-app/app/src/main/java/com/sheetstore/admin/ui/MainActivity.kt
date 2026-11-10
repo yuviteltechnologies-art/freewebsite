@@ -788,7 +788,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.2.6 • Secure Admin Portal",
+            text = "🚀 v1.2.7 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -823,7 +823,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.2.6)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.7)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -942,7 +942,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.2.6",
+            text = "⚡ SheetStore Admin v1.2.7",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -1848,7 +1848,7 @@ class MainActivity : Activity() {
 
     // ==========================================
     // ==========================================
-    // WEBSITE CATEGORIES & FORMATS (RECTANGULAR BOXES)
+    // WEBSITE CATEGORIES & 15 E-COMMERCE THEMES
     // ==========================================
     data class WebsiteCategory(
         val id: String,
@@ -1862,25 +1862,182 @@ class MainActivity : Activity() {
         val accentColor: String
     )
 
-    private val websiteCategories = listOf(
+    private val ecommerceThemes = listOf(
         WebsiteCategory(
-            id = "ecommerce",
-            icon = "🛒",
-            title = "E-Commerce Online Store",
-            subtitle = "Complete Shopping Cart & Direct UPI Checkout",
-            description = "Full e-commerce online store: customer products cart me add karega aur direct dynamic UPI scan karke payment aur order place karega.",
-            bullets = listOf("Add to Cart & Checkout Flow", "Auto Dynamic UPI QR Payments", "WhatsApp Instant Order Notification", "Product Catalog & Inventory"),
-            badge = "Full E-Store",
+            id = "electronics",
+            icon = "📱",
+            title = "Electronics",
+            subtitle = "Mobiles, Laptops, Audio, Smart Gadgets & Accessories",
+            description = "High-tech electronics store with technical specifications, warranty badges and instant UPI checkout.",
+            bullets = listOf("Tech Specs Comparison", "Warranty Badges", "EMI / UPI Checkout", "Brand Filtering"),
+            badge = "Gadgets & Tech",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#00F0FF"
         ),
         WebsiteCategory(
+            id = "fashion",
+            icon = "👗",
+            title = "Fashion & Apparel",
+            subtitle = "Clothing, Footwear, Ethnic Wear, Bags & Accessories",
+            description = "Trendy fashion store layout with size selectors, color swatches and image lookbooks.",
+            bullets = listOf("Size & Color Selectors", "Lookbook Showcase", "Trendy Grid Layout", "WhatsApp Styling Help"),
+            badge = "Clothing & Style",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/saree-demo.html",
+            accentColor = "#EC4899"
+        ),
+        WebsiteCategory(
+            id = "health_medical",
+            icon = "💊",
+            title = "Health & Medical",
+            subtitle = "Medicines, Wellness, Healthcare Devices & Supplements",
+            description = "Clean, certified medical pharmacy and wellness store with dosage guidance and prescription upload.",
+            bullets = listOf("Prescription Upload", "Dosage & Usage Info", "Verified Badges", "Express Delivery"),
+            badge = "Pharmacy & Care",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#10B981"
+        ),
+        WebsiteCategory(
+            id = "beauty_personal_care",
+            icon = "💄",
+            title = "Beauty & Personal Care",
+            subtitle = "Skincare, Makeup, Haircare, Fragrances & Grooming",
+            description = "Elegant cosmetic and skincare storefront with ingredient highlights and beauty routines.",
+            bullets = listOf("Ingredient Highlights", "Skin Type Matching", "Customer Glow Reviews", "Bundle Discounts"),
+            badge = "Cosmetics & Glow",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#F43F5E"
+        ),
+        WebsiteCategory(
+            id = "home_kitchen",
+            icon = "🍳",
+            title = "Home & Kitchen",
+            subtitle = "Cookware, Kitchen Appliances, Dining & Home Essentials",
+            description = "Modern culinary and home utility store highlighting material durability and kitchen dimensions.",
+            bullets = listOf("Material & Capacity Specs", "Cooking Video Demos", "Cash on Delivery", "Replacement Guarantee"),
+            badge = "Cookware & Dining",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#F59E0B"
+        ),
+        WebsiteCategory(
+            id = "grocery_food",
+            icon = "🛒",
+            title = "Grocery & Food",
+            subtitle = "Daily Staples, Fresh Fruits, Vegetables, Snacks & Beverages",
+            description = "Fast neighborhood grocery store with quick re-order, weight options and slot delivery.",
+            bullets = listOf("Weight / Quantity Picker", "1-Tap Quick Reorder", "Freshness Guarantee", "Local Slot Delivery"),
+            badge = "Daily Essentials",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#84CC16"
+        ),
+        WebsiteCategory(
+            id = "automotive_accessories",
+            icon = "🚗",
+            title = "Automotive & Accessories",
+            subtitle = "Car Parts, Bike Accessories, Helmets, Oils & Tools",
+            description = "Rugged automotive storefront with vehicle make/model compatibility filter.",
+            bullets = listOf("Vehicle Model Compatibility", "OEM Part Numbers", "Installation Guides", "Heavy Duty Shipping"),
+            badge = "Auto Parts & Care",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#EF4444"
+        ),
+        WebsiteCategory(
+            id = "industrial_supplies",
+            icon = "🏭",
+            title = "Industrial Supplies",
+            subtitle = "Hardware, Power Tools, Safety Equipment & Machinery",
+            description = "High-durability B2B industrial catalog with bulk tier pricing and technical datasheets.",
+            bullets = listOf("Bulk Quantity Tiers", "Technical Data Sheets", "GST Invoicing", "Safety Standards"),
+            badge = "Tools & Equipment",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#64748B"
+        ),
+        WebsiteCategory(
+            id = "books_stationery",
+            icon = "📚",
+            title = "Books & Stationery",
+            subtitle = "Educational Books, Novels, Art Supplies, Notebooks & Office Supplies",
+            description = "Thoughtful bookstore and stationery catalog with author bios and sample reading previews.",
+            bullets = listOf("Author & Publisher Bios", "Reading Level Filters", "School / Office Packs", "Fast Book Delivery"),
+            badge = "Office & Reading",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#8B5CF6"
+        ),
+        WebsiteCategory(
+            id = "sports_fitness",
+            icon = "⚽",
+            title = "Sports & Fitness",
+            subtitle = "Gym Equipment, Activewear, Sports Gear & Nutrition",
+            description = "Energetic sports and gym storefront with gear recommendations and workout categories.",
+            bullets = listOf("Training Level Filters", "Equipment Dimensions", "Protein / Shaker Combos", "Durable Gear Warranty"),
+            badge = "Gym & Athletics",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#06B6D4"
+        ),
+        WebsiteCategory(
+            id = "baby_kids",
+            icon = "👶",
+            title = "Baby & Kids",
+            subtitle = "Toys, Baby Care, Kids Clothing, Diapers & Nursery",
+            description = "Playful and secure parenting store highlighting non-toxic materials and age suitability.",
+            bullets = listOf("Age Group Filtering", "Non-Toxic Safety Badges", "Parent Gift Combos", "Gentle Baby Care"),
+            badge = "Toys & Baby Care",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#FB7185"
+        ),
+        WebsiteCategory(
+            id = "agriculture_farming",
+            icon = "🌾",
+            title = "Agriculture & Farming",
+            subtitle = "Seeds, Fertilizers, Irrigation, Farm Tools & Animal Feed",
+            description = "Kisan and farming friendly store with seasonal crop guides and direct WhatsApp ordering.",
+            bullets = listOf("Seasonal Crop Guides", "Organic / Hybrid Seeds", "Direct Kisan WhatsApp Support", "Bulk Farm Shipping"),
+            badge = "Seeds & Agro Tools",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#22C55E"
+        ),
+        WebsiteCategory(
+            id = "pet_supplies",
+            icon = "🐾",
+            title = "Pet Supplies",
+            subtitle = "Dog Food, Cat Care, Pet Toys, Grooming & Pet Health",
+            description = "Pet lover storefront with breed size selectors and recurring subscription boxes.",
+            bullets = listOf("Breed & Age Nutrition", "Treats & Toy Bundles", "Vet Approved Badges", "Doorstep Pet Care"),
+            badge = "Dogs, Pets & Care",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#F97316"
+        ),
+        WebsiteCategory(
+            id = "furniture_home_decor",
+            icon = "🛋️",
+            title = "Furniture & Home Decor",
+            subtitle = "Sofas, Beds, Lighting, Wall Art & Living Space Decor",
+            description = "Aesthetic interior showroom with dimension blueprints and custom fabric inquiry.",
+            bullets = listOf("Room Dimension Guides", "Fabric & Wood Swatches", "Assembly Assistance", "Safe Transit Packaging"),
+            badge = "Living & Interior",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#A855F7"
+        ),
+        WebsiteCategory(
+            id = "b2b_wholesale",
+            icon = "📦",
+            title = "B2B Wholesale",
+            subtitle = "Bulk Orders, Wholesale Pricing, Dealer Inquiries & Quotations",
+            description = "Wholesale trader platform with Minimum Order Quantities (MOQ) and instant quotation generator.",
+            bullets = listOf("MOQ Bulk Quantity Selector", "Request Quote on WhatsApp", "GST Tax Invoicing", "Commercial Freight"),
+            badge = "Bulk Order & Trade",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#3B82F6"
+        )
+    )
+
+    private val otherWebsiteFormats = listOf(
+        WebsiteCategory(
             id = "portfolio",
             icon = "💼",
-            title = "Portfolio & Creative Showcase",
+            title = "Portfolio & Agency",
             subtitle = "Freelancers, Creators & Creative Agencies",
-            description = "Apne best projects, design work, skills aur client testimonials ko professional layout me showcase karein. Direct lead inquiry form sahit.",
-            bullets = listOf("Project Gallery & Case Studies", "Client Testimonials & Ratings", "Interactive Hire / Contact Form", "Service & Pricing Packages"),
+            description = "Showcase projects, design work, and client testimonials.",
+            bullets = listOf("Project Gallery", "Testimonials", "Hire Me Form", "Pricing"),
             badge = "Portfolio",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#A78BFA"
@@ -1888,10 +2045,10 @@ class MainActivity : Activity() {
         WebsiteCategory(
             id = "linktree",
             icon = "🔗",
-            title = "Linktree Style Social Bio Link",
+            title = "Linktree Bio Page",
             subtitle = "Instagram, YouTube & Social Media Bio Page",
-            description = "Clean linktree bio landing card jahan ek hi mobile page par WhatsApp, YouTube, Instagram, product links aur payment details provide hoti hain.",
-            bullets = listOf("Ultra-fast Mobile Bio Landing", "All Social Media Direct Links", "1-Tap WhatsApp Chat Button", "Digital Visiting Card"),
+            description = "Clean bio landing card with all social and payment links.",
+            bullets = listOf("Mobile Bio Landing", "Social Links", "WhatsApp Chat", "Visiting Card"),
             badge = "Bio Links",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#10B981"
@@ -1899,10 +2056,10 @@ class MainActivity : Activity() {
         WebsiteCategory(
             id = "digital_product",
             icon = "💻",
-            title = "Digital Products & Downloads",
+            title = "Digital Products Store",
             subtitle = "eBooks, Courses, Software, PDFs & Presets",
-            description = "Digital downloadable items bechein. Customer UPI se pay karega aur payment verify hote hi instant download link auto deliver ho jayegi.",
-            bullets = listOf("Instant Download Link Delivery", "Zero Shipping & Inventory Cost", "UPI Payment Verification", "Protected Digital Downloads"),
+            description = "Sell digital downloadable items with instant UPI verification.",
+            bullets = listOf("Instant Download Link", "Zero Shipping", "UPI Verification", "Protected Files"),
             badge = "Digital Files",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#F59E0B"
@@ -1910,37 +2067,18 @@ class MainActivity : Activity() {
         WebsiteCategory(
             id = "blogger",
             icon = "✍️",
-            title = "Personal Blogger & Magazine",
+            title = "Personal Blogger",
             subtitle = "Writers, Journalists, Creators & Storytellers",
-            description = "Apne articles, daily blogs aur stories publish karein. Distraction-free clean reading typography, category filtering aur newsletter box ke saath.",
-            bullets = listOf("Clean Reading Experience", "Blog Categories & Tag Archives", "Author Profile & Social Follow", "Newsletter Subscription Form"),
+            description = "Publish articles, blogs and stories with clean reading typography.",
+            bullets = listOf("Clean Reading", "Categories & Tags", "Author Profile", "Newsletter"),
             badge = "Blog & Content",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#EC4899"
-        ),
-        WebsiteCategory(
-            id = "shop",
-            icon = "🏬",
-            title = "Local Retail Shop & Dukaan",
-            subtitle = "Kirana, Clothing, Bakery, Boutique & Neighborhood Dukaan",
-            description = "Local area aur city ke customers ke liye dukaan ka digital showroom. Customer items choose karke direct WhatsApp par order bhej sakega.",
-            bullets = listOf("Local Neighborhood Ordering", "Direct WhatsApp Order Message", "Store Address & Google Map", "Opening Hours & Call Helpline"),
-            badge = "Local Dukaan",
-            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/saree-demo.html",
-            accentColor = "#38BDF8"
-        ),
-        WebsiteCategory(
-            id = "display_store",
-            icon = "🏷️",
-            title = "Product Display Store (Showroom)",
-            subtitle = "Catalog Showroom with Direct WhatsApp Inquiry (No Cart)",
-            description = "Bina online payment friction ke products showcase karein. Price aur photo dikhegi aur customer 'Inquire on WhatsApp' par baat karke order karega.",
-            bullets = listOf("Clean Product Showroom", "Photo & Price Display", "Direct 'Inquire on WhatsApp' CTA", "Zero Cart Abandonment"),
-            badge = "Showroom",
-            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
-            accentColor = "#8B5CF6"
         )
     )
+
+    private val websiteCategories: List<WebsiteCategory>
+        get() = ecommerceThemes + otherWebsiteFormats
 
     private fun applyWebsiteCategory(category: WebsiteCategory) {
         val url = getSheetUrl()
@@ -1951,9 +2089,13 @@ class MainActivity : Activity() {
 
         Toast.makeText(this, "Applying '${category.title}' to Live Website... ⏳", Toast.LENGTH_SHORT).show()
 
+        val isEcomTheme = ecommerceThemes.any { it.id == category.id }
+        val categoryType = if (isEcomTheme) "ecommerce" else category.id
+
         val body = mapOf(
             "action" to "updateSettings",
-            "website_category" to category.id,
+            "website_category" to categoryType,
+            "ecommerce_theme" to category.id,
             "template_id" to category.id,
             "theme" to category.id
         )
@@ -1966,13 +2108,15 @@ class MainActivity : Activity() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
                         val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
-                        s["website_category"] = category.id
+                        s["website_category"] = categoryType
+                        s["ecommerce_theme"] = category.id
                         s["template_id"] = category.id
                         s["theme"] = category.id
                         dashboardData = dashboardData?.copy(settings = s)
                         getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
                             .edit()
-                            .putString("selected_website_category", category.id)
+                            .putString("selected_website_category", categoryType)
+                            .putString("selected_ecommerce_theme", category.id)
                             .putString("selected_theme_id", category.id)
                             .apply()
                         refreshCurrentTab()
@@ -1984,13 +2128,15 @@ class MainActivity : Activity() {
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
-                    s["website_category"] = category.id
+                    s["website_category"] = categoryType
+                    s["ecommerce_theme"] = category.id
                     s["template_id"] = category.id
                     s["theme"] = category.id
                     dashboardData = dashboardData?.copy(settings = s)
                     getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
                         .edit()
-                        .putString("selected_website_category", category.id)
+                        .putString("selected_website_category", categoryType)
+                        .putString("selected_ecommerce_theme", category.id)
                         .putString("selected_theme_id", category.id)
                         .apply()
                     refreshCurrentTab()
@@ -2180,7 +2326,7 @@ class MainActivity : Activity() {
         return card
     }
 
-    // SUB-TAB 2: WEBSITE CATEGORIES & FORMATS
+    // SUB-TAB 2: WEBSITE CATEGORIES & 15 E-COMMERCE THEMES
     private fun createThemeSelectionSubTab(): View {
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -2192,16 +2338,16 @@ class MainActivity : Activity() {
         }
 
         container.addView(createSubTabBackHeader(
-            title = "🎨 2nd: Website Category & Type",
-            subtitle = "Apne business ke hisab se theme select karein aur 1-click me live apply karein:"
+            title = "🎨 2nd: Website Category & Themes",
+            subtitle = "E-Commerce Main Category ke andar 15 industry-ready themes select aur apply karein:"
         ))
 
-        // Top Info Banner (Simple & Clean)
+        // Top Info Banner: E-Commerce Main Category
         val infoBanner = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             background = UiKit.cardDrawable(
                 bgColor = Color.parseColor("#081524"),
-                strokeColor = Color.parseColor("#0284C7"),
+                strokeColor = Color.parseColor("#00F0FF"),
                 strokeWidthDp = 1,
                 radiusDp = 6f,
                 context = this@MainActivity
@@ -2212,13 +2358,13 @@ class MainActivity : Activity() {
             }
         }
         val infoTitle = TextView(this).apply {
-            text = "💡 Choose Your Website Theme"
+            text = "🛒 Main Category: E-Commerce Store (15 Themes)"
             textSize = 13.5f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.parseColor("#38BDF8"))
         }
         val infoSub = TextView(this).apply {
-            text = "Niche diye gaye grid me se theme name dekhein, Demo par click karke live preview check karein aur Apply par tap karke website par apply karein:"
+            text = "Har industry ke hisab se specialized layout aur colors diye gaye hain. Demo par click karke preview check karein aur Apply par tap karke website par activate karein:"
             textSize = 11f
             setTextColor(Color.parseColor("#94A3B8"))
             setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
@@ -2227,13 +2373,16 @@ class MainActivity : Activity() {
         infoBanner.addView(infoSub)
         container.addView(infoBanner)
 
-        // Get currently active category
-        val currentActiveCat = (dashboardData?.settings?.get("website_category")
-            ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_website_category", "ecommerce")
-            ?: "ecommerce").trim().lowercase()
+        // Get currently active theme
+        val currentActiveTheme = (dashboardData?.settings?.get("ecommerce_theme")
+            ?: dashboardData?.settings?.get("theme")
+            ?: dashboardData?.settings?.get("template_id")
+            ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_ecommerce_theme", null)
+            ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_theme_id", "electronics")
+            ?: "electronics").trim().lowercase()
 
-        // 2-Column Grid Layout (Simple & Clean)
-        for (pair in websiteCategories.chunked(2)) {
+        // 15 E-Commerce Themes (2-Column Clean Grid)
+        for (pair in ecommerceThemes.chunked(2)) {
             val row = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
                 layoutParams = LinearLayout.LayoutParams(
@@ -2245,7 +2394,7 @@ class MainActivity : Activity() {
             }
 
             val cat1 = pair[0]
-            val isActive1 = (currentActiveCat == cat1.id.lowercase())
+            val isActive1 = (currentActiveTheme == cat1.id.lowercase())
             val card1 = createCategoryRectGridCard(cat1, isActive1).apply {
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
                     rightMargin = UiKit.dp(this@MainActivity, 5)
@@ -2255,7 +2404,58 @@ class MainActivity : Activity() {
 
             if (pair.size > 1) {
                 val cat2 = pair[1]
-                val isActive2 = (currentActiveCat == cat2.id.lowercase())
+                val isActive2 = (currentActiveTheme == cat2.id.lowercase())
+                val card2 = createCategoryRectGridCard(cat2, isActive2).apply {
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                        leftMargin = UiKit.dp(this@MainActivity, 5)
+                    }
+                }
+                row.addView(card2)
+            } else {
+                val spacer = View(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                        leftMargin = UiKit.dp(this@MainActivity, 5)
+                    }
+                }
+                row.addView(spacer)
+            }
+
+            container.addView(row)
+        }
+
+        // Section: Other Non-Commerce Formats
+        val otherSectionTitle = TextView(this).apply {
+            text = "🌐 Other Website Formats (Non E-Commerce)"
+            textSize = 13f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#E2E8F0"))
+            setPadding(0, UiKit.dp(this@MainActivity, 16), 0, UiKit.dp(this@MainActivity, 10))
+        }
+        container.addView(otherSectionTitle)
+
+        for (pair in otherWebsiteFormats.chunked(2)) {
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    bottomMargin = UiKit.dp(this@MainActivity, 10)
+                }
+            }
+
+            val cat1 = pair[0]
+            val isActive1 = (currentActiveTheme == cat1.id.lowercase())
+            val card1 = createCategoryRectGridCard(cat1, isActive1).apply {
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                    rightMargin = UiKit.dp(this@MainActivity, 5)
+                }
+            }
+            row.addView(card1)
+
+            if (pair.size > 1) {
+                val cat2 = pair[1]
+                val isActive2 = (currentActiveTheme == cat2.id.lowercase())
                 val card2 = createCategoryRectGridCard(cat2, isActive2).apply {
                     layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
                         leftMargin = UiKit.dp(this@MainActivity, 5)
@@ -3824,9 +4024,9 @@ class MainActivity : Activity() {
             StudioMenuItem(
                 index = 1,
                 icon = "🎨",
-                title = "2nd: Website Category & Type",
-                subtitle = "E-Commerce, Portfolio, Linktree, Digital Products, Blogger, Shop & Display Store",
-                badge = "7 Formats",
+                title = "2nd: Website Category & Themes",
+                subtitle = "E-Commerce Main Category (15 Industry Themes: Electronics, Fashion, Health, Grocery, etc.)",
+                badge = "15 Themes",
                 accentColor = "#A78BFA"
             ),
             StudioMenuItem(
