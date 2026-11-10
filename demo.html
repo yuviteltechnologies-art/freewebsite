@@ -8,10 +8,10 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter, Outfit, Cinzel & Space Grotesk -->
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Outfit, Playfair Display, Plus Jakarta Sans, Poppins, Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -25,6 +25,9 @@
             heading: ['"Outfit"', 'sans-serif'],
             cinzel: ['"Cinzel"', 'serif'],
             space: ['"Space Grotesk"', 'sans-serif'],
+            playfair: ['"Playfair Display"', 'serif'],
+            poppins: ['"Poppins"', 'sans-serif'],
+            cormorant: ['"Cormorant Garamond"', 'serif'],
           },
           colors: {
             store: {
@@ -43,20 +46,22 @@
 
   <style>
     /* ========================================================
-       15 E-COMMERCE THEME SYSTEMS (GitHub Open-Source Inspired)
+       15 E-COMMERCE THEME SYSTEMS (GitHub & Modern D2C Inspired)
        ======================================================== */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--theme-bg, #070B18); }
     ::-webkit-scrollbar-thumb { background: var(--theme-accent, #2563EB); border-radius: 4px; }
 
-    /* DEFAULT & 1: Electronics & Smart Gadgets (Cyber Blue / Cyan) */
+    /* 1: Electronics & Smart Gadgets (Cyber Blue / Neon Cyan - DARK) */
     :root, [data-theme="modern-blue"], [data-theme="electronics"] {
       --theme-bg: #070B18;
       --theme-bg-alt: #0B1124;
       --theme-header-bg: rgba(7, 11, 24, 0.94);
-      --theme-card-bg: rgba(15, 23, 42, 0.82);
+      --theme-card-bg: rgba(15, 23, 42, 0.85);
       --theme-card-border: rgba(0, 240, 255, 0.22);
-      --theme-card-hover: rgba(0, 240, 255, 0.65);
+      --theme-card-hover: rgba(0, 240, 255, 0.75);
+      --theme-card-radius: 12px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(0, 240, 255, 0.2);
       --theme-text-primary: #F8FAFC;
       --theme-text-secondary: #94A3B8;
       --theme-accent: #00F0FF;
@@ -69,313 +74,345 @@
       --theme-font-heading: 'Space Grotesk', sans-serif;
     }
 
-    /* 2: Fashion & Apparel (Editorial Rose Pink & Luxe Noir) */
+    /* 2: Fashion & Apparel (Editorial Chic - Champagne Gold & Ivory LIGHT) */
     [data-theme="fashion"] {
-      --theme-bg: #0E070B;
-      --theme-bg-alt: #180D15;
-      --theme-header-bg: rgba(14, 7, 11, 0.95);
-      --theme-card-bg: rgba(24, 13, 21, 0.88);
-      --theme-card-border: rgba(244, 63, 94, 0.28);
-      --theme-card-hover: rgba(244, 63, 94, 0.7);
-      --theme-text-primary: #FFF1F2;
-      --theme-text-secondary: #FECDD3;
-      --theme-accent: #F43F5E;
-      --theme-accent-light: #FB7185;
+      --theme-bg: #FAF7F2;
+      --theme-bg-alt: #F3ECE1;
+      --theme-header-bg: rgba(250, 247, 242, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(212, 175, 55, 0.32);
+      --theme-card-hover: #D4AF37;
+      --theme-card-radius: 4px;
+      --theme-card-shadow: 0 10px 30px -5px rgba(28, 25, 23, 0.08);
+      --theme-text-primary: #1C1917;
+      --theme-text-secondary: #78716C;
+      --theme-accent: #991B1B;
+      --theme-accent-light: #D4AF37;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #FFE4E6 0%, #FB7185 50%, #E11D48 100%);
-      --theme-btn-grad: linear-gradient(135deg, #E11D48 0%, #9F1239 100%);
-      --theme-banner-grad: linear-gradient(to right, #4C0519, #881337, #4C0519);
-      --theme-glow: rgba(244, 63, 94, 0.4);
-      --theme-font-heading: 'Cinzel', serif;
+      --theme-title-grad: linear-gradient(135deg, #1C1917 0%, #78350F 50%, #B45309 100%);
+      --theme-btn-grad: linear-gradient(135deg, #1C1917 0%, #292524 100%);
+      --theme-banner-grad: linear-gradient(to right, #292524, #1C1917, #292524);
+      --theme-glow: rgba(212, 175, 55, 0.25);
+      --theme-font-heading: 'Playfair Display', serif;
     }
 
-    /* 3: Health & Medical (Clinical Mint Teal & Emerald) */
+    /* 3: Health & Medical (Clinical Pure Teal & Crisp White LIGHT) */
     [data-theme="health_medical"], [data-theme="emerald-pro"] {
-      --theme-bg: #031714;
-      --theme-bg-alt: #062420;
-      --theme-header-bg: rgba(3, 23, 20, 0.95);
-      --theme-card-bg: rgba(6, 36, 32, 0.85);
-      --theme-card-border: rgba(16, 185, 129, 0.3);
-      --theme-card-hover: rgba(52, 211, 153, 0.7);
-      --theme-text-primary: #F0FDF4;
-      --theme-text-secondary: #A7F3D0;
-      --theme-accent: #10B981;
-      --theme-accent-light: #6EE7B7;
-      --theme-btn-text: #022C22;
-      --theme-title-grad: linear-gradient(135deg, #6EE7B7 0%, #10B981 50%, #059669 100%);
-      --theme-btn-grad: linear-gradient(135deg, #10B981 0%, #047857 100%);
-      --theme-banner-grad: linear-gradient(to right, #022C22, #065F46, #022C22);
-      --theme-glow: rgba(16, 185, 129, 0.35);
+      --theme-bg: #F0FDFA;
+      --theme-bg-alt: #CCFBF1;
+      --theme-header-bg: rgba(255, 255, 255, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(13, 148, 136, 0.25);
+      --theme-card-hover: #0D9488;
+      --theme-card-radius: 14px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.08);
+      --theme-text-primary: #042F2E;
+      --theme-text-secondary: #0F766E;
+      --theme-accent: #0D9488;
+      --theme-accent-light: #14B8A6;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #042F2E 0%, #0D9488 50%, #059669 100%);
+      --theme-btn-grad: linear-gradient(135deg, #0D9488 0%, #047857 100%);
+      --theme-banner-grad: linear-gradient(to right, #042F2E, #0F766E, #042F2E);
+      --theme-glow: rgba(13, 148, 136, 0.2);
       --theme-font-heading: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* 4: Beauty & Personal Care (Petal Blush & Rose Gold) */
+    /* 4: Beauty & Personal Care (Soft Rose Blush & Petal Pink LIGHT) */
     [data-theme="beauty_personal_care"] {
-      --theme-bg: #15060D;
-      --theme-bg-alt: #220B16;
-      --theme-header-bg: rgba(21, 6, 13, 0.95);
-      --theme-card-bg: rgba(34, 11, 22, 0.86);
-      --theme-card-border: rgba(251, 113, 133, 0.32);
-      --theme-card-hover: rgba(251, 113, 133, 0.7);
-      --theme-text-primary: #FFF1F2;
-      --theme-text-secondary: #FBCFE8;
-      --theme-accent: #FB7185;
-      --theme-accent-light: #F472B6;
+      --theme-bg: #FFF5F7;
+      --theme-bg-alt: #FFE4E8;
+      --theme-header-bg: rgba(255, 245, 247, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(244, 63, 94, 0.22);
+      --theme-card-hover: #F43F5E;
+      --theme-card-radius: 20px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.08);
+      --theme-text-primary: #4C0519;
+      --theme-text-secondary: #9F1239;
+      --theme-accent: #E11D48;
+      --theme-accent-light: #FB7185;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #FDE8E8 0%, #FB7185 50%, #DB2777 100%);
-      --theme-btn-grad: linear-gradient(135deg, #FB7185 0%, #DB2777 100%);
-      --theme-banner-grad: linear-gradient(to right, #500724, #831843, #500724);
-      --theme-glow: rgba(251, 113, 133, 0.4);
-      --theme-font-heading: 'Cinzel', serif;
+      --theme-title-grad: linear-gradient(135deg, #881337 0%, #E11D48 50%, #F43F5E 100%);
+      --theme-btn-grad: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+      --theme-banner-grad: linear-gradient(to right, #881337, #BE123C, #881337);
+      --theme-glow: rgba(225, 29, 72, 0.22);
+      --theme-font-heading: 'Playfair Display', serif;
     }
 
-    /* 5: Home & Kitchen (Warm Terracotta & Brass Amber) */
+    /* 5: Home & Kitchen (Warm Terracotta & Honey Amber LIGHT) */
     [data-theme="home_kitchen"] {
-      --theme-bg: #140B06;
-      --theme-bg-alt: #20130A;
-      --theme-header-bg: rgba(20, 11, 6, 0.95);
-      --theme-card-bg: rgba(32, 19, 10, 0.86);
-      --theme-card-border: rgba(245, 158, 11, 0.32);
-      --theme-card-hover: rgba(251, 191, 36, 0.7);
-      --theme-text-primary: #FFFBEB;
-      --theme-text-secondary: #FDE68A;
-      --theme-accent: #F59E0B;
-      --theme-accent-light: #FBBF24;
-      --theme-btn-text: #1C1917;
-      --theme-title-grad: linear-gradient(135deg, #FEF3C7 0%, #F59E0B 50%, #D97706 100%);
-      --theme-btn-grad: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
-      --theme-banner-grad: linear-gradient(to right, #451A03, #78350F, #451A03);
-      --theme-glow: rgba(245, 158, 11, 0.4);
+      --theme-bg: #FFFBEB;
+      --theme-bg-alt: #FEF3C7;
+      --theme-header-bg: rgba(255, 251, 235, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(217, 119, 6, 0.25);
+      --theme-card-hover: #D97706;
+      --theme-card-radius: 14px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.08);
+      --theme-text-primary: #451A03;
+      --theme-text-secondary: #92400E;
+      --theme-accent: #D97706;
+      --theme-accent-light: #F59E0B;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #451A03 0%, #B45309 50%, #D97706 100%);
+      --theme-btn-grad: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+      --theme-banner-grad: linear-gradient(to right, #78350F, #B45309, #78350F);
+      --theme-glow: rgba(217, 119, 6, 0.22);
       --theme-font-heading: 'Outfit', sans-serif;
     }
 
-    /* 6: Grocery & Food (Supermarket Lime Green & Harvest) */
+    /* 6: Grocery & Food (FreshCart Clean White & Fresh Green LIGHT) */
     [data-theme="grocery_food"] {
-      --theme-bg: #06170A;
-      --theme-bg-alt: #0C2312;
-      --theme-header-bg: rgba(6, 23, 10, 0.95);
-      --theme-card-bg: rgba(12, 35, 18, 0.86);
-      --theme-card-border: rgba(132, 204, 22, 0.32);
-      --theme-card-hover: rgba(163, 230, 53, 0.7);
-      --theme-text-primary: #F7FEE7;
-      --theme-text-secondary: #D9F99D;
-      --theme-accent: #84CC16;
-      --theme-accent-light: #A3E635;
-      --theme-btn-text: #14532D;
-      --theme-title-grad: linear-gradient(135deg, #ECFCCB 0%, #84CC16 50%, #4D7C0F 100%);
-      --theme-btn-grad: linear-gradient(135deg, #84CC16 0%, #4D7C0F 100%);
+      --theme-bg: #F8FCF8;
+      --theme-bg-alt: #DCFCE7;
+      --theme-header-bg: rgba(255, 255, 255, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(22, 163, 74, 0.25);
+      --theme-card-hover: #16A34A;
+      --theme-card-radius: 16px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.08);
+      --theme-text-primary: #052E16;
+      --theme-text-secondary: #166534;
+      --theme-accent: #16A34A;
+      --theme-accent-light: #22C55E;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #052E16 0%, #16A34A 50%, #15803D 100%);
+      --theme-btn-grad: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
       --theme-banner-grad: linear-gradient(to right, #14532D, #166534, #14532D);
-      --theme-glow: rgba(132, 204, 22, 0.4);
-      --theme-font-heading: 'Outfit', sans-serif;
+      --theme-glow: rgba(22, 163, 74, 0.25);
+      --theme-font-heading: 'Poppins', sans-serif;
     }
 
-    /* 7: Automotive & Accessories (Carbon Fiber & Racing Red) */
+    /* 7: Automotive & Accessories (Carbon Fiber & Racing Red DARK) */
     [data-theme="automotive_accessories"] {
-      --theme-bg: #0D0E12;
-      --theme-bg-alt: #161820;
-      --theme-header-bg: rgba(13, 14, 18, 0.95);
-      --theme-card-bg: rgba(22, 24, 32, 0.88);
-      --theme-card-border: rgba(239, 68, 68, 0.32);
-      --theme-card-hover: rgba(248, 113, 113, 0.7);
+      --theme-bg: #0B0D13;
+      --theme-bg-alt: #141722;
+      --theme-header-bg: rgba(11, 13, 19, 0.96);
+      --theme-card-bg: rgba(20, 23, 34, 0.88);
+      --theme-card-border: rgba(239, 68, 68, 0.3);
+      --theme-card-hover: rgba(239, 68, 68, 0.8);
+      --theme-card-radius: 6px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.2);
       --theme-text-primary: #FEF2F2;
-      --theme-text-secondary: #FECACA;
+      --theme-text-secondary: #FCA5A5;
       --theme-accent: #EF4444;
       --theme-accent-light: #F87171;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #FEE2E2 0%, #EF4444 50%, #B91C1C 100%);
-      --theme-btn-grad: linear-gradient(135deg, #EF4444 0%, #991B1B 100%);
+      --theme-title-grad: linear-gradient(135deg, #FFFFFF 0%, #EF4444 50%, #B91C1C 100%);
+      --theme-btn-grad: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
       --theme-banner-grad: linear-gradient(to right, #450A0A, #7F1D1D, #450A0A);
       --theme-glow: rgba(239, 68, 68, 0.4);
       --theme-font-heading: 'Space Grotesk', sans-serif;
     }
 
-    /* 8: Industrial Supplies (Heavy Gunmetal & Caution Yellow) */
+    /* 8: Industrial Supplies (Heavy Graphite & Hazard Amber DARK) */
     [data-theme="industrial_supplies"] {
       --theme-bg: #0A0F17;
       --theme-bg-alt: #131C2B;
-      --theme-header-bg: rgba(10, 15, 23, 0.95);
-      --theme-card-bg: rgba(19, 28, 43, 0.88);
+      --theme-header-bg: rgba(10, 15, 23, 0.96);
+      --theme-card-bg: rgba(19, 28, 43, 0.9);
       --theme-card-border: rgba(234, 179, 8, 0.35);
-      --theme-card-hover: rgba(250, 204, 21, 0.7);
+      --theme-card-hover: rgba(250, 204, 21, 0.85);
+      --theme-card-radius: 6px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(234, 179, 8, 0.15);
       --theme-text-primary: #FEFCE8;
       --theme-text-secondary: #CBD5E1;
       --theme-accent: #EAB308;
       --theme-accent-light: #FACC15;
       --theme-btn-text: #0F172A;
-      --theme-title-grad: linear-gradient(135deg, #FEF08A 0%, #EAB308 50%, #CA8A04 100%);
-      --theme-btn-grad: linear-gradient(135deg, #EAB308 0%, #A16207 100%);
+      --theme-title-grad: linear-gradient(135deg, #FFFFFF 0%, #FACC15 50%, #CA8A04 100%);
+      --theme-btn-grad: linear-gradient(135deg, #EAB308 0%, #CA8A04 100%);
       --theme-banner-grad: linear-gradient(to right, #1E293B, #334155, #1E293B);
-      --theme-glow: rgba(234, 179, 8, 0.4);
+      --theme-glow: rgba(234, 179, 8, 0.35);
       --theme-font-heading: 'Space Grotesk', sans-serif;
     }
 
-    /* 9: Books & Stationery (Classic Indigo & Parchment Amber) */
+    /* 9: Books & Stationery (Antique Academic Parchment & Oxford Navy LIGHT) */
     [data-theme="books_stationery"] {
-      --theme-bg: #0A0D18;
-      --theme-bg-alt: #131728;
-      --theme-header-bg: rgba(10, 13, 24, 0.95);
-      --theme-card-bg: rgba(19, 23, 40, 0.86);
-      --theme-card-border: rgba(139, 92, 246, 0.32);
-      --theme-card-hover: rgba(167, 139, 250, 0.7);
-      --theme-text-primary: #F5F3FF;
-      --theme-text-secondary: #DDD6FE;
-      --theme-accent: #8B5CF6;
-      --theme-accent-light: #A78BFA;
+      --theme-bg: #FAF7EF;
+      --theme-bg-alt: #F0E9D8;
+      --theme-header-bg: rgba(250, 247, 239, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(109, 40, 217, 0.22);
+      --theme-card-hover: #6D28D9;
+      --theme-card-radius: 8px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(67, 56, 202, 0.08);
+      --theme-text-primary: #1E1B4B;
+      --theme-text-secondary: #4338CA;
+      --theme-accent: #6D28D9;
+      --theme-accent-light: #8B5CF6;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #EDE9FE 0%, #8B5CF6 50%, #6D28D9 100%);
-      --theme-btn-grad: linear-gradient(135deg, #8B5CF6 0%, #5B21B6 100%);
-      --theme-banner-grad: linear-gradient(to right, #2E1065, #4C1D95, #2E1065);
-      --theme-glow: rgba(139, 92, 246, 0.38);
+      --theme-title-grad: linear-gradient(135deg, #1E1B4B 0%, #4338CA 50%, #6D28D9 100%);
+      --theme-btn-grad: linear-gradient(135deg, #4338CA 0%, #312E81 100%);
+      --theme-banner-grad: linear-gradient(to right, #1E1B4B, #312E81, #1E1B4B);
+      --theme-glow: rgba(109, 40, 217, 0.22);
       --theme-font-heading: 'Cinzel', serif;
     }
 
-    /* 10: Sports & Fitness (Electric Volt Cyan & Athletic Orange) */
+    /* 10: Sports & Fitness (Athletic Charcoal & Electric Volt Cyan DARK) */
     [data-theme="sports_fitness"] {
-      --theme-bg: #060E18;
-      --theme-bg-alt: #0C1A2E;
-      --theme-header-bg: rgba(6, 14, 24, 0.95);
-      --theme-card-bg: rgba(12, 26, 46, 0.88);
+      --theme-bg: #080E17;
+      --theme-bg-alt: #101A29;
+      --theme-header-bg: rgba(8, 14, 23, 0.96);
+      --theme-card-bg: rgba(16, 26, 41, 0.88);
       --theme-card-border: rgba(6, 182, 212, 0.32);
-      --theme-card-hover: rgba(34, 211, 238, 0.7);
+      --theme-card-hover: rgba(34, 211, 238, 0.8);
+      --theme-card-radius: 10px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.2);
       --theme-text-primary: #ECFEFF;
       --theme-text-secondary: #A5F3FC;
       --theme-accent: #06B6D4;
       --theme-accent-light: #22D3EE;
       --theme-btn-text: #082F49;
-      --theme-title-grad: linear-gradient(135deg, #CFFAFE 0%, #06B6D4 50%, #0891B2 100%);
-      --theme-btn-grad: linear-gradient(135deg, #06B6D4 0%, #0369A1 100%);
+      --theme-title-grad: linear-gradient(135deg, #FFFFFF 0%, #22D3EE 50%, #0284C7 100%);
+      --theme-btn-grad: linear-gradient(135deg, #06B6D4 0%, #0284C7 100%);
       --theme-banner-grad: linear-gradient(to right, #082F49, #0E7490, #082F49);
       --theme-glow: rgba(6, 182, 212, 0.4);
       --theme-font-heading: 'Space Grotesk', sans-serif;
     }
 
-    /* 11: Baby & Kids (Cotton Candy Pastel & Sky Blue) */
+    /* 11: Baby & Kids (Cotton Candy Soft Pastel & Bubblegum LIGHT) */
     [data-theme="baby_kids"] {
-      --theme-bg: #120A1A;
-      --theme-bg-alt: #1E112A;
-      --theme-header-bg: rgba(18, 10, 26, 0.95);
-      --theme-card-bg: rgba(30, 17, 42, 0.86);
-      --theme-card-border: rgba(244, 114, 182, 0.35);
-      --theme-card-hover: rgba(244, 114, 182, 0.75);
-      --theme-text-primary: #FDF2F8;
-      --theme-text-secondary: #FBCFE8;
-      --theme-accent: #F472B6;
-      --theme-accent-light: #FBCFE8;
+      --theme-bg: #FFF9FB;
+      --theme-bg-alt: #FCE7F3;
+      --theme-header-bg: rgba(255, 249, 251, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(244, 114, 182, 0.28);
+      --theme-card-hover: #EC4899;
+      --theme-card-radius: 24px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.08);
+      --theme-text-primary: #701A75;
+      --theme-text-secondary: #A21CAF;
+      --theme-accent: #EC4899;
+      --theme-accent-light: #F472B6;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #FDF2F8 0%, #F472B6 50%, #DB2777 100%);
-      --theme-btn-grad: linear-gradient(135deg, #F472B6 0%, #BE185D 100%);
-      --theme-banner-grad: linear-gradient(to right, #4A044E, #701A75, #4A044E);
-      --theme-glow: rgba(244, 114, 182, 0.4);
-      --theme-font-heading: 'Outfit', sans-serif;
+      --theme-title-grad: linear-gradient(135deg, #701A75 0%, #EC4899 50%, #F472B6 100%);
+      --theme-btn-grad: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+      --theme-banner-grad: linear-gradient(to right, #701A75, #BE185D, #701A75);
+      --theme-glow: rgba(236, 72, 153, 0.22);
+      --theme-font-heading: 'Poppins', sans-serif;
     }
 
-    /* 12: Agriculture & Farming (Fertile Earth & Monsoon Green) */
+    /* 12: Agriculture & Farming (Fertile Meadow & Organic Green LIGHT) */
     [data-theme="agriculture_farming"] {
-      --theme-bg: #071509;
-      --theme-bg-alt: #0D2411;
-      --theme-header-bg: rgba(7, 21, 9, 0.95);
-      --theme-card-bg: rgba(13, 36, 17, 0.86);
-      --theme-card-border: rgba(34, 197, 94, 0.32);
-      --theme-card-hover: rgba(74, 222, 128, 0.7);
-      --theme-text-primary: #F0FDF4;
-      --theme-text-secondary: #BBF7D0;
-      --theme-accent: #22C55E;
+      --theme-bg: #F5FAF3;
+      --theme-bg-alt: #DCFCE7;
+      --theme-header-bg: rgba(245, 250, 243, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(21, 128, 61, 0.22);
+      --theme-card-hover: #16A34A;
+      --theme-card-radius: 14px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(21, 128, 61, 0.08);
+      --theme-text-primary: #14532D;
+      --theme-text-secondary: #15803D;
+      --theme-accent: #16A34A;
       --theme-accent-light: #4ADE80;
-      --theme-btn-text: #052E16;
-      --theme-title-grad: linear-gradient(135deg, #DCFCE7 0%, #22C55E 50%, #15803D 100%);
-      --theme-btn-grad: linear-gradient(135deg, #22C55E 0%, #15803D 100%);
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #14532D 0%, #15803D 50%, #16A34A 100%);
+      --theme-btn-grad: linear-gradient(135deg, #15803D 0%, #166534 100%);
       --theme-banner-grad: linear-gradient(to right, #052E16, #14532D, #052E16);
-      --theme-glow: rgba(34, 197, 94, 0.4);
+      --theme-glow: rgba(21, 128, 61, 0.22);
       --theme-font-heading: 'Outfit', sans-serif;
     }
 
-    /* 13: Pet Supplies (Playful Sunset Bark & Orange) */
+    /* 13: Pet Supplies (Sunny Apricot & Bark Orange LIGHT) */
     [data-theme="pet_supplies"] {
-      --theme-bg: #140C07;
-      --theme-bg-alt: #21150D;
-      --theme-header-bg: rgba(20, 12, 7, 0.95);
-      --theme-card-bg: rgba(33, 21, 13, 0.86);
-      --theme-card-border: rgba(249, 115, 22, 0.35);
-      --theme-card-hover: rgba(251, 146, 60, 0.75);
-      --theme-text-primary: #FFF7ED;
-      --theme-text-secondary: #FED7AA;
-      --theme-accent: #F97316;
-      --theme-accent-light: #FB923C;
+      --theme-bg: #FFF8F0;
+      --theme-bg-alt: #FFEDD5;
+      --theme-header-bg: rgba(255, 248, 240, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(249, 115, 22, 0.22);
+      --theme-card-hover: #EA580C;
+      --theme-card-radius: 18px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(234, 88, 12, 0.08);
+      --theme-text-primary: #7C2D12;
+      --theme-text-secondary: #C2410C;
+      --theme-accent: #EA580C;
+      --theme-accent-light: #F97316;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #FFEDD5 0%, #F97316 50%, #C2410C 100%);
-      --theme-btn-grad: linear-gradient(135deg, #F97316 0%, #9A3412 100%);
-      --theme-banner-grad: linear-gradient(to right, #431407, #7C2D12, #431407);
-      --theme-glow: rgba(249, 115, 22, 0.4);
+      --theme-title-grad: linear-gradient(135deg, #7C2D12 0%, #EA580C 50%, #F97316 100%);
+      --theme-btn-grad: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+      --theme-banner-grad: linear-gradient(to right, #7C2D12, #9A3412, #7C2D12);
+      --theme-glow: rgba(234, 88, 12, 0.22);
+      --theme-font-heading: 'Poppins', sans-serif;
+    }
+
+    /* 14: Furniture & Home Decor (Japandi Warm Linen & Architectural Stone LIGHT) */
+    [data-theme="furniture_home_decor"] {
+      --theme-bg: #F7F5F0;
+      --theme-bg-alt: #ECE7DE;
+      --theme-header-bg: rgba(247, 245, 240, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(87, 83, 78, 0.2);
+      --theme-card-hover: #44403C;
+      --theme-card-radius: 8px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(41, 37, 36, 0.08);
+      --theme-text-primary: #292524;
+      --theme-text-secondary: #78716C;
+      --theme-accent: #78716C;
+      --theme-accent-light: #A8A29E;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #1C1917 0%, #44403C 50%, #78716C 100%);
+      --theme-btn-grad: linear-gradient(135deg, #292524 0%, #1C1917 100%);
+      --theme-banner-grad: linear-gradient(to right, #1C1917, #292524, #1C1917);
+      --theme-glow: rgba(41, 37, 36, 0.18);
       --theme-font-heading: 'Outfit', sans-serif;
     }
 
-    /* 14: Furniture & Home Decor (Velvet Violet & Teak Gold) */
-    [data-theme="furniture_home_decor"] {
-      --theme-bg: #100A18;
-      --theme-bg-alt: #1A1125;
-      --theme-header-bg: rgba(16, 10, 24, 0.95);
-      --theme-card-bg: rgba(26, 17, 37, 0.86);
-      --theme-card-border: rgba(168, 85, 247, 0.35);
-      --theme-card-hover: rgba(192, 132, 252, 0.75);
-      --theme-text-primary: #FAF5FF;
-      --theme-text-secondary: #E9D5FF;
-      --theme-accent: #A855F7;
-      --theme-accent-light: #C084FC;
-      --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #F3E8FF 0%, #A855F7 50%, #7E22CE 100%);
-      --theme-btn-grad: linear-gradient(135deg, #A855F7 0%, #6B21A8 100%);
-      --theme-banner-grad: linear-gradient(to right, #3B0764, #581C87, #3B0764);
-      --theme-glow: rgba(168, 85, 247, 0.4);
-      --theme-font-heading: 'Cinzel', serif;
-    }
-
-    /* 15: B2B Wholesale (Corporate Navy & Bullion Gold) */
+    /* 15: B2B Wholesale (Corporate Steel & Executive Royal Navy LIGHT) */
     [data-theme="b2b_wholesale"] {
-      --theme-bg: #070E1C;
-      --theme-bg-alt: #0D1930;
-      --theme-header-bg: rgba(7, 14, 28, 0.95);
-      --theme-card-bg: rgba(13, 25, 48, 0.88);
-      --theme-card-border: rgba(59, 130, 246, 0.35);
-      --theme-card-hover: rgba(96, 165, 250, 0.75);
-      --theme-text-primary: #EFF6FF;
-      --theme-text-secondary: #BFDBFE;
-      --theme-accent: #3B82F6;
-      --theme-accent-light: #60A5FA;
+      --theme-bg: #F8FAFC;
+      --theme-bg-alt: #EFF6FF;
+      --theme-header-bg: rgba(255, 255, 255, 0.96);
+      --theme-card-bg: #FFFFFF;
+      --theme-card-border: rgba(37, 99, 235, 0.2);
+      --theme-card-hover: #1D4ED8;
+      --theme-card-radius: 10px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.08);
+      --theme-text-primary: #0F172A;
+      --theme-text-secondary: #475569;
+      --theme-accent: #1D4ED8;
+      --theme-accent-light: #3B82F6;
       --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #DBEAFE 0%, #3B82F6 50%, #1D4ED8 100%);
-      --theme-btn-grad: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
-      --theme-banner-grad: linear-gradient(to right, #1E3A8A, #1E40AF, #1E3A8A);
-      --theme-glow: rgba(59, 130, 246, 0.4);
-      --theme-font-heading: 'Space Grotesk', sans-serif;
+      --theme-title-grad: linear-gradient(135deg, #0F172A 0%, #1E40AF 50%, #2563EB 100%);
+      --theme-btn-grad: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%);
+      --theme-banner-grad: linear-gradient(to right, #0F172A, #1E40AF, #0F172A);
+      --theme-glow: rgba(30, 64, 175, 0.2);
+      --theme-font-heading: 'Plus Jakarta Sans', sans-serif;
     }
 
     /* LEGACY ALIASES & STYLES */
-    [data-theme="vedic-gold"] {
-      --theme-bg: #090510;
-      --theme-bg-alt: #130722;
-      --theme-header-bg: rgba(9, 5, 16, 0.94);
-      --theme-card-bg: rgba(22, 10, 36, 0.85);
-      --theme-card-border: rgba(245, 158, 11, 0.3);
-      --theme-card-hover: rgba(251, 191, 36, 0.7);
-      --theme-text-primary: #FFFBEB;
-      --theme-text-secondary: #E5D5B8;
-      --theme-accent: #F59E0B;
-      --theme-accent-light: #FDE68A;
-      --theme-btn-text: #1C1917;
-      --theme-title-grad: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
-      --theme-btn-grad: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
-      --theme-banner-grad: linear-gradient(to right, #92400E, #D97706, #78350F);
-      --theme-glow: rgba(245, 158, 11, 0.45);
+    [data-theme="vedic-gold"], [data-theme="noolam-saree"] {
+      --theme-bg: #140204;
+      --theme-bg-alt: #200407;
+      --theme-header-bg: rgba(20, 2, 4, 0.96);
+      --theme-card-bg: rgba(32, 4, 7, 0.88);
+      --theme-card-border: rgba(212, 175, 55, 0.35);
+      --theme-card-hover: rgba(212, 175, 55, 0.8);
+      --theme-card-radius: 12px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.2);
+      --theme-text-primary: #FFFDF9;
+      --theme-text-secondary: #EAD8B1;
+      --theme-accent: #D4AF37;
+      --theme-accent-light: #F5DE7A;
+      --theme-btn-text: #FFFFFF;
+      --theme-title-grad: linear-gradient(135deg, #F5DE7A 0%, #D4AF37 50%, #B45309 100%);
+      --theme-btn-grad: linear-gradient(135deg, #500A13 0%, #3A080E 100%);
+      --theme-banner-grad: linear-gradient(to right, #250409, #500A13, #250409);
+      --theme-glow: rgba(212, 175, 55, 0.45);
       --theme-font-heading: 'Cinzel', serif;
     }
 
     [data-theme="minimal-light"] {
       --theme-bg: #F8FAFC;
       --theme-bg-alt: #F1F5F9;
-      --theme-header-bg: rgba(255, 255, 255, 0.95);
+      --theme-header-bg: rgba(255, 255, 255, 0.96);
       --theme-card-bg: #FFFFFF;
       --theme-card-border: #E2E8F0;
       --theme-card-hover: #CBD5E1;
+      --theme-card-radius: 12px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
       --theme-text-primary: #0F172A;
       --theme-text-secondary: #64748B;
       --theme-accent: #059669;
@@ -395,6 +432,8 @@
       --theme-card-bg: rgba(18, 5, 36, 0.85);
       --theme-card-border: rgba(168, 85, 247, 0.35);
       --theme-card-hover: rgba(236, 72, 153, 0.7);
+      --theme-card-radius: 12px;
+      --theme-card-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.25);
       --theme-text-primary: #FFFFFF;
       --theme-text-secondary: #D8B4FE;
       --theme-accent: #8B5CF6;
@@ -407,26 +446,7 @@
       --theme-font-heading: 'Space Grotesk', sans-serif;
     }
 
-    [data-theme="noolam-saree"] {
-      --theme-bg: #140204;
-      --theme-bg-alt: #200407;
-      --theme-header-bg: rgba(20, 2, 4, 0.95);
-      --theme-card-bg: rgba(32, 4, 7, 0.88);
-      --theme-card-border: rgba(212, 175, 55, 0.35);
-      --theme-card-hover: rgba(212, 175, 55, 0.75);
-      --theme-text-primary: #FFFDF9;
-      --theme-text-secondary: #EAD8B1;
-      --theme-accent: #D4AF37;
-      --theme-accent-light: #F5DE7A;
-      --theme-btn-text: #FFFFFF;
-      --theme-title-grad: linear-gradient(135deg, #F5DE7A 0%, #D4AF37 50%, #B45309 100%);
-      --theme-btn-grad: linear-gradient(135deg, #500A13 0%, #3A080E 100%);
-      --theme-banner-grad: linear-gradient(to right, #250409, #500A13, #250409);
-      --theme-glow: rgba(212, 175, 55, 0.45);
-      --theme-font-heading: 'Cinzel', serif;
-    }
-
-    /* THEME-RESPONSIVE ELEMENT BINDINGS */
+    /* THEME-RESPONSIVE CORE ELEMENT BINDINGS */
     body {
       background-color: var(--theme-bg) !important;
       color: var(--theme-text-primary) !important;
@@ -435,15 +455,17 @@
 
     header {
       background-color: var(--theme-header-bg) !important;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    .glass-card {
+    .glass-card, .product-card {
       background: var(--theme-card-bg) !important;
-      backdrop-filter: blur(12px);
       border: 1px solid var(--theme-card-border) !important;
+      border-radius: var(--theme-card-radius, 14px);
+      box-shadow: var(--theme-card-shadow, 0 10px 25px -5px rgba(0,0,0,0.2));
       transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .glass-card:hover {
+    .glass-card:hover, .product-card:hover {
       border-color: var(--theme-card-hover) !important;
     }
 
@@ -462,111 +484,238 @@
       color: var(--theme-btn-text, #ffffff) !important;
       box-shadow: 0 10px 25px -5px var(--theme-glow) !important;
     }
+    .btn-theme:hover {
+      filter: brightness(1.08);
+    }
 
-    /* THEME 3 LIGHT OVERRIDES */
-    [data-theme="minimal-light"] .text-slate-100,
-    [data-theme="minimal-light"] .text-slate-200,
-    [data-theme="minimal-light"] .text-slate-300,
-    [data-theme="minimal-light"] .text-white {
+    .cat-btn.active {
+      background: var(--theme-btn-grad) !important;
+      color: var(--theme-btn-text, #ffffff) !important;
+      box-shadow: 0 4px 15px -2px var(--theme-glow) !important;
+    }
+
+    /* ========================================================
+       LIGHT MODE UNIVERSAL OVERRIDES (For High-Contrast Clean Stores)
+       ======================================================== */
+    [data-theme-mode="light"] {
+      color-scheme: light;
+    }
+    [data-theme-mode="light"] body {
+      background-color: var(--theme-bg, #FFFFFF) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] header {
+      background-color: var(--theme-header-bg, #FFFFFF) !important;
+      border-bottom: 1px solid var(--theme-card-border, #E2E8F0) !important;
+      box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+    [data-theme-mode="light"] #topAnnouncementBar {
+      background: var(--theme-bg-alt, #F1F5F9) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+      border-bottom: 1px solid var(--theme-card-border, #E2E8F0) !important;
+    }
+    [data-theme-mode="light"] #topAnnouncementBar #announcementTextSpan,
+    [data-theme-mode="light"] #topAnnouncementBar a,
+    [data-theme-mode="light"] #topAnnouncementBar strong {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #topAnnouncementBar button {
+      background-color: rgba(0, 0, 0, 0.08) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+      border-color: rgba(0, 0, 0, 0.15) !important;
+    }
+    [data-theme-mode="light"] nav a {
+      color: var(--theme-text-secondary, #475569) !important;
+    }
+    [data-theme-mode="light"] nav a:hover {
+      color: var(--theme-accent, #2563EB) !important;
+    }
+    [data-theme-mode="light"] #headerHelplinePill {
+      background-color: #FFFFFF !important;
+      border-color: var(--theme-card-border, #CBD5E1) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #brandNameText {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #brandTaglineText {
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] #heroSection {
+      background-color: var(--theme-bg, #FFFFFF) !important;
+    }
+    [data-theme-mode="light"] #heroSection .bg-blue-950\/80 {
+      background-color: var(--theme-bg-alt, #F1F5F9) !important;
+      border-color: var(--theme-card-border, #CBD5E1) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #heroBadgeText {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #heroTitleText {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #heroSubtitleText {
+      color: var(--theme-text-secondary, #475569) !important;
+    }
+    [data-theme-mode="light"] #heroSecondaryWaBtn {
+      background-color: #FFFFFF !important;
+      border-color: var(--theme-card-border, #CBD5E1) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #heroSection .grid > div {
+      background-color: #FFFFFF !important;
+      border-color: var(--theme-card-border, #E2E8F0) !important;
+      box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.04) !important;
+    }
+    [data-theme-mode="light"] #heroSection .grid > div .text-xs {
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] #products h2,
+    [data-theme-mode="light"] #features h2,
+    [data-theme-mode="light"] #contact-directory h2,
+    [data-theme-mode="light"] #faq h2 {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #categoryFilterContainer {
+      background-color: var(--theme-bg-alt, #F1F5F9) !important;
+      border-color: var(--theme-card-border, #E2E8F0) !important;
+    }
+    [data-theme-mode="light"] #categoryFilterContainer .cat-btn:not(.active) {
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] .glass-card,
+    [data-theme-mode="light"] .product-card {
+      background-color: var(--theme-card-bg, #FFFFFF) !important;
+      border: 1px solid var(--theme-card-border, #E2E8F0) !important;
+      box-shadow: var(--theme-card-shadow, 0 8px 24px -4px rgba(0,0,0,0.06)) !important;
+      backdrop-filter: none !important;
+    }
+    [data-theme-mode="light"] .glass-card:hover,
+    [data-theme-mode="light"] .product-card:hover {
+      border-color: var(--theme-card-hover, #CBD5E1) !important;
+      box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.1) !important;
+    }
+    [data-theme-mode="light"] footer {
+      background-color: var(--theme-bg-alt, #F8FAFC) !important;
+      border-top: 1px solid var(--theme-card-border, #E2E8F0) !important;
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] footer .text-white {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] footer a {
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] footer a:hover {
+      color: var(--theme-accent, #2563EB) !important;
+    }
+    [data-theme-mode="light"] footer span.px-2 {
+      background-color: #FFFFFF !important;
+      border-color: var(--theme-card-border, #E2E8F0) !important;
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #inquiryCard,
+    [data-theme-mode="light"] #mapCard {
+      background-color: #FFFFFF !important;
+      border-color: var(--theme-card-border, #E2E8F0) !important;
+    }
+    [data-theme-mode="light"] #inquiryCard input,
+    [data-theme-mode="light"] #inquiryCard textarea {
+      background-color: #F8FAFC !important;
+      border-color: #E2E8F0 !important;
       color: #0F172A !important;
     }
-    [data-theme="minimal-light"] .text-slate-400 {
-      color: #64748B !important;
-    }
-    [data-theme="minimal-light"] .bg-\[\#070B18\],
-    [data-theme="minimal-light"] .bg-\[\#080C1A\] {
-      background-color: #F8FAFC !important;
-    }
-    [data-theme="minimal-light"] .bg-\[\#0F172A\] {
+    [data-theme-mode="light"] #inquiryCard input:focus,
+    [data-theme-mode="light"] #inquiryCard textarea:focus {
+      border-color: var(--theme-accent, #2563EB) !important;
       background-color: #FFFFFF !important;
     }
-    [data-theme="minimal-light"] .border-slate-800,
-    [data-theme="minimal-light"] .border-slate-700 {
-      border-color: #E2E8F0 !important;
+    [data-theme-mode="light"] #inquiryFormStatus {
+      color: var(--theme-text-secondary, #64748B) !important;
     }
-    [data-theme="minimal-light"] .text-blue-400,
-    [data-theme="minimal-light"] .text-blue-500 {
-      color: #059669 !important;
+    [data-theme-mode="light"] #faq .border-slate-800 {
+      border-color: var(--theme-card-border, #E2E8F0) !important;
+      background-color: #FFFFFF !important;
     }
-    [data-theme="minimal-light"] .bg-blue-600 {
-      background-color: #0F172A !important;
+    [data-theme-mode="light"] #faq button span {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] #faq div p {
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] .dir-card {
+      background-color: #FFFFFF !important;
+      border-color: var(--theme-card-border, #E2E8F0) !important;
+      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+    [data-theme-mode="light"] .dir-card h4 {
+      color: var(--theme-text-primary, #0F172A) !important;
+    }
+    [data-theme-mode="light"] .dir-card p {
+      color: var(--theme-text-secondary, #64748B) !important;
+    }
+    [data-theme-mode="light"] .dir-card a span,
+    [data-theme-mode="light"] .dir-card strong {
+      color: var(--theme-text-primary, #0F172A) !important;
     }
 
-    /* ACCENT COLOR DYNAMIC MAPPER */
-    [data-theme="electronics"] .text-blue-400,
-    [data-theme="electronics"] .text-blue-500 { color: #00F0FF !important; }
+    /* DYNAMIC ACCENT OVERRIDES */
+    [data-theme="electronics"] .text-blue-400, [data-theme="electronics"] .text-blue-500 { color: #00F0FF !important; }
     [data-theme="electronics"] .bg-blue-600 { background-color: #2563EB !important; }
 
-    [data-theme="fashion"] .text-blue-400,
-    [data-theme="fashion"] .text-blue-500 { color: #F43F5E !important; }
-    [data-theme="fashion"] .bg-blue-600 { background-color: #E11D48 !important; }
+    [data-theme="fashion"] .text-blue-400, [data-theme="fashion"] .text-blue-500 { color: #991B1B !important; }
+    [data-theme="fashion"] .bg-blue-600 { background-color: #1C1917 !important; }
 
-    [data-theme="health_medical"] .text-blue-400,
-    [data-theme="health_medical"] .text-blue-500 { color: #10B981 !important; }
-    [data-theme="health_medical"] .bg-blue-600 { background-color: #059669 !important; }
+    [data-theme="health_medical"] .text-blue-400, [data-theme="health_medical"] .text-blue-500 { color: #0D9488 !important; }
+    [data-theme="health_medical"] .bg-blue-600 { background-color: #0D9488 !important; }
 
-    [data-theme="beauty_personal_care"] .text-blue-400,
-    [data-theme="beauty_personal_care"] .text-blue-500 { color: #FB7185 !important; }
-    [data-theme="beauty_personal_care"] .bg-blue-600 { background-color: #DB2777 !important; }
+    [data-theme="beauty_personal_care"] .text-blue-400, [data-theme="beauty_personal_care"] .text-blue-500 { color: #E11D48 !important; }
+    [data-theme="beauty_personal_care"] .bg-blue-600 { background-color: #E11D48 !important; }
 
-    [data-theme="home_kitchen"] .text-blue-400,
-    [data-theme="home_kitchen"] .text-blue-500 { color: #F59E0B !important; }
+    [data-theme="home_kitchen"] .text-blue-400, [data-theme="home_kitchen"] .text-blue-500 { color: #D97706 !important; }
     [data-theme="home_kitchen"] .bg-blue-600 { background-color: #D97706 !important; }
 
-    [data-theme="grocery_food"] .text-blue-400,
-    [data-theme="grocery_food"] .text-blue-500 { color: #84CC16 !important; }
-    [data-theme="grocery_food"] .bg-blue-600 { background-color: #65A30D !important; }
+    [data-theme="grocery_food"] .text-blue-400, [data-theme="grocery_food"] .text-blue-500 { color: #16A34A !important; }
+    [data-theme="grocery_food"] .bg-blue-600 { background-color: #16A34A !important; }
 
-    [data-theme="automotive_accessories"] .text-blue-400,
-    [data-theme="automotive_accessories"] .text-blue-500 { color: #EF4444 !important; }
+    [data-theme="automotive_accessories"] .text-blue-400, [data-theme="automotive_accessories"] .text-blue-500 { color: #EF4444 !important; }
     [data-theme="automotive_accessories"] .bg-blue-600 { background-color: #DC2626 !important; }
 
-    [data-theme="industrial_supplies"] .text-blue-400,
-    [data-theme="industrial_supplies"] .text-blue-500 { color: #EAB308 !important; }
+    [data-theme="industrial_supplies"] .text-blue-400, [data-theme="industrial_supplies"] .text-blue-500 { color: #EAB308 !important; }
     [data-theme="industrial_supplies"] .bg-blue-600 { background-color: #CA8A04 !important; }
 
-    [data-theme="books_stationery"] .text-blue-400,
-    [data-theme="books_stationery"] .text-blue-500 { color: #8B5CF6 !important; }
-    [data-theme="books_stationery"] .bg-blue-600 { background-color: #7C3AED !important; }
+    [data-theme="books_stationery"] .text-blue-400, [data-theme="books_stationery"] .text-blue-500 { color: #6D28D9 !important; }
+    [data-theme="books_stationery"] .bg-blue-600 { background-color: #4338CA !important; }
 
-    [data-theme="sports_fitness"] .text-blue-400,
-    [data-theme="sports_fitness"] .text-blue-500 { color: #06B6D4 !important; }
+    [data-theme="sports_fitness"] .text-blue-400, [data-theme="sports_fitness"] .text-blue-500 { color: #06B6D4 !important; }
     [data-theme="sports_fitness"] .bg-blue-600 { background-color: #0891B2 !important; }
 
-    [data-theme="baby_kids"] .text-blue-400,
-    [data-theme="baby_kids"] .text-blue-500 { color: #F472B6 !important; }
-    [data-theme="baby_kids"] .bg-blue-600 { background-color: #DB2777 !important; }
+    [data-theme="baby_kids"] .text-blue-400, [data-theme="baby_kids"] .text-blue-500 { color: #EC4899 !important; }
+    [data-theme="baby_kids"] .bg-blue-600 { background-color: #EC4899 !important; }
 
-    [data-theme="agriculture_farming"] .text-blue-400,
-    [data-theme="agriculture_farming"] .text-blue-500 { color: #22C55E !important; }
-    [data-theme="agriculture_farming"] .bg-blue-600 { background-color: #16A34A !important; }
+    [data-theme="agriculture_farming"] .text-blue-400, [data-theme="agriculture_farming"] .text-blue-500 { color: #16A34A !important; }
+    [data-theme="agriculture_farming"] .bg-blue-600 { background-color: #15803D !important; }
 
-    [data-theme="pet_supplies"] .text-blue-400,
-    [data-theme="pet_supplies"] .text-blue-500 { color: #F97316 !important; }
+    [data-theme="pet_supplies"] .text-blue-400, [data-theme="pet_supplies"] .text-blue-500 { color: #EA580C !important; }
     [data-theme="pet_supplies"] .bg-blue-600 { background-color: #EA580C !important; }
 
-    [data-theme="furniture_home_decor"] .text-blue-400,
-    [data-theme="furniture_home_decor"] .text-blue-500 { color: #A855F7 !important; }
-    [data-theme="furniture_home_decor"] .bg-blue-600 { background-color: #9333EA !important; }
+    [data-theme="furniture_home_decor"] .text-blue-400, [data-theme="furniture_home_decor"] .text-blue-500 { color: #78716C !important; }
+    [data-theme="furniture_home_decor"] .bg-blue-600 { background-color: #292524 !important; }
 
-    [data-theme="b2b_wholesale"] .text-blue-400,
-    [data-theme="b2b_wholesale"] .text-blue-500 { color: #3B82F6 !important; }
-    [data-theme="b2b_wholesale"] .bg-blue-600 { background-color: #1D4ED8 !important; }
+    [data-theme="b2b_wholesale"] .text-blue-400, [data-theme="b2b_wholesale"] .text-blue-500 { color: #1D4ED8 !important; }
+    [data-theme="b2b_wholesale"] .bg-blue-600 { background-color: #1E40AF !important; }
 
-    [data-theme="vedic-gold"] .text-blue-400,
-    [data-theme="vedic-gold"] .text-blue-500 { color: #F59E0B !important; }
-    [data-theme="vedic-gold"] .bg-blue-600 { background-color: #D97706 !important; }
+    [data-theme="vedic-gold"] .text-blue-400, [data-theme="vedic-gold"] .text-blue-500 { color: #D4AF37 !important; }
+    [data-theme="vedic-gold"] .bg-blue-600 { background-color: #500A13 !important; }
 
-    [data-theme="neon-violet"] .text-blue-400,
-    [data-theme="neon-violet"] .text-blue-500 { color: #C084FC !important; }
+    [data-theme="neon-violet"] .text-blue-400, [data-theme="neon-violet"] .text-blue-500 { color: #C084FC !important; }
     [data-theme="neon-violet"] .bg-blue-600 { background-color: #8B5CF6 !important; }
 
-    [data-theme="emerald-pro"] .text-blue-400,
-    [data-theme="emerald-pro"] .text-blue-500 { color: #34D399 !important; }
-    [data-theme="emerald-pro"] .bg-blue-600 { background-color: #059669 !important; }
+    [data-theme="emerald-pro"] .text-blue-400, [data-theme="emerald-pro"] .text-blue-500 { color: #0D9488 !important; }
+    [data-theme="emerald-pro"] .bg-blue-600 { background-color: #0D9488 !important; }
 
-    [data-theme="noolam-saree"] .text-blue-400,
-    [data-theme="noolam-saree"] .text-blue-500 { color: #D4AF37 !important; }
+    [data-theme="noolam-saree"] .text-blue-400, [data-theme="noolam-saree"] .text-blue-500 { color: #D4AF37 !important; }
     [data-theme="noolam-saree"] .bg-blue-600 { background-color: #500A13 !important; }
   </style>
 </head>
@@ -689,7 +838,7 @@
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a id="heroPrimaryCtaBtn" href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white font-bold text-base shadow-xl shadow-blue-600/25 hover:scale-105 active:scale-95 transition">
+          <a id="heroPrimaryCtaBtn" href="#products" class="btn-theme w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 font-bold text-base shadow-xl hover:scale-105 active:scale-95 transition" style="border-radius: var(--theme-card-radius, 12px);">
             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
             <span id="heroCtaText">Browse Catalog</span>
           </a>
@@ -2290,6 +2439,9 @@
         ctaText: "Browse Tech Catalog",
         icon: "📱",
         categoryTag: "electronics",
+        mode: "dark",
+        fontHeading: "'Space Grotesk', sans-serif",
+        cardRadius: "12px",
         catalog: INDUSTRY_CATALOGS.electronics
       },
       fashion: {
@@ -2300,6 +2452,9 @@
         ctaText: "Explore Collection",
         icon: "👗",
         categoryTag: "fashion",
+        mode: "light",
+        fontHeading: "'Playfair Display', serif",
+        cardRadius: "4px",
         catalog: INDUSTRY_CATALOGS.fashion
       },
       health_medical: {
@@ -2310,6 +2465,9 @@
         ctaText: "Shop Healthcare",
         icon: "💊",
         categoryTag: "health_medical",
+        mode: "light",
+        fontHeading: "'Plus Jakarta Sans', sans-serif",
+        cardRadius: "14px",
         catalog: INDUSTRY_CATALOGS.health_medical
       },
       beauty_personal_care: {
@@ -2320,6 +2478,9 @@
         ctaText: "Discover Beauty",
         icon: "💄",
         categoryTag: "beauty_personal_care",
+        mode: "light",
+        fontHeading: "'Playfair Display', serif",
+        cardRadius: "20px",
         catalog: INDUSTRY_CATALOGS.beauty_personal_care
       },
       home_kitchen: {
@@ -2330,6 +2491,9 @@
         ctaText: "Shop Kitchen Range",
         icon: "🍳",
         categoryTag: "home_kitchen",
+        mode: "light",
+        fontHeading: "'Outfit', sans-serif",
+        cardRadius: "14px",
         catalog: INDUSTRY_CATALOGS.home_kitchen
       },
       grocery_food: {
@@ -2340,11 +2504,11 @@
         ctaText: "Order Daily Grocery",
         icon: "🛒",
         categoryTag: "grocery_food",
+        mode: "light",
+        fontHeading: "'Poppins', sans-serif",
+        cardRadius: "16px",
         catalog: INDUSTRY_CATALOGS.grocery_food
       },
-      automotive_accessories: [
-        /* will be mapped below */
-      ],
       automotive_accessories: {
         title: "🚗 Automotive & Bike Accessories",
         badge: "🏎️ High Performance Auto Parts & Care",
@@ -2353,6 +2517,9 @@
         ctaText: "Equip Your Ride",
         icon: "🚗",
         categoryTag: "automotive_accessories",
+        mode: "dark",
+        fontHeading: "'Space Grotesk', sans-serif",
+        cardRadius: "6px",
         catalog: INDUSTRY_CATALOGS.automotive_accessories
       },
       industrial_supplies: {
@@ -2363,6 +2530,9 @@
         ctaText: "Request B2B Quote",
         icon: "🏭",
         categoryTag: "industrial_supplies",
+        mode: "dark",
+        fontHeading: "'Space Grotesk', sans-serif",
+        cardRadius: "6px",
         catalog: INDUSTRY_CATALOGS.industrial_supplies
       },
       books_stationery: {
@@ -2373,6 +2543,9 @@
         ctaText: "Browse Books & Pens",
         icon: "📚",
         categoryTag: "books_stationery",
+        mode: "light",
+        fontHeading: "'Cinzel', serif",
+        cardRadius: "8px",
         catalog: INDUSTRY_CATALOGS.books_stationery
       },
       sports_fitness: {
@@ -2383,6 +2556,9 @@
         ctaText: "Start Training",
         icon: "⚽",
         categoryTag: "sports_fitness",
+        mode: "dark",
+        fontHeading: "'Space Grotesk', sans-serif",
+        cardRadius: "10px",
         catalog: INDUSTRY_CATALOGS.sports_fitness
       },
       baby_kids: {
@@ -2393,6 +2569,9 @@
         ctaText: "Shop Baby Essentials",
         icon: "👶",
         categoryTag: "baby_kids",
+        mode: "light",
+        fontHeading: "'Poppins', sans-serif",
+        cardRadius: "24px",
         catalog: INDUSTRY_CATALOGS.baby_kids
       },
       agriculture_farming: {
@@ -2403,6 +2582,9 @@
         ctaText: "Order Farm Supplies",
         icon: "🌾",
         categoryTag: "agriculture_farming",
+        mode: "light",
+        fontHeading: "'Outfit', sans-serif",
+        cardRadius: "14px",
         catalog: INDUSTRY_CATALOGS.agriculture_farming
       },
       pet_supplies: {
@@ -2413,6 +2595,9 @@
         ctaText: "Treat Your Pet",
         icon: "🐾",
         categoryTag: "pet_supplies",
+        mode: "light",
+        fontHeading: "'Poppins', sans-serif",
+        cardRadius: "18px",
         catalog: INDUSTRY_CATALOGS.pet_supplies
       },
       furniture_home_decor: {
@@ -2423,6 +2608,9 @@
         ctaText: "Explore Furniture",
         icon: "🛋️",
         categoryTag: "furniture_home_decor",
+        mode: "light",
+        fontHeading: "'Outfit', sans-serif",
+        cardRadius: "8px",
         catalog: INDUSTRY_CATALOGS.furniture_home_decor
       },
       b2b_wholesale: {
@@ -2433,6 +2621,9 @@
         ctaText: "Request Wholesale Quotation",
         icon: "📦",
         categoryTag: "b2b_wholesale",
+        mode: "light",
+        fontHeading: "'Plus Jakarta Sans', sans-serif",
+        cardRadius: "10px",
         catalog: INDUSTRY_CATALOGS.b2b_wholesale
       },
       // Aliases for backward compatibility
@@ -2444,6 +2635,9 @@
         ctaText: "Browse Digital Products",
         icon: "⚡",
         categoryTag: "electronics",
+        mode: "dark",
+        fontHeading: "'Space Grotesk', sans-serif",
+        cardRadius: "12px",
         catalog: INDUSTRY_CATALOGS.electronics
       },
       'noolam-saree': {
@@ -2454,6 +2648,9 @@
         ctaText: "Explore Saree Studio",
         icon: "🥻",
         categoryTag: "fashion",
+        mode: "dark",
+        fontHeading: "'Cinzel', serif",
+        cardRadius: "12px",
         catalog: INDUSTRY_CATALOGS.fashion
       },
       'emerald-pro': {
@@ -2464,6 +2661,9 @@
         ctaText: "Shop Healthcare",
         icon: "🌿",
         categoryTag: "health_medical",
+        mode: "light",
+        fontHeading: "'Plus Jakarta Sans', sans-serif",
+        cardRadius: "14px",
         catalog: INDUSTRY_CATALOGS.health_medical
       },
       'vedic-gold': {
@@ -2474,6 +2674,9 @@
         ctaText: "Explore Spiritual Tools",
         icon: "🕉️",
         categoryTag: "fashion",
+        mode: "dark",
+        fontHeading: "'Cinzel', serif",
+        cardRadius: "12px",
         catalog: INDUSTRY_CATALOGS.fashion
       },
       'minimal-light': {
@@ -2484,6 +2687,9 @@
         ctaText: "Shop Collection",
         icon: "🛍️",
         categoryTag: "home_kitchen",
+        mode: "light",
+        fontHeading: "'Outfit', sans-serif",
+        cardRadius: "12px",
         catalog: INDUSTRY_CATALOGS.home_kitchen
       },
       'neon-violet': {
@@ -2494,6 +2700,9 @@
         ctaText: "Level Up Now",
         icon: "👾",
         categoryTag: "electronics",
+        mode: "dark",
+        fontHeading: "'Space Grotesk', sans-serif",
+        cardRadius: "12px",
         catalog: INDUSTRY_CATALOGS.electronics
       }
     };
@@ -2801,10 +3010,20 @@
 
       const conf = THEME_CONFIGS[id];
       storeConfig.activeTheme = id;
+      const mode = conf.mode || 'dark';
 
       document.documentElement.setAttribute('data-theme', id);
+      document.documentElement.setAttribute('data-theme-mode', mode);
       document.body.setAttribute('data-theme', id);
+      document.body.setAttribute('data-theme-mode', mode);
       localStorage.setItem('store_active_template', id);
+
+      if (conf.fontHeading) {
+        document.documentElement.style.setProperty('--theme-font-heading', conf.fontHeading);
+      }
+      if (conf.cardRadius) {
+        document.documentElement.style.setProperty('--theme-card-radius', conf.cardRadius);
+      }
 
       const badgeEl = document.getElementById('currentThemeBadge');
       if (badgeEl) badgeEl.innerText = `${conf.icon} ${conf.title}`;
@@ -2835,10 +3054,11 @@
       if (switchCatalog && (!window.hasLoadedSheetProducts || currentProducts.length === 0)) {
         if (conf.catalog && Array.isArray(conf.catalog)) {
           currentProducts = [...conf.catalog];
-          renderProducts(currentProducts);
         }
       }
 
+      // Re-render product grid so cards immediately adopt the theme's colors, radius, and button gradients
+      renderProducts(currentProducts);
       lucide.createIcons();
     }
 
@@ -3013,39 +3233,40 @@
           : 0;
 
         const card = document.createElement('div');
-        card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/10";
+        card.className = "product-card glass-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5";
+        card.style.borderRadius = "var(--theme-card-radius, 14px)";
         
         card.innerHTML = `
           <div>
-            <div class="relative h-48 w-full bg-slate-900 overflow-hidden">
+            <div class="relative h-52 w-full overflow-hidden" style="background-color: var(--theme-bg-alt, #0F172A);">
               <img src="${p.thumbnail || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80'}" 
                    alt="${p.title}" 
                    class="w-full h-full object-cover transition duration-500 hover:scale-105" 
                    onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80';" />
               
               <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                ${p.badge ? `<span class="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-blue-600 text-white shadow-md">${p.badge}</span>` : ''}
+                ${p.badge ? `<span class="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-wider btn-theme shadow-md">${p.badge}</span>` : ''}
                 ${discountPercent > 0 ? `<span class="px-2 py-1 rounded-md text-[11px] font-bold bg-rose-600 text-white shadow-md">${discountPercent}% OFF</span>` : ''}
               </div>
 
-              <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[10px] uppercase font-semibold text-slate-300 border border-slate-700">
-                ${p.category || 'Digital File'}
+              <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded text-[10px] uppercase font-bold border" style="background: rgba(0,0,0,0.65); color: #FFFFFF; border-color: rgba(255,255,255,0.2); backdrop-filter: blur(4px);">
+                ${p.category || 'Store Item'}
               </div>
             </div>
 
-            <div class="p-6">
-              <h3 class="font-heading font-bold text-lg text-white mb-2 leading-snug hover:text-blue-300 transition">
+            <div class="p-5 sm:p-6">
+              <h3 class="font-heading font-bold text-lg mb-2 leading-snug transition hover:opacity-85" style="color: var(--theme-text-primary);">
                 ${p.title}
               </h3>
-              <p class="text-xs text-slate-400 mb-4 line-clamp-2">
+              <p class="text-xs mb-4 line-clamp-2" style="color: var(--theme-text-secondary);">
                 ${p.description || ''}
               </p>
 
               ${featuresArray.length > 0 ? `
-                <ul class="space-y-1.5 mb-5 border-t border-slate-800/80 pt-3">
+                <ul class="space-y-1.5 mb-5 border-t pt-3" style="border-color: var(--theme-card-border);">
                   ${featuresArray.slice(0, 3).map(f => `
-                    <li class="flex items-center gap-2 text-xs text-slate-300">
-                      <i data-lucide="check" class="w-3.5 h-3.5 text-blue-400 shrink-0"></i>
+                    <li class="flex items-center gap-2 text-xs" style="color: var(--theme-text-secondary);">
+                      <i data-lucide="check" class="w-3.5 h-3.5 shrink-0" style="color: var(--theme-accent);"></i>
                       <span>${f}</span>
                     </li>
                   `).join('')}
@@ -3054,24 +3275,25 @@
             </div>
           </div>
 
-          <div class="px-6 pb-6 pt-2 border-t border-slate-800/80">
+          <div class="px-5 sm:px-6 pb-6 pt-2 border-t" style="border-color: var(--theme-card-border);">
             <div class="flex items-baseline justify-between mb-4">
               <div>
-                <span class="text-[11px] text-slate-400 block font-medium">Limited Price</span>
+                <span class="text-[11px] block font-medium" style="color: var(--theme-text-secondary);">Direct Price</span>
                 <div class="flex items-baseline gap-2">
-                  <span class="text-2xl font-black font-heading text-emerald-400">₹${p.price_selling}</span>
-                  ${p.price_original ? `<span class="text-xs text-slate-500 line-through">₹${p.price_original}</span>` : ''}
+                  <span class="text-2xl font-black font-heading" style="color: var(--theme-accent);">₹${p.price_selling}</span>
+                  ${p.price_original ? `<span class="text-xs line-through" style="color: var(--theme-text-secondary); opacity: 0.7;">₹${p.price_original}</span>` : ''}
                 </div>
               </div>
-              <span class="text-[11px] text-blue-300 font-semibold flex items-center gap-1">
-                <i data-lucide="zap" class="w-3.5 h-3.5"></i> Instant Download
+              <span class="text-[11px] font-semibold flex items-center gap-1" style="color: var(--theme-accent);">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i> Ready Stock
               </span>
             </div>
 
             <button onclick="openOrderModal('${p.id}')" 
-                    class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition active:scale-95">
+                    class="btn-theme w-full py-3 font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
+                    style="border-radius: var(--theme-card-radius, 12px);">
               <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
-              <span>Buy via WhatsApp</span>
+              <span>Order on WhatsApp</span>
             </button>
           </div>
         `;
@@ -3086,12 +3308,14 @@
       activeFilter = cat;
       const buttons = document.querySelectorAll('.cat-btn');
       buttons.forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.remove('active', 'bg-blue-600', 'text-white');
         btn.classList.add('text-slate-400');
       });
 
-      event.target.classList.add('bg-blue-600', 'text-white');
-      event.target.classList.remove('text-slate-400');
+      if (event && event.target) {
+        event.target.classList.add('active', 'text-white');
+        event.target.classList.remove('text-slate-400');
+      }
 
       renderProducts(currentProducts);
     }

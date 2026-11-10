@@ -3566,6 +3566,79 @@ class MainActivity : Activity() {
             }
         ))
 
+        // [A15] Hero Promo Tagline / Badge
+        val initialBadge = pendingSettings["hero_badge"] ?: dashboardData?.settings?.get("hero_badge") ?: ""
+        heroBadgeInput = createExcelStyledInput("e.g. ⚡ High-Tech Electronics & Smart Gadgets Store", initialBadge)
+        form.addView(createExcelRow(
+            cellRef = "A15",
+            title = "Hero Tagline / Promo Pill Badge",
+            subHint = "Headline ke upar pill box me dikhne wala offer / brand tag.",
+            inputView = heroBadgeInput,
+            onSaveRow = {
+                val v = heroBadgeInput.text.toString().trim()
+                saveIndividualSetting("hero_badge", v, "Hero Badge Text")
+            }
+        ))
+
+        // [A16] Hero Main Headline
+        val initialHeroTitle = pendingSettings["hero_title"] ?: dashboardData?.settings?.get("hero_title") ?: ""
+        heroTitleInput = createExcelStyledInput("e.g. Next-Gen Tech & Electronics At Genuine Direct Prices", initialHeroTitle, multiline = true)
+        form.addView(createExcelRow(
+            cellRef = "A16",
+            title = "Hero Main Headline",
+            subHint = "Website home page ka sabse bada primary headline text.",
+            inputView = heroTitleInput,
+            onSaveRow = {
+                val v = heroTitleInput.text.toString().trim()
+                saveIndividualSetting("hero_title", v, "Hero Headline")
+            }
+        ))
+
+        // [A17] Hero Subheadline / Description
+        val initialHeroSub = pendingSettings["hero_subtitle"] ?: dashboardData?.settings?.get("hero_subtitle") ?: ""
+        heroSubtitleInput = createExcelStyledInput("e.g. Original brand warranties, fastest EMI & 0% fee UPI checkout.", initialHeroSub, multiline = true)
+        form.addView(createExcelRow(
+            cellRef = "A17",
+            title = "Hero Subheadline / Description",
+            subHint = "Headline ke niche store aur offers ka detail description text.",
+            inputView = heroSubtitleInput,
+            onSaveRow = {
+                val v = heroSubtitleInput.text.toString().trim()
+                saveIndividualSetting("hero_subtitle", v, "Hero Subheadline")
+            }
+        ))
+
+        // [A18] Hero Background Banner Photo
+        val initialBanner = pendingSettings["banner_url"] ?: dashboardData?.settings?.get("banner_url") ?: dashboardData?.settings?.get("hero_banner_url") ?: ""
+        bannerUrlInput = createExcelStyledInput("https://example.com/banner.jpg ya niche gallery se chunein", initialBanner)
+        val pickBannerBtn = UiKit.createSecondaryButton(this, "📁 Phone Gallery Se Banner Chunein (1200x500 px)", "#10B981") {
+            openImagePicker(REQUEST_PICK_BANNER)
+        }.apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 38)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+        }
+        liveBannerPreview = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, UiKit.dp(this@MainActivity, 90)).apply {
+                topMargin = UiKit.dp(this@MainActivity, 6)
+            }
+            background = UiKit.cardDrawable(Color.parseColor("#070E1A"), Color.parseColor("#1F2D44"), 1, 8f, this@MainActivity)
+        }
+        loadPreviewImage(initialBanner, liveBannerPreview!!)
+        form.addView(createExcelRow(
+            cellRef = "A18",
+            title = "Hero Background Banner Photo (1200x500 px)",
+            subHint = "Website ke hero section ka background cover photo.",
+            inputView = bannerUrlInput,
+            actionView = pickBannerBtn,
+            previewView = liveBannerPreview,
+            onSaveRow = {
+                val v = bannerUrlInput.text.toString().trim()
+                saveMultipleSettings(mapOf("banner_url" to v, "hero_banner_url" to v), "Hero Banner Photo")
+            }
+        ))
+
         // Live Website Store Links Card
         val (webCard, webBody) = UiKit.createSectionContainer(this, "🌐 Live Website Store Links", "Online")
         val webUrl = "https://ayush131102.github.io/sheetstore/"
@@ -3614,7 +3687,7 @@ class MainActivity : Activity() {
         // Bulk Save Button (Excel emerald green gradient)
         val saveAllBtn = UiKit.createPrimaryButton(
             context = this,
-            btnText = "💾 Save All 14 Fields Together (Bulk Live Sync)",
+            btnText = "💾 Save All 18 Fields Together (Bulk Live Sync)",
             startColor = "#059669",
             endColor = "#10B981"
         ) {
@@ -3961,7 +4034,9 @@ class MainActivity : Activity() {
             pendingSettings["logo_url"] = logoUrlInput.text.toString().trim()
         }
         if (::bannerUrlInput.isInitialized && bannerUrlInput.isAttachedToWindow) {
-            pendingSettings["banner_url"] = bannerUrlInput.text.toString().trim()
+            val bUrl = bannerUrlInput.text.toString().trim()
+            pendingSettings["banner_url"] = bUrl
+            pendingSettings["hero_banner_url"] = bUrl
         }
         if (::fontFamilyInput.isInitialized && fontFamilyInput.isAttachedToWindow) {
             pendingSettings["font_family"] = fontFamilyInput.text.toString().trim()
