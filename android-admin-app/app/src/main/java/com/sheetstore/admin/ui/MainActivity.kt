@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.sheetstore.admin.R
 import com.sheetstore.admin.models.*
 import com.sheetstore.admin.network.ApiClient
 import kotlinx.coroutines.*
@@ -749,22 +750,13 @@ class MainActivity : Activity() {
             layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         }
 
-        val iconBox = TextView(this).apply {
-            text = "⚡"
-            textSize = 42f
-            gravity = Gravity.CENTER
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#121D33"),
-                strokeColor = Color.parseColor("#00F0FF"),
-                strokeWidthDp = 2,
-                radiusDp = 26f,
-                context = this@MainActivity
-            )
-            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 84), UiKit.dp(this@MainActivity, 84)).apply {
+        val logoView = ImageView(this).apply {
+            setImageResource(R.drawable.ic_app_logo)
+            layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 88), UiKit.dp(this@MainActivity, 88)).apply {
                 bottomMargin = UiKit.dp(this@MainActivity, 18)
             }
         }
-        splash.addView(iconBox)
+        splash.addView(logoView)
 
         val titleView = TextView(this).apply {
             text = "SheetStore Pro"
@@ -788,7 +780,7 @@ class MainActivity : Activity() {
 
         val pillBadge = UiKit.createPillBadge(
             context = this,
-            text = "🚀 v1.2.7 • Secure Admin Portal",
+            text = "🚀 v1.2.8 • Secure Admin Portal",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -823,7 +815,7 @@ class MainActivity : Activity() {
     private fun showDashboardHome() {
         topBarView.visibility = View.VISIBLE
         navBar.visibility = View.VISIBLE
-        authBtn.text = "👤 ${getLoggedInName()} (v1.2.7)"
+        authBtn.text = "👤 ${getLoggedInName()} (v1.2.8)"
         val brand = dashboardData?.settings?.get("brand_name") ?: getLoggedInName().ifEmpty { "SheetStore Pro" }
         topBrandNameView.text = brand
         topAvatarView.text = brand.take(2).uppercase()
@@ -913,22 +905,13 @@ class MainActivity : Activity() {
         cornerRow.addView(cornerSettingBtn)
         container.addView(cornerRow)
 
-        val lockIcon = TextView(this).apply {
-            text = "🔐"
-            textSize = 36f
-            gravity = Gravity.CENTER
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#152238"),
-                strokeColor = Color.parseColor("#00F0FF"),
-                strokeWidthDp = 1,
-                radiusDp = 50f,
-                context = this@MainActivity
-            )
+        val logoView = ImageView(this).apply {
+            setImageResource(R.drawable.ic_app_logo)
             layoutParams = LinearLayout.LayoutParams(UiKit.dp(this@MainActivity, 74), UiKit.dp(this@MainActivity, 74)).apply {
                 bottomMargin = UiKit.dp(this@MainActivity, 16)
             }
         }
-        container.addView(lockIcon)
+        container.addView(logoView)
 
         val headerTitle = TextView(this).apply {
             text = "Admin Portal Login"
@@ -942,7 +925,7 @@ class MainActivity : Activity() {
 
         val vBadge = UiKit.createPillBadge(
             context = this,
-            text = "⚡ SheetStore Admin v1.2.7",
+            text = "⚡ SheetStore Admin v1.2.8",
             textColor = Color.parseColor("#00F0FF"),
             bgColor = Color.parseColor("#0C2A4A"),
             borderColor = Color.parseColor("#00F0FF")
@@ -2030,55 +2013,373 @@ class MainActivity : Activity() {
         )
     )
 
-    private val otherWebsiteFormats = listOf(
-        WebsiteCategory(
+    data class MainCategoryItem(
+        val id: String,
+        val icon: String,
+        val title: String,
+        val subCountText: String,
+        val badgeText: String,
+        val accentColor: String
+    )
+
+    private val mainCategoryCatalog = listOf(
+        MainCategoryItem(
+            id = "ecommerce",
+            icon = "🛒",
+            title = "E-Commerce Online Store",
+            subCountText = "15 Themes",
+            badgeText = "15 Themes",
+            accentColor = "#00F0FF"
+        ),
+        MainCategoryItem(
             id = "portfolio",
             icon = "💼",
-            title = "Portfolio & Agency",
-            subtitle = "Freelancers, Creators & Creative Agencies",
-            description = "Showcase projects, design work, and client testimonials.",
-            bullets = listOf("Project Gallery", "Testimonials", "Hire Me Form", "Pricing"),
-            badge = "Portfolio",
+            title = "Portfolio & Showcase",
+            subCountText = "4 Themes",
+            badgeText = "4 Themes",
+            accentColor = "#A78BFA"
+        ),
+        MainCategoryItem(
+            id = "linktree",
+            icon = "🔗",
+            title = "Linktree Bio Page",
+            subCountText = "4 Themes",
+            badgeText = "4 Themes",
+            accentColor = "#10B981"
+        ),
+        MainCategoryItem(
+            id = "digital_product",
+            icon = "💻",
+            title = "Digital Products & SaaS",
+            subCountText = "4 Themes",
+            badgeText = "4 Themes",
+            accentColor = "#F59E0B"
+        ),
+        MainCategoryItem(
+            id = "blogger",
+            icon = "✍️",
+            title = "Personal Blogger & News",
+            subCountText = "4 Themes",
+            badgeText = "4 Themes",
+            accentColor = "#EC4899"
+        ),
+        MainCategoryItem(
+            id = "shop",
+            icon = "🏬",
+            title = "Local Retail Shop & Dukaan",
+            subCountText = "4 Themes",
+            badgeText = "4 Themes",
+            accentColor = "#38BDF8"
+        ),
+        MainCategoryItem(
+            id = "display_store",
+            icon = "🏷️",
+            title = "Product Showroom Catalog",
+            subCountText = "4 Themes",
+            badgeText = "4 Themes",
+            accentColor = "#8B5CF6"
+        )
+    )
+
+    private val portfolioThemes = listOf(
+        WebsiteCategory(
+            id = "portfolio_designer",
+            icon = "🎨",
+            title = "UI/UX & Designer",
+            subtitle = "Designers, Illustrators & Creatives",
+            description = "Showcase design case studies, Figma prototypes and client reviews.",
+            bullets = listOf("Visual Case Studies", "Design Portfolio", "Client Reviews", "Hire Me Button"),
+            badge = "UI/UX Design",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#A78BFA"
         ),
         WebsiteCategory(
-            id = "linktree",
-            icon = "🔗",
-            title = "Linktree Bio Page",
-            subtitle = "Instagram, YouTube & Social Media Bio Page",
-            description = "Clean bio landing card with all social and payment links.",
-            bullets = listOf("Mobile Bio Landing", "Social Links", "WhatsApp Chat", "Visiting Card"),
-            badge = "Bio Links",
+            id = "portfolio_developer",
+            icon = "💻",
+            title = "Software Developer",
+            subtitle = "Full-Stack Devs, Mobile & Cloud Engineers",
+            description = "Display GitHub repos, tech stack, deployed projects and resume download.",
+            bullets = listOf("Tech Stack Badges", "Live Demo Links", "Resume Download", "Contact Form"),
+            badge = "Tech & Dev",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#38BDF8"
+        ),
+        WebsiteCategory(
+            id = "portfolio_agency",
+            icon = "🚀",
+            title = "Creative Digital Agency",
+            subtitle = "Studios, Media Houses & Dev Agencies",
+            description = "Agency portfolio highlighting client testimonials, service packages and quotes.",
+            bullets = listOf("Client Logos", "Service Packages", "Case Studies", "Schedule Meeting"),
+            badge = "Agency",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#818CF8"
+        ),
+        WebsiteCategory(
+            id = "portfolio_consultant",
+            icon = "👔",
+            title = "Consultant & Freelancer",
+            subtitle = "Business Advisors, Coaches & Solopreneurs",
+            description = "Personal advisory brand with booking calendar and client results.",
+            bullets = listOf("Consultation Booking", "Client Testimonials", "Pricing Tiers", "WhatsApp Chat"),
+            badge = "Consultant",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#34D399"
+        )
+    )
+
+    private val linktreeThemes = listOf(
+        WebsiteCategory(
+            id = "linktree_creator",
+            icon = "🌿",
+            title = "Minimal Creator Bio",
+            subtitle = "Clean 1-page mobile landing card for creators",
+            description = "Fast, clean bio page with all social, video and content links.",
+            bullets = listOf("Fast Mobile Landing", "Social Links", "YouTube / Insta", "Custom Colors"),
+            badge = "Minimal Bio",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#10B981"
         ),
         WebsiteCategory(
-            id = "digital_product",
-            icon = "💻",
-            title = "Digital Products Store",
-            subtitle = "eBooks, Courses, Software, PDFs & Presets",
-            description = "Sell digital downloadable items with instant UPI verification.",
-            bullets = listOf("Instant Download Link", "Zero Shipping", "UPI Verification", "Protected Files"),
-            badge = "Digital Files",
+            id = "linktree_whatsapp",
+            icon = "💬",
+            title = "WhatsApp Quick Contact",
+            subtitle = "Direct 1-tap WhatsApp chat and inquiries",
+            description = "Optimized for businesses where customers connect directly via WhatsApp.",
+            bullets = listOf("1-Tap WhatsApp", "Quick Order Chat", "Catalog Link", "Store Location"),
+            badge = "WhatsApp Card",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#22C55E"
+        ),
+        WebsiteCategory(
+            id = "linktree_influencer",
+            icon = "📸",
+            title = "Influencer Bio Page",
+            subtitle = "Instagram, YouTube, Brand Collabs & Affiliate",
+            description = "Showcase your top sponsored links, promo codes and collaboration inquiries.",
+            bullets = listOf("Brand Deals Email", "Discount Promo Codes", "Featured Video", "Follow Links"),
+            badge = "Influencer",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#F43F5E"
+        ),
+        WebsiteCategory(
+            id = "linktree_business",
+            icon = "💼",
+            title = "Corporate Digital Card",
+            subtitle = "Smart digital visiting card for business owners",
+            description = "Share contact details, Google Map directions, UPI payment and company profile.",
+            bullets = listOf("Save vCard to Phone", "UPI Payment QR", "Google Map Pin", "PDF Brochure"),
+            badge = "Business Card",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#00F0FF"
+        )
+    )
+
+    private val digitalThemes = listOf(
+        WebsiteCategory(
+            id = "digital_ebook",
+            icon = "📄",
+            title = "eBooks & PDF Guides",
+            subtitle = "Books, Whitepapers, Research & Guides",
+            description = "Instant UPI checkout with auto-generated secure download link.",
+            bullets = listOf("Instant Download Link", "UPI Verification", "Zero Shipping", "PDF Watermarking"),
+            badge = "eBooks & Guides",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#F59E0B"
         ),
         WebsiteCategory(
-            id = "blogger",
-            icon = "✍️",
-            title = "Personal Blogger",
-            subtitle = "Writers, Journalists, Creators & Storytellers",
-            description = "Publish articles, blogs and stories with clean reading typography.",
-            bullets = listOf("Clean Reading", "Categories & Tags", "Author Profile", "Newsletter"),
-            badge = "Blog & Content",
+            id = "digital_course",
+            icon = "🎓",
+            title = "Courses & Masterclasses",
+            subtitle = "Workshops, Video Courses & Bootcamps",
+            description = "Course syllabus curriculum, student testimonials and instant enrollment.",
+            bullets = listOf("Curriculum Breakdown", "Student Reviews", "Live Zoom Links", "Certificate"),
+            badge = "Courses",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#6366F1"
+        ),
+        WebsiteCategory(
+            id = "digital_software",
+            icon = "💻",
+            title = "Software & Presets",
+            subtitle = "Lightroom Presets, Scripts, Code & Plugins",
+            description = "Deliver digital assets, license keys and zip files directly upon payment.",
+            bullets = listOf("License Key Delivery", "Zip File Download", "Version Updates", "Setup Guide"),
+            badge = "Software",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#0284C7"
+        ),
+        WebsiteCategory(
+            id = "digital_templates",
+            icon = "🗂️",
+            title = "Notion & Canva Kits",
+            subtitle = "Productivity Dashboards, Canva & Figma Kits",
+            description = "Ready-to-duplicate digital templates with video walkthrough tutorial.",
+            bullets = listOf("Duplicate in 1-Click", "Walkthrough Video", "Free Updates", "Community Access"),
+            badge = "Templates",
             demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
             accentColor = "#EC4899"
         )
     )
 
+    private val blogThemes = listOf(
+        WebsiteCategory(
+            id = "blog_tech",
+            icon = "🚀",
+            title = "Tech & Startups",
+            subtitle = "Coding, AI, Product & Entrepreneurship",
+            description = "Clean markdown reading typography with code syntax highlighting.",
+            bullets = listOf("Code Highlighting", "Tech Category Tags", "Newsletter Form", "Author Bio"),
+            badge = "Tech & AI",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#38BDF8"
+        ),
+        WebsiteCategory(
+            id = "blog_lifestyle",
+            icon = "🧘",
+            title = "Lifestyle & Wellness",
+            subtitle = "Health, Mindset, Yoga & Daily Habits",
+            description = "Warm visual reading layout with beautiful image banners and tips.",
+            bullets = listOf("Image Rich Layout", "Reading Time Tags", "Recipe / Routine Cards", "Social Sharing"),
+            badge = "Lifestyle",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#EC4899"
+        ),
+        WebsiteCategory(
+            id = "blog_travel",
+            icon = "✈️",
+            title = "Travel & Stories",
+            subtitle = "Travel Guides, Destinations & Photography",
+            description = "Photo-centric journal with destination guides and packing lists.",
+            bullets = listOf("Full-width Photo Hero", "Destination Guides", "Map Pins", "Gear Checklist"),
+            badge = "Travel Journal",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#F59E0B"
+        ),
+        WebsiteCategory(
+            id = "blog_finance",
+            icon = "📈",
+            title = "Finance & Business",
+            subtitle = "Stock Market, Crypto, Real Estate & Wealth",
+            description = "Data-focused editorial with market charts and investment breakdowns.",
+            bullets = listOf("Market Breakdown", "Key Takeaways", "Weekly Newsletter", "Disclaimer Notes"),
+            badge = "Finance Insights",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#10B981"
+        )
+    )
+
+    private val shopThemes = listOf(
+        WebsiteCategory(
+            id = "shop_kirana",
+            icon = "🌾",
+            title = "Kirana & Dukaan",
+            subtitle = "Local Grocery, Staples & Daily Essentials",
+            description = "Neighborhood store with instant WhatsApp ordering and doorstep delivery.",
+            bullets = listOf("Quick WhatsApp Order", "Local Delivery Radius", "Item Price List", "Store Timings"),
+            badge = "Local Kirana",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#84CC16"
+        ),
+        WebsiteCategory(
+            id = "shop_bakery",
+            icon = "🍰",
+            title = "Bakery & Cafe",
+            subtitle = "Cakes, Pastries, Fresh Breads & Coffee",
+            description = "Custom cake design ordering with date selector and flavor choices.",
+            bullets = listOf("Custom Cake Booking", "Eggless / Vegan Tags", "Order for Today", "Menu Card"),
+            badge = "Bakery & Sweets",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#F59E0B"
+        ),
+        WebsiteCategory(
+            id = "shop_boutique",
+            icon = "👗",
+            title = "Clothing Boutique",
+            subtitle = "Sarees, Suits, Lehengas & Designer Wear",
+            description = "Boutique showcase with WhatsApp inquiry and custom tailoring.",
+            bullets = listOf("WhatsApp Style Chat", "Fabric Details", "Tailoring Option", "Video Call Shopping"),
+            badge = "Boutique",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/saree-demo.html",
+            accentColor = "#EC4899"
+        ),
+        WebsiteCategory(
+            id = "shop_chemist",
+            icon = "🩺",
+            title = "Medical & Chemist",
+            subtitle = "Pharmacy, Health Devices & First Aid",
+            description = "WhatsApp prescription sending and neighborhood express delivery.",
+            bullets = listOf("Send Prescription on WA", "Express Home Delivery", "Verified Chemist", "Emergency Call"),
+            badge = "Chemist",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#10B981"
+        )
+    )
+
+    private val showroomThemes = listOf(
+        WebsiteCategory(
+            id = "display_furniture",
+            icon = "🛋️",
+            title = "Furniture Showroom",
+            subtitle = "Sofas, Dining, Beds & Office Furniture",
+            description = "Catalog display with WhatsApp quote and custom fabric selector.",
+            bullets = listOf("Dimensions & Specs", "WhatsApp Quotation", "Showroom Address", "Custom Fabric"),
+            badge = "Furniture",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#A855F7"
+        ),
+        WebsiteCategory(
+            id = "display_jewelry",
+            icon = "💎",
+            title = "Jewelry Showroom",
+            subtitle = "Gold, Diamonds, Polki & Silver Jewelry",
+            description = "High-trust luxury catalog with certified purity badges and consultation.",
+            bullets = listOf("Purity Certification", "Book Video Viewing", "Price on Request", "Showroom Visit"),
+            badge = "Jewelry",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/saree-demo.html",
+            accentColor = "#EAB308"
+        ),
+        WebsiteCategory(
+            id = "display_realestate",
+            icon = "🏠",
+            title = "Real Estate Showcase",
+            subtitle = "Villas, Apartments, Plots & Commercial",
+            description = "Property floor plans, amenities, price ranges and site visit booking.",
+            bullets = listOf("Floor Plan Blueprint", "Site Visit Booking", "Amenities List", "Location Map"),
+            badge = "Real Estate",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#0284C7"
+        ),
+        WebsiteCategory(
+            id = "display_auto",
+            icon = "🏎️",
+            title = "Automobile Showroom",
+            subtitle = "Cars, Bikes, Electric Vehicles & Pre-Owned",
+            description = "Vehicle specs, test drive scheduling and WhatsApp EMI quotes.",
+            bullets = listOf("Test Drive Booking", "Vehicle Mileage Specs", "EMI Calculator", "Brochure PDF"),
+            badge = "Automobile",
+            demoUrl = "https://yuviteltechnologies-art.github.io/freewebsite/demo.html",
+            accentColor = "#EF4444"
+        )
+    )
+
+    private var selectedMainCategoryForSubTab: String? = null
+
+    private fun getSubThemesForCategory(catId: String): List<WebsiteCategory> {
+        return when (catId.lowercase()) {
+            "ecommerce" -> ecommerceThemes
+            "portfolio" -> portfolioThemes
+            "linktree" -> linktreeThemes
+            "digital_product" -> digitalThemes
+            "blogger" -> blogThemes
+            "shop" -> shopThemes
+            "display_store" -> showroomThemes
+            else -> ecommerceThemes
+        }
+    }
+
     private val websiteCategories: List<WebsiteCategory>
-        get() = ecommerceThemes + otherWebsiteFormats
+        get() = ecommerceThemes + portfolioThemes + linktreeThemes + digitalThemes + blogThemes + shopThemes + showroomThemes
 
     private fun applyWebsiteCategory(category: WebsiteCategory) {
         val url = getSheetUrl()
@@ -2089,12 +2390,19 @@ class MainActivity : Activity() {
 
         Toast.makeText(this, "Applying '${category.title}' to Live Website... ⏳", Toast.LENGTH_SHORT).show()
 
-        val isEcomTheme = ecommerceThemes.any { it.id == category.id }
-        val categoryType = if (isEcomTheme) "ecommerce" else category.id
+        val mainCatId = selectedMainCategoryForSubTab
+            ?: if (ecommerceThemes.any { it.id == category.id }) "ecommerce"
+            else if (portfolioThemes.any { it.id == category.id }) "portfolio"
+            else if (linktreeThemes.any { it.id == category.id }) "linktree"
+            else if (digitalThemes.any { it.id == category.id }) "digital_product"
+            else if (blogThemes.any { it.id == category.id }) "blogger"
+            else if (shopThemes.any { it.id == category.id }) "shop"
+            else if (showroomThemes.any { it.id == category.id }) "display_store"
+            else "ecommerce"
 
         val body = mapOf(
             "action" to "updateSettings",
-            "website_category" to categoryType,
+            "website_category" to mainCatId,
             "ecommerce_theme" to category.id,
             "template_id" to category.id,
             "theme" to category.id
@@ -2108,14 +2416,14 @@ class MainActivity : Activity() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
                         val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
-                        s["website_category"] = categoryType
+                        s["website_category"] = mainCatId
                         s["ecommerce_theme"] = category.id
                         s["template_id"] = category.id
                         s["theme"] = category.id
                         dashboardData = dashboardData?.copy(settings = s)
                         getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
                             .edit()
-                            .putString("selected_website_category", categoryType)
+                            .putString("selected_website_category", mainCatId)
                             .putString("selected_ecommerce_theme", category.id)
                             .putString("selected_theme_id", category.id)
                             .apply()
@@ -2128,14 +2436,14 @@ class MainActivity : Activity() {
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     val s = dashboardData?.settings?.toMutableMap() ?: mutableMapOf()
-                    s["website_category"] = categoryType
+                    s["website_category"] = mainCatId
                     s["ecommerce_theme"] = category.id
                     s["template_id"] = category.id
                     s["theme"] = category.id
                     dashboardData = dashboardData?.copy(settings = s)
                     getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE)
                         .edit()
-                        .putString("selected_website_category", categoryType)
+                        .putString("selected_website_category", mainCatId)
                         .putString("selected_ecommerce_theme", category.id)
                         .putString("selected_theme_id", category.id)
                         .apply()
@@ -2160,6 +2468,136 @@ class MainActivity : Activity() {
                 ApiClient.service.updateSettings(fullUrl = url, body = body).execute()
             } catch (_: Exception) {}
         }
+    }
+
+    private fun createMainCategoryCard(item: MainCategoryItem, isActive: Boolean): View {
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER_HORIZONTAL
+            background = UiKit.cardDrawable(
+                bgColor = if (isActive) Color.parseColor("#0C202F") else Color.parseColor("#0E1626"),
+                strokeColor = if (isActive) Color.parseColor("#00F0FF") else Color.parseColor("#1E2D48"),
+                strokeWidthDp = if (isActive) 2 else 1,
+                radiusDp = 8f,
+                context = this@MainActivity
+            )
+            setPadding(
+                UiKit.dp(this@MainActivity, 12),
+                UiKit.dp(this@MainActivity, 14),
+                UiKit.dp(this@MainActivity, 12),
+                UiKit.dp(this@MainActivity, 14)
+            )
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                selectedMainCategoryForSubTab = item.id
+                refreshCurrentTab()
+            }
+        }
+
+        // Icon Box
+        val iconBox = TextView(this).apply {
+            text = item.icon
+            textSize = 28f
+            gravity = Gravity.CENTER
+            background = UiKit.cardDrawable(
+                bgColor = Color.parseColor("#152238"),
+                strokeColor = Color.parseColor(item.accentColor),
+                strokeWidthDp = 1,
+                radiusDp = 8f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(
+                UiKit.dp(this@MainActivity, 48),
+                UiKit.dp(this@MainActivity, 48)
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 8)
+            }
+        }
+        card.addView(iconBox)
+
+        // Title
+        val titleView = TextView(this).apply {
+            text = item.title
+            textSize = 13f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            maxLines = 2
+            minLines = 2
+            ellipsize = android.text.TextUtils.TruncateAt.END
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 4)
+            }
+        }
+        card.addView(titleView)
+
+        // Status Badge (Active or theme count)
+        val statusBadge = TextView(this).apply {
+            text = if (isActive) "✓ ACTIVE NOW" else item.badgeText
+            textSize = 9.5f
+            typeface = Typeface.MONOSPACE
+            gravity = Gravity.CENTER
+            setTextColor(if (isActive) Color.parseColor("#10B981") else Color.parseColor("#94A3B8"))
+            background = UiKit.cardDrawable(
+                bgColor = if (isActive) Color.parseColor("#063321") else Color.parseColor("#141D2E"),
+                strokeColor = if (isActive) Color.parseColor("#10B981") else Color.parseColor("#25354F"),
+                strokeWidthDp = 1,
+                radiusDp = 4f,
+                context = this@MainActivity
+            )
+            setPadding(
+                UiKit.dp(this@MainActivity, 8),
+                UiKit.dp(this@MainActivity, 3),
+                UiKit.dp(this@MainActivity, 8),
+                UiKit.dp(this@MainActivity, 3)
+            )
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = UiKit.dp(this@MainActivity, 10)
+            }
+        }
+        card.addView(statusBadge)
+
+        // Spacer
+        val spacer = View(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0,
+                1f
+            )
+        }
+        card.addView(spacer)
+
+        // "Open Themes ›" Action Button
+        val openBtn = Button(this).apply {
+            text = "${item.subCountText} ›"
+            textSize = 11.5f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = UiKit.gradientButtonDrawable(
+                startColor = Color.parseColor("#2563EB"),
+                endColor = Color.parseColor("#1D4ED8"),
+                radiusDp = 6f,
+                context = this@MainActivity
+            )
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                UiKit.dp(this@MainActivity, 36)
+            )
+            setOnClickListener {
+                selectedMainCategoryForSubTab = item.id
+                refreshCurrentTab()
+            }
+        }
+        card.addView(openBtn)
+
+        return card
     }
 
     private fun createCategoryRectGridCard(cat: WebsiteCategory, isActive: Boolean): View {
@@ -2326,7 +2764,7 @@ class MainActivity : Activity() {
         return card
     }
 
-    // SUB-TAB 2: WEBSITE CATEGORIES & 15 E-COMMERCE THEMES
+    // SUB-TAB 2: WEBSITE CATEGORIES & SUB-THEMES (2-TIER DRILLDOWN FLOW)
     private fun createThemeSelectionSubTab(): View {
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -2337,141 +2775,183 @@ class MainActivity : Activity() {
             setPadding(UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 16), UiKit.dp(this@MainActivity, 32))
         }
 
-        container.addView(createSubTabBackHeader(
-            title = "🎨 2nd: Website Category & Themes",
-            subtitle = "E-Commerce Main Category ke andar 15 industry-ready themes select aur apply karein:"
-        ))
+        val activeMainCatId = selectedMainCategoryForSubTab
+        if (activeMainCatId == null) {
+            // STATE 1: MAIN CATEGORIES SELECTION
+            container.addView(createSubTabBackHeader(
+                title = "🎨 2nd: Website Category Selection",
+                subtitle = "Apne business type ke according main category select karein aur uske andar themes explore karein:"
+            ))
 
-        // Top Info Banner: E-Commerce Main Category
-        val infoBanner = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            background = UiKit.cardDrawable(
-                bgColor = Color.parseColor("#081524"),
-                strokeColor = Color.parseColor("#00F0FF"),
-                strokeWidthDp = 1,
-                radiusDp = 6f,
-                context = this@MainActivity
-            )
-            setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                bottomMargin = UiKit.dp(this@MainActivity, 14)
-            }
-        }
-        val infoTitle = TextView(this).apply {
-            text = "🛒 Main Category: E-Commerce Store (15 Themes)"
-            textSize = 13.5f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#38BDF8"))
-        }
-        val infoSub = TextView(this).apply {
-            text = "Har industry ke hisab se specialized layout aur colors diye gaye hain. Demo par click karke preview check karein aur Apply par tap karke website par activate karein:"
-            textSize = 11f
-            setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
-        }
-        infoBanner.addView(infoTitle)
-        infoBanner.addView(infoSub)
-        container.addView(infoBanner)
-
-        // Get currently active theme
-        val currentActiveTheme = (dashboardData?.settings?.get("ecommerce_theme")
-            ?: dashboardData?.settings?.get("theme")
-            ?: dashboardData?.settings?.get("template_id")
-            ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_ecommerce_theme", null)
-            ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_theme_id", "electronics")
-            ?: "electronics").trim().lowercase()
-
-        // 15 E-Commerce Themes (2-Column Clean Grid)
-        for (pair in ecommerceThemes.chunked(2)) {
-            val row = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    bottomMargin = UiKit.dp(this@MainActivity, 10)
+            val infoBanner = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#081524"),
+                    strokeColor = Color.parseColor("#00F0FF"),
+                    strokeWidthDp = 1,
+                    radiusDp = 6f,
+                    context = this@MainActivity
+                )
+                setPadding(UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10), UiKit.dp(this@MainActivity, 14), UiKit.dp(this@MainActivity, 10))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = UiKit.dp(this@MainActivity, 14)
                 }
             }
-
-            val cat1 = pair[0]
-            val isActive1 = (currentActiveTheme == cat1.id.lowercase())
-            val card1 = createCategoryRectGridCard(cat1, isActive1).apply {
-                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
-                    rightMargin = UiKit.dp(this@MainActivity, 5)
-                }
+            val infoTitle = TextView(this).apply {
+                text = "💡 Choose Main Category"
+                textSize = 13.5f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#38BDF8"))
             }
-            row.addView(card1)
+            val infoSub = TextView(this).apply {
+                text = "Kisi bhi category par tap karein, uske andar ke specialized themes open ho jayenge (Jaise E-Commerce me 15 themes):"
+                textSize = 11f
+                setTextColor(Color.parseColor("#94A3B8"))
+                setPadding(0, UiKit.dp(this@MainActivity, 2), 0, 0)
+            }
+            infoBanner.addView(infoTitle)
+            infoBanner.addView(infoSub)
+            container.addView(infoBanner)
 
-            if (pair.size > 1) {
-                val cat2 = pair[1]
-                val isActive2 = (currentActiveTheme == cat2.id.lowercase())
-                val card2 = createCategoryRectGridCard(cat2, isActive2).apply {
-                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
-                        leftMargin = UiKit.dp(this@MainActivity, 5)
+            val currentActiveMainCat = (dashboardData?.settings?.get("website_category")
+                ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_website_category", "ecommerce")
+                ?: "ecommerce").trim().lowercase()
+
+            for (pair in mainCategoryCatalog.chunked(2)) {
+                val row = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 10)
                     }
                 }
-                row.addView(card2)
-            } else {
-                val spacer = View(this).apply {
+
+                val item1 = pair[0]
+                val isActive1 = (currentActiveMainCat == item1.id.lowercase())
+                val card1 = createMainCategoryCard(item1, isActive1).apply {
                     layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
-                        leftMargin = UiKit.dp(this@MainActivity, 5)
+                        rightMargin = UiKit.dp(this@MainActivity, 5)
                     }
                 }
-                row.addView(spacer)
+                row.addView(card1)
+
+                if (pair.size > 1) {
+                    val item2 = pair[1]
+                    val isActive2 = (currentActiveMainCat == item2.id.lowercase())
+                    val card2 = createMainCategoryCard(item2, isActive2).apply {
+                        layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                            leftMargin = UiKit.dp(this@MainActivity, 5)
+                        }
+                    }
+                    row.addView(card2)
+                } else {
+                    val spacer = View(this).apply {
+                        layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                            leftMargin = UiKit.dp(this@MainActivity, 5)
+                        }
+                    }
+                    row.addView(spacer)
+                }
+
+                container.addView(row)
             }
+        } else {
+            // STATE 2: SUB-THEMES OF SELECTED MAIN CATEGORY
+            val mainCat = mainCategoryCatalog.find { it.id == activeMainCatId } ?: mainCategoryCatalog[0]
 
-            container.addView(row)
-        }
-
-        // Section: Other Non-Commerce Formats
-        val otherSectionTitle = TextView(this).apply {
-            text = "🌐 Other Website Formats (Non E-Commerce)"
-            textSize = 13f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.parseColor("#E2E8F0"))
-            setPadding(0, UiKit.dp(this@MainActivity, 16), 0, UiKit.dp(this@MainActivity, 10))
-        }
-        container.addView(otherSectionTitle)
-
-        for (pair in otherWebsiteFormats.chunked(2)) {
-            val row = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    bottomMargin = UiKit.dp(this@MainActivity, 10)
+            val subHeader = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(0, 0, 0, UiKit.dp(this@MainActivity, 14))
+            }
+            val backToMainBtn = TextView(this).apply {
+                text = "⬅️ Wapas Main Categories Par Jayein"
+                textSize = 12f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#00F0FF"))
+                background = UiKit.cardDrawable(
+                    bgColor = Color.parseColor("#0F1E36"),
+                    strokeColor = Color.parseColor("#00F0FF"),
+                    strokeWidthDp = 1,
+                    radiusDp = 6f,
+                    context = this@MainActivity
+                )
+                setPadding(UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 8), UiKit.dp(this@MainActivity, 12), UiKit.dp(this@MainActivity, 8))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = UiKit.dp(this@MainActivity, 8)
+                }
+                setOnClickListener {
+                    selectedMainCategoryForSubTab = null
+                    refreshCurrentTab()
                 }
             }
+            subHeader.addView(backToMainBtn)
 
-            val cat1 = pair[0]
-            val isActive1 = (currentActiveTheme == cat1.id.lowercase())
-            val card1 = createCategoryRectGridCard(cat1, isActive1).apply {
-                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
-                    rightMargin = UiKit.dp(this@MainActivity, 5)
-                }
+            val titleView = TextView(this).apply {
+                text = "${mainCat.icon} ${mainCat.title} (${mainCat.subCountText})"
+                textSize = 16f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.WHITE)
             }
-            row.addView(card1)
+            val subtitleView = TextView(this).apply {
+                text = "Apne business ke hisab se theme select karein aur 1-click me live apply karein:"
+                textSize = 11.5f
+                setTextColor(Color.parseColor("#94A3B8"))
+                setPadding(0, UiKit.dp(this@MainActivity, 3), 0, 0)
+            }
+            subHeader.addView(titleView)
+            subHeader.addView(subtitleView)
+            container.addView(subHeader)
 
-            if (pair.size > 1) {
-                val cat2 = pair[1]
-                val isActive2 = (currentActiveTheme == cat2.id.lowercase())
-                val card2 = createCategoryRectGridCard(cat2, isActive2).apply {
-                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
-                        leftMargin = UiKit.dp(this@MainActivity, 5)
+            val currentActiveTheme = (dashboardData?.settings?.get("ecommerce_theme")
+                ?: dashboardData?.settings?.get("theme")
+                ?: dashboardData?.settings?.get("template_id")
+                ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_ecommerce_theme", null)
+                ?: getSharedPreferences("SheetStoreAdminPrefs", Context.MODE_PRIVATE).getString("selected_theme_id", "electronics")
+                ?: "electronics").trim().lowercase()
+
+            val themes = getSubThemesForCategory(activeMainCatId)
+            for (pair in themes.chunked(2)) {
+                val row = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        bottomMargin = UiKit.dp(this@MainActivity, 10)
                     }
                 }
-                row.addView(card2)
-            } else {
-                val spacer = View(this).apply {
+
+                val cat1 = pair[0]
+                val isActive1 = (currentActiveTheme == cat1.id.lowercase())
+                val card1 = createCategoryRectGridCard(cat1, isActive1).apply {
                     layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
-                        leftMargin = UiKit.dp(this@MainActivity, 5)
+                        rightMargin = UiKit.dp(this@MainActivity, 5)
                     }
                 }
-                row.addView(spacer)
-            }
+                row.addView(card1)
 
-            container.addView(row)
+                if (pair.size > 1) {
+                    val cat2 = pair[1]
+                    val isActive2 = (currentActiveTheme == cat2.id.lowercase())
+                    val card2 = createCategoryRectGridCard(cat2, isActive2).apply {
+                        layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                            leftMargin = UiKit.dp(this@MainActivity, 5)
+                        }
+                    }
+                    row.addView(card2)
+                } else {
+                    val spacer = View(this).apply {
+                        layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply {
+                            leftMargin = UiKit.dp(this@MainActivity, 5)
+                        }
+                    }
+                    row.addView(spacer)
+                }
+
+                container.addView(row)
+            }
         }
 
         scroll.addView(container)
@@ -4141,6 +4621,11 @@ class MainActivity : Activity() {
     }
 
     override fun onBackPressed() {
+        if (currentTab == 1 && designSubTabIndex == 1 && selectedMainCategoryForSubTab != null) {
+            selectedMainCategoryForSubTab = null
+            refreshCurrentTab()
+            return
+        }
         if (currentTab == 1 && designSubTabIndex != -1) {
             syncVisibleInputsToPending()
             designSubTabIndex = -1
