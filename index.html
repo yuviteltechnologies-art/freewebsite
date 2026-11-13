@@ -585,9 +585,29 @@
           </div>
         </div>
 
-        <p class="font-poppins font-normal text-dimWhite text-sm leading-relaxed mb-6">
+        <p class="font-poppins font-normal text-dimWhite text-sm leading-relaxed mb-4">
           Aapka storefront 24/7 bina kisi hosting down-time ke GitHub ke ultra-fast global CDN par run hota hai. Free SSL HTTPS encryption padlock, automatic cache invalidation aur custom domain (.com, .in) support included hai.
         </p>
+
+        <!-- 1-Click Popup Copy Bar -->
+        <div class="mb-6 p-4 rounded-2xl bg-slate-950/90 border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 shadow">
+              <i data-lucide="git-fork" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                <span>Frontend Repository 1-Click Me Copy Karein</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Popup Ready</span>
+              </h4>
+              <p class="text-[11px] text-dimWhite mt-0.5">Popup window me kholein aur 404 error se bachne ke aasan steps follow karein.</p>
+            </div>
+          </div>
+          <button type="button" onclick="openGitHubRepoPopup()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition active:scale-95 shrink-0">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            <span>Popup Me Repo Copy Karein ➔</span>
+          </button>
+        </div>
 
         <!-- 3 Interactive Screenshots Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -1896,6 +1916,86 @@
     </div>
   </div>
 
+  <!-- GitHub Repo Copy & Next Steps Guidance Modal for Homepage -->
+  <div id="indexRepoPopupModal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto" onclick="closeIndexRepoPopupModal()">
+    <div class="relative max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-left my-6" onclick="event.stopPropagation()">
+      
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 shadow">
+            <i data-lucide="git-fork" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] font-bold uppercase tracking-wider border border-cyan-500/20">
+                1-Click Setup
+              </span>
+              <span class="text-[10px] text-dimWhite">Frontend Hosting</span>
+            </div>
+            <h3 class="font-poppins font-bold text-lg sm:text-xl text-white mt-0.5">
+              GitHub Repo Copy &amp; Live Setup Steps
+            </h3>
+          </div>
+        </div>
+        <button onclick="closeIndexRepoPopupModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition border border-slate-700">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Popup notice -->
+      <div class="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 flex items-start gap-3">
+        <i data-lucide="external-link" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          GitHub popup window khul chuka hai! Agar browser ne popup block kiya ho, toh 
+          <a href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" target="_blank" class="text-cyan-400 underline font-bold">Yahan Click Karke Kholein ↗</a>
+        </p>
+      </div>
+
+      <!-- 3 Steps -->
+      <div class="space-y-3.5 text-xs text-slate-300">
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+          <div>
+            <strong class="text-white block mb-0.5">Popup me 'Create repository' dabayein</strong>
+            <span>Public pehle se selected rahega. Green button dabate hi repository aapke account me copy ho jayegi.</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+          <div>
+            <strong class="text-white block mb-0.5">GitHub Pages ON karein (Branch: main ➔ Save)</strong>
+            <span>Apne repo ke <strong>Settings ➔ Pages</strong> me jayein, Branch me <code class="text-cyan-400 font-mono font-bold">main</code> chunein aur Save karein.</span>
+          </div>
+        </div>
+
+        <!-- 404 Error Clarification -->
+        <div class="p-3.5 rounded-xl bg-amber-950/30 border border-amber-500/40 space-y-1.5">
+          <div class="flex items-center gap-2 text-amber-400 font-bold">
+            <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
+            <span>⚠️ 404 Error Kyun Aata Hai? (Ghabrayein Nahi)</span>
+          </div>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            1. Jab tak aap <strong>Settings ➔ Pages</strong> me <strong>main</strong> branch save nahi karte, site 404 dikhati hai.<br>
+            2. Save dabane ke baad GitHub server ko pehli baar website build karne me <strong>45-60 seconds</strong> lagte hain. Isliye turant 404 dekhkar pareshan na hon, 1 minute me site live ho jati hai!
+          </p>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="dashboard.html" class="text-xs text-cyan-400 hover:underline flex items-center gap-1">
+          <span>Complete Automated Dashboard Kholein</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+        <button onclick="closeIndexRepoPopupModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs transition">
+          Samajh Gaya ✓
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -1937,6 +2037,30 @@
     }
     function closeConfigModal() {
       document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function openGitHubRepoPopup() {
+      const popupUrl = 'https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public';
+      const width = Math.min(1040, window.screen.width - 40);
+      const height = Math.min(760, window.screen.height - 80);
+      const left = Math.max(20, Math.floor((window.screen.width - width) / 2));
+      const top = Math.max(20, Math.floor((window.screen.height - height) / 2));
+      window.open(popupUrl, 'GitHubRepoCreator', `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+      
+      const modal = document.getElementById('indexRepoPopupModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => { lucide.createIcons(); }, 50);
+      }
+    }
+
+    function closeIndexRepoPopupModal() {
+      const modal = document.getElementById('indexRepoPopupModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
     }
 
     // Lightbox Screenshot Zoom
