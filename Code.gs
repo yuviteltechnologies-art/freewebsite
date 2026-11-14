@@ -1792,6 +1792,11 @@ function handleGithubOAuth(ss, params) {
       }
     }
 
+    var autoSetupMsg = "Aapka repository ready hai. GitHub Pages activate ho raha hai.";
+    if (isPagesActive) {
+      autoSetupMsg = "Badhai ho! Aapka GitHub repository aur GitHub Pages 100% automatically create aur activate ho gaya hai!";
+    }
+
     return returnJsonResponse({
       success: true,
       username: username,
@@ -1801,9 +1806,7 @@ function handleGithubOAuth(ss, params) {
       branch_ready: branchReady,
       pages_enabled: isPagesActive,
       pages_status: pagesStatusCode,
-      message: isPagesActive
-        ? "Badhai ho! Aapka GitHub repository aur GitHub Pages 100% automatically create aur activate ho gaya hai!"
-        : "Aapka repository ready hai. GitHub Pages activate ho raha hai."
+      message: autoSetupMsg
     });
 
   } catch(err) {
