@@ -1725,6 +1725,7 @@ function handleGithubOAuth(ss, params) {
     // 5. TURN ON GITHUB PAGES ON 'main' BRANCH
     var pagesUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/pages";
     var pagesPayload = {
+      build_type: "legacy",
       source: {
         branch: "main",
         path: "/"
@@ -1736,7 +1737,7 @@ function handleGithubOAuth(ss, params) {
     var pagesRespText = "";
 
     for (var pAttempt = 1; pAttempt <= 5; pAttempt++) {
-      Utilities.sleep(1500);
+      Utilities.sleep(2000);
       var pagesResp = UrlFetchApp.fetch(pagesUrl, {
         method: "post",
         contentType: "application/json",
@@ -1755,6 +1756,23 @@ function handleGithubOAuth(ss, params) {
       if (pagesStatusCode === 409) {
         pagesSuccess = true;
         break;
+      }
+      // If 422: Try PUT method to configure branch
+      if (pagesStatusCode === 422) {
+        try {
+          var putResp = UrlFetchApp.fetch(pagesUrl, {
+            method: "put",
+            contentType: "application/json",
+            headers: ghHeaders,
+            payload: JSON.stringify(pagesPayload),
+            muteHttpExceptions: true
+          });
+          if (putResp.getResponseCode() >= 200 && putResp.getResponseCode() < 300) {
+            pagesSuccess = true;
+            pagesStatusCode = putResp.getResponseCode();
+            break;
+          }
+        } catch(putErr) {}
       }
     }
 
@@ -1806,6 +1824,7 @@ function handleGithubOAuth(ss, params) {
       branch_ready: branchReady,
       pages_enabled: isPagesActive,
       pages_status: pagesStatusCode,
+      pages_debug: pagesRespText,
       message: autoSetupMsg
     });
 
