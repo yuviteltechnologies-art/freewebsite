@@ -1706,11 +1706,11 @@ function handleGithubOAuth(ss, params) {
 
     // 4. WAIT FOR REPOSITORY COPY TO FINISH & VERIFY 'main' BRANCH
     // Template copy on GitHub runs asynchronously in the background.
-    // We poll until 'branches/main' exists and responds 200 OK (up to 12 attempts x 2s = 24 seconds).
+    // We poll until 'branches/main' exists and responds 200 OK (up to 15 attempts x 2s = 30 seconds).
     var branchReady = false;
     var branchCheckUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/branches/main";
 
-    for (var bAttempt = 1; bAttempt <= 12; bAttempt++) {
+    for (var bAttempt = 1; bAttempt <= 15; bAttempt++) {
       Utilities.sleep(2000); // Wait 2s per check
       var bResp = UrlFetchApp.fetch(branchCheckUrl, {
         headers: ghHeaders,
