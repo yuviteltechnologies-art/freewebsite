@@ -472,26 +472,22 @@
                 </div>
               </div>
 
-              <!-- Primary CTA Button (Opens Up & Down Half Window + Advances to Step 1.2) -->
+              <!-- Primary CTA Button (Opens Mobile & Desktop Popup Assistant Modal) -->
               <div class="space-y-2.5">
-                <button type="button" onclick="openGitHubUpDownScreen('down')" id="btnForkTemplate"
+                <button type="button" onclick="openGitHubSetupPopup()" id="btnForkTemplate"
                    class="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-black text-xs sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-emerald-500/25 transition active:scale-95 group">
-                  <i data-lucide="rows" class="w-5 h-5 text-amber-300 group-hover:scale-110 transition-transform"></i>
-                  <span>🚀 Up &amp; Down Split-Screen Me GitHub Kholein &amp; Copy Karein</span>
+                  <i data-lucide="layers" class="w-5 h-5 text-amber-300 group-hover:scale-110 transition-transform"></i>
+                  <span>🚀 GitHub Setup Popup Window Kholein (Mobile &amp; Desktop Guide)</span>
                   <i data-lucide="external-link" class="w-4 h-4"></i>
                 </button>
                 <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-300 gap-1.5 px-1 bg-slate-900/90 p-2 rounded-xl border border-slate-800">
                   <span class="flex items-center gap-1.5 text-emerald-400 font-medium">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5 shrink-0"></i>
-                    <span>Niche (Down Side) me GitHub khulega aur upar (Up Side) Dashboard Step 1.2 par rahega!</span>
+                    <span>Mobile Chrome aur Desktop par aasan popup window jahan 1-tap me link paste kar sakte hain!</span>
                   </span>
                   <div class="flex items-center gap-2">
-                    <button type="button" onclick="openGitHubUpDownScreen('up')" class="text-cyan-400 hover:underline font-semibold flex items-center gap-1">
-                      <span>Upar (Up Side) Kholein ⬆️</span>
-                    </button>
-                    <span class="text-slate-600">•</span>
                     <a id="btnForkFallbackLink" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" target="_blank" class="text-blue-400 hover:underline font-semibold flex items-center gap-1 shrink-0">
-                      <span>New Tab</span> <i data-lucide="external-link" class="w-3 h-3"></i>
+                      <span>Direct GitHub ↗</span>
                     </a>
                   </div>
                 </div>
@@ -2991,7 +2987,7 @@
     }
 
     // ========================================================
-    // GITHUB UP & DOWN SPLIT-SCREEN SYSTEM
+    // GITHUB POPUP WINDOW & MOBILE-FRIENDLY SETUP MODAL
     // ========================================================
     let ghLivePollInterval = null;
     let activeGhHalfWindow = null;
@@ -3002,21 +2998,100 @@
       return (input ? input.value.trim() : '') || 'mystore';
     }
 
+    function openGitHubSetupPopup(position = 'down') {
+      currentGhPosition = position;
+      const repoName = getSelectedRepoName();
+      const popupUrl = `https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=${encodeURIComponent(repoName)}&visibility=public`;
+
+      // 1. Detect if Mobile browser
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+      // 2. Open GitHub Window or Tab
+      try {
+        if (isMobile) {
+          // On mobile Chrome, opening via _blank is clean and standard
+          window.open(popupUrl, '_blank');
+        } else {
+          // On desktop, open in a dedicated centered popup window
+          const screenW = window.screen.availWidth || window.screen.width || 1280;
+          const screenH = window.screen.availHeight || window.screen.height || 720;
+          const width = Math.min(1080, Math.floor(screenW * 0.88));
+          const height = Math.min(740, Math.floor(screenH * 0.88));
+          const left = Math.floor((screenW - width) / 2);
+          const top = Math.floor((screenH - height) / 2);
+          const features = `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes,status=yes,location=yes`;
+
+          activeGhHalfWindow = window.open(popupUrl, 'GitHubRepoPopup', features);
+          if (activeGhHalfWindow) activeGhHalfWindow.focus();
+        }
+      } catch (e) {
+        console.warn('Popup blocked, fallback link provided:', e);
+      }
+
+      // 3. Immediately show Setup Companion Popup Modal on the Dashboard!
+      const modal = document.getElementById('ghCopyAssistantModal');
+      const reopenBtn = document.getElementById('modalReopenPopupBtn');
+      const modalInput = document.getElementById('modalGhInput');
+
+      if (reopenBtn) reopenBtn.href = popupUrl;
+      if (modalInput) {
+        if (currentUser && currentUser.github_repo_url) {
+          modalInput.value = currentUser.github_repo_url;
+        } else {
+          modalInput.value = '';
+        }
+        handleModalGhInput();
+      }
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        lucide.createIcons();
+      }
+
+      // 4. Ensure background dashboard is at Sub-Step 1.2
+      goToSubStep(2);
+
+      // Focus modal input
+      setTimeout(() => {
+        if (modalInput && !modalInput.value) modalInput.focus();
+      }, 350);
+    }
+
+    async function pasteFromClipboardToModalInput() {
+      const input = document.getElementById('modalGhInput');
+      if (!input) return;
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          const text = await navigator.clipboard.readText();
+          if (text && text.trim()) {
+            input.value = text.trim();
+            handleModalGhInput();
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Clipboard read error:', err);
+      }
+
+      // Fallback prompt for mobile Chrome
+      const manual = prompt('Apni GitHub Repository ka link paste karein (Ctrl+V):', input.value || '');
+      if (manual && manual.trim()) {
+        input.value = manual.trim();
+        handleModalGhInput();
+      } else {
+        input.focus();
+      }
+    }
+
     function getGitHubUpDownFeatures(position = 'down') {
       const screenW = window.screen.availWidth || window.screen.width || 1280;
       const screenH = window.screen.availHeight || window.screen.height || 720;
       
-      // Full width, half height (Up / Down split)
       const width = Math.max(760, screenW - 20);
       const height = Math.max(380, Math.floor(screenH * 0.49));
       const left = 10;
-      
-      let top = 10;
-      if (position === 'down') {
-        top = Math.floor(screenH * 0.49); // Down-side (Bottom half)
-      } else {
-        top = 10; // Up-side (Top half)
-      }
+      let top = (position === 'down') ? Math.floor(screenH * 0.49) : 10;
 
       return {
         features: `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes,status=yes,location=yes,menubar=no,toolbar=no`,
@@ -3026,55 +3101,6 @@
         top,
         position
       };
-    }
-
-    function openGitHubUpDownScreen(position = 'down') {
-      currentGhPosition = position;
-      const repoName = getSelectedRepoName();
-      const popupUrl = `https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=${encodeURIComponent(repoName)}&visibility=public`;
-
-      const winInfo = getGitHubUpDownFeatures(position);
-
-      try {
-        if (activeGhHalfWindow && !activeGhHalfWindow.closed) {
-          activeGhHalfWindow.location.href = popupUrl;
-          activeGhHalfWindow.moveTo(winInfo.left, winInfo.top);
-          activeGhHalfWindow.resizeTo(winInfo.width, winInfo.height);
-          activeGhHalfWindow.focus();
-        } else {
-          activeGhHalfWindow = window.open(
-            popupUrl,
-            'GitHubRepoUpDownWindow',
-            winInfo.features
-          );
-          if (activeGhHalfWindow) activeGhHalfWindow.focus();
-        }
-      } catch (e) {
-        console.warn('Popup blocked, fallback link provided:', e);
-      }
-
-      // Automatically transition dashboard to Sub-Step 1.2
-      goToSubStep(2);
-
-      // Show and update split screen status bar on Sub-Step 1.2
-      const statusBar = document.getElementById('splitScreenStatusBar');
-      if (statusBar) {
-        statusBar.classList.remove('hidden');
-        statusBar.classList.remove('opacity-75');
-      }
-      updateGhPositionStatusUI(position);
-
-      // Scroll smoothly to Sub-Step 1.2
-      const stepCard = document.getElementById('cardStep1');
-      if (stepCard) {
-        stepCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      // Focus the Repo Input field
-      setTimeout(() => {
-        const input = document.getElementById('ghRepoUrlInput');
-        if (input && !input.value) input.focus();
-      }, 350);
     }
 
     function toggleGitHubWindowPosition() {
@@ -3088,8 +3114,6 @@
           activeGhHalfWindow.resizeTo(winInfo.width, winInfo.height);
           activeGhHalfWindow.focus();
         } catch(e) {}
-      } else {
-        openGitHubUpDownScreen(nextPos);
       }
       updateGhPositionStatusUI(nextPos);
     }
@@ -3130,7 +3154,7 @@
       }
       const statusText = document.getElementById('splitScreenStatusText');
       if (statusText) {
-        statusText.innerHTML = `⚪ GitHub Window Band Kar Di Gayi Hai • <a href="javascript:void(0)" onclick="openGitHubUpDownScreen()" class="text-emerald-400 underline font-bold">Dobara Kholein ↗</a>`;
+        statusText.innerHTML = `⚪ GitHub Window Band Kar Di Gayi Hai • <a href="javascript:void(0)" onclick="openGitHubSetupPopup()" class="text-emerald-400 underline font-bold">Dobara Kholein ↗</a>`;
       }
     }
 
@@ -3196,8 +3220,9 @@
     }
 
     // Backwards-compatible aliases
-    const openGitHubHalfScreen = openGitHubUpDownScreen;
-    const openGitHubRepoPopupAndGuide = openGitHubUpDownScreen;
+    const openGitHubHalfScreen = openGitHubSetupPopup;
+    const openGitHubUpDownScreen = openGitHubSetupPopup;
+    const openGitHubRepoPopupAndGuide = openGitHubSetupPopup;
 
     function closeGhCopyAssistantModal() {
       const modal = document.getElementById('ghCopyAssistantModal');
@@ -3387,38 +3412,50 @@
       <!-- 4-STEP CLEAR ACTION FLOW -->
       <div class="space-y-4">
         
-        <!-- Action 1: Popup me button dabayein -->
-        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+        <!-- Action 1: GitHub kholne aur repo banane ka button -->
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center">1</span>
-              <span>Popup Me Green Button Dabayein:</span>
+              <span>GitHub Par Repo Banayein (1-Tap):</span>
             </span>
-            <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">1-Click</span>
+            <span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Public By Default</span>
           </div>
-          <p class="text-xs text-slate-300 pl-7">
-            Khuli hui GitHub popup window me Public pehle se chuna hoga. Bas green <strong class="text-emerald-400">"Create repository"</strong> button dabayein.
+          <a id="modalReopenPopupBtn" href="#" target="_blank"
+             class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 shadow-md shadow-emerald-500/20 text-center">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            <span>👉 1-Tap Me GitHub Par Repo Page Kholein ↗</span>
+          </a>
+          <p class="text-[11px] text-slate-400">
+            Wahan Public pehle se chuna hoga, bas green <strong>"Create repository"</strong> dabayein, fir link copy karke yahan wapas aakar Step 2 me paste karein.
           </p>
         </div>
 
-        <!-- Action 2: Link / Username input -->
+        <!-- Action 2: Link / Username input with 1-Tap Clipboard Paste button -->
         <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center">2</span>
-              <span>Apna GitHub Username Ya Repo Link Daalein:</span>
+              <span>Repo Ka Link Yahan Paste Karein:</span>
             </span>
-            <span class="text-[10px] text-blue-400">Formula Generator</span>
+            <span class="text-[10px] text-blue-400">1-Tap Formula</span>
           </div>
-          <div class="pl-7 space-y-2">
-            <input type="text" id="modalGhInput" placeholder="jaise: https://github.com/rahul/mystore  ya  sirf  rahul"
-                   oninput="handleModalGhInput()"
-                   class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <input type="text" id="modalGhInput" placeholder="jaise: https://github.com/username/vastustore"
+                     oninput="handleModalGhInput()"
+                     class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:border-emerald-500 focus:outline-none font-mono" />
+              <button type="button" onclick="pasteFromClipboardToModalInput()"
+                      class="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center gap-1.5 shrink-0 transition active:scale-95 shadow">
+                <i data-lucide="clipboard-paste" class="w-4 h-4"></i>
+                <span>📋 Paste</span>
+              </button>
+            </div>
             
             <div id="modalCalculatedLinks" class="hidden p-3 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-1.5 font-mono">
-              <div class="flex items-center justify-between text-[11px]">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px]">
                 <span class="text-slate-400 font-sans">Aapki Live Website Link:</span>
-                <span id="modalLiveSiteText" class="text-emerald-400 font-bold">https://username.github.io/mystore/</span>
+                <span id="modalLiveSiteText" class="text-emerald-400 font-bold break-all">https://username.github.io/mystore/</span>
               </div>
             </div>
           </div>
