@@ -345,6 +345,35 @@
           </span>
         </div>
 
+        <!-- ACTIVE STOREFRONT THEME BANNER (SET AFTER PAYMENT) -->
+        <div id="activeThemeBanner" class="mb-5 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
+          <div class="flex items-center gap-3">
+            <div id="activeThemeIconBox" class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-2xl shadow-inner shrink-0">
+              🕉️
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Selected Frontend Theme</span>
+                <span class="text-[10px] text-slate-400">Default for Your Customers</span>
+              </div>
+              <h4 id="activeThemeTitle" class="font-heading font-bold text-sm sm:text-base text-white mt-0.5">वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)</h4>
+              <p id="activeThemeSubtitle" class="text-[11px] text-slate-300">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+            <a id="activeThemeDemoBtn" href="vastu-demo.html" target="_blank"
+               class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow">
+              <span>Preview Demo</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+            <button type="button" onclick="openThemeSelectorModal()"
+                    class="px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/40 text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow">
+              <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>Change Theme (थीम बदलें)</span>
+            </button>
+          </div>
+        </div>
+
         <!-- HORIZONTAL SUB-STEP WIZARD TABS (FULL-WIDTH 1.1 ➔ 1.2 ➔ 1.3 ➔ 1.4) -->
         <div class="mb-5 p-2 rounded-2xl bg-slate-950/70 border border-slate-800">
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -422,12 +451,12 @@
                          class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:border-blue-500 focus:outline-none font-mono" />
                   
                   <!-- Quick Suggestion Pills -->
-                  <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                  <div id="quickRepoPillsContainer" class="flex flex-wrap items-center gap-1.5 mt-2">
                     <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>
+                    <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
                     <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
                     <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
                     <button type="button" onclick="setQuickRepoName('dukaan')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">dukaan</button>
-                    <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
                   </div>
                 </div>
 
@@ -1433,6 +1462,136 @@
     
     let currentUser = null;
 
+    // FLAGSHIP STOREFRONT THEMES CONFIGURATION
+    const STORE_THEMES = {
+      'vastu': {
+        icon: '🕉️',
+        title: 'वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)',
+        subtitle: '2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप',
+        demoUrl: 'vastu-demo.html',
+        file: 'vastu-demo.html',
+        repoDefault: 'vastustore',
+        pills: ['vastustore', 'vastushop', 'brahmand', 'mystore']
+      },
+      'saree': {
+        icon: '🥻',
+        title: 'नूलम साड़ी (NOOLAM Saree & Ethnic Couture)',
+        subtitle: 'बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक ज़ूम व डायरेक्ट व्हाट्सएप ऑर्डरिंग',
+        demoUrl: 'saree-demo.html',
+        file: 'saree-demo.html',
+        repoDefault: 'sareestore',
+        pills: ['sareestore', 'ethnicshop', 'couture', 'mystore']
+      },
+      'electronics': {
+        icon: '⚡',
+        title: 'Electronics & Gadgets Pro',
+        subtitle: 'Mobiles, Smartwatches, Audio, Specs Comparer & Tech Catalog',
+        demoUrl: 'demo.html?theme=electronics',
+        file: 'demo.html?theme=electronics',
+        repoDefault: 'gadgetstore',
+        pills: ['gadgetstore', 'techstore', 'electronics', 'mystore']
+      },
+      'fashion': {
+        icon: '👗',
+        title: 'Fashion & Apparel Boutique',
+        subtitle: 'Clothing, Dresses, Streetwear & Luxury Style Catalog',
+        demoUrl: 'demo.html?theme=fashion',
+        file: 'demo.html?theme=fashion',
+        repoDefault: 'fashionhub',
+        pills: ['fashionhub', 'boutique', 'apparel', 'mystore']
+      },
+      'grocery_food': {
+        icon: '🛒',
+        title: 'Grocery & Daily Food Mart',
+        subtitle: 'Fresh Organics, Fruits, Dairy, Snacks & Quick Cart',
+        demoUrl: 'demo.html?theme=grocery_food',
+        file: 'demo.html?theme=grocery_food',
+        repoDefault: 'grocerystore',
+        pills: ['grocerystore', 'freshmart', 'dailyfood', 'mystore']
+      },
+      'beauty_personal_care': {
+        icon: '💄',
+        title: 'Beauty & Personal Care',
+        subtitle: 'Skincare, Makeup, Serums & Salon Grade Products',
+        demoUrl: 'demo.html?theme=beauty_personal_care',
+        file: 'demo.html?theme=beauty_personal_care',
+        repoDefault: 'beautystore',
+        pills: ['beautystore', 'glamshop', 'skincare', 'mystore']
+      }
+    };
+
+    function getActiveThemeKey() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('theme') || localStorage.getItem('sheetstore_selected_theme') || localStorage.getItem('store_active_template') || (currentUser && currentUser.selected_theme) || 'vastu';
+    }
+
+    function updateActiveThemeUI(themeKey) {
+      const key = themeKey || getActiveThemeKey();
+      const theme = STORE_THEMES[key] || STORE_THEMES['vastu'];
+      if (!theme) return;
+
+      const iconBox = document.getElementById('activeThemeIconBox');
+      const title = document.getElementById('activeThemeTitle');
+      const subtitle = document.getElementById('activeThemeSubtitle');
+      const demoBtn = document.getElementById('activeThemeDemoBtn');
+
+      if (iconBox) iconBox.innerText = theme.icon;
+      if (title) title.innerText = theme.title;
+      if (subtitle) subtitle.innerText = theme.subtitle;
+      if (demoBtn) demoBtn.href = theme.demoUrl;
+
+      // Update pills in Sub-Step 1.1
+      const pillsContainer = document.getElementById('quickRepoPillsContainer');
+      if (pillsContainer && theme.pills) {
+        let html = `<span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>`;
+        theme.pills.forEach(p => {
+          html += `<button type="button" onclick="setQuickRepoName('${p}')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">${p}</button>`;
+        });
+        pillsContainer.innerHTML = html;
+      }
+
+      // If customRepoNameInput has default value, change it to this theme's default
+      const repoInput = document.getElementById('customRepoNameInput');
+      if (repoInput) {
+        const curVal = repoInput.value.trim().toLowerCase();
+        if (!curVal || curVal === 'mystore' || curVal.includes('store') || curVal.includes('shop') || curVal.includes('hub')) {
+          repoInput.value = theme.repoDefault;
+          updateCustomRepoForkUrl();
+        }
+      }
+
+      // Refresh live formula preview
+      handleGhRepoPaste();
+    }
+
+    function openThemeSelectorModal() {
+      const modal = document.getElementById('dashboardThemeSelectorModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function closeThemeSelectorModal() {
+      const modal = document.getElementById('dashboardThemeSelectorModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function applyNewThemeFromModal(themeKey) {
+      localStorage.setItem('sheetstore_selected_theme', themeKey);
+      localStorage.setItem('store_active_template', themeKey);
+      if (currentUser) {
+        currentUser.selected_theme = themeKey;
+        localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
+        syncUserProfileToBackend({ selected_theme: themeKey });
+      }
+      updateActiveThemeUI(themeKey);
+      closeThemeSelectorModal();
+
+      const theme = STORE_THEMES[themeKey];
+      alert(`✅ Storefront theme successfully set to: ${theme ? theme.title : themeKey}!\n\nAapki live website par ab yahi theme default open hogi.`);
+    }
+
     function getBackendUrl() {
       return localStorage.getItem('store_sheet_url') || DEFAULT_SHEET_URL;
     }
@@ -1443,6 +1602,7 @@
       const urlOrderId = urlParams.get('order_id');
       const urlEmail = urlParams.get('email');
       const urlName = urlParams.get('name');
+      const urlTheme = urlParams.get('theme');
 
       const stored = localStorage.getItem('sheetstore_auth_user');
       
@@ -1526,6 +1686,15 @@
 
       // Initialize custom fork button
       updateCustomRepoForkUrl();
+
+      // Initialize active storefront theme
+      const initialTheme = urlTheme || localStorage.getItem('sheetstore_selected_theme') || localStorage.getItem('store_active_template') || (currentUser && currentUser.selected_theme) || 'vastu';
+      localStorage.setItem('sheetstore_selected_theme', initialTheme);
+      localStorage.setItem('store_active_template', initialTheme);
+      if (currentUser) {
+        currentUser.selected_theme = initialTheme;
+      }
+      updateActiveThemeUI(initialTheme);
 
       // Refresh UI steps
       updateStepUI(currentUser.onboarding_step || 1);
@@ -2198,14 +2367,31 @@
         const liveWebsiteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`;
         const settingsPagesUrl = `https://github.com/${owner}/${repo}/settings/pages`;
 
-        if (preview) preview.innerText = liveWebsiteUrl;
+        // Active Theme Direct Storefront Link
+        const activeTheme = getActiveThemeKey();
+        const themeConfig = STORE_THEMES[activeTheme] || STORE_THEMES['vastu'];
+        const directThemeUrl = `${liveWebsiteUrl}${themeConfig.file}`;
+
+        if (preview) {
+          preview.innerHTML = `
+            <div class="space-y-1 text-left">
+              <div class="flex items-center justify-between text-emerald-400">
+                <span class="font-bold">Live Store: <span class="text-white">${liveWebsiteUrl}</span></span>
+                <span class="text-[10px] text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">Active</span>
+              </div>
+              <div class="text-[11px] text-amber-300 font-mono">
+                Storefront (${themeConfig.title}): <a href="${directThemeUrl}" target="_blank" class="underline hover:text-white">${directThemeUrl} ↗</a>
+              </div>
+            </div>
+          `;
+        }
         if (directBtn) directBtn.href = settingsPagesUrl;
         if (siteUrlInput) siteUrlInput.value = liveWebsiteUrl;
 
         const summaryRepo = document.getElementById('summaryRepoUrl');
         const summaryLive = document.getElementById('summaryLiveUrl');
         if (summaryRepo) summaryRepo.innerText = repoUrl;
-        if (summaryLive) summaryLive.innerText = liveWebsiteUrl;
+        if (summaryLive) summaryLive.innerHTML = `<span class="text-emerald-400 font-bold">${liveWebsiteUrl}</span> <span class="text-amber-300 font-sans text-xs">(${themeConfig.title})</span>`;
 
         const ctaBox = document.getElementById('ghPublishCtaBox');
         if (ctaBox) {
@@ -2223,8 +2409,7 @@
     }
 
     function copyHelperUrl() {
-      const preview = document.getElementById('ghPreviewLiveUrl');
-      const url = preview ? preview.innerText.trim() : '';
+      const url = (currentUser && currentUser.website_live_url) || '';
       if (!url || url.includes('yourusername')) {
         alert("Pehle apni GitHub repository ka link paste karein!");
         return;
@@ -2814,8 +2999,14 @@
         const liveSiteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`;
         const pagesUrl = `https://github.com/${owner}/${repo}/settings/pages`;
 
+        const activeTheme = getActiveThemeKey();
+        const themeConfig = STORE_THEMES[activeTheme] || STORE_THEMES['vastu'];
+        const directThemeUrl = `${liveSiteUrl}${themeConfig.file}`;
+
         if (previewCard) previewCard.classList.remove('hidden');
-        if (liveText) liveText.innerText = liveSiteUrl;
+        if (liveText) {
+          liveText.innerHTML = `<span class="text-white">${liveSiteUrl}</span> <a href="${directThemeUrl}" target="_blank" class="text-amber-300 underline text-[10px] ml-1">(${themeConfig.title} ↗)</a>`;
+        }
         if (pagesBtn) pagesBtn.href = pagesUrl;
 
         // Sync with dashboard Step 1 inputs
@@ -3056,7 +3247,129 @@
 
     </div>
   </div>
-  </script>
+
+  <!-- ========================================================
+       IN-DASHBOARD THEME SELECTOR MODAL
+       ======================================================== -->
+  <div id="dashboardThemeSelectorModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-4 my-6 text-left" onclick="event.stopPropagation()">
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 text-xl shrink-0">
+            🎨
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Storefront Theme Chunein</h3>
+            <p class="text-xs text-slate-400">Jo theme aap chunte hain, wahi aapke frontend par default set ho jayegi:</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeThemeSelectorModal()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- 6 Flagship Themes Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[55vh] overflow-y-auto pr-1">
+        
+        <!-- Theme 1: Vastu -->
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-amber-400 cursor-pointer transition relative group dashboard-theme-card"
+             onclick="applyNewThemeFromModal('vastu')">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-2xl">🕉️</span>
+            <span class="text-[10px] text-amber-400 font-mono font-semibold">vastu-demo.html</span>
+          </div>
+          <h4 class="font-bold text-xs sm:text-sm text-amber-300">वास्तु ब्रह्मांड (Vastu Brahmand)</h4>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप।</p>
+          <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
+            <a href="vastu-demo.html" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+          </div>
+        </div>
+
+        <!-- Theme 2: Saree -->
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-amber-400 cursor-pointer transition relative group dashboard-theme-card"
+             onclick="applyNewThemeFromModal('saree')">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-2xl">🥻</span>
+            <span class="text-[10px] text-amber-400 font-mono font-semibold">saree-demo.html</span>
+          </div>
+          <h4 class="font-bold text-xs sm:text-sm text-[#F5DE7A]">नूलम साड़ी (NOOLAM Saree)</h4>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक ज़ूम व डायरेक्ट व्हाट्सएप ऑर्डरिंग।</p>
+          <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
+            <a href="saree-demo.html" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+          </div>
+        </div>
+
+        <!-- Theme 3: Electronics -->
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-cyan-400 cursor-pointer transition relative group dashboard-theme-card"
+             onclick="applyNewThemeFromModal('electronics')">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-2xl">⚡</span>
+            <span class="text-[10px] text-cyan-400 font-mono font-semibold">theme=electronics</span>
+          </div>
+          <h4 class="font-bold text-xs sm:text-sm text-cyan-300">Electronics &amp; Gadgets Pro</h4>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Mobiles, Smartwatches, Audio, Specs Comparer & Tech Catalog.</p>
+          <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
+            <a href="demo.html?theme=electronics" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+          </div>
+        </div>
+
+        <!-- Theme 4: Fashion -->
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-rose-400 cursor-pointer transition relative group dashboard-theme-card"
+             onclick="applyNewThemeFromModal('fashion')">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-2xl">👗</span>
+            <span class="text-[10px] text-rose-400 font-mono font-semibold">theme=fashion</span>
+          </div>
+          <h4 class="font-bold text-xs sm:text-sm text-rose-300">Fashion &amp; Apparel Boutique</h4>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Clothing, Dresses, Streetwear & Luxury Style Catalog.</p>
+          <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
+            <a href="demo.html?theme=fashion" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+          </div>
+        </div>
+
+        <!-- Theme 5: Grocery -->
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-emerald-400 cursor-pointer transition relative group dashboard-theme-card"
+             onclick="applyNewThemeFromModal('grocery_food')">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-2xl">🛒</span>
+            <span class="text-[10px] text-emerald-400 font-mono font-semibold">theme=grocery_food</span>
+          </div>
+          <h4 class="font-bold text-xs sm:text-sm text-emerald-300">Grocery &amp; Daily Food</h4>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart.</p>
+          <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
+            <a href="demo.html?theme=grocery_food" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+          </div>
+        </div>
+
+        <!-- Theme 6: Beauty -->
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-pink-400 cursor-pointer transition relative group dashboard-theme-card"
+             onclick="applyNewThemeFromModal('beauty_personal_care')">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-2xl">💄</span>
+            <span class="text-[10px] text-pink-400 font-mono font-semibold">theme=beauty_personal_care</span>
+          </div>
+          <h4 class="font-bold text-xs sm:text-sm text-pink-300">Beauty &amp; Personal Care</h4>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Skincare, Makeup, Serums & Salon Grade Products.</p>
+          <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
+            <a href="demo.html?theme=beauty_personal_care" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 text-center">
+        <button type="button" onclick="closeThemeSelectorModal()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+          Band Karein
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Lightbox Modal for Screenshots -->
   <div id="imageLightboxModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">

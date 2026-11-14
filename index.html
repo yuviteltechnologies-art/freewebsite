@@ -17,6 +17,48 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- Customer Store Auto-Router: When deployed to customer's GitHub Pages, route root to storefront -->
+  <script>
+    (function() {
+      try {
+        const host = window.location.hostname.toLowerCase();
+        const path = window.location.pathname.toLowerCase();
+        const search = window.location.search;
+        const params = new URLSearchParams(search);
+        
+        // If query string explicitly requests landing page, don't redirect
+        if (params.get('landing') === 'true' || params.get('admin') === 'true') return;
+
+        // Check if hosted on customer's GitHub Pages (not localhost and not master account)
+        const isMaster = host === 'localhost' || host === '127.0.0.1' || host === 'yuviteltechnologies-art.github.io';
+        
+        if (!isMaster && host.endsWith('.github.io')) {
+          // Check saved theme or deduce from repository name
+          let chosen = localStorage.getItem('store_active_template') || localStorage.getItem('sheetstore_selected_theme') || '';
+          if (!chosen) {
+            if (path.includes('vastu')) chosen = 'vastu';
+            else if (path.includes('saree')) chosen = 'saree';
+            else if (path.includes('gadget') || path.includes('electronic')) chosen = 'electronics';
+            else if (path.includes('fashion')) chosen = 'fashion';
+            else if (path.includes('grocery')) chosen = 'grocery_food';
+            else if (path.includes('beauty')) chosen = 'beauty_personal_care';
+            else chosen = 'vastu'; // Default flagship
+          }
+
+          if (chosen === 'vastu' || chosen === 'vastu_brahmand') {
+            window.location.replace('vastu-demo.html' + search);
+          } else if (chosen === 'saree' || chosen === 'noolam-saree') {
+            window.location.replace('saree-demo.html' + search);
+          } else {
+            window.location.replace('demo.html?theme=' + encodeURIComponent(chosen));
+          }
+        }
+      } catch(e) {
+        console.warn('Auto router error:', e);
+      }
+    })();
+  </script>
+
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -1775,19 +1817,131 @@
         </button>
       </div>
 
-      <!-- VIEW 3: SUCCESS CELEBRATION VIEW -->
-      <div id="paymentSuccessView" class="hidden text-center py-4">
-        <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-emerald-500/20">
-          <i data-lucide="check" class="w-8 h-8 stroke-[3]"></i>
+      <!-- VIEW 3: SUCCESS CELEBRATION & THEME SELECTOR VIEW -->
+      <div id="paymentSuccessView" class="hidden text-left py-2 space-y-4">
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto mb-2 shadow-lg shadow-emerald-500/20">
+            <i data-lucide="check" class="w-7 h-7 stroke-[3]"></i>
+          </div>
+          <h3 class="font-poppins font-black text-xl text-white">🎉 Payment Verified Successfully!</h3>
+          <p class="text-xs text-emerald-300 font-medium" id="successWelcomeMsg">Aapka account activate ho gaya hai!</p>
+          <div class="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-bold">
+            <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+            <span>Step 1: Apni Dukaan Ki Default Theme Chunein</span>
+          </div>
+          <p class="text-[11px] text-slate-300 mt-1">Jo theme aap chunenge, wahi aapke frontend par default set ho jayegi, fir hum GitHub setup karenge:</p>
         </div>
-        <h3 class="font-poppins font-black text-xl text-white mb-1">🎉 Payment Verified Successfully!</h3>
-        <p class="text-xs text-emerald-300 mb-4 font-medium" id="successWelcomeMsg">Aapka account activate ho gaya hai!</p>
-        <div class="p-3 bg-slate-950/80 rounded-2xl border border-emerald-500/30 text-xs text-slate-300 mb-4">
-          <p>Aapko Launchpad Dashboard par redirect kiya ja raha hai...</p>
+
+        <!-- 6 Flagship Themes Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[46vh] overflow-y-auto pr-1" id="postPaymentThemeGrid">
+          
+          <!-- Card 1: Vastu Brahmand -->
+          <div class="theme-choice-card active p-3 rounded-2xl bg-gradient-to-br from-[#171A3A] to-slate-950 border-2 border-amber-400 cursor-pointer transition relative group shadow-md"
+               onclick="selectStoreTheme('vastu', this)">
+            <div class="flex items-start justify-between mb-1">
+              <span class="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-base">🕉️</span>
+              <span class="theme-check-badge w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+            </div>
+            <h4 class="font-bold text-xs sm:text-sm text-amber-300 group-hover:text-amber-200">वास्तु ब्रह्मांड (Vastu Brahmand)</h4>
+            <p class="text-[10.5px] text-slate-300 mt-0.5 line-clamp-2">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप।</p>
+            <div class="mt-2 flex items-center justify-between text-[10px] pt-1 border-t border-white/5">
+              <span class="text-amber-400 font-semibold font-mono">vastu-demo.html</span>
+              <a href="vastu-demo.html" target="_blank" onclick="event.stopPropagation()" class="text-cyan-400 hover:underline">Demo ↗</a>
+            </div>
+          </div>
+
+          <!-- Card 2: Saree & Ethnic Couture -->
+          <div class="theme-choice-card p-3 rounded-2xl bg-gradient-to-br from-[#200407] to-slate-950 border border-slate-700 hover:border-amber-400/70 cursor-pointer transition relative group shadow-md"
+               onclick="selectStoreTheme('saree', this)">
+            <div class="flex items-start justify-between mb-1">
+              <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-base">🥻</span>
+              <span class="theme-check-badge hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+            </div>
+            <h4 class="font-bold text-xs sm:text-sm text-[#F5DE7A] group-hover:text-amber-200">नूलम साड़ी (NOOLAM Saree)</h4>
+            <p class="text-[10.5px] text-slate-300 mt-0.5 line-clamp-2">Gopuram 6 Mood Arch, Interactive Saree Rail, Reels & 10% Bundle Checkout.</p>
+            <div class="mt-2 flex items-center justify-between text-[10px] pt-1 border-t border-white/5">
+              <span class="text-amber-400 font-semibold font-mono">saree-demo.html</span>
+              <a href="saree-demo.html" target="_blank" onclick="event.stopPropagation()" class="text-cyan-400 hover:underline">Demo ↗</a>
+            </div>
+          </div>
+
+          <!-- Card 3: Electronics & Smart Gadgets -->
+          <div class="theme-choice-card p-3 rounded-2xl bg-slate-950 border border-slate-700 hover:border-cyan-400/70 cursor-pointer transition relative group shadow-md"
+               onclick="selectStoreTheme('electronics', this)">
+            <div class="flex items-start justify-between mb-1">
+              <span class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-base">📱</span>
+              <span class="theme-check-badge hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+            </div>
+            <h4 class="font-bold text-xs sm:text-sm text-cyan-400 group-hover:text-cyan-300">Electronics &amp; Gadgets</h4>
+            <p class="text-[10.5px] text-slate-300 mt-0.5 line-clamp-2">Smartphones, Audio, Laptops, Tech Accessories & Direct UPI.</p>
+            <div class="mt-2 flex items-center justify-between text-[10px] pt-1 border-t border-white/5">
+              <span class="text-cyan-400 font-semibold font-mono">demo.html?theme=electronics</span>
+              <a href="demo.html?theme=electronics" target="_blank" onclick="event.stopPropagation()" class="text-cyan-400 hover:underline">Demo ↗</a>
+            </div>
+          </div>
+
+          <!-- Card 4: Fashion & Apparel -->
+          <div class="theme-choice-card p-3 rounded-2xl bg-slate-950 border border-slate-700 hover:border-rose-400/70 cursor-pointer transition relative group shadow-md"
+               onclick="selectStoreTheme('fashion', this)">
+            <div class="flex items-start justify-between mb-1">
+              <span class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center font-bold text-base">👗</span>
+              <span class="theme-check-badge hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+            </div>
+            <h4 class="font-bold text-xs sm:text-sm text-rose-400 group-hover:text-rose-300">Fashion &amp; Apparel</h4>
+            <p class="text-[10.5px] text-slate-300 mt-0.5 line-clamp-2">Clothing, Dresses, Streetwear & Luxury Style Catalog.</p>
+            <div class="mt-2 flex items-center justify-between text-[10px] pt-1 border-t border-white/5">
+              <span class="text-rose-400 font-semibold font-mono">demo.html?theme=fashion</span>
+              <a href="demo.html?theme=fashion" target="_blank" onclick="event.stopPropagation()" class="text-cyan-400 hover:underline">Demo ↗</a>
+            </div>
+          </div>
+
+          <!-- Card 5: Grocery & Food -->
+          <div class="theme-choice-card p-3 rounded-2xl bg-slate-950 border border-slate-700 hover:border-emerald-400/70 cursor-pointer transition relative group shadow-md"
+               onclick="selectStoreTheme('grocery_food', this)">
+            <div class="flex items-start justify-between mb-1">
+              <span class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold text-base">🛒</span>
+              <span class="theme-check-badge hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+            </div>
+            <h4 class="font-bold text-xs sm:text-sm text-emerald-400 group-hover:text-emerald-300">Grocery &amp; Daily Food</h4>
+            <p class="text-[10.5px] text-slate-300 mt-0.5 line-clamp-2">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart.</p>
+            <div class="mt-2 flex items-center justify-between text-[10px] pt-1 border-t border-white/5">
+              <span class="text-emerald-400 font-semibold font-mono">demo.html?theme=grocery_food</span>
+              <a href="demo.html?theme=grocery_food" target="_blank" onclick="event.stopPropagation()" class="text-cyan-400 hover:underline">Demo ↗</a>
+            </div>
+          </div>
+
+          <!-- Card 6: Beauty & Personal Care -->
+          <div class="theme-choice-card p-3 rounded-2xl bg-slate-950 border border-slate-700 hover:border-pink-400/70 cursor-pointer transition relative group shadow-md"
+               onclick="selectStoreTheme('beauty_personal_care', this)">
+            <div class="flex items-start justify-between mb-1">
+              <span class="w-8 h-8 rounded-xl bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold text-base">💄</span>
+              <span class="theme-check-badge hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+            </div>
+            <h4 class="font-bold text-xs sm:text-sm text-pink-400 group-hover:text-pink-300">Beauty &amp; Personal Care</h4>
+            <p class="text-[10.5px] text-slate-300 mt-0.5 line-clamp-2">Skincare, Makeup, Serums & Salon Grade Products.</p>
+            <div class="mt-2 flex items-center justify-between text-[10px] pt-1 border-t border-white/5">
+              <span class="text-pink-400 font-semibold font-mono">demo.html?theme=beauty_personal_care</span>
+              <a href="demo.html?theme=beauty_personal_care" target="_blank" onclick="event.stopPropagation()" class="text-cyan-400 hover:underline">Demo ↗</a>
+            </div>
+          </div>
+
         </div>
-        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-          <div class="bg-emerald-400 h-1.5 rounded-full animate-[progress_1.5s_ease-in-out_infinite]" style="width: 100%;"></div>
+
+        <!-- Selected Theme Confirmation Box -->
+        <div class="p-3 bg-slate-950/90 rounded-xl border border-emerald-500/30 flex items-center justify-between">
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase block font-semibold">Chuni Hui Default Theme:</span>
+            <span id="selectedThemeDisplay" class="text-xs font-bold text-emerald-400">🕉️ वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)</span>
+          </div>
+          <span class="text-[10px] text-slate-400">(Bad me bhi badal sakte hain)</span>
         </div>
+
+        <!-- Confirm and Proceed Button -->
+        <button type="button" onclick="confirmThemeAndProceedToDashboard()"
+                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition active:scale-95">
+          <span>Yeh Theme Set Karein &amp; GitHub Setup Shuru Karein ➔</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
       </div>
 
     </div>
@@ -2489,20 +2643,122 @@
               email: email,
               is_paid: true,
               status: "ACTIVE",
-              onboarding_step: 1
+              onboarding_step: 1,
+              selected_theme: currentChosenTheme || 'vastu'
             };
             localStorage.setItem('sheetstore_auth_user', JSON.stringify(authUser));
             sessionStorage.setItem('sheetstore_logged_in', 'true');
             sessionStorage.setItem('sheetstore_current_order', cleanOrderId);
 
-            setTimeout(() => {
-              window.location.href = `dashboard.html?order_id=${cleanOrderId}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
-            }, 1400);
+            // Store in memory for theme confirmation step
+            currentVerifiedOrder = {
+              orderId: cleanOrderId,
+              name: name,
+              phone: cleanPhone,
+              email: email
+            };
+
+            // Set default theme selection
+            selectStoreTheme(currentChosenTheme || 'vastu');
           }
         } catch (err) {
           console.warn('Polling check error:', err);
         }
       }, 3000);
+    }
+
+    // THEME SELECTION & PROCEED TO DASHBOARD HANDLERS
+    let currentChosenTheme = 'vastu';
+    let currentVerifiedOrder = null;
+
+    const themeDisplayNames = {
+      'vastu': '🕉️ वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)',
+      'saree': '🥻 नूलम साड़ी (NOOLAM Saree & Ethnic Couture)',
+      'electronics': '⚡ Electronics & Gadgets Pro',
+      'fashion': '👗 Fashion & Apparel Boutique',
+      'grocery_food': '🛒 Grocery & Daily Food Mart',
+      'beauty_personal_care': '💄 Beauty & Personal Care'
+    };
+
+    function selectStoreTheme(themeKey, el) {
+      currentChosenTheme = themeKey;
+
+      // Update card UI highlights
+      const grid = document.getElementById('postPaymentThemeGrid');
+      if (grid) {
+        const cards = grid.querySelectorAll('.theme-choice-card');
+        cards.forEach(card => {
+          card.classList.remove('active', 'border-2', 'border-amber-400', 'border-emerald-400', 'border-cyan-400', 'border-rose-400', 'border-pink-400');
+          card.classList.add('border-slate-700');
+          const badge = card.querySelector('.theme-check-badge');
+          if (badge) badge.classList.add('hidden');
+        });
+
+        // Find clicked card or card matching themeKey
+        let targetCard = el;
+        if (!targetCard) {
+          cards.forEach(card => {
+            const oc = card.getAttribute('onclick') || '';
+            if (oc.includes(`'${themeKey}'`)) targetCard = card;
+          });
+        }
+
+        if (targetCard) {
+          targetCard.classList.remove('border-slate-700');
+          targetCard.classList.add('active', 'border-2', 'border-emerald-400');
+          const badge = targetCard.querySelector('.theme-check-badge');
+          if (badge) badge.classList.remove('hidden');
+        }
+      }
+
+      const display = document.getElementById('selectedThemeDisplay');
+      if (display) {
+        display.innerText = themeDisplayNames[themeKey] || themeKey;
+      }
+    }
+
+    function confirmThemeAndProceedToDashboard() {
+      const theme = currentChosenTheme || 'vastu';
+      localStorage.setItem('sheetstore_selected_theme', theme);
+      localStorage.setItem('store_active_template', theme);
+
+      let orderId = '';
+      let email = '';
+      let name = '';
+
+      if (currentVerifiedOrder) {
+        orderId = currentVerifiedOrder.orderId || '';
+        email = currentVerifiedOrder.email || '';
+        name = currentVerifiedOrder.name || '';
+      } else {
+        const stored = localStorage.getItem('sheetstore_auth_user');
+        if (stored) {
+          try {
+            const u = JSON.parse(stored);
+            orderId = u.id || '';
+            email = u.email || '';
+            name = u.name || '';
+            u.selected_theme = theme;
+            localStorage.setItem('sheetstore_auth_user', JSON.stringify(u));
+          } catch(e){}
+        }
+      }
+
+      // Best effort background sync of theme to Google Sheet
+      try {
+        const masterApi = "https://script.google.com/macros/s/AKfycbyyzqzTbww2QQeQffEjY6ckDGMjgeLBVwd4KwlID99ZkXxTQiuKOzNqXJbr_fKcNZ6t/exec";
+        const syncParams = new URLSearchParams({
+          action: 'updateOrderTheme',
+          order_id: orderId,
+          email: email,
+          theme: theme
+        });
+        fetch(`${masterApi}?${syncParams.toString()}`).catch(() => {});
+      } catch(e){}
+
+      // Navigate to Dashboard with chosen theme & order info
+      const targetUrl = `dashboard.html?theme=${encodeURIComponent(theme)}&order_id=${encodeURIComponent(orderId)}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+      window.location.href = targetUrl;
     }
   </script>
 
