@@ -1962,7 +1962,7 @@
       const totalText = document.getElementById('upiModalAmount').innerText;
 
       // Google Sheet Web App URL
-      const webAppUrl = "https://script.google.com/macros/s/AKfycbxUyCBt83U0hmpAQGPZy7xo10iiGaASkpStxiIGa7lpIskZKgbSxgzP5rKHpelwab4x/exec";
+      const webAppUrl = "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec";
 
       const params = new URLSearchParams({
         action: 'createOrder',
@@ -2058,7 +2058,7 @@
 
     async function fetchSareeStoreSettings() {
       const urlParams = new URLSearchParams(window.location.search);
-      const sheetUrl = urlParams.get('sheet') || localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycbxUyCBt83U0hmpAQGPZy7xo10iiGaASkpStxiIGa7lpIskZKgbSxgzP5rKHpelwab4x/exec";
+      const sheetUrl = urlParams.get('sheet') || localStorage.getItem('store_sheet_url') || "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec";
       try {
         const res = await fetch(sheetUrl);
         const data = await res.json();
