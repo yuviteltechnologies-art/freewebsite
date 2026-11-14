@@ -1580,6 +1580,7 @@ function handleGithubOAuth(ss, params) {
   var userIdentifier = params.identifier ? String(params.identifier).trim() : "";
   var repoName = params.repo ? String(params.repo).trim() : "vastustore";
   repoName = repoName.replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase() || "vastustore";
+  var redirectUri = params.redirect_uri ? String(params.redirect_uri).trim() : "https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html";
 
   var clientId = "Ov23li9KZawfem6zI2ad";
   var clientSecret = "33af3fba96551924eeff60e4f36fbc74a8228fc5";
@@ -1596,6 +1597,9 @@ function handleGithubOAuth(ss, params) {
     var tokenPayload = "client_id=" + encodeURIComponent(clientId) +
                        "&client_secret=" + encodeURIComponent(clientSecret) +
                        "&code=" + encodeURIComponent(code);
+    if (redirectUri) {
+      tokenPayload += "&redirect_uri=" + encodeURIComponent(redirectUri);
+    }
 
     var tokenResp = UrlFetchApp.fetch(tokenUrl, {
       method: "post",

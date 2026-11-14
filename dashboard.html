@@ -1701,7 +1701,12 @@
     }
 
     function getBackendUrl() {
-      return localStorage.getItem('store_sheet_url') || DEFAULT_SHEET_URL;
+      const stored = localStorage.getItem('store_sheet_url');
+      if (stored && (stored.includes('AKfycbwZGmEgb03h8wgNrePs') || !stored.startsWith('https://script.google.com/macros/s/'))) {
+        localStorage.removeItem('store_sheet_url');
+        return DEFAULT_SHEET_URL;
+      }
+      return stored || DEFAULT_SHEET_URL;
     }
 
     // Initialize Dashboard
@@ -1750,6 +1755,19 @@
           currentUser.is_paid = true;
           currentUser.status = "ACTIVE";
         }
+        localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
+      }
+
+      // If user returned from GitHub OAuth callback without saved local session
+      if (!currentUser && oauthCode) {
+        currentUser = {
+          id: 'user_' + Math.floor(1000 + Math.random() * 9000),
+          name: "Store Owner",
+          email: "",
+          is_paid: true,
+          status: "ACTIVE",
+          onboarding_step: 1
+        };
         localStorage.setItem('sheetstore_auth_user', JSON.stringify(currentUser));
       }
 
@@ -3034,11 +3052,18 @@
     // ========================================================
     const GITHUB_OAUTH_CLIENT_ID = "Ov23li9KZawfem6zI2ad";
 
+    function getOAuthRedirectUri() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return window.location.origin + window.location.pathname;
+      }
+      return 'https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html';
+    }
+
     function startGitHubOAuthFlow() {
       const repoName = getSelectedRepoName();
       localStorage.setItem('pending_oauth_repo', repoName);
       
-      const redirectUri = window.location.origin + window.location.pathname;
+      const redirectUri = getOAuthRedirectUri();
       const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=repo,workflow&state=gh_oauth`;
       
       window.location.href = authUrl;
@@ -3066,7 +3091,8 @@
       const identifier = (currentUser && (currentUser.email || currentUser.phone)) || '';
 
       try {
-        const endpoint = `${getBackendUrl()}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}`;
+        const redirectUri = getOAuthRedirectUri();
+        const endpoint = `${DEFAULT_SHEET_URL}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
         
         if (pbar) pbar.style.width = "50%";
         if (step1) step1.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">1. GitHub Account Connected</span>`;
