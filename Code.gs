@@ -1704,8 +1704,25 @@ function handleGithubOAuth(ss, params) {
     var fullRepoUrl = "https://github.com/" + username + "/" + finalRepoName;
     var liveSiteUrl = "https://" + username.toLowerCase() + ".github.io/" + finalRepoName + "/";
 
-    // 4. Turn ON GitHub Pages on 'main' branch
-    // Template copy is asynchronous, poll up to 5 times (waiting up to ~15s) until main branch is ready
+    // 4. WAIT FOR REPOSITORY COPY TO FINISH & VERIFY 'main' BRANCH
+    // Template copy on GitHub runs asynchronously in the background.
+    // We poll until 'branches/main' exists and responds 200 OK (up to 12 attempts x 2s = 24 seconds).
+    var branchReady = false;
+    var branchCheckUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/branches/main";
+
+    for (var bAttempt = 1; bAttempt <= 12; bAttempt++) {
+      Utilities.sleep(2000); // Wait 2s per check
+      var bResp = UrlFetchApp.fetch(branchCheckUrl, {
+        headers: ghHeaders,
+        muteHttpExceptions: true
+      });
+      if (bResp.getResponseCode() === 200) {
+        branchReady = true;
+        break;
+      }
+    }
+
+    // 5. TURN ON GITHUB PAGES ON 'main' BRANCH
     var pagesUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/pages";
     var pagesPayload = {
       source: {
@@ -1718,8 +1735,8 @@ function handleGithubOAuth(ss, params) {
     var pagesStatusCode = 0;
     var pagesRespText = "";
 
-    for (var attempt = 1; attempt <= 5; attempt++) {
-      Utilities.sleep(3000); // Wait 3s per attempt
+    for (var pAttempt = 1; pAttempt <= 5; pAttempt++) {
+      Utilities.sleep(1500);
       var pagesResp = UrlFetchApp.fetch(pagesUrl, {
         method: "post",
         contentType: "application/json",
@@ -1734,12 +1751,25 @@ function handleGithubOAuth(ss, params) {
         pagesSuccess = true;
         break;
       }
-      // If already enabled (409 already exists), it's also success!
-      if (pagesStatusCode === 409 && pagesRespText.indexOf("already") !== -1) {
+      // If already enabled (409 Conflict: already exists), it's success!
+      if (pagesStatusCode === 409) {
         pagesSuccess = true;
         break;
       }
     }
+
+    // 6. VERIFY GITHUB PAGES STATUS
+    var isPagesActive = pagesSuccess;
+    try {
+      var checkPagesUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/pages";
+      var finalPagesResp = UrlFetchApp.fetch(checkPagesUrl, {
+        headers: ghHeaders,
+        muteHttpExceptions: true
+      });
+      if (finalPagesResp.getResponseCode() === 200) {
+        isPagesActive = true;
+      }
+    } catch(e) {}
 
     // 5. Update user profile in Google Sheet if identifier provided
     if (ss && userIdentifier) {
@@ -1768,8 +1798,12 @@ function handleGithubOAuth(ss, params) {
       repo_name: finalRepoName,
       github_repo_url: fullRepoUrl,
       site_url: liveSiteUrl,
-      pages_status: pagesResp.getResponseCode(),
-      message: "Badhai ho! Aapka GitHub repository aur GitHub Pages 100% automatically create ho gaya hai!"
+      branch_ready: branchReady,
+      pages_enabled: isPagesActive,
+      pages_status: pagesStatusCode,
+      message: isPagesActive
+        ? "Badhai ho! Aapka GitHub repository aur GitHub Pages 100% automatically create aur activate ho gaya hai!"
+        : "Aapka repository ready hai. GitHub Pages activate ho raha hai."
     });
 
   } catch(err) {

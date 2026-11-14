@@ -494,6 +494,38 @@
                   <i data-lucide="arrow-right" class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
                 </button>
 
+                <!-- Transparent Consent & Permissions Card -->
+                <div class="p-3.5 bg-slate-900/90 border border-emerald-500/30 rounded-2xl text-left space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                      <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                      <span>Auto-Setup Consent & Permissions:</span>
+                    </span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                      100% Secure & Automatic
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-slate-300 space-y-1.5">
+                    <p class="leading-relaxed">
+                      1-Click Setup shuru karne se aap automated system ko permission dete hain ki:
+                    </p>
+                    <ul class="space-y-1 pl-1 font-mono text-[10.5px]">
+                      <li class="flex items-center gap-1.5 text-slate-200">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                        <span>Aapke GitHub account me <strong class="text-white">freewebsite</strong> template se store repo copy kare.</span>
+                      </li>
+                      <li class="flex items-center gap-1.5 text-slate-200">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                        <span>Template files puri tarah copy hone tak <strong class="text-amber-300">wait & verify</strong> kare.</span>
+                      </li>
+                      <li class="flex items-center gap-1.5 text-slate-200">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                        <span><strong class="text-emerald-400">'main' branch</strong> par 100% Free Lifetime GitHub Pages hosting automatically activate kare.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
                 <!-- Divider -->
                 <div class="flex items-center gap-3 py-0.5">
                   <div class="flex-1 h-px bg-slate-800"></div>
@@ -3076,6 +3108,7 @@
       const step1 = document.getElementById('oauthStep1Status');
       const step2 = document.getElementById('oauthStep2Status');
       const step3 = document.getElementById('oauthStep3Status');
+      const step4 = document.getElementById('oauthStep4Status');
       const pbar = document.getElementById('oauthProgressBar');
 
       if (modal) modal.classList.remove('hidden');
@@ -3083,31 +3116,62 @@
       if (sub) sub.innerText = "Google / GitHub connect ho chuka hai! Aapka repository banaya ja raha hai...";
       if (step1) step1.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-blue-400"></i> <span class="text-blue-300">1. Connecting GitHub Account...</span>`;
       if (step2) step2.innerHTML = `<i data-lucide="circle" class="w-4 h-4 shrink-0 text-slate-500"></i> <span class="text-slate-500">2. Creating Repo from Template...</span>`;
-      if (step3) step3.innerHTML = `<i data-lucide="circle" class="w-4 h-4 shrink-0 text-slate-500"></i> <span class="text-slate-500">3. Activating GitHub Pages...</span>`;
-      if (pbar) pbar.style.width = "30%";
+      if (step3) step3.innerHTML = `<i data-lucide="circle" class="w-4 h-4 shrink-0 text-slate-500"></i> <span class="text-slate-500">3. Verifying Template Files (main branch)...</span>`;
+      if (step4) step4.innerHTML = `<i data-lucide="circle" class="w-4 h-4 shrink-0 text-slate-500"></i> <span class="text-slate-500">4. Activating GitHub Pages on 'main' branch...</span>`;
+      if (pbar) pbar.style.width = "25%";
       lucide.createIcons();
 
       const repoName = localStorage.getItem('pending_oauth_repo') || getSelectedRepoName() || 'vastustore';
       const identifier = (currentUser && (currentUser.email || currentUser.phone)) || '';
 
+      // Stage timers to keep user visually updated while backend waits for template copy & Pages
+      const t1 = setTimeout(() => {
+        if (pbar) pbar.style.width = "50%";
+        if (step1) step1.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">1. GitHub Account Connected</span>`;
+        if (step2) step2.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-blue-400"></i> <span class="text-blue-300">2. Template Se Repo Copy Ho Rahi Hai...</span>`;
+        lucide.createIcons();
+      }, 1500);
+
+      const t2 = setTimeout(() => {
+        if (pbar) pbar.style.width = "75%";
+        if (step2) step2.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">2. Template Repo Ready</span>`;
+        if (step3) step3.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-blue-400"></i> <span class="text-blue-300">3. Template Files & 'main' Branch Copy Verify Ho Rahi Hai...</span>`;
+        lucide.createIcons();
+      }, 6000);
+
+      const t3 = setTimeout(() => {
+        if (pbar) pbar.style.width = "90%";
+        if (step3) step3.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">3. 'main' Branch & Files Verified</span>`;
+        if (step4) step4.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-cyan-400"></i> <span class="text-cyan-300">4. GitHub Pages 'main' Branch Par Enable Ho Raha Hai...</span>`;
+        lucide.createIcons();
+      }, 14000);
+
       try {
         const redirectUri = getOAuthRedirectUri();
         const endpoint = `${DEFAULT_SHEET_URL}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
         
-        if (pbar) pbar.style.width = "50%";
-        if (step1) step1.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">1. GitHub Account Connected</span>`;
-        if (step2) step2.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-blue-400"></i> <span class="text-blue-300">2. Template se Repo banayi ja rahi hai...</span>`;
-        lucide.createIcons();
-
         const res = await fetch(endpoint);
+        clearTimeout(t1);
+        clearTimeout(t2);
+        clearTimeout(t3);
+
         const data = await res.json();
 
         if (data && data.success) {
           if (pbar) pbar.style.width = "100%";
-          if (step2) step2.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">2. Repo Ready (${data.username}/${data.repo_name})</span>`;
-          if (step3) step3.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">3. GitHub Pages Activate Ho Gaya!</span>`;
-          if (title) title.innerHTML = `🎉 Badhai Ho! Website Ready Hai!`;
-          if (sub) sub.innerHTML = `Aapka GitHub setup 100% automatically complete ho chuka hai.`;
+          if (step1) step1.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">1. GitHub Connected (${data.username})</span>`;
+          if (step2) step2.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">2. Repo Ready (${data.repo_name})</span>`;
+          if (step3) step3.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">3. Template Files 100% Copied ('main' branch)</span>`;
+          
+          if (data.pages_enabled) {
+            if (step4) step4.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">4. GitHub Pages 100% Activated on 'main'!</span>`;
+            if (title) title.innerHTML = `🎉 Badhai Ho! Website Ready Hai!`;
+            if (sub) sub.innerHTML = `Aapka GitHub setup aur Free Hosting 100% automatically complete ho chuka hai.`;
+          } else {
+            if (step4) step4.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">4. GitHub Pages Activated ('main')</span>`;
+            if (title) title.innerHTML = `🎉 Badhai Ho! Website Ready Hai!`;
+            if (sub) sub.innerHTML = `Repo & Pages ready hain. 30-40 seconds me GitHub site build kar dega.`;
+          }
           lucide.createIcons();
 
           confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
@@ -3786,7 +3850,11 @@
         </div>
         <div id="oauthStep3Status" class="flex items-center gap-2 text-slate-500">
           <i data-lucide="circle" class="w-4 h-4 shrink-0"></i>
-          <span>3. Activating GitHub Pages (main branch)...</span>
+          <span>3. Verifying Template Files (main branch)...</span>
+        </div>
+        <div id="oauthStep4Status" class="flex items-center gap-2 text-slate-500">
+          <i data-lucide="circle" class="w-4 h-4 shrink-0"></i>
+          <span>4. Activating GitHub Pages on 'main' branch...</span>
         </div>
       </div>
 
