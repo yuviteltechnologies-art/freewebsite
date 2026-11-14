@@ -1705,9 +1705,7 @@ function handleGithubOAuth(ss, params) {
     var liveSiteUrl = "https://" + username.toLowerCase() + ".github.io/" + finalRepoName + "/";
 
     // 4. Turn ON GitHub Pages on 'main' branch
-    // Wait ~2.5s for GitHub template copy to finish
-    Utilities.sleep(2500);
-
+    // Template copy is asynchronous, poll up to 5 times (waiting up to ~15s) until main branch is ready
     var pagesUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/pages";
     var pagesPayload = {
       source: {
@@ -1716,13 +1714,32 @@ function handleGithubOAuth(ss, params) {
       }
     };
 
-    var pagesResp = UrlFetchApp.fetch(pagesUrl, {
-      method: "post",
-      contentType: "application/json",
-      headers: ghHeaders,
-      payload: JSON.stringify(pagesPayload),
-      muteHttpExceptions: true
-    });
+    var pagesSuccess = false;
+    var pagesStatusCode = 0;
+    var pagesRespText = "";
+
+    for (var attempt = 1; attempt <= 5; attempt++) {
+      Utilities.sleep(3000); // Wait 3s per attempt
+      var pagesResp = UrlFetchApp.fetch(pagesUrl, {
+        method: "post",
+        contentType: "application/json",
+        headers: ghHeaders,
+        payload: JSON.stringify(pagesPayload),
+        muteHttpExceptions: true
+      });
+      pagesStatusCode = pagesResp.getResponseCode();
+      pagesRespText = pagesResp.getContentText();
+
+      if (pagesStatusCode >= 200 && pagesStatusCode < 300) {
+        pagesSuccess = true;
+        break;
+      }
+      // If already enabled (409 already exists), it's also success!
+      if (pagesStatusCode === 409 && pagesRespText.indexOf("already") !== -1) {
+        pagesSuccess = true;
+        break;
+      }
+    }
 
     // 5. Update user profile in Google Sheet if identifier provided
     if (ss && userIdentifier) {
