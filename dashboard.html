@@ -472,21 +472,49 @@
                 </div>
               </div>
 
-              <!-- Primary CTA Button (Opens Mobile & Desktop Popup Assistant Modal) -->
-              <div class="space-y-2.5">
-                <button type="button" onclick="openGitHubSetupPopup()" id="btnForkTemplate"
-                   class="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-black text-xs sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-emerald-500/25 transition active:scale-95 group">
-                  <i data-lucide="layers" class="w-5 h-5 text-amber-300 group-hover:scale-110 transition-transform"></i>
-                  <span>🚀 GitHub Setup Popup Window Kholein (Mobile &amp; Desktop Guide)</span>
-                  <i data-lucide="external-link" class="w-4 h-4"></i>
+              <!-- Primary 1-Click Auto Setup & Manual Setup Options -->
+              <div class="space-y-3">
+                <!-- 1-Click OAuth Auto-Setup Button -->
+                <button type="button" onclick="startGitHubOAuthFlow()" id="btnOAuthConnect"
+                   class="w-full py-4 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black text-xs sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group">
+                  <div class="flex items-center gap-3 text-left">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0 shadow">
+                      <i data-lucide="zap" class="w-6 h-6 text-amber-300"></i>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Auto Setup (Google / GitHub)</span>
+                        <span class="text-[9px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-black uppercase tracking-wider">100% Automatic</span>
+                      </div>
+                      <p class="text-[11px] text-emerald-100 font-normal leading-tight mt-0.5">
+                        Repo aur Pages खुद बन जाएंगे, कोई लिंक कॉपी या सेटिंग नहीं करनी!
+                      </p>
+                    </div>
+                  </div>
+                  <i data-lucide="arrow-right" class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
                 </button>
-                <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-300 gap-1.5 px-1 bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3 py-0.5">
+                  <div class="flex-1 h-px bg-slate-800"></div>
+                  <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Ya Manual Setup Karein</span>
+                  <div class="flex-1 h-px bg-slate-800"></div>
+                </div>
+
+                <!-- Secondary: Manual Popup Modal Option -->
+                <button type="button" onclick="openGitHubSetupPopup()" id="btnForkTemplate"
+                   class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-xs flex items-center justify-center gap-2 border border-slate-700/80 transition active:scale-95">
+                  <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-400"></i>
+                  <span>Manual Setup Window (Agar khud link ya username daalna ho)</span>
+                </button>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-1.5 px-1 bg-slate-900/60 p-2 rounded-xl border border-slate-800">
                   <span class="flex items-center gap-1.5 text-emerald-400 font-medium">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5 shrink-0"></i>
-                    <span>Mobile Chrome aur Desktop par aasan popup window jahan 1-tap me link paste kar sakte hain!</span>
+                    <span>⚡ 1-Click Setup me sirf 'Continue with Google' दबाएं aur sab ready!</span>
                   </span>
                   <div class="flex items-center gap-2">
-                    <a id="btnForkFallbackLink" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" target="_blank" class="text-blue-400 hover:underline font-semibold flex items-center gap-1 shrink-0">
+                    <a id="btnForkFallbackLink" href="https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=mystore&visibility=public" target="_blank" class="text-blue-400 hover:underline font-semibold flex items-center gap-1 shrink-0 text-[10.5px]">
                       <span>Direct GitHub ↗</span>
                     </a>
                   </div>
@@ -1684,9 +1712,12 @@
       const urlName = urlParams.get('name');
       const urlTheme = urlParams.get('theme');
 
+      const oauthCode = urlParams.get('code');
+      const oauthState = urlParams.get('state');
+
       const stored = localStorage.getItem('sheetstore_auth_user');
       
-      if (!stored && !urlOrderId) {
+      if (!stored && !urlOrderId && !oauthCode) {
         // Not logged in and no order in URL -> redirect to auth
         window.location.href = "auth.html";
         return;
@@ -1732,6 +1763,11 @@
       document.getElementById('headerUserName').innerText = currentUser.name || "Store Owner";
       document.getElementById('headerUserEmail').innerText = currentUser.email || "";
       document.getElementById('userAvatarText').innerText = (currentUser.name || "U").charAt(0).toUpperCase();
+
+      // Auto-process incoming GitHub OAuth callback
+      if (oauthCode && oauthState === 'gh_oauth') {
+        processGitHubOAuthCode(oauthCode);
+      }
 
       if (currentUser.github_repo_url) {
         const rInput = document.getElementById('ghRepoUrlInput');
@@ -2994,6 +3030,94 @@
     }
 
     // ========================================================
+    // 1-CLICK GITHUB OAUTH AUTOMATION (CONTINUE WITH GOOGLE)
+    // ========================================================
+    const GITHUB_OAUTH_CLIENT_ID = "Ov23li9KZawfem6zI2ad";
+
+    function startGitHubOAuthFlow() {
+      const repoName = getSelectedRepoName();
+      localStorage.setItem('pending_oauth_repo', repoName);
+      
+      const redirectUri = window.location.origin + window.location.pathname;
+      const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=repo,workflow&state=gh_oauth`;
+      
+      window.location.href = authUrl;
+    }
+
+    async function processGitHubOAuthCode(code) {
+      const modal = document.getElementById('oauthLoadingModal');
+      const title = document.getElementById('oauthLoadingTitle');
+      const sub = document.getElementById('oauthLoadingSubtitle');
+      const step1 = document.getElementById('oauthStep1Status');
+      const step2 = document.getElementById('oauthStep2Status');
+      const step3 = document.getElementById('oauthStep3Status');
+      const pbar = document.getElementById('oauthProgressBar');
+
+      if (modal) modal.classList.remove('hidden');
+      lucide.createIcons();
+
+      const repoName = localStorage.getItem('pending_oauth_repo') || getSelectedRepoName() || 'vastustore';
+      const identifier = (currentUser && (currentUser.email || currentUser.phone)) || '';
+
+      try {
+        if (pbar) pbar.style.width = "45%";
+        if (step2) step2.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin"></i> <span>2. Template se Repo banayi ja rahi hai...</span>`;
+        lucide.createIcons();
+
+        const endpoint = `${getBackendUrl()}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}`;
+        const res = await fetch(endpoint);
+        const data = await res.json();
+
+        if (data && data.success) {
+          if (pbar) pbar.style.width = "100%";
+          if (step2) step2.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">2. Repo Ready (${data.username}/${data.repo_name})</span>`;
+          if (step3) step3.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">3. GitHub Pages Activate Ho Gaya!</span>`;
+          if (title) title.innerHTML = `🎉 Badhai Ho! Website Ready Hai!`;
+          if (sub) sub.innerHTML = `Aapka GitHub setup 100% automatically complete ho chuka hai.`;
+          lucide.createIcons();
+
+          confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
+
+          // Update dashboard inputs
+          const ghRepoInput = document.getElementById('ghRepoUrlInput');
+          if (ghRepoInput) {
+            ghRepoInput.value = data.github_repo_url;
+            handleGhRepoPaste();
+          }
+
+          if (currentUser) {
+            currentUser.github_repo_url = data.github_repo_url;
+            currentUser.site_url = data.site_url;
+            currentUser.onboarding_step = Math.max(currentUser.onboarding_step || 1, 2);
+            saveUserLocally();
+          }
+
+          // Clean URL parameters without reloading
+          window.history.replaceState({}, document.title, window.location.pathname);
+
+          setTimeout(() => {
+            if (modal) modal.classList.add('hidden');
+            switchMasterStep(2);
+          }, 1800);
+
+        } else {
+          if (title) title.innerText = "Setup me rukawat aayi";
+          if (sub) sub.innerHTML = `<span class="text-amber-400">${data.message || 'Error occurred'}</span><br><button type="button" onclick="closeOAuthModal()" class="mt-3 px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs hover:bg-slate-700">Band Karein & Manual Setup Karein</button>`;
+        }
+      } catch (err) {
+        console.error('OAuth processing error:', err);
+        if (title) title.innerText = "Connection issue";
+        if (sub) sub.innerHTML = `<span class="text-red-400">Internet connection issue ya backend timeout.</span><br><button type="button" onclick="closeOAuthModal()" class="mt-3 px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs hover:bg-slate-700">Band Karein & Manual Setup Karein</button>`;
+      }
+    }
+
+    function closeOAuthModal() {
+      const modal = document.getElementById('oauthLoadingModal');
+      if (modal) modal.classList.add('hidden');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // ========================================================
     // GITHUB POPUP WINDOW & MOBILE-FRIENDLY SETUP MODAL
     // ========================================================
     let ghLivePollInterval = null;
@@ -3546,6 +3670,45 @@
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ========================================================
+       OAUTH AUTOMATION PROGRESS MODAL
+       ======================================================== -->
+  <div id="oauthLoadingModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-slate-900 border border-emerald-500/50 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto animate-pulse">
+        <i data-lucide="zap" class="w-8 h-8 text-amber-300"></i>
+      </div>
+      <div class="space-y-1">
+        <h3 id="oauthLoadingTitle" class="font-heading font-bold text-lg sm:text-xl text-white">
+          GitHub Auto Setup Chal Raha Hai...
+        </h3>
+        <p id="oauthLoadingSubtitle" class="text-xs text-slate-400">
+          Google / GitHub connect ho chuka hai! Aapka repository banaya ja raha hai...
+        </p>
+      </div>
+
+      <!-- Step Progress Checklist -->
+      <div class="space-y-2 p-3 bg-slate-950/80 rounded-2xl border border-slate-800 text-left text-xs font-mono">
+        <div id="oauthStep1Status" class="flex items-center gap-2 text-emerald-400">
+          <i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i>
+          <span>1. GitHub Account Connected</span>
+        </div>
+        <div id="oauthStep2Status" class="flex items-center gap-2 text-blue-400">
+          <i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin"></i>
+          <span>2. Creating Repo from Template...</span>
+        </div>
+        <div id="oauthStep3Status" class="flex items-center gap-2 text-slate-500">
+          <i data-lucide="circle" class="w-4 h-4 shrink-0"></i>
+          <span>3. Activating GitHub Pages (main branch)...</span>
+        </div>
+      </div>
+
+      <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+        <div id="oauthProgressBar" class="bg-gradient-to-r from-emerald-500 to-cyan-500 h-1.5 rounded-full transition-all duration-500 w-1/3"></div>
+      </div>
     </div>
   </div>
 

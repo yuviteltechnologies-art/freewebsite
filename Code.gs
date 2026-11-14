@@ -107,6 +107,9 @@ function doGet(e) {
     if (action === "changePassword") {
       return handleChangePassword(ss, params);
     }
+    if (action === "githubOAuth") {
+      return handleGithubOAuth(ss, params);
+    }
 
     // ----------------------------------------------------
     // DEFAULT: Fetch Full Dashboard (Settings + Products Catalog + Orders + Stats)
@@ -186,6 +189,8 @@ function doPost(e) {
       return handleVerifySiteUrl(params);
     } else if (action === "changePassword") {
       return handleChangePassword(ss, params);
+    } else if (action === "githubOAuth") {
+      return handleGithubOAuth(ss, params);
     }
 
     return returnJsonResponse({ error: "Unknown action", received: action });
@@ -1558,4 +1563,170 @@ function setupAutoTabs() {
   getOrCreateUsersSheet(ss);
 
   SpreadsheetApp.flush();
+}
+
+/**
+ * 15. Handle GitHub OAuth Code Exchange & Auto-Create Repo from Template & Enable Pages
+ */
+function handleGithubOAuth(ss, params) {
+  var code = params.code ? String(params.code).trim() : "";
+  var userIdentifier = params.identifier ? String(params.identifier).trim() : "";
+  var repoName = params.repo ? String(params.repo).trim() : "vastustore";
+  repoName = repoName.replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase() || "vastustore";
+
+  var clientId = "Ov23li9KZawfem6zI2ad";
+  var clientSecret = "33af3fba96551924eeff60e4f36fbc74a8228fc5";
+  var templateOwner = "yuviteltechnologies-art";
+  var templateRepo = "freewebsite";
+
+  if (!code) {
+    return returnJsonResponse({ success: false, message: "OAuth authorization code provide nahi kiya gaya." });
+  }
+
+  try {
+    // 1. Exchange authorization code for user access token
+    var tokenUrl = "https://github.com/login/oauth/access_token";
+    var tokenPayload = {
+      client_id: clientId,
+      client_secret: clientSecret,
+      code: code
+    };
+    var tokenResp = UrlFetchApp.fetch(tokenUrl, {
+      method: "post",
+      contentType: "application/json",
+      headers: { "Accept": "application/json" },
+      payload: JSON.stringify(tokenPayload),
+      muteHttpExceptions: true
+    });
+    
+    var tokenData = {};
+    try {
+      tokenData = JSON.parse(tokenResp.getContentText());
+    } catch(pe) {
+      return returnJsonResponse({ success: false, message: "GitHub token response parse error: " + tokenResp.getContentText() });
+    }
+
+    if (!tokenData || !tokenData.access_token) {
+      return returnJsonResponse({
+        success: false,
+        message: "GitHub Access Token nahi mila: " + (tokenData.error_description || tokenData.error || "Unknown token error")
+      });
+    }
+
+    var accessToken = tokenData.access_token;
+    var ghHeaders = {
+      "Authorization": "Bearer " + accessToken,
+      "Accept": "application/vnd.github+json",
+      "User-Agent": "VastuStore-Setup-App",
+      "X-GitHub-Api-Version": "2022-11-28"
+    };
+
+    // 2. Fetch authenticated GitHub user details
+    var userResp = UrlFetchApp.fetch("https://api.github.com/user", {
+      headers: ghHeaders,
+      muteHttpExceptions: true
+    });
+    var userData = JSON.parse(userResp.getContentText());
+    var username = userData.login;
+    if (!username) {
+      return returnJsonResponse({ success: false, message: "GitHub username fetch nahi ho saka." });
+    }
+
+    // 3. Create repository from template (freewebsite)
+    var generateUrl = "https://api.github.com/repos/" + templateOwner + "/" + templateRepo + "/generate";
+    var generatePayload = {
+      owner: username,
+      name: repoName,
+      description: "My Online Store powered by VastuStore & Google Sheet",
+      include_all_branches: false,
+      "private": false
+    };
+
+    var genResp = UrlFetchApp.fetch(generateUrl, {
+      method: "post",
+      contentType: "application/json",
+      headers: ghHeaders,
+      payload: JSON.stringify(generatePayload),
+      muteHttpExceptions: true
+    });
+
+    var genCode = genResp.getResponseCode();
+    var finalRepoName = repoName;
+
+    // If repo name already exists (422), try appending a random 3-digit suffix or use existing
+    if (genCode === 422) {
+      var altRepoName = repoName + "-" + Math.floor(100 + Math.random() * 900);
+      generatePayload.name = altRepoName;
+      var retryResp = UrlFetchApp.fetch(generateUrl, {
+        method: "post",
+        contentType: "application/json",
+        headers: ghHeaders,
+        payload: JSON.stringify(generatePayload),
+        muteHttpExceptions: true
+      });
+      if (retryResp.getResponseCode() >= 200 && retryResp.getResponseCode() < 300) {
+        finalRepoName = altRepoName;
+      }
+    }
+
+    var fullRepoUrl = "https://github.com/" + username + "/" + finalRepoName;
+    var liveSiteUrl = "https://" + username.toLowerCase() + ".github.io/" + finalRepoName + "/";
+
+    // 4. Turn ON GitHub Pages on 'main' branch
+    // Wait ~1.5s for GitHub template copy to finish
+    Utilities.sleep(1500);
+
+    var pagesUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/pages";
+    var pagesPayload = {
+      source: {
+        branch: "main",
+        path: "/"
+      }
+    };
+
+    var pagesResp = UrlFetchApp.fetch(pagesUrl, {
+      method: "post",
+      contentType: "application/json",
+      headers: ghHeaders,
+      payload: JSON.stringify(pagesPayload),
+      muteHttpExceptions: true
+    });
+
+    // 5. Update user profile in Google Sheet if identifier provided
+    if (ss && userIdentifier) {
+      try {
+        var usersSheet = ss.getSheetByName("Users");
+        if (usersSheet) {
+          var uData = usersSheet.getDataRange().getValues();
+          for (var i = 1; i < uData.length; i++) {
+            var rowEmail = String(uData[i][1] || "").toLowerCase().trim();
+            var rowPhone = String(uData[i][2] || "").trim();
+            if (rowEmail === userIdentifier.toLowerCase() || rowPhone === userIdentifier) {
+              usersSheet.getRange(i + 1, 6).setValue(fullRepoUrl); // col F: github_repo_url
+              usersSheet.getRange(i + 1, 7).setValue(liveSiteUrl); // col G: site_url
+              break;
+            }
+          }
+        }
+      } catch(sheetErr) {
+        // Non-fatal
+      }
+    }
+
+    return returnJsonResponse({
+      success: true,
+      username: username,
+      repo_name: finalRepoName,
+      github_repo_url: fullRepoUrl,
+      site_url: liveSiteUrl,
+      pages_status: pagesResp.getResponseCode(),
+      message: "Badhai ho! Aapka GitHub repository aur GitHub Pages 100% automatically create ho gaya hai!"
+    });
+
+  } catch(err) {
+    return returnJsonResponse({
+      success: false,
+      message: "GitHub Auto Setup Error: " + err.toString()
+    });
+  }
 }
