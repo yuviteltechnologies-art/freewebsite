@@ -3054,17 +3054,25 @@
       const pbar = document.getElementById('oauthProgressBar');
 
       if (modal) modal.classList.remove('hidden');
+      if (title) title.innerText = "GitHub Auto Setup Chal Raha Hai...";
+      if (sub) sub.innerText = "Google / GitHub connect ho chuka hai! Aapka repository banaya ja raha hai...";
+      if (step1) step1.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-blue-400"></i> <span class="text-blue-300">1. Connecting GitHub Account...</span>`;
+      if (step2) step2.innerHTML = `<i data-lucide="circle" class="w-4 h-4 shrink-0 text-slate-500"></i> <span class="text-slate-500">2. Creating Repo from Template...</span>`;
+      if (step3) step3.innerHTML = `<i data-lucide="circle" class="w-4 h-4 shrink-0 text-slate-500"></i> <span class="text-slate-500">3. Activating GitHub Pages...</span>`;
+      if (pbar) pbar.style.width = "30%";
       lucide.createIcons();
 
       const repoName = localStorage.getItem('pending_oauth_repo') || getSelectedRepoName() || 'vastustore';
       const identifier = (currentUser && (currentUser.email || currentUser.phone)) || '';
 
       try {
-        if (pbar) pbar.style.width = "45%";
-        if (step2) step2.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin"></i> <span>2. Template se Repo banayi ja rahi hai...</span>`;
+        const endpoint = `${getBackendUrl()}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}`;
+        
+        if (pbar) pbar.style.width = "50%";
+        if (step1) step1.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">1. GitHub Account Connected</span>`;
+        if (step2) step2.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 shrink-0 animate-spin text-blue-400"></i> <span class="text-blue-300">2. Template se Repo banayi ja rahi hai...</span>`;
         lucide.createIcons();
 
-        const endpoint = `${getBackendUrl()}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}`;
         const res = await fetch(endpoint);
         const data = await res.json();
 
@@ -3101,13 +3109,43 @@
           }, 1800);
 
         } else {
+          const errorMsg = (data && (data.message || data.error)) || (typeof data === 'string' ? data : JSON.stringify(data)) || 'Unknown error occurred';
+          console.error('OAuth backend failed:', data);
+          if (pbar) pbar.style.width = "0%";
           if (title) title.innerText = "Setup me rukawat aayi";
-          if (sub) sub.innerHTML = `<span class="text-amber-400">${data.message || 'Error occurred'}</span><br><button type="button" onclick="closeOAuthModal()" class="mt-3 px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs hover:bg-slate-700">Band Karein & Manual Setup Karein</button>`;
+          if (sub) sub.innerHTML = `
+            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono break-all text-left mb-3">
+              ${errorMsg}
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
+              <button type="button" onclick="startGitHubOAuthFlow()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 shadow transition active:scale-95">
+                Dobara Try Karein 🔄
+              </button>
+              <button type="button" onclick="closeOAuthModal()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:bg-slate-700 transition">
+                Manual Setup Window Kholein
+              </button>
+            </div>
+          `;
+          lucide.createIcons();
         }
       } catch (err) {
         console.error('OAuth processing error:', err);
-        if (title) title.innerText = "Connection issue";
-        if (sub) sub.innerHTML = `<span class="text-red-400">Internet connection issue ya backend timeout.</span><br><button type="button" onclick="closeOAuthModal()" class="mt-3 px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs hover:bg-slate-700">Band Karein & Manual Setup Karein</button>`;
+        if (pbar) pbar.style.width = "0%";
+        if (title) title.innerText = "Connection Issue";
+        if (sub) sub.innerHTML = `
+          <div class="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono break-all text-left mb-3">
+            ${err.message || err.toString()}
+          </div>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
+            <button type="button" onclick="startGitHubOAuthFlow()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 shadow transition active:scale-95">
+              Dobara Try Karein 🔄
+            </button>
+            <button type="button" onclick="closeOAuthModal()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:bg-slate-700 transition">
+              Manual Setup Window Kholein
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
       }
     }
 

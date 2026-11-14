@@ -1584,18 +1584,17 @@ function handleGithubOAuth(ss, params) {
   }
 
   try {
-    // 1. Exchange authorization code for user access token
+    // 1. Exchange authorization code for user access token (Must be urlencoded payload)
     var tokenUrl = "https://github.com/login/oauth/access_token";
-    var tokenPayload = {
-      client_id: clientId,
-      client_secret: clientSecret,
-      code: code
-    };
+    var tokenPayload = "client_id=" + encodeURIComponent(clientId) +
+                       "&client_secret=" + encodeURIComponent(clientSecret) +
+                       "&code=" + encodeURIComponent(code);
+
     var tokenResp = UrlFetchApp.fetch(tokenUrl, {
       method: "post",
-      contentType: "application/json",
+      contentType: "application/x-www-form-urlencoded",
       headers: { "Accept": "application/json" },
-      payload: JSON.stringify(tokenPayload),
+      payload: tokenPayload,
       muteHttpExceptions: true
     });
     
@@ -1633,9 +1632,9 @@ function handleGithubOAuth(ss, params) {
     }
 
     // 3. Create repository from template (freewebsite)
+    // NOTE: 'owner' parameter must be omitted for personal user accounts!
     var generateUrl = "https://api.github.com/repos/" + templateOwner + "/" + templateRepo + "/generate";
     var generatePayload = {
-      owner: username,
       name: repoName,
       description: "My Online Store powered by VastuStore & Google Sheet",
       include_all_branches: false,
@@ -1651,9 +1650,13 @@ function handleGithubOAuth(ss, params) {
     });
 
     var genCode = genResp.getResponseCode();
+    var genText = genResp.getContentText();
+    var genData = {};
+    try { genData = JSON.parse(genText); } catch(e) {}
+
     var finalRepoName = repoName;
 
-    // If repo name already exists (422), try appending a random 3-digit suffix or use existing
+    // If repo name already exists (422), try appending a random 3-digit suffix or check existing
     if (genCode === 422) {
       var altRepoName = repoName + "-" + Math.floor(100 + Math.random() * 900);
       generatePayload.name = altRepoName;
@@ -1664,17 +1667,35 @@ function handleGithubOAuth(ss, params) {
         payload: JSON.stringify(generatePayload),
         muteHttpExceptions: true
       });
-      if (retryResp.getResponseCode() >= 200 && retryResp.getResponseCode() < 300) {
+      var retryCode = retryResp.getResponseCode();
+      if (retryCode >= 200 && retryCode < 300) {
         finalRepoName = altRepoName;
+        genCode = retryCode;
+      } else {
+        // Check if repo already exists and belongs to user
+        var checkResp = UrlFetchApp.fetch("https://api.github.com/repos/" + username + "/" + repoName, {
+          headers: ghHeaders,
+          muteHttpExceptions: true
+        });
+        if (checkResp.getResponseCode() === 200) {
+          genCode = 200; // Repo already exists, proceed to enable pages
+        }
       }
+    }
+
+    if (genCode < 200 || genCode >= 300) {
+      return returnJsonResponse({
+        success: false,
+        message: "GitHub Repo create nahi ho saki (HTTP " + genCode + "): " + (genData.message || genText)
+      });
     }
 
     var fullRepoUrl = "https://github.com/" + username + "/" + finalRepoName;
     var liveSiteUrl = "https://" + username.toLowerCase() + ".github.io/" + finalRepoName + "/";
 
     // 4. Turn ON GitHub Pages on 'main' branch
-    // Wait ~1.5s for GitHub template copy to finish
-    Utilities.sleep(1500);
+    // Wait ~2.5s for GitHub template copy to finish
+    Utilities.sleep(2500);
 
     var pagesUrl = "https://api.github.com/repos/" + username + "/" + finalRepoName + "/pages";
     var pagesPayload = {
