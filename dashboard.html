@@ -2421,22 +2421,29 @@
       let repo = '';
 
       // 1. Match github.io format: https://owner.github.io/repo/
-      const ioMatch = val.match(/(?:https?:\/\/)?([a-zA-Z0-9-_]+)\.github\.io\/([^\/\s#?]+)/i);
-      if (ioMatch && ioMatch[1] && ioMatch[2]) {
+      const ioMatch = val.match(/(?:https?:\/\/)?([a-zA-Z0-9-_]+)\.github\.io(?:\/([^\/\s#?]+))?/i);
+      if (ioMatch && ioMatch[1]) {
         owner = ioMatch[1].trim();
-        repo = ioMatch[2].trim().replace(/\.git$/i, '');
+        repo = (ioMatch[2] ? ioMatch[2].trim().replace(/\.git$/i, '') : '') || getSelectedRepoName();
       } else {
         // 2. Match github.com format: https://github.com/owner/repo
-        const comMatch = val.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^\/\s#?]+)\/([^\/\s#?]+)/i);
-        if (comMatch && comMatch[1] && comMatch[2]) {
+        const comMatch = val.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^\/\s#?]+)(?:\/([^\/\s#?]+))?/i);
+        if (comMatch && comMatch[1]) {
           owner = comMatch[1].trim();
-          repo = comMatch[2].trim().replace(/\.git$/i, '');
+          repo = (comMatch[2] ? comMatch[2].trim().replace(/\.git$/i, '') : '') || getSelectedRepoName();
         } else {
           // 3. Match owner/repo format
           const slashMatch = val.match(/^([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)$/);
           if (slashMatch && slashMatch[1] && slashMatch[2]) {
             owner = slashMatch[1].trim();
             repo = slashMatch[2].trim().replace(/\.git$/i, '');
+          } else {
+            // 4. Match plain username format (e.g. rahul123)
+            const userMatch = val.match(/^([a-zA-Z0-9-_]+)$/);
+            if (userMatch && userMatch[1]) {
+              owner = userMatch[1].trim();
+              repo = getSelectedRepoName();
+            }
           }
         }
       }
@@ -3251,13 +3258,25 @@
       let owner = '';
       let repo = getSelectedRepoName();
 
-      // Extract username and repo
-      const urlMatch = val.match(/(?:github\.com\/|github\.io\/)?([a-zA-Z0-9-_]+)(?:\/([a-zA-Z0-9-_]+))?/i);
-      if (urlMatch && urlMatch[1]) {
-        owner = urlMatch[1].trim();
-        if (urlMatch[2]) {
-          repo = urlMatch[2].trim().replace(/\.git$/i, '');
-        }
+      // Clean val and extract username / repo
+      const clean = val.replace(/^https?:\/\//i, '').replace(/^www\./i, '');
+      const ioMatch = clean.match(/^([a-zA-Z0-9-_]+)\.github\.io(?:\/([^\/\s#?]+))?/i);
+      const comMatch = clean.match(/^github\.com\/([^\/\s#?]+)(?:\/([^\/\s#?]+))?/i);
+      const slashMatch = clean.match(/^([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)$/);
+      const userMatch = clean.match(/^([a-zA-Z0-9-_]+)$/);
+
+      if (ioMatch && ioMatch[1]) {
+        owner = ioMatch[1].trim();
+        repo = (ioMatch[2] ? ioMatch[2].trim().replace(/\.git$/i, '') : '') || getSelectedRepoName();
+      } else if (comMatch && comMatch[1]) {
+        owner = comMatch[1].trim();
+        repo = (comMatch[2] ? comMatch[2].trim().replace(/\.git$/i, '') : '') || getSelectedRepoName();
+      } else if (slashMatch && slashMatch[1] && slashMatch[2]) {
+        owner = slashMatch[1].trim();
+        repo = slashMatch[2].trim().replace(/\.git$/i, '');
+      } else if (userMatch && userMatch[1]) {
+        owner = userMatch[1].trim();
+        repo = getSelectedRepoName();
       }
 
       if (owner) {
@@ -3359,6 +3378,33 @@
       if (modal) modal.classList.add('hidden');
     }
 
+    // Mobile tab return auto-detection
+    let isAwaitingGhReturn = false;
+    function markAwaitingGhReturn() {
+      isAwaitingGhReturn = true;
+    }
+
+    function checkTabReturn() {
+      if (!isAwaitingGhReturn) return;
+      const modal = document.getElementById('ghCopyAssistantModal');
+      const banner = document.getElementById('modalReturnBanner');
+      if (modal && !modal.classList.contains('hidden')) {
+        if (banner) banner.classList.remove('hidden');
+        const input = document.getElementById('modalGhInput');
+        if (input && !input.value) {
+          input.focus();
+        }
+        lucide.createIcons();
+      }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        checkTabReturn();
+      }
+    });
+    window.addEventListener('focus', checkTabReturn);
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeImageModal();
@@ -3395,6 +3441,17 @@
         </button>
       </div>
 
+      <!-- Welcome Back Notification (Auto-detects when returning from GitHub tab) -->
+      <div id="modalReturnBanner" class="hidden p-2.5 rounded-xl bg-emerald-950/70 border border-emerald-500/40 flex items-center justify-between text-xs text-emerald-200 animate-pulse">
+        <div class="flex items-center gap-2">
+          <span class="text-base">👋</span>
+          <div>
+            <p class="font-bold text-white text-[11px]">Wapas aane par swagat hai!</p>
+            <p class="text-[10px] text-emerald-300">Niche apna GitHub <strong>Username</strong> likhein ya Paste karein:</p>
+          </div>
+        </div>
+      </div>
+
       <!-- COMPACT 3-STEP ACTION FLOW -->
       <div class="space-y-2.5">
         
@@ -3407,27 +3464,27 @@
             </span>
             <span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Public Default</span>
           </div>
-          <a id="modalReopenPopupBtn" href="#" target="_blank"
+          <a id="modalReopenPopupBtn" href="#" target="_blank" onclick="markAwaitingGhReturn()"
              class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow text-center">
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             <span>👉 1-Tap Me GitHub Repo Kholein (Create repository) ↗</span>
           </a>
           <p class="text-[10.5px] text-slate-400 leading-tight">
-            Green <strong>"Create repository"</strong> dabane ke baad link copy karein aur niche paste karein:
+            Naye tab me hara <strong>"Create repository"</strong> dabayein, phir wapas is tab par aa jayein.
           </p>
         </div>
 
-        <!-- Step 2: Paste Repo URL (1-Tap Clipboard Button) -->
+        <!-- Step 2: Paste Repo URL or Username -->
         <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white flex items-center gap-1.5">
               <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
-              <span>Repo Ka Link Yahan Paste Karein:</span>
+              <span>GitHub Username ya Repo Link Daalein:</span>
             </span>
-            <span class="text-[9px] text-blue-400">1-Tap Paste</span>
+            <span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">✨ Sirf Username Bhi Chalega</span>
           </div>
           <div class="flex items-center gap-2">
-            <input type="text" id="modalGhInput" placeholder="jaise: https://github.com/username/vastustore"
+            <input type="text" id="modalGhInput" placeholder="jaise: rahul123 ya poora link"
                    oninput="handleModalGhInput()"
                    class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
             <button type="button" onclick="pasteFromClipboardToModalInput()"
@@ -3436,6 +3493,9 @@
               <span>📋 Paste</span>
             </button>
           </div>
+          <p class="text-[10px] text-slate-400 leading-tight">
+            💡 <strong>Mobile Tip:</strong> Link copy karne ke chakkar me na padein — sirf apna GitHub <strong>Username</strong> likhein, baki links hum khud auto-generate kar denge!
+          </p>
           
           <!-- Live Link Preview -->
           <div id="modalCalculatedLinks" class="hidden p-2.5 rounded-lg bg-slate-900 border border-emerald-500/30 text-xs font-mono space-y-1">
@@ -3453,12 +3513,21 @@
               <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
               <span>Pages Settings (Branch: main ➔ Save):</span>
             </span>
-            <span class="text-[9px] text-amber-400">Zaroori Step</span>
+            <span class="text-[9px] text-amber-400 font-bold">Zaroori Step</span>
           </div>
           <a id="modalDirectPagesBtn" href="https://github.com/settings" target="_blank"
              class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow text-center">
             <i data-lucide="settings" class="w-3.5 h-3.5"></i>
             <span>Pages Settings Kholein (Branch: main ➔ Save) ↗</span>
+          </a>
+        </div>
+
+        <!-- Support Backup Option -->
+        <div class="text-center pt-0.5">
+          <a href="https://wa.me/?text=Hi%2C+mujhe+Vastu+Store+ka+GitHub+setup+karne+me+help+chahiye" target="_blank"
+             class="text-[10px] text-slate-400 hover:text-emerald-400 transition underline inline-flex items-center gap-1">
+            <i data-lucide="message-circle" class="w-3 h-3 text-emerald-400"></i>
+            <span>Mobile par koi problem ho rahi hai? Direct WhatsApp Support Lein ↗</span>
           </a>
         </div>
 
