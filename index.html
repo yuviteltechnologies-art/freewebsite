@@ -2047,7 +2047,7 @@
       <h3 class="font-poppins font-bold text-lg text-white mb-2">Google Sheet Configuration</h3>
       <p class="text-xs text-dimWhite mb-4">Apna Google Apps Script Web App URL yahan daalein:</p>
       <input type="url" id="sheetUrlInput" 
-             value="https://script.google.com/macros/s/AKfycbyjrzUZ4cUyd48nXnp5mGJ6O4gsJvmMCAj0Nu6N70DY0kQ91ETzFtnot1VCVqycJZ-S/exec"
+             value="https://script.google.com/macros/s/AKfycbxUyCBt83U0hmpAQGPZy7xo10iiGaASkpStxiIGa7lpIskZKgbSxgzP5rKHpelwab4x/exec"
              class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white mb-4 font-mono" />
       <button onclick="closeConfigModal()" class="w-full py-2.5 rounded-xl bg-blue-gradient text-primary font-bold text-xs uppercase">
         Save &amp; Close
@@ -2285,7 +2285,7 @@
       lucide.createIcons();
     }
 
-    const MASTER_API_URL = "https://script.google.com/macros/s/AKfycbyjrzUZ4cUyd48nXnp5mGJ6O4gsJvmMCAj0Nu6N70DY0kQ91ETzFtnot1VCVqycJZ-S/exec";
+    const MASTER_API_URL = "https://script.google.com/macros/s/AKfycbxUyCBt83U0hmpAQGPZy7xo10iiGaASkpStxiIGa7lpIskZKgbSxgzP5rKHpelwab4x/exec";
 
     let activeStoreSettings = {
       brandName: localStorage.getItem('store_brand_name') || "new record",
@@ -2569,7 +2569,7 @@
       lucide.createIcons();
 
       const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
-      const masterApi = "https://script.google.com/macros/s/AKfycbyjrzUZ4cUyd48nXnp5mGJ6O4gsJvmMCAj0Nu6N70DY0kQ91ETzFtnot1VCVqycJZ-S/exec";
+      const masterApi = "https://script.google.com/macros/s/AKfycbxUyCBt83U0hmpAQGPZy7xo10iiGaASkpStxiIGa7lpIskZKgbSxgzP5rKHpelwab4x/exec";
 
       // Populate Verification Screen
       document.getElementById('verifOrderId').innerText = '#' + orderId;
@@ -2746,7 +2746,7 @@
 
       // Best effort background sync of theme to Google Sheet
       try {
-        const masterApi = "https://script.google.com/macros/s/AKfycbyjrzUZ4cUyd48nXnp5mGJ6O4gsJvmMCAj0Nu6N70DY0kQ91ETzFtnot1VCVqycJZ-S/exec";
+        const masterApi = "https://script.google.com/macros/s/AKfycbxUyCBt83U0hmpAQGPZy7xo10iiGaASkpStxiIGa7lpIskZKgbSxgzP5rKHpelwab4x/exec";
         const syncParams = new URLSearchParams({
           action: 'updateOrderTheme',
           order_id: orderId,
