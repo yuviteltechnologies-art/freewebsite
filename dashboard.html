@@ -3113,7 +3113,27 @@
           console.error('OAuth backend failed:', data);
           if (pbar) pbar.style.width = "0%";
           if (title) title.innerText = "Setup me rukawat aayi";
+
+          let permissionHint = '';
+          if (errorMsg.includes('UrlFetchApp') || errorMsg.includes('external_request') || errorMsg.includes('permission')) {
+            permissionHint = `
+              <div class="p-3 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-200 text-xs text-left mb-3 space-y-1.5">
+                <p class="font-bold text-white flex items-center gap-1.5">
+                  <span>💡 Google Script Permission Ki Zaroorat Hai:</span>
+                </p>
+                <p class="text-[11px] text-slate-300">
+                  Google Apps Script me external network (GitHub) call karne ki permission authorize karein:
+                </p>
+                <ol class="text-[11px] text-blue-300 list-decimal pl-4 space-y-0.5">
+                  <li>Apps Script editor me upar function dropdown se <strong>authorizeUrlFetchApp</strong> chunein.</li>
+                  <li><strong>▷ Run</strong> dabayein aur <strong>Review Permissions ➔ Advanced ➔ Allow</strong> karein.</li>
+                </ol>
+              </div>
+            `;
+          }
+
           if (sub) sub.innerHTML = `
+            ${permissionHint}
             <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono break-all text-left mb-3">
               ${errorMsg}
             </div>

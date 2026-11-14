@@ -27,6 +27,13 @@ function doGet(e) {
       });
     }
 
+    if (action === "testPermission" || action === "checkPermission") {
+      return returnJsonResponse({
+        success: true,
+        permission: authorizeUrlFetchApp()
+      });
+    }
+
     // Auto-create tabs if blank spreadsheet
     if (!ss.getSheetByName("Settings") || !ss.getSheetByName("Products") || !ss.getSheetByName("Orders")) {
       setupAutoTabs();
@@ -1749,5 +1756,25 @@ function handleGithubOAuth(ss, params) {
       success: false,
       message: "GitHub Auto Setup Error: " + err.toString()
     });
+  }
+}
+
+/**
+ * ========================================================
+ * ONE-CLICK NETWORK PERMISSION AUTHORIZER
+ * ========================================================
+ * Google Apps Script me UrlFetchApp (external network) ko
+ * authorize karne ke liye:
+ * 1. Apps Script editor me function dropdown se 'authorizeUrlFetchApp' chunein
+ * 2. 'Run' dabayein -> 'Review permissions' -> 'Advanced' -> 'Allow' karein.
+ */
+function authorizeUrlFetchApp() {
+  try {
+    var testResp = UrlFetchApp.fetch("https://api.github.com", { muteHttpExceptions: true });
+    Logger.log("Permission granted! GitHub API test status: " + testResp.getResponseCode());
+    return "Permission Granted Successfully (Status: " + testResp.getResponseCode() + ")";
+  } catch(e) {
+    Logger.log("Authorization needed: " + e.toString());
+    throw e;
   }
 }
