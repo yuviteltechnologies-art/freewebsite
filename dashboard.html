@@ -340,6 +340,19 @@
         <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
         <div id="cardStep1" class="transition-all relative">
         
+        <!-- Top Navigation Bar for Step 1 -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">Step 1 of 4</span>
+            <span class="text-[11px] text-slate-400 hidden sm:inline">Storefront Theme Selection</span>
+          </div>
+          <button type="button" onclick="confirmThemeAndGoToStep2()"
+                  class="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition">
+            <span>Agla: Step 2 (Website Setup)</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
         <!-- STEP 1 HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
           <div class="flex items-center gap-3">
@@ -496,12 +509,15 @@
           </div>
         </div>
 
-        <!-- STEP 1 PROCEED BUTTON -->
-        <div class="pt-4 border-t border-slate-800/80">
+        <!-- Bottom Navigation Bar for Step 1 -->
+        <div class="pt-5 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-slate-400 text-center sm:text-left">
+            <span>Theme pasand karke agle step par jayein:</span>
+          </div>
           <button type="button" onclick="confirmThemeAndGoToStep2()"
-                  class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-500/25 transition transform active:scale-95">
-            <span>Theme Confirm Karein ➔ Agla Step: Website Setup (Step 2)</span>
-            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                  class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition">
+            <span>Agla: Step 2 (Website Setup)</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
 
@@ -510,13 +526,16 @@
       <!-- STEP 2: WEBSITE SETUP (1-CLICK AUTOMATION) -->
       <div id="cardStep2" class="transition-all relative hidden">
         
-        <!-- Top Back Navigation -->
+        <!-- Top Navigation Bar for Step 2 -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+          <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition active:scale-95 border border-slate-700">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 1 (Theme Badlein)</span>
+            <span>Pichhla: Step 1 (Theme)</span>
           </button>
-          <span class="text-[11px] text-slate-400 font-medium">Master Step 2 of 4</span>
+          <button type="button" onclick="switchMasterStep(3)" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition active:scale-95 shadow-md shadow-blue-500/20">
+            <span>Agla: Step 3 (Google Sheet)</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
         </div>
 
         <!-- TOP CARD HEADER -->
@@ -712,11 +731,15 @@
               </div>
             </div>
 
-            <!-- PROCEED TO STEP 3 BUTTON -->
-            <div class="pt-2">
+            <!-- Bottom Navigation Bar for Step 2 -->
+            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
+              <button type="button" onclick="switchMasterStep(1)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition active:scale-95 border border-slate-700 flex items-center gap-1.5">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Pichhla: Step 1 (Theme)</span>
+              </button>
               <button type="button" onclick="switchMasterStep(3)"
-                      class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
-                <span>Agla Step: Google Sheet Connect Karein (Step 3)</span>
+                      class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
+                <span>Agla: Step 3 (Google Sheet)</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </button>
             </div>
@@ -750,13 +773,16 @@
 
       <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
       <div id="cardStep3" class="transition-all relative hidden">
-        <!-- Top Back Navigation -->
+        <!-- Top Navigation Bar for Step 3 -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+          <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition active:scale-95 border border-slate-700">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
             <span>Pichhla: Step 2 (Website Setup)</span>
           </button>
-          <span class="text-[11px] text-slate-400 font-medium">Master Step 3 of 4</span>
+          <button type="button" onclick="switchMasterStep(4)" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition active:scale-95 shadow-md shadow-indigo-500/20">
+            <span>Agla: Step 4 (Android App)</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
         </div>
         <!-- LOCK OVERLAY FOR STEP 2 (Shown when Step 1 is not complete) -->
         <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
@@ -1159,13 +1185,15 @@
 
       <!-- STEP 4: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
       <div id="cardStep4" class="transition-all relative hidden">
-        <!-- Top Back Navigation -->
+        <!-- Top Navigation Bar for Step 4 -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(3)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-indigo-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+          <button type="button" onclick="switchMasterStep(3)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition active:scale-95 border border-slate-700">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
             <span>Pichhla: Step 3 (Google Sheet)</span>
           </button>
-          <span class="text-[11px] text-slate-400 font-medium">Master Step 4 of 4</span>
+          <a href="index.html" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition active:scale-95 shadow-md shadow-emerald-500/20">
+            <span>Live Website Kholein ↗</span>
+          </a>
         </div>
         <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
         <div id="lockOverlayStep4" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
@@ -1469,7 +1497,7 @@
   <!-- ========================================================
        IN-DASHBOARD THEME PREVIEW FULLSCREEN MODAL (WITH BACK BUTTON)
        ======================================================== -->
-  <div id="themePreviewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col">
+  <div id="themePreviewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col" style="display: none;">
     <!-- Top Navigation Bar -->
     <div class="bg-slate-900 border-b border-slate-800 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 shrink-0 shadow-xl z-20">
       <div class="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -1604,13 +1632,13 @@
       const pillIcon = document.getElementById('step2ThemePillIcon');
       const pillTitle = document.getElementById('step2ThemePillTitle');
       if (pillIcon) pillIcon.innerText = theme.icon;
-      if (pillTitle) pillTitle.innerText = ${theme.title} ();
+      if (pillTitle) pillTitle.innerText = theme.title + ' (' + key + ')';
 
       // Update Interactive Theme Grid Cards
       const themeKeys = ['vastu', 'saree', 'electronics', 'fashion', 'grocery_food', 'beauty_personal_care'];
       themeKeys.forEach(k => {
-        const card = document.getElementById(	hemeCard_);
-        const badge = document.getElementById(	hemeBadge_);
+        const card = document.getElementById('themeCard_' + k);
+        const badge = document.getElementById('themeBadge_' + k);
         if (card) {
           if (k === key) {
             card.className = "p-4 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex flex-col justify-between group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30";
@@ -1632,9 +1660,9 @@
       // Update pills in Step 2 Repo Box
       const pillsContainer = document.getElementById('quickRepoPillsContainer');
       if (pillsContainer && theme.pills) {
-        let html = <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>;
+        let html = '<span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>';
         theme.pills.forEach(p => {
-          html += <button type="button" onclick="setQuickRepoName('')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95"></button>;
+          html += '<button type="button" onclick="setQuickRepoName(\'' + p + '\')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">' + p + '</button>';
         });
         pillsContainer.innerHTML = html;
       }
@@ -1671,17 +1699,24 @@
 
       if (icon) icon.innerText = theme.icon;
       if (title) title.innerText = theme.title;
-      if (spinner) spinner.classList.remove('hidden');
+      if (spinner) {
+        spinner.classList.remove('hidden');
+        spinner.style.display = 'flex';
+      }
 
       if (iframe) {
         iframe.onload = function() {
-          if (spinner) spinner.classList.add('hidden');
+          if (spinner) {
+            spinner.classList.add('hidden');
+            spinner.style.display = 'none';
+          }
         };
         iframe.src = theme.demoUrl;
       }
 
       if (modal) {
         modal.classList.remove('hidden');
+        modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
       }
 
@@ -1690,13 +1725,16 @@
         window.history.pushState({ modalOpen: 'themePreview' }, '');
       } catch (e) {}
 
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeThemePreviewModal(triggerHistoryBack = true) {
       const modal = document.getElementById('themePreviewModal');
       const iframe = document.getElementById('themePreviewIframe');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
       if (iframe) iframe.src = 'about:blank';
       document.body.style.overflow = '';
 
@@ -2352,18 +2390,6 @@
     function switchMasterStep(stepNum) {
       if (stepNum < 1 || stepNum > 4) return;
 
-      const userStep = currentUser ? (currentUser.onboarding_step || 1) : 1;
-      
-      // Validation: Prevent skipping ahead without required data
-      if (stepNum > userStep && stepNum === 3 && (!currentUser || !currentUser.github_repo_url)) {
-        alert("Pehle Step 2 poora karein aur apni repository create karein!");
-        return;
-      }
-      if (stepNum > userStep && stepNum === 4 && (!currentUser || !currentUser.sheet_url)) {
-        alert("Pehle Step 3 me Google Sheet connect karein!");
-        return;
-      }
-
       currentMasterStep = stepNum;
 
       const card1 = document.getElementById('cardStep1');
@@ -2374,9 +2400,11 @@
       if (card1) {
         if (stepNum === 1) {
           card1.classList.remove('hidden');
+          card1.style.display = 'block';
           card1.classList.add('glass-card-active');
         } else {
           card1.classList.add('hidden');
+          card1.style.display = 'none';
           card1.classList.remove('glass-card-active');
         }
       }
@@ -2384,9 +2412,11 @@
       if (card2) {
         if (stepNum === 2) {
           card2.classList.remove('hidden');
+          card2.style.display = 'block';
           card2.classList.add('glass-card-active');
         } else {
           card2.classList.add('hidden');
+          card2.style.display = 'none';
           card2.classList.remove('glass-card-active');
         }
       }
@@ -2394,9 +2424,11 @@
       if (card3) {
         if (stepNum === 3) {
           card3.classList.remove('hidden');
+          card3.style.display = 'block';
           card3.classList.add('glass-card-active');
         } else {
           card3.classList.add('hidden');
+          card3.style.display = 'none';
           card3.classList.remove('glass-card-active');
         }
       }
@@ -2404,10 +2436,12 @@
       if (card4) {
         if (stepNum === 4) {
           card4.classList.remove('hidden');
+          card4.style.display = 'block';
           card4.classList.add('glass-card-active');
-          syncAppStepUrlDisplay();
+          if (typeof syncAppStepUrlDisplay === 'function') syncAppStepUrlDisplay();
         } else {
           card4.classList.add('hidden');
+          card4.style.display = 'none';
           card4.classList.remove('glass-card-active');
         }
       }
@@ -2420,7 +2454,7 @@
         targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function updateMasterStepperUI(activeStep) {
@@ -2446,13 +2480,13 @@
       if (topCirc1) {
         if (activeStep === 1) {
           topCirc1.className = "w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/25 transition group-hover:scale-105";
-          topCirc1.innerHTML = themeConfirmed ? <i data-lucide="check" class="w-5 h-5"></i> : <span>1</span>;
+          topCirc1.innerHTML = themeConfirmed ? '<i data-lucide="check" class="w-5 h-5"></i>' : '<span>1</span>';
         } else if (themeConfirmed || activeStep > 1) {
           topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc1.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+          topCirc1.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
         } else {
           topCirc1.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc1.innerHTML = <span>1</span>;
+          topCirc1.innerHTML = '<span>1</span>';
         }
       }
 
@@ -2460,16 +2494,16 @@
       if (topCirc2) {
         if (activeStep === 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/30 ring-4 ring-indigo-500/25 transition group-hover:scale-105";
-          topCirc2.innerHTML = repoReady ? <i data-lucide="check" class="w-5 h-5"></i> : <span>2</span>;
+          topCirc2.innerHTML = repoReady ? '<i data-lucide="check" class="w-5 h-5"></i>' : '<span>2</span>';
         } else if (repoReady || activeStep > 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc2.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+          topCirc2.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
         } else if (themeConfirmed || activeStep >= 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-indigo-500 text-indigo-400 font-bold flex items-center justify-center text-sm transition group-hover:scale-105";
-          topCirc2.innerHTML = <span>2</span>;
+          topCirc2.innerHTML = '<span>2</span>';
         } else {
           topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc2.innerHTML = <span>2</span>;
+          topCirc2.innerHTML = '<span>2</span>';
         }
       }
 
@@ -2477,16 +2511,16 @@
       if (topCirc3) {
         if (activeStep === 3) {
           topCirc3.className = "w-11 h-11 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-purple-500/30 ring-4 ring-purple-500/25 transition group-hover:scale-105";
-          topCirc3.innerHTML = sheetReady ? <i data-lucide="check" class="w-5 h-5"></i> : <span>3</span>;
+          topCirc3.innerHTML = sheetReady ? '<i data-lucide="check" class="w-5 h-5"></i>' : '<span>3</span>';
         } else if (sheetReady || activeStep > 3) {
           topCirc3.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc3.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+          topCirc3.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
         } else if (repoReady || activeStep >= 3) {
           topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-purple-500 text-purple-400 font-bold flex items-center justify-center text-sm transition group-hover:scale-105";
-          topCirc3.innerHTML = <span>3</span>;
+          topCirc3.innerHTML = '<span>3</span>';
         } else {
           topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc3.innerHTML = <span>3</span>;
+          topCirc3.innerHTML = '<span>3</span>';
         }
       }
 
@@ -2494,13 +2528,13 @@
       if (topCirc4) {
         if (activeStep === 4) {
           topCirc4.className = "w-11 h-11 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-500/25 transition group-hover:scale-105";
-          topCirc4.innerHTML = userStep >= 4 ? <i data-lucide="check" class="w-5 h-5"></i> : <span>4</span>;
+          topCirc4.innerHTML = userStep >= 4 ? '<i data-lucide="check" class="w-5 h-5"></i>' : '<span>4</span>';
         } else if (userStep >= 4) {
           topCirc4.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc4.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+          topCirc4.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
         } else {
           topCirc4.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc4.innerHTML = <span>4</span>;
+          topCirc4.innerHTML = '<span>4</span>';
         }
       }
       lucide.createIcons();
@@ -2536,19 +2570,19 @@
         }
         if (badge1) {
           badge1.className = "px-3.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge1.innerHTML = <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-300"></i> <span>Theme Selection</span>;
+          badge1.innerHTML = '<i data-lucide="palette" class="w-3.5 h-3.5 text-amber-300"></i> <span>Theme Selection</span>';
         }
         if (badge2) {
           badge2.className = "px-3.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge2.innerHTML = <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready Next</span>;
+          badge2.innerHTML = '<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready Next</span>';
         }
         if (badge3) {
           badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 2 Baki)</span>;
+          badge3.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 2 Baki)</span>';
         }
         if (badge4) {
           badge4.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge4.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>;
+          badge4.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>';
         }
 
         if (card1) card1.classList.add('glass-card-active');
@@ -2568,19 +2602,19 @@
         }
         if (badge1) {
           badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
+          badge1.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>';
         }
         if (badge2) {
           badge2.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge2.innerHTML = <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i> <span>100% Automated</span>;
+          badge2.innerHTML = '<i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i> <span>100% Automated</span>';
         }
         if (badge3) {
           badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 2 Baki)</span>;
+          badge3.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 2 Baki)</span>';
         }
         if (badge4) {
           badge4.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge4.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>;
+          badge4.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>';
         }
 
         if (card1) card1.classList.remove('glass-card-active');
@@ -2600,19 +2634,19 @@
         }
         if (badge1) {
           badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
+          badge1.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>';
         }
         if (badge2) {
           badge2.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge2.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Repo & Site Live ✓</span>;
+          badge2.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Repo & Site Live ✓</span>';
         }
         if (badge3) {
           badge3.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>;
+          badge3.innerHTML = '<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>';
         }
         if (badge4) {
           badge4.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge4.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>;
+          badge4.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>';
         }
 
         if (card1) card1.classList.remove('glass-card-active');
@@ -2636,19 +2670,19 @@
         }
         if (badge1) {
           badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
+          badge1.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>';
         }
         if (badge2) {
           badge2.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge2.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Repo & Site Live ✓</span>;
+          badge2.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Repo & Site Live ✓</span>';
         }
         if (badge3) {
           badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>;
+          badge3.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>';
         }
         if (badge4) {
           badge4.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge4.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>;
+          badge4.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>';
         }
 
         if (card1) card1.classList.remove('glass-card-active');
