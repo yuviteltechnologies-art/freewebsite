@@ -250,13 +250,13 @@
         <div>
           <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 mb-2">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-            <span>3-Step Automated Store Setup</span>
+            <span>4-Step Automated Store Setup</span>
           </span>
           <h1 class="font-heading font-black text-2xl sm:text-4xl text-white">
             Namaste, <span id="welcomeUserName" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">Store Owner</span>! 👋
           </h1>
           <p class="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-xl">
-            Aapki dukaan ko 100% live karne ke liye bas ye <strong class="text-white">3 aasan steps</strong> poore karein. Coding ki 0% zaroorat hai.
+            Aapki dukaan ko 100% live karne ke liye bas ye <strong class="text-white">4 aasan steps</strong> poore karein. Coding ki 0% zaroorat hai.
           </p>
         </div>
 
@@ -357,31 +357,7 @@
           </span>
         </div>
 
-        <!-- ACTIVE STOREFRONT THEME SHOWCASE BANNER -->
-        <div id="activeThemeBanner" class="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border-2 border-indigo-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
-          <div class="flex items-center gap-3.5">
-            <div id="activeThemeIconBox" class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-3xl shadow-inner shrink-0">
-              🕉️
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Selected Frontend Theme</span>
-                <span class="text-[10px] text-slate-400">Default for Your Customers</span>
-              </div>
-              <h4 id="activeThemeTitle" class="font-heading font-bold text-base sm:text-lg text-white mt-0.5">वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)</h4>
-              <p id="activeThemeSubtitle" class="text-xs text-slate-300">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-            <a id="activeThemeDemoBtn" href="vastu-demo.html" target="_blank"
-               class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-cyan-200 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow">
-              <span>Preview Demo</span>
-              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- 6 FLAGSHIP THEMES INTERACTIVE SELECTION GRID -->
+        <!-- 6 FLAGSHIP THEMES SELECTION GRID -->
         <div class="space-y-3 mb-6">
           <div class="flex items-center justify-between">
             <label class="block text-xs font-bold text-slate-200 flex items-center gap-2">
@@ -398,11 +374,11 @@
               <div>
                 <div class="flex items-start justify-between gap-2 mb-2">
                   <span class="text-3xl">🕉️</span>
-                  <a href="vastu-demo.html" target="_blank" onclick="event.stopPropagation()"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('vastu')"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
+                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
                     <span>Preview Demo</span>
-                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                  </a>
+                  </button>
                 </div>
                 <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-300 transition">वास्तु ब्रह्मांड</h4>
                 <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
@@ -419,11 +395,11 @@
               <div>
                 <div class="flex items-start justify-between gap-2 mb-2">
                   <span class="text-3xl">🥻</span>
-                  <a href="saree-demo.html" target="_blank" onclick="event.stopPropagation()"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('saree')"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
+                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
                     <span>Preview Demo</span>
-                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                  </a>
+                  </button>
                 </div>
                 <h4 class="font-heading font-bold text-sm text-white group-hover:text-pink-300 transition">नूलम साड़ी (NOOLAM)</h4>
                 <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक ज़ूम व डायरेक्ट व्हाट्सऐप ऑर्डरिंग</p>
@@ -440,11 +416,11 @@
               <div>
                 <div class="flex items-start justify-between gap-2 mb-2">
                   <span class="text-3xl">⚡</span>
-                  <a href="demo.html?theme=electronics" target="_blank" onclick="event.stopPropagation()"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('electronics')"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
+                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
                     <span>Preview Demo</span>
-                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                  </a>
+                  </button>
                 </div>
                 <h4 class="font-heading font-bold text-sm text-white group-hover:text-blue-300 transition">Electronics Pro</h4>
                 <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Mobiles, Smartwatches, Audio, Specs Comparer & Tech Catalog</p>
@@ -461,11 +437,11 @@
               <div>
                 <div class="flex items-start justify-between gap-2 mb-2">
                   <span class="text-3xl">👗</span>
-                  <a href="demo.html?theme=fashion" target="_blank" onclick="event.stopPropagation()"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('fashion')"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
+                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
                     <span>Preview Demo</span>
-                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                  </a>
+                  </button>
                 </div>
                 <h4 class="font-heading font-bold text-sm text-white group-hover:text-purple-300 transition">Fashion & Apparel</h4>
                 <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Clothing, Dresses, Streetwear & Luxury Style Catalog</p>
@@ -482,11 +458,11 @@
               <div>
                 <div class="flex items-start justify-between gap-2 mb-2">
                   <span class="text-3xl">🛒</span>
-                  <a href="demo.html?theme=grocery_food" target="_blank" onclick="event.stopPropagation()"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('grocery_food')"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
+                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
                     <span>Preview Demo</span>
-                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                  </a>
+                  </button>
                 </div>
                 <h4 class="font-heading font-bold text-sm text-white group-hover:text-emerald-300 transition">Grocery & Daily Food</h4>
                 <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart</p>
@@ -503,11 +479,11 @@
               <div>
                 <div class="flex items-start justify-between gap-2 mb-2">
                   <span class="text-3xl">💄</span>
-                  <a href="demo.html?theme=beauty_personal_care" target="_blank" onclick="event.stopPropagation()"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('beauty_personal_care')"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
+                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
                     <span>Preview Demo</span>
-                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                  </a>
+                  </button>
                 </div>
                 <h4 class="font-heading font-bold text-sm text-white group-hover:text-rose-300 transition">Beauty & Cosmetics</h4>
                 <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Skincare, Makeup, Serums & Salon Grade Products</p>
@@ -1167,11 +1143,11 @@
           </div>
         </div>
 
-        <!-- Bottom Navigation Bar for Step 4 -->
+        <!-- Bottom Navigation Bar for Step 3 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(3)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+          <button type="button" onclick="switchMasterStep(2)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 3 (Google Sheet)</span>
+            <span>Pichhla: Step 2 (Website Setup)</span>
           </button>
 
           <button type="button" onclick="switchMasterStep(4)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95">
@@ -1358,6 +1334,69 @@
 
         </div>
 
+        <!-- STORE QUICK HUB / MANAGEMENT PREVIEW (Only visible upon completion or in Step 4) -->
+        <div id="storeQuickHubSection" class="hidden mt-6 pt-6 border-t border-slate-800/80">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border-2 border-emerald-500/40 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 text-2xl shadow-inner">
+                  🎉
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Setup Complete</span>
+                    <span class="text-[10px] text-slate-400">100% Free Lifetime Hosting</span>
+                  </div>
+                  <h3 class="font-heading font-bold text-base sm:text-lg text-white mt-0.5">Aapki Live Dukaan Ka Quick Hub</h3>
+                  <p class="text-xs text-slate-300">Yahan se aap apni live website, Google Sheet database aur support ko direct open kar sakte hain.</p>
+                </div>
+              </div>
+              <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Store Ready</span>
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Live Store Link -->
+              <a id="hubLiveSiteLink" href="index.html" target="_blank"
+                 class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-blue-500/50 transition flex items-center gap-3 group shadow">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-105 transition">
+                  <i data-lucide="globe" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Aapki Website</p>
+                  <p class="text-xs font-bold text-white group-hover:text-blue-400 flex items-center gap-1">Open Live Site <i data-lucide="external-link" class="w-3 h-3"></i></p>
+                </div>
+              </a>
+
+              <!-- Live Sheet Link -->
+              <a id="hubSheetLink" href="#" target="_blank"
+                 class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-3 group shadow">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition">
+                  <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Google Sheet Database</p>
+                  <p class="text-xs font-bold text-white group-hover:text-emerald-400 flex items-center gap-1">Hisaab Register <i data-lucide="external-link" class="w-3 h-3"></i></p>
+                </div>
+              </a>
+
+              <!-- Support Link -->
+              <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20setup%20me%20help%20chahiye" target="_blank"
+                 class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-3 group shadow">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-105 transition">
+                  <i data-lucide="message-circle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">VIP Support</p>
+                  <p class="text-xs font-bold text-white group-hover:text-amber-400 flex items-center gap-1">WhatsApp Chat <i data-lucide="external-link" class="w-3 h-3"></i></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
         <!-- Bottom Navigation Bar for Step 4 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
           <button type="button" onclick="switchMasterStep(3)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
@@ -1378,59 +1417,7 @@
     <!-- END OF UNIFIED 3-STEP STORE SETUP WIZARD CARD -->
     </div>
 
-    <!-- STORE QUICK HUB / MANAGEMENT PREVIEW -->
-    <div class="glass-card rounded-3xl p-6 sm:p-8">
-      <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
-            <i data-lucide="store" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="font-heading font-bold text-lg text-white">Aapki Live Dukaan Ka Quick Hub</h3>
-            <p class="text-xs text-slate-400">Yahan se aap apni live website aur settings ko direct open kar sakte hain.</p>
-          </div>
-        </div>
-        <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">100% Free Hosting</span>
-      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <!-- Live Store Link -->
-        <a id="hubLiveSiteLink" href="index.html" target="_blank"
-           class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-blue-500/50 transition flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-105 transition">
-            <i data-lucide="globe" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Aapki Website</p>
-            <p class="text-xs font-bold text-white group-hover:text-blue-400 flex items-center gap-1">Open Live Site <i data-lucide="external-link" class="w-3 h-3"></i></p>
-          </div>
-        </a>
-
-        <!-- Live Sheet Link -->
-        <a id="hubSheetLink" href="#" target="_blank"
-           class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition">
-            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Google Sheet Database</p>
-            <p class="text-xs font-bold text-white group-hover:text-emerald-400 flex items-center gap-1">Hisaab Register <i data-lucide="external-link" class="w-3 h-3"></i></p>
-          </div>
-        </a>
-
-        <!-- Support Link -->
-        <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20setup%20me%20help%20chahiye" target="_blank"
-           class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-105 transition">
-            <i data-lucide="message-circle" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">VIP Support</p>
-            <p class="text-xs font-bold text-white group-hover:text-amber-400 flex items-center gap-1">WhatsApp Chat <i data-lucide="external-link" class="w-3 h-3"></i></p>
-          </div>
-        </a>
-      </div>
-    </div>
 
   </main>
 
@@ -1476,6 +1463,52 @@
           <span>Password Save Karein ⚡</span>
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       IN-DASHBOARD THEME PREVIEW FULLSCREEN MODAL (WITH BACK BUTTON)
+       ======================================================== -->
+  <div id="themePreviewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col">
+    <!-- Top Navigation Bar -->
+    <div class="bg-slate-900 border-b border-slate-800 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 shrink-0 shadow-xl z-20">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button type="button" onclick="closeThemePreviewModal()"
+                class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 border border-slate-700 active:scale-95 transition shadow shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4 text-cyan-400"></i>
+          <span>← Wapas Themes Par (Back)</span>
+        </button>
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="themePreviewModalIcon" class="text-xl sm:text-2xl shrink-0">🕉️</span>
+          <div class="truncate">
+            <h4 id="themePreviewModalTitle" class="font-bold text-xs sm:text-sm text-white truncate">वास्तु ब्रह्मांड</h4>
+            <p class="text-[10px] text-slate-400 hidden sm:block">Live Interactive Demo • Wapas button daba kar dusri theme bhi dekh sakte hain</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button type="button" onclick="selectThemeFromPreview()"
+                class="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center gap-1.5 shadow-lg shadow-emerald-600/30 active:scale-95 transition">
+          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+          <span>✓ Yeh Theme Chunein</span>
+        </button>
+        <button type="button" onclick="closeThemePreviewModal()"
+                class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 active:scale-95 transition"
+                title="Close Preview">
+          <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Responsive Iframe Container -->
+    <div class="relative flex-1 w-full bg-slate-950 overflow-hidden">
+      <!-- Loading Spinner -->
+      <div id="themePreviewSpinner" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/85 gap-3 pointer-events-none">
+        <div class="w-10 h-10 border-4 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin"></div>
+        <p class="text-xs text-slate-300 font-medium">Theme demo load ho raha hai...</p>
+      </div>
+      <iframe id="themePreviewIframe" src="" class="w-full h-full border-0 bg-slate-950" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -1620,6 +1653,78 @@
       handleGhRepoPaste();
     }
 
+    // THEME PREVIEW MODAL LOGIC (IN-DASHBOARD IFRAME WITH HARDWARE BACK BUTTON)
+    let currentPreviewThemeKey = 'vastu';
+
+    function openThemePreviewModal(themeKey) {
+      const key = themeKey || getActiveThemeKey() || 'vastu';
+      const theme = STORE_THEMES[key] || STORE_THEMES['vastu'];
+      if (!theme) return;
+
+      currentPreviewThemeKey = key;
+
+      const modal = document.getElementById('themePreviewModal');
+      const iframe = document.getElementById('themePreviewIframe');
+      const spinner = document.getElementById('themePreviewSpinner');
+      const icon = document.getElementById('themePreviewModalIcon');
+      const title = document.getElementById('themePreviewModalTitle');
+
+      if (icon) icon.innerText = theme.icon;
+      if (title) title.innerText = theme.title;
+      if (spinner) spinner.classList.remove('hidden');
+
+      if (iframe) {
+        iframe.onload = function() {
+          if (spinner) spinner.classList.add('hidden');
+        };
+        iframe.src = theme.demoUrl;
+      }
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Add browser history entry so device/browser back button returns to themes grid
+      try {
+        window.history.pushState({ modalOpen: 'themePreview' }, '');
+      } catch (e) {}
+
+      lucide.createIcons();
+    }
+
+    function closeThemePreviewModal(triggerHistoryBack = true) {
+      const modal = document.getElementById('themePreviewModal');
+      const iframe = document.getElementById('themePreviewIframe');
+      if (modal) modal.classList.add('hidden');
+      if (iframe) iframe.src = 'about:blank';
+      document.body.style.overflow = '';
+
+      if (triggerHistoryBack && window.history.state && window.history.state.modalOpen === 'themePreview') {
+        try {
+          window.history.back();
+        } catch (e) {}
+      }
+    }
+
+    function selectThemeFromPreview() {
+      if (currentPreviewThemeKey) {
+        selectDashboardTheme(currentPreviewThemeKey);
+      }
+      closeThemePreviewModal();
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+      }
+    }
+
+    // Intercept mobile/hardware back button to smoothly close modal
+    window.addEventListener('popstate', function(e) {
+      const modal = document.getElementById('themePreviewModal');
+      if (modal && !modal.classList.contains('hidden')) {
+        closeThemePreviewModal(false);
+      }
+    });
+
     function selectDashboardTheme(themeKey) {
       localStorage.setItem('sheetstore_selected_theme', themeKey);
       localStorage.setItem('store_active_template', themeKey);
@@ -1687,14 +1792,8 @@
     }
 
     function maybePromptThemeSelection() {
-      const isPaid = currentUser && (currentUser.is_paid === true || currentUser.status === "ACTIVE");
-      if (!isPaid) return;
-      const themeConfirmed = localStorage.getItem('sheetstore_theme_confirmed');
-      if (!themeConfirmed) {
-        setTimeout(() => {
-          openThemeSelectorModal();
-        }, 500);
-      }
+      // Step 1 is already the dedicated Theme Selection step; no automatic popup needed.
+      return;
     }
 
     function copyCardLink(inputId, btnId) {
@@ -2531,6 +2630,10 @@
           pBar.style.width = "100%";
           pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
         }
+        const quickHub = document.getElementById('storeQuickHubSection');
+        if (quickHub && (currentUser && currentUser.onboarding_step >= 4)) {
+          quickHub.classList.remove('hidden');
+        }
         if (badge1) {
           badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
           badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
@@ -3016,9 +3119,14 @@
 
     // Step 3: Mark App Completed
     function markAppCompleted() {
-      currentUser.onboarding_step = 3;
+      currentUser.onboarding_step = 4;
       saveUserLocally();
-      updateStepUI(3);
+      updateStepUI(4);
+      const hub = document.getElementById('storeQuickHubSection');
+      if (hub) {
+        hub.classList.remove('hidden');
+        hub.scrollIntoView({ behavior: 'smooth' });
+      }
       confetti({ particleCount: 100, spread: 90, origin: { y: 0.5 } });
       alert("Badhai ho! Aapka poora store setup 100% complete ho gaya hai! Ab aap apni website se orders receive karna shuru kar sakte hain.");
     }
