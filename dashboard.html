@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -290,14 +290,14 @@
             </div>
           </div>
 
-          <!-- Step 2 Circle & Label (Website Setup) -->
+          <!-- Step 2 Circle & Label (Frontend Setup) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(2)">
             <div id="topStepCircle2" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>2</span>
             </div>
             <div class="text-center mt-2">
               <p id="topStepTitle2" class="text-xs font-bold text-slate-400">Step 2</p>
-              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Website Setup</p>
+              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Frontend Setup</p>
             </div>
           </div>
 
@@ -328,7 +328,7 @@
         <div class="hidden">
           <div id="progressBarFill" style="width: 25%;"></div>
           <span id="stepLabel1">1. Store Theme Selection</span>
-          <span id="stepLabel2">2. Website Setup (1-Click)</span>
+          <span id="stepLabel2">2. Frontend Setup</span>
           <span id="stepLabel3">3. Google Sheet Connect</span>
           <span id="stepLabel4">4. Android Admin App</span>
         </div>
@@ -339,19 +339,6 @@
 
         <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
         <div id="cardStep1" class="transition-all relative">
-        
-        <!-- Top Navigation Bar for Step 1 -->
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">Step 1 of 4</span>
-            <span class="text-[11px] text-slate-400 hidden sm:inline">Storefront Theme Selection</span>
-          </div>
-          <button type="button" onclick="confirmThemeAndGoToStep2()"
-                  class="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition">
-            <span>Agla: Step 2 (Website Setup)</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
-        </div>
 
         <!-- STEP 1 HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
@@ -510,33 +497,18 @@
         </div>
 
         <!-- Bottom Navigation Bar for Step 1 -->
-        <div class="pt-5 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-xs text-slate-400 text-center sm:text-left">
-            <span>Theme pasand karke agle step par jayein:</span>
-          </div>
+        <div class="pt-5 border-t border-slate-800/80 flex items-center justify-end">
           <button type="button" onclick="confirmThemeAndGoToStep2()"
-                  class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition">
-            <span>Agla: Step 2 (Website Setup)</span>
+                  class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/25 active:scale-95 transition">
+            <span>Next</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
 
       </div>
 
-      <!-- STEP 2: WEBSITE SETUP (1-CLICK AUTOMATION) -->
+      <!-- STEP 2: FRONTEND SETUP (1-CLICK AUTOMATION) -->
       <div id="cardStep2" class="transition-all relative hidden">
-        
-        <!-- Top Navigation Bar for Step 2 -->
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition active:scale-95 border border-slate-700">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 1 (Theme)</span>
-          </button>
-          <button type="button" onclick="switchMasterStep(3)" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition active:scale-95 shadow-md shadow-blue-500/20">
-            <span>Agla: Step 3 (Google Sheet)</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
 
         <!-- TOP CARD HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
@@ -545,8 +517,8 @@
               <i data-lucide="globe" class="w-5 h-5"></i>
             </div>
             <div>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 2: Website Setup (1-Click Automation)</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Apne store ke liye lifetime free hosting aur GitHub repository activate karein.</p>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 2: Frontend Setup</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Apne store ke liye GitHub repository aur free hosting activate karein.</p>
             </div>
           </div>
           <span id="badgeStep2" class="px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
@@ -555,46 +527,8 @@
           </span>
         </div>
 
-        <!-- SELECTED THEME REMINDER PILL -->
-        <div class="mb-5 p-3 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-2.5">
-            <span id="step2ThemePillIcon" class="text-xl">🕉️</span>
-            <div>
-              <div class="text-[10px] text-slate-400">Selected Store Theme:</div>
-              <div id="step2ThemePillTitle" class="text-xs sm:text-sm font-bold text-white">वास्तु ब्रह्मांड (vastu)</div>
-            </div>
-          </div>
-          <button type="button" onclick="switchMasterStep(1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 text-xs font-semibold border border-slate-700 transition active:scale-95 flex items-center gap-1">
-            <i data-lucide="palette" class="w-3.5 h-3.5"></i>
-            <span>Badlein</span>
-          </button>
-        </div>
-
         <!-- MAIN STEP 2 1-CLICK CONTAINER -->
         <div class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-5">
-          
-          <!-- STORE REPOSITORY NAME INPUT BOX -->
-          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-200 mb-1 flex items-center justify-between">
-                <span>Repository Ka Naam (Store Name):</span>
-                <span class="text-[10px] text-slate-500">Pasand ka naam daal sakte hain</span>
-              </label>
-              <input type="text" id="customRepoNameInput" value="vastustore" oninput="updateCustomRepoForkUrl()"
-                     placeholder="jaise: vastustore, sareestore, gadgetstore, shop"
-                     class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:border-blue-500 focus:outline-none font-mono" />
-              
-              <!-- Quick Suggestion Pills -->
-              <div id="quickRepoPillsContainer" class="flex flex-wrap items-center gap-1.5 mt-2">
-                <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>
-                <button type="button" onclick="setQuickRepoName('vastustore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">vastustore</button>
-                <button type="button" onclick="setQuickRepoName('sareestore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">sareestore</button>
-                <button type="button" onclick="setQuickRepoName('gadgetstore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">gadgetstore</button>
-                <button type="button" onclick="setQuickRepoName('mystore')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">mystore</button>
-                <button type="button" onclick="setQuickRepoName('shop')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">shop</button>
-              </div>
-            </div>
-          </div>
 
           <!-- PRIMARY 1-CLICK AUTO SETUP BUTTON -->
           <div>
@@ -606,48 +540,16 @@
                 </div>
                 <div>
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Auto Setup (Google / GitHub)</span>
+                    <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub Setup</span>
                     <span class="text-[9px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-black uppercase tracking-wider">100% Online Automatic</span>
                   </div>
                   <p class="text-[11px] text-emerald-100 font-normal leading-tight mt-0.5">
-                    Sirf Google se login karein — GitHub repository aur Free Pages Hosting apne aap ready ho jayegi!
+                    GitHub repository aur Free Pages Hosting apne aap ready ho jayegi.
                   </p>
                 </div>
               </div>
               <i data-lucide="arrow-right" class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
             </button>
-          </div>
-
-          <!-- TRANSPARENT CONSENT & PERMISSIONS CARD -->
-          <div class="p-4 bg-slate-900/90 border border-emerald-500/30 rounded-2xl text-left space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-white flex items-center gap-1.5">
-                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
-                <span>Auto-Setup Consent & Permissions:</span>
-              </span>
-              <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                100% Secure
-              </span>
-            </div>
-            <div class="text-[11px] text-slate-300 space-y-1">
-              <p class="leading-relaxed">
-                1-Click Setup shuru karne se aap automated system ko permission dete hain ki:
-              </p>
-              <ul class="space-y-1 pl-1 font-mono text-[10.5px]">
-                <li class="flex items-center gap-1.5 text-slate-200">
-                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
-                  <span>Aapke GitHub account me <strong class="text-white">freewebsite</strong> template se store repository copy kare.</span>
-                </li>
-                <li class="flex items-center gap-1.5 text-slate-200">
-                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
-                  <span>Template files copy hone tak wait karke 'main' branch verify kare.</span>
-                </li>
-                <li class="flex items-center gap-1.5 text-slate-200">
-                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
-                  <span>Aapke repository me <strong class="text-emerald-400">'main' branch</strong> par 100% Free Lifetime GitHub Pages hosting automatically enable kare.</span>
-                </li>
-              </ul>
-            </div>
           </div>
 
           <!-- PROMINENT REPOSITORY & WEBSITE LINKS DISPLAY CARD (SHOWN WHEN READY) -->
@@ -730,23 +632,26 @@
                 </p>
               </div>
             </div>
+          </div>
 
-            <!-- Bottom Navigation Bar for Step 2 -->
-            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
-              <button type="button" onclick="switchMasterStep(1)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition active:scale-95 border border-slate-700 flex items-center gap-1.5">
-                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                <span>Pichhla: Step 1 (Theme)</span>
-              </button>
-              <button type="button" onclick="switchMasterStep(3)"
-                      class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
-                <span>Agla: Step 3 (Google Sheet)</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-            </div>
+          <!-- Bottom Navigation Bar for Step 2 -->
+          <div class="pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+            <button type="button" onclick="switchMasterStep(1)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back</span>
+            </button>
+            <button type="button" onclick="switchMasterStep(3)"
+                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/25 active:scale-95 transition">
+              <span>Next</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
           </div>
 
           <!-- HIDDEN BACKWARDS-COMPATIBILITY HOOKS -->
           <div class="hidden">
+            <input type="text" id="customRepoNameInput" value="vastustore" />
+            <span id="step2ThemePillIcon"></span>
+            <span id="step2ThemePillTitle"></span>
             <span id="ghPreviewLiveUrl"></span>
             <span id="summaryRepoUrl"></span>
             <span id="summaryLiveUrl"></span>
@@ -771,31 +676,20 @@
 
       </div>
 
-      <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
+      <!-- STEP 3: GOOGLE SHEET CONNECT & TEST -->
       <div id="cardStep3" class="transition-all relative hidden">
-        <!-- Top Navigation Bar for Step 3 -->
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition active:scale-95 border border-slate-700">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 2 (Website Setup)</span>
-          </button>
-          <button type="button" onclick="switchMasterStep(4)" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition active:scale-95 shadow-md shadow-indigo-500/20">
-            <span>Agla: Step 4 (Android App)</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
-        <!-- LOCK OVERLAY FOR STEP 2 (Shown when Step 1 is not complete) -->
+        <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
         <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
             <i data-lucide="lock" class="w-6 h-6"></i>
           </div>
           <h4 class="font-heading font-bold text-lg text-white">Step 3 Abhi Locked Hai 🔒</h4>
           <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
-            Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 2</strong> me apni GitHub repository setup karein.
+            Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 2 (Frontend Setup)</strong> me apni GitHub repository setup karein.
           </p>
           <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25">
             <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
-            <span>Pehle Step 2 Setup Karein</span>
+            <span>Pehle Step 2 (Frontend Setup) Karein</span>
           </a>
         </div>
 
@@ -1171,30 +1065,20 @@
 
         <!-- Bottom Navigation Bar for Step 3 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(2)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 2 (Website Setup)</span>
+          <button type="button" onclick="switchMasterStep(2)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
           </button>
 
-          <button type="button" onclick="switchMasterStep(4)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95">
-            <span>Agla: Step 4 (Android App)</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          <button type="button" onclick="switchMasterStep(4)" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition">
+            <span>Next</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
       <!-- STEP 4: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
       <div id="cardStep4" class="transition-all relative hidden">
-        <!-- Top Navigation Bar for Step 4 -->
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(3)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition active:scale-95 border border-slate-700">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 3 (Google Sheet)</span>
-          </button>
-          <a href="index.html" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition active:scale-95 shadow-md shadow-emerald-500/20">
-            <span>Live Website Kholein ↗</span>
-          </a>
-        </div>
         <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
         <div id="lockOverlayStep4" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
@@ -1427,14 +1311,14 @@
 
         <!-- Bottom Navigation Bar for Step 4 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(3)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 3 (Google Sheet)</span>
+          <button type="button" onclick="switchMasterStep(3)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
           </button>
 
-          <a id="hubBottomLiveLink" href="index.html" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-500/25 active:scale-95">
-            <span>Aapki Store Website Kholein ↗</span>
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <a id="hubBottomLiveLink" href="index.html" target="_blank" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-emerald-500/25 active:scale-95 transition">
+            <span>Open Live Store</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
           </a>
         </div>
       </div>
@@ -2490,7 +2374,7 @@
         }
       }
 
-      // Circle 2: Website Setup
+      // Circle 2: Frontend Setup
       if (topCirc2) {
         if (activeStep === 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/30 ring-4 ring-indigo-500/25 transition group-hover:scale-105";
@@ -2595,7 +2479,7 @@
 
       } else if (step === 2) {
         if (pPercent) pPercent.innerText = "50%";
-        if (pStatus) pStatus.innerText = "Step 2 of 4: Website Setup (1-Click Automation)";
+        if (pStatus) pStatus.innerText = "Step 2 of 4: Frontend Setup";
         if (pBar) {
           pBar.style.width = "50%";
           pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
