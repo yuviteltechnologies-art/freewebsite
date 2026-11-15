@@ -56,12 +56,13 @@ function doGet(e) {
         newUrl = ss ? ss.getUrl() : ("https://docs.google.com/spreadsheets/d/" + templateId + "/edit");
       }
 
-      if (params.redirect_url) {
-        var returnTarget = params.redirect_url + 
-          (params.redirect_url.indexOf('?') > -1 ? '&' : '?') + 
-          'sheet_id=' + encodeURIComponent(newId) + 
-          '&sheet_url=' + encodeURIComponent(newUrl);
+      var targetBase = params.redirect_url || "https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html";
+      var returnTarget = targetBase + 
+        (targetBase.indexOf('?') > -1 ? '&' : '?') + 
+        'sheet_id=' + encodeURIComponent(newId) + 
+        '&sheet_url=' + encodeURIComponent(newUrl);
 
+      if (params.format !== "json") {
         var redirectHtml = '<!DOCTYPE html>' +
           '<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
           '<title>Connecting SheetStore...</title>' +
