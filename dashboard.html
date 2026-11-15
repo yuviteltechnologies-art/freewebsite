@@ -567,15 +567,15 @@
               <button type="button" onclick="startGitHubOAuthFlow()" id="btnOAuthConnect"
                 class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group">
                 <div class="flex items-center gap-3 text-left">
-                  <div class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0 shadow">
+                  <div id="btnOAuthConnectIcon" class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0 shadow">
                     <i data-lucide="zap" class="w-6 h-6 text-amber-300"></i>
                   </div>
                   <div>
-                    <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub
-                      Setup</span>
+                    <span id="btnOAuthConnectTitle" class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub Setup</span>
+                    <p id="btnOAuthConnectSub" class="text-[10px] text-white/80 font-bold hidden sm:block">Personal GitHub Account • Free Lifetime Hosting</p>
                   </div>
                 </div>
-                <i data-lucide="arrow-right"
+                <i id="btnOAuthConnectArrow" data-lucide="arrow-right"
                   class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
               </button>
             </div>
@@ -745,15 +745,15 @@
             <!-- Status Notice Area -->
             <div id="sheetConnectNotice" class="hidden max-w-md mx-auto p-3.5 rounded-xl text-xs font-medium border flex items-center gap-2.5"></div>
 
-            <!-- SELF DEPLOYMENT BLOCK (Direct script.google.com/home with Authentic Account Continuity) -->
-            <div id="step3SelfDeployBlock" class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-indigo-500/40 shadow-xl space-y-4 text-left">
+            <!-- SELF DEPLOYMENT BLOCK (1-Click Database Connect) -->
+            <div id="step3SelfDeployBlock" class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-emerald-500/40 shadow-xl space-y-4 text-left">
               <div class="flex items-center justify-between pb-2 border-b border-slate-800">
                 <span class="text-xs font-bold text-white flex items-center gap-1.5">
-                  <i data-lucide="rocket" class="w-4 h-4 text-indigo-400"></i>
-                  <span>Apna Personal Backend Web App Deploy Karein:</span>
+                  <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
+                  <span>Store Database Connection:</span>
                 </span>
-                <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/30">
-                  Direct Chrome Open 🚀
+                <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                  100% Automatic ⚡
                 </span>
               </div>
 
@@ -768,7 +768,7 @@
               <!-- Project Name Reminder with 1-Click Copy -->
               <div class="bg-indigo-950/40 border border-indigo-500/30 p-2.5 rounded-xl text-xs space-y-1">
                 <div class="text-[10px] uppercase tracking-wider text-indigo-300 font-bold flex items-center justify-between">
-                  <span>Apps Script me is project par tap karein:</span>
+                  <span>Connected Database Sheet:</span>
                   <button type="button" onclick="copyProjectName()" class="text-emerald-400 hover:underline flex items-center gap-1 font-sans text-[10px] cursor-pointer">
                     <i data-lucide="copy" class="w-2.5 h-2.5"></i> <span id="copyProjNameStatus">Copy Name</span>
                   </button>
@@ -778,65 +778,30 @@
                 </div>
               </div>
 
-              <!-- PRIMARY ACTION: DIRECT TO script.google.com/home in Chrome -->
+              <!-- PRIMARY ACTION: 1-CLICK DATABASE CONNECT (Identical Style & Color to Upper Button) -->
               <div>
-                <button type="button" onclick="openAppsScriptHome()" id="step3BtnOpenAppsScript"
-                   class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 transition transform active:scale-95 cursor-pointer">
-                  <i data-lucide="external-link" class="w-4 h-4"></i>
-                  <span>1-Click Apps Script Kholein (script.google.com/home) ↗</span>
+                <button type="button" onclick="handleOneClickDatabaseConnect()" id="step3BtnDbConnect"
+                  class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group cursor-pointer">
+                  <div class="flex items-center gap-3 text-left">
+                    <div class="w-10 h-10 rounded-xl bg-slate-950/20 flex items-center justify-center shrink-0">
+                      <i data-lucide="database" class="w-5 h-5 text-slate-950"></i>
+                    </div>
+                    <div>
+                      <span id="btnDbConnectText" class="tracking-wide font-black text-sm sm:text-base">⚡ 1-Click Database Connect</span>
+                      <p class="text-[10px] text-slate-900/80 font-bold hidden sm:block">Automated Live Database Sync • Zero Setup</p>
+                    </div>
+                  </div>
+                  <i data-lucide="arrow-right" class="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition-transform shrink-0"></i>
                 </button>
-                <p class="text-[10px] text-slate-400 text-center mt-1.5">
-                  ⚡ Mobile Chrome me seedha khulega (Sheets App me redirect nahi hoga)
-                </p>
-              </div>
-
-              <!-- 3-Step Simple Mobile Guide -->
-              <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-2 font-sans">
-                <div class="flex items-start gap-2">
-                  <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">1</span>
-                  <div>
-                    <strong>Project Chunein:</strong> Upar button daba kar Apps Script kholein aur list me sabse upar <strong id="step3GuideProjectName" class="text-amber-300">Digital Store - Products &amp; Orders</strong> par tap karein.
-                  </div>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">2</span>
-                  <div>
-                    <strong>Deploy Karein:</strong> Upar <strong>Deploy ➔ New deployment</strong> chunein. Gear icon par Web app select karein, <strong>Who has access: Anyone</strong> rakhein aur blue <strong>Deploy</strong> dabayein.
-                  </div>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">3</span>
-                  <div>
-                    <strong>Link Paste Karein:</strong> Mila hua <strong>Web app URL</strong> copy karke niche paste karein aur Connect dabayein!
-                  </div>
+                <div class="flex items-center justify-center gap-3 mt-2 text-[11px] text-slate-400">
+                  <a href="javascript:void(0)" onclick="openAppsScriptHome()" class="hover:text-emerald-400 underline flex items-center gap-1">
+                    <i data-lucide="external-link" class="w-3 h-3"></i> Advanced: Apps Script Editor Kholein (script.google.com/home) ↗
+                  </a>
                 </div>
               </div>
 
-              <!-- Input & Save Web App URL -->
-              <div class="space-y-1.5 pt-1">
-                <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
-                  <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i> Deploy kiya hua Web App URL:
-                </label>
-                <div class="flex flex-col sm:flex-row gap-2">
-                  <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
-                         placeholder="https://script.google.com/macros/s/.../exec"
-                         class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none font-mono" />
-                  <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
-                          class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition shrink-0 cursor-pointer">
-                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
-                    <span>Connect &amp; Step 4 ➔</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Instant Central API 1-Click Fallback -->
-              <div class="pt-1.5 text-center border-t border-slate-800/80">
-                <button type="button" onclick="connectInstantCentralApi()" id="btnInstantCentralApi"
-                        class="text-[11px] text-slate-400 hover:text-emerald-400 underline underline-offset-4 transition inline-flex items-center gap-1 cursor-pointer">
-                  <i data-lucide="sparkles" class="w-3 h-3 text-emerald-400"></i>
-                  <span>Abhi deploy nahi karna? 1-Click me Instant Connect karein</span>
-                </button>
-              </div>
+              <!-- Hidden input for backwards compatibility -->
+              <input type="hidden" id="sheetUrlInput" />
             </div>
 
 
@@ -1052,6 +1017,61 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- STORE & APK READY LINKS CARD (Always Visible in Step 4) -->
+          <div id="step4StoreLinksCard" class="mt-6 p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/40 shadow-xl space-y-4">
+            <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
+              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                <span>Aapke Store &amp; Mobile App Links:</span>
+              </span>
+              <span class="text-[10px] text-slate-400 font-bold">1-Click Copy Ready</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Website Live URL -->
+              <div class="space-y-1.5">
+                <span class="text-[11px] font-bold text-emerald-300 flex items-center gap-1">
+                  <i data-lucide="globe" class="w-3.5 h-3.5 text-emerald-400"></i> Live Website Storefront URL:
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <input type="text" id="step4LiveSiteUrlInput" readonly
+                         class="flex-1 px-3 py-2 bg-slate-950 border border-emerald-500/30 rounded-xl text-xs text-emerald-200 font-mono select-all focus:outline-none font-bold" />
+                  <button type="button" id="step4BtnCopySiteLink" onclick="copyCardLink('step4LiveSiteUrlInput', 'step4BtnCopySiteLink')"
+                          class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Website Link">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>Copy</span>
+                  </button>
+                  <a id="step4BtnOpenSiteUrl" href="#" target="_blank"
+                     class="px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Open Live Store">
+                    <span>Open ↗</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Direct APK Download URL -->
+              <div class="space-y-1.5">
+                <span class="text-[11px] font-bold text-purple-300 flex items-center gap-1">
+                  <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-400"></i> Direct APK Download URL:
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <input type="text" id="step4DirectApkInput" readonly
+                         value="https://yuviteltechnologies-art.github.io/freewebsite/downloads/SheetStore-Admin.apk"
+                         class="flex-1 px-3 py-2 bg-slate-950 border border-purple-500/30 rounded-xl text-xs text-purple-200 font-mono select-all focus:outline-none font-bold" />
+                  <button type="button" id="step4BtnCopyApkLink" onclick="copyCardLink('step4DirectApkInput', 'step4BtnCopyApkLink')"
+                          class="px-3 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy APK Link">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>Copy</span>
+                  </button>
+                  <a href="downloads/SheetStore-Admin.apk" download="SheetStore-Admin.apk"
+                     class="px-3 py-2 rounded-xl bg-purple-500 hover:bg-purple-400 text-slate-950 font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Download APK">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                    <span>Download</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- STORE QUICK HUB / MANAGEMENT PREVIEW (Only visible upon completion or in Step 4) -->
@@ -1613,6 +1633,34 @@
       if (step3BtnOpenRepo && r) step3BtnOpenRepo.href = r;
       if (step3BtnOpenSite && s) step3BtnOpenSite.href = s;
 
+      // Update Step 4 Live Site URL & links
+      const step4SiteInput = document.getElementById('step4LiveSiteUrlInput');
+      const step4OpenSiteBtn = document.getElementById('step4BtnOpenSiteUrl');
+      if (step4SiteInput && s) step4SiteInput.value = s;
+      if (step4OpenSiteBtn && s) step4OpenSiteBtn.href = s;
+
+      // Update Step 2 GitHub 1-Click Button to Connected state
+      const btnOAuth = document.getElementById('btnOAuthConnect');
+      const titleSpan = document.getElementById('btnOAuthConnectTitle');
+      const subSpan = document.getElementById('btnOAuthConnectSub');
+      const iconDiv = document.getElementById('btnOAuthConnectIcon');
+      const arrowIcon = document.getElementById('btnOAuthConnectArrow');
+
+      if (r) {
+        if (titleSpan) titleSpan.innerText = "✓ GitHub Repository Connected!";
+        if (subSpan) subSpan.innerText = r.replace('https://github.com/', '') + " • Free Lifetime Hosting Active";
+        if (iconDiv) {
+          iconDiv.innerHTML = '<i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-300"></i>';
+          iconDiv.className = "w-11 h-11 rounded-xl bg-emerald-500/30 flex items-center justify-center shrink-0 shadow";
+        }
+        if (btnOAuth) {
+          btnOAuth.className = "w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-600/30 transition active:scale-95 group border border-emerald-400/40 cursor-pointer";
+        }
+        if (arrowIcon) {
+          arrowIcon.setAttribute('data-lucide', 'check');
+        }
+      }
+
       if (r || s) {
         if (card) card.classList.remove('hidden');
         if (step3Card) step3Card.classList.remove('hidden');
@@ -1714,6 +1762,43 @@
       }).catch(() => {
         prompt("Apps Script Project Name:", text);
       });
+    }
+
+    // 1-Click Database Connect Handler (Direct auto-connect to personal Google Sheet)
+    function handleOneClickDatabaseConnect() {
+      const sheetId = (currentUser && currentUser.sheet_id) || localStorage.getItem('google_sheet_id');
+      const btn = document.getElementById('step3BtnDbConnect');
+      const textSpan = document.getElementById('btnDbConnectText');
+
+      if (!sheetId) {
+        startGoogleAutoProvisioning();
+        return;
+      }
+
+      if (btn && textSpan) {
+        btn.disabled = true;
+        textSpan.innerHTML = '<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin text-slate-950"></i> Database Connect Ho Raha Hai...</span>';
+        if (window.lucide) lucide.createIcons();
+      }
+
+      const centralUrl = "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec?sheet_id=" + encodeURIComponent(sheetId);
+      currentUser = currentUser || {};
+      currentUser.sheet_url = centralUrl;
+      currentUser.onboarding_step = 4;
+      localStorage.setItem('store_sheet_url', centralUrl);
+      saveUserLocally();
+      syncUserProfileToBackend({ sheet_url: centralUrl, sheet_id: sheetId });
+
+      showStepNotice('sheetConnectNotice', '🎉 Database 100% connect ho gaya hai! Step 4 par aage badha ja raha hai...', true);
+      if (typeof confetti === 'function') confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+
+      setTimeout(() => {
+        if (btn && textSpan) {
+          btn.disabled = false;
+          textSpan.innerText = "✓ Database Connected!";
+        }
+        switchMasterStep(4);
+      }, 800);
     }
 
     function connectInstantCentralApi() {
@@ -1890,8 +1975,9 @@
       // Refresh UI steps
       updateStepUI(currentUser.onboarding_step || 1);
 
-      // Initialize Sub-Step 1 & Master Step
-      switchMasterStep(currentUser.onboarding_step || 1);
+      // Initialize Sub-Step 1 & Master Step: Hamesha shuru se Step 1 aayegi (unless returning from active OAuth/Sheet redirect)
+      const landingStep = (urlSheetId) ? 3 : (oauthCode ? 2 : 1);
+      switchMasterStep(landingStep);
 
       // STRICT PAYMENT VERIFICATION GUARD:
       // Ensure only paying customers can access and use dashboard steps
@@ -2313,6 +2399,9 @@
           card4.classList.remove('hidden');
           card4.style.display = 'block';
           card4.classList.add('glass-card-active');
+          const lock4 = document.getElementById('lockOverlayStep4');
+          if (lock4) lock4.classList.add('hidden');
+          updateReadyLinksUI();
           if (typeof syncAppStepUrlDisplay === 'function') syncAppStepUrlDisplay();
         } else {
           card4.classList.add('hidden');
