@@ -8,9 +8,31 @@
  * 3. 'Orders' Tab: Live Customer Orders, UTR Numbers, and 1-Tap Checkbox Verification!
  */
 
+function getTargetSpreadsheet(e, parsedParams) {
+  var p = parsedParams || ((e && e.parameter) ? e.parameter : {});
+  var sheetId = p.sheet_id || p.sheetId;
+  if (!sheetId && p.sheet_url) {
+    var match = String(p.sheet_url).match(/\/d\/([a-zA-Z0-9-_]+)/);
+    if (match && match[1]) {
+      sheetId = match[1];
+    }
+  }
+  if (!sheetId && e && e.parameter && (e.parameter.sheet_id || e.parameter.sheetId)) {
+    sheetId = e.parameter.sheet_id || e.parameter.sheetId;
+  }
+  if (sheetId) {
+    try {
+      return SpreadsheetApp.openById(sheetId);
+    } catch (err) {
+      Logger.log("Could not open target sheetId " + sheetId + ": " + err.message);
+    }
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function doGet(e) {
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getTargetSpreadsheet(e);
     var params = (e && e.parameter) ? e.parameter : {};
     var action = params.action ? String(params.action).trim() : "";
 
@@ -18,7 +40,7 @@ function doGet(e) {
     // ACTION 0: Run setupAutoTabs remotely via URL
     // ----------------------------------------------------
     if (action === "setupTabs" || action === "setupAutoTabs" || action === "init") {
-      setupAutoTabs();
+      setupAutoTabs(ss);
       return returnJsonResponse({
         success: true,
         message: "Google Sheet successfully initialized with Settings, Products, and Orders tabs!",
@@ -36,7 +58,7 @@ function doGet(e) {
 
     // Auto-create tabs if blank spreadsheet
     if (!ss.getSheetByName("Settings") || !ss.getSheetByName("Products") || !ss.getSheetByName("Orders")) {
-      setupAutoTabs();
+      setupAutoTabs(ss);
     }
 
     // ----------------------------------------------------
@@ -150,7 +172,6 @@ function doGet(e) {
 
 function doPost(e) {
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
     var params = {};
 
     // Support JSON postData or standard form parameters
@@ -163,6 +184,8 @@ function doPost(e) {
     } else if (e && e.parameter) {
       params = e.parameter;
     }
+
+    var ss = getTargetSpreadsheet(e, params);
 
     var action = params.action ? String(params.action).trim() : "";
 
@@ -1401,8 +1424,8 @@ function returnJsonResponse(data) {
  * 2. 'Products'
  * 3. 'Orders' (with 1-Tap Checkbox verification setup!)
  */
-function setupAutoTabs() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+function setupAutoTabs(targetSs) {
+  var ss = targetSs || SpreadsheetApp.getActiveSpreadsheet();
   
   // ----------------------------------------------------
   // 1. Create or Reset 'Settings' Sheet
