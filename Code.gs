@@ -67,16 +67,42 @@ function doGet(e) {
           '<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
           '<title>Connecting SheetStore...</title>' +
           '<meta http-equiv="refresh" content="1;url=' + returnTarget + '">' +
-          '<script src="https://cdn.tailwindcss.com"><\/script></head>' +
+          '<script src="https://cdn.tailwindcss.com"><\/script>' +
+          '<style>' +
+          '@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.9; } }' +
+          '.pulse-icon { animation: pulse 1.5s infinite ease-in-out; }' +
+          '</style>' +
+          '</head>' +
           '<body class="bg-slate-950 text-white flex items-center justify-center min-h-screen p-4 text-center font-sans">' +
-          '<div class="space-y-4 max-w-sm bg-slate-900 border border-emerald-500/30 p-6 rounded-3xl shadow-2xl">' +
-          '<div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center text-3xl font-black">\u2713</div>' +
-          '<h2 class="text-xl font-bold">Google Sheet Safalta-purvak Jud Gayi!</h2>' +
-          '<p class="text-xs text-slate-400">Dashboard par wapas redirect kiya ja raha hai...</p>' +
-          '<a href="' + returnTarget + '" class="w-full inline-block py-3 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs shadow-lg">Dashboard Par Wapas Jayein \u2192</a>' +
+          '<div class="space-y-5 max-w-sm w-full bg-slate-900 border border-emerald-500/40 p-6 sm:p-8 rounded-3xl shadow-2xl">' +
+          '<div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-slate-950 font-black text-3xl mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/30 pulse-icon">\u2713</div>' +
+          '<div>' +
+          '<h2 class="text-xl font-black text-white">Google Sheet Ban Gayi Hai!</h2>' +
+          '<p class="text-xs text-emerald-400 font-semibold mt-1">Aapke Google Account me safe save ho gayi</p>' +
+          '</div>' +
+          '<div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-left text-[11px] text-slate-300 space-y-1">' +
+          '<div class="flex justify-between"><span class="text-slate-500">Sheet ID:</span><span class="font-mono text-emerald-400">' + newId.substring(0, 12) + '...</span></div>' +
+          '<div class="flex justify-between"><span class="text-slate-500">Redirect:</span><span class="text-slate-400">Dashboard Connecting...</span></div>' +
+          '</div>' +
+          '<a id="redirectBtn" href="' + returnTarget + '" target="_top" class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 active:scale-95 transition">' +
+          '<span>Dashboard Par Wapas Jayein \u2192</span>' +
+          '</a>' +
+          '<p class="text-[10px] text-slate-500">Auto-redirecting in 1 second...</p>' +
           '</div>' +
           '<script>' +
-          'setTimeout(function() { window.location.href = "' + returnTarget + '"; }, 800);' +
+          '(function() {' +
+          '  function doRedirect() {' +
+          '    try {' +
+          '      var btn = document.getElementById("redirectBtn");' +
+          '      if (btn) { btn.click(); return; }' +
+          '    } catch (e) {}' +
+          '    try {' +
+          '      if (window.top && window.top !== window) { window.top.location.href = "' + returnTarget + '"; return; }' +
+          '    } catch (e) {}' +
+          '    window.location.href = "' + returnTarget + '";' +
+          '  }' +
+          '  setTimeout(doRedirect, 600);' +
+          '})();' +
           '<\/script></body></html>';
 
         return HtmlService.createHtmlOutput(redirectHtml)
