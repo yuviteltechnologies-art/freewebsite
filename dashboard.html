@@ -657,16 +657,16 @@
               </p>
             </div>
 
-            <a href="https://script.google.com/macros/s/AKfycbyO9xkLhfWZWnMMYoS52wiG6ClIickWeFY89CCmZ2LU6VnJ1TnUzEN50dYbd1u_4A4/exec?redirect_url=https://yuviteltechnologies-art.github.io/freewebsite/dashboard.html"
-               class="px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-500/30 transition hover:scale-[1.02] active:scale-95 shrink-0 whitespace-nowrap">
+            <button type="button" id="btnGoogleAutoConnect" onclick="startGoogleAutoProvisioning()"
+               class="px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-500/30 transition hover:scale-[1.02] active:scale-95 shrink-0 whitespace-nowrap cursor-pointer">
               <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
               </svg>
-              <span>Connect with Google 🚀</span>
-            </a>
+              <span id="btnGoogleAutoConnectText">Connect with Google 🚀</span>
+            </button>
           </div>
         </div>
 
@@ -1919,6 +1919,19 @@
         handleAutoConnectedSheet(urlSheetId, urlSheetUrl);
       }
 
+      // Cross-window postMessage listener for Google Auto-Provisioner popup
+      window.addEventListener('message', (event) => {
+        if (!event.data) return;
+        const msg = event.data;
+        if (msg.type === 'SHEETSTORE_AUTO_SETUP_COMPLETE' || msg.sheet_id || msg.sheetId) {
+          const sId = msg.sheetId || msg.sheet_id;
+          const sUrl = msg.sheetUrl || msg.sheet_url;
+          if (sId) {
+            handleAutoConnectedSheet(sId, sUrl);
+          }
+        }
+      });
+
       lucide.createIcons();
     });
 
@@ -2969,6 +2982,51 @@
       }
     }
 
+    const GOOGLE_PROVISIONER_URL = "https://script.google.com/macros/s/AKfycbyO9xkLhfWZWnMMYoS52wiG6ClIickWeFY89CCmZ2LU6VnJ1TnUzEN50dYbd1u_4A4/exec";
+
+    // 1-Click Auto Provisioning with Google Account (Tareeqa B)
+    function startGoogleAutoProvisioning() {
+      const currentCleanUrl = window.location.href.split('?')[0].split('#')[0];
+      const webAppUrl = GOOGLE_PROVISIONER_URL + "?redirect_url=" + encodeURIComponent(currentCleanUrl);
+
+      const btn = document.getElementById('btnGoogleAutoConnect');
+      const btnText = document.getElementById('btnGoogleAutoConnectText');
+      if (btn && btnText) {
+        btn.disabled = true;
+        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Window Khul Rahi Hai...</span>`;
+        if (window.lucide) lucide.createIcons();
+      }
+
+      const width = 520;
+      const height = 660;
+      const left = window.screenX + Math.max(0, (window.outerWidth - width) / 2);
+      const top = window.screenY + Math.max(0, (window.outerHeight - height) / 2);
+
+      let popup = null;
+      try {
+        popup = window.open(webAppUrl, "google_provisioning_popup", `width=${width},height=${height},left=${left},top=${top},status=no,menubar=no,toolbar=no,scrollbars=yes,resizable=yes`);
+      } catch (e) {
+        console.warn("Popup blocked or failed:", e);
+      }
+
+      // If popup was blocked or browser is on mobile tab navigation, redirect in current tab
+      if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+        window.location.href = webAppUrl;
+        return;
+      }
+
+      // Periodically check if popup closed without completing
+      const checkPopupTimer = setInterval(() => {
+        if (!popup || popup.closed) {
+          clearInterval(checkPopupTimer);
+          if (btn && btnText && !currentUser.sheet_id) {
+            btn.disabled = false;
+            btnText.innerText = "Connect with Google 🚀";
+          }
+        }
+      }, 1200);
+    }
+
     const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
     const GOOGLE_SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/copy";
 
@@ -3061,6 +3119,16 @@
 
       const hubLink = document.getElementById('hubSheetLink');
       if (hubLink) hubLink.href = fullSheetUrl;
+
+      // Update 1-Click Connect Button to connected state
+      const autoBtn = document.getElementById('btnGoogleAutoConnect');
+      const autoBtnText = document.getElementById('btnGoogleAutoConnectText');
+      if (autoBtn && autoBtnText) {
+        autoBtn.disabled = false;
+        autoBtnText.innerText = "✓ Google Sheet Connected!";
+        autoBtn.classList.remove('from-blue-600', 'via-indigo-600', 'to-purple-600');
+        autoBtn.classList.add('from-emerald-600', 'to-teal-600');
+      }
 
       showStepNotice('sheetConnectNotice', '🎉 Google Account safalta-purvak jud gaya hai! Aapki Google Sheet aapki Drive me create ho chuki hai.', true);
       if (typeof confetti === 'function') {
