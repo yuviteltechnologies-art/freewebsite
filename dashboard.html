@@ -341,157 +341,121 @@
         <div id="cardStep1" class="transition-all relative">
 
         <!-- STEP 1 HEADER -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
           <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold shadow-md shadow-indigo-500/10">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold shadow-md shadow-indigo-500/10 shrink-0">
               <i data-lucide="palette" class="w-5 h-5"></i>
             </div>
             <div>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Storefront Theme Chunein (Select Theme)</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Apne business ya shop ke anuroop flagship theme chunein — yehi aapke live store par load hogi.</p>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Theme Selection</h3>
             </div>
           </div>
-          <span id="badgeStep1" class="px-3.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
-            <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-300"></i>
-            <span>Theme Selection</span>
-          </span>
+          <span id="badgeStep1" class="hidden"></span>
         </div>
 
-        <!-- 6 FLAGSHIP THEMES SELECTION GRID -->
+        <!-- 6 FLAGSHIP THEMES SELECTION GRID (2 IN A ROW) -->
         <div class="space-y-3 mb-6">
-          <div class="flex items-center justify-between">
-            <label class="block text-xs font-bold text-slate-200 flex items-center gap-2">
-              <i data-lucide="layout-grid" class="w-4 h-4 text-indigo-400"></i>
-              <span>Select Theme for Your Online Store:</span>
-            </label>
-            <span class="text-[11px] text-slate-400">Niche kisi bhi theme par click karein</span>
-          </div>
-
-          <div id="themeCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          <div id="themeCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Theme Card 1: Vastu -->
             <div id="themeCard_vastu" onclick="selectDashboardTheme('vastu')"
-                 class="p-4 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex flex-col justify-between group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <span class="text-3xl">🕉️</span>
-                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('vastu')"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
-                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
-                    <span>Preview Demo</span>
-                  </button>
+                 class="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="text-3xl shrink-0">🕉️</span>
+                <div class="min-w-0">
+                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-300 transition truncate">वास्तु ब्रह्मांड</h4>
+                  <span id="themeBadge_vastu" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">✓ Selected</span>
                 </div>
-                <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-300 transition">वास्तु ब्रह्मांड</h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
-                <span class="text-[10px] font-mono text-slate-500">vastu-demo.html</span>
-                <span id="themeBadge_vastu" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">✓ Selected Theme</span>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('vastu')"
+                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Preview</span>
+              </button>
             </div>
 
             <!-- Theme Card 2: Saree -->
             <div id="themeCard_saree" onclick="selectDashboardTheme('saree')"
-                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-pink-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-pink-500/10">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <span class="text-3xl">🥻</span>
-                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('saree')"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
-                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
-                    <span>Preview Demo</span>
-                  </button>
+                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-pink-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-pink-500/10">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="text-3xl shrink-0">🥻</span>
+                <div class="min-w-0">
+                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-pink-300 transition truncate">नूलम साड़ी</h4>
+                  <span id="themeBadge_saree" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
                 </div>
-                <h4 class="font-heading font-bold text-sm text-white group-hover:text-pink-300 transition">नूलम साड़ी (NOOLAM)</h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक ज़ूम व डायरेक्ट व्हाट्सऐप ऑर्डरिंग</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
-                <span class="text-[10px] font-mono text-slate-500">saree-demo.html</span>
-                <span id="themeBadge_saree" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('saree')"
+                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Preview</span>
+              </button>
             </div>
 
             <!-- Theme Card 3: Electronics -->
             <div id="themeCard_electronics" onclick="selectDashboardTheme('electronics')"
-                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-blue-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-blue-500/10">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <span class="text-3xl">⚡</span>
-                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('electronics')"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
-                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
-                    <span>Preview Demo</span>
-                  </button>
+                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-blue-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-blue-500/10">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="text-3xl shrink-0">⚡</span>
+                <div class="min-w-0">
+                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-blue-300 transition truncate">Electronics Pro</h4>
+                  <span id="themeBadge_electronics" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
                 </div>
-                <h4 class="font-heading font-bold text-sm text-white group-hover:text-blue-300 transition">Electronics Pro</h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Mobiles, Smartwatches, Audio, Specs Comparer & Tech Catalog</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
-                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=electronics</span>
-                <span id="themeBadge_electronics" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('electronics')"
+                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Preview</span>
+              </button>
             </div>
 
             <!-- Theme Card 4: Fashion -->
             <div id="themeCard_fashion" onclick="selectDashboardTheme('fashion')"
-                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-purple-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-purple-500/10">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <span class="text-3xl">👗</span>
-                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('fashion')"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
-                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
-                    <span>Preview Demo</span>
-                  </button>
+                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-purple-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-purple-500/10">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="text-3xl shrink-0">👗</span>
+                <div class="min-w-0">
+                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-purple-300 transition truncate">Fashion & Apparel</h4>
+                  <span id="themeBadge_fashion" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
                 </div>
-                <h4 class="font-heading font-bold text-sm text-white group-hover:text-purple-300 transition">Fashion & Apparel</h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Clothing, Dresses, Streetwear & Luxury Style Catalog</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
-                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=fashion</span>
-                <span id="themeBadge_fashion" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('fashion')"
+                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Preview</span>
+              </button>
             </div>
 
             <!-- Theme Card 5: Grocery -->
             <div id="themeCard_grocery_food" onclick="selectDashboardTheme('grocery_food')"
-                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-emerald-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-emerald-500/10">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <span class="text-3xl">🛒</span>
-                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('grocery_food')"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
-                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
-                    <span>Preview Demo</span>
-                  </button>
+                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-emerald-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-emerald-500/10">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="text-3xl shrink-0">🛒</span>
+                <div class="min-w-0">
+                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-emerald-300 transition truncate">Grocery & Food</h4>
+                  <span id="themeBadge_grocery_food" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
                 </div>
-                <h4 class="font-heading font-bold text-sm text-white group-hover:text-emerald-300 transition">Grocery & Daily Food</h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
-                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=grocery_food</span>
-                <span id="themeBadge_grocery_food" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('grocery_food')"
+                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Preview</span>
+              </button>
             </div>
 
             <!-- Theme Card 6: Beauty -->
             <div id="themeCard_beauty_personal_care" onclick="selectDashboardTheme('beauty_personal_care')"
-                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-rose-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-rose-500/10">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <span class="text-3xl">💄</span>
-                  <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('beauty_personal_care')"
-                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition active:scale-95 shadow" title="Live Preview Dekhein">
-                    <i data-lucide="eye" class="w-3 h-3 text-cyan-400"></i>
-                    <span>Preview Demo</span>
-                  </button>
+                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-rose-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-rose-500/10">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="text-3xl shrink-0">💄</span>
+                <div class="min-w-0">
+                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-rose-300 transition truncate">Beauty & Cosmetics</h4>
+                  <span id="themeBadge_beauty_personal_care" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
                 </div>
-                <h4 class="font-heading font-bold text-sm text-white group-hover:text-rose-300 transition">Beauty & Cosmetics</h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Skincare, Makeup, Serums & Salon Grade Products</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
-                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=beauty_personal_care</span>
-                <span id="themeBadge_beauty_personal_care" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('beauty_personal_care')"
+                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Preview</span>
+              </button>
             </div>
           </div>
         </div>
@@ -511,20 +475,16 @@
       <div id="cardStep2" class="transition-all relative hidden">
 
         <!-- TOP CARD HEADER -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
           <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10 shrink-0">
               <i data-lucide="globe" class="w-5 h-5"></i>
             </div>
             <div>
               <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 2: Frontend Setup</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Apne store ke liye GitHub repository aur free hosting activate karein.</p>
             </div>
           </div>
-          <span id="badgeStep2" class="px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
-            <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i>
-            <span>100% Automated</span>
-          </span>
+          <span id="badgeStep2" class="hidden"></span>
         </div>
 
         <!-- MAIN STEP 2 1-CLICK CONTAINER -->
@@ -539,13 +499,7 @@
                   <i data-lucide="zap" class="w-6 h-6 text-amber-300"></i>
                 </div>
                 <div>
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub Setup</span>
-                    <span class="text-[9px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-black uppercase tracking-wider">100% Online Automatic</span>
-                  </div>
-                  <p class="text-[11px] text-emerald-100 font-normal leading-tight mt-0.5">
-                    GitHub repository aur Free Pages Hosting apne aap ready ho jayegi.
-                  </p>
+                  <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub Setup</span>
                 </div>
               </div>
               <i data-lucide="arrow-right" class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
@@ -1450,17 +1404,17 @@
         const badge = document.getElementById('themeBadge_' + k);
         if (card) {
           if (k === key) {
-            card.className = "p-4 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex flex-col justify-between group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30";
+            card.className = "p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30";
           } else {
-            card.className = "p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-slate-700 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-slate-700/10";
+            card.className = "p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-slate-700 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-slate-700/10";
           }
         }
         if (badge) {
           if (k === key) {
-            badge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
-            badge.innerText = "✓ Selected Theme";
+            badge.className = "inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+            badge.innerText = "✓ Selected";
           } else {
-            badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700";
+            badge.className = "inline-block mt-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700";
             badge.innerText = "Select Theme";
           }
         }
