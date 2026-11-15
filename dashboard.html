@@ -705,30 +705,77 @@
           <!-- Status Notice Area -->
           <div id="sheetConnectNotice" class="hidden max-w-md mx-auto p-3.5 rounded-xl text-xs font-medium border flex items-center gap-2.5"></div>
 
-          <!-- Secondary Collapsible: Direct Sheet URL Paste Option -->
-          <div class="max-w-md mx-auto pt-2">
-            <details class="group bg-slate-950/60 border border-slate-800 rounded-xl p-3 text-xs text-slate-400 transition">
-              <summary class="cursor-pointer text-[11px] font-bold text-slate-400 hover:text-emerald-400 flex items-center justify-between select-none">
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="link-2" class="w-3.5 h-3.5 text-blue-400"></i>
-                  <span>Kahi pehle se Sheet bani hai? Yahan direct link paste karein (Optional)</span>
-                </span>
-                <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition group-open:rotate-180"></i>
-              </summary>
-              <div class="mt-3 pt-3 border-t border-slate-800/80 space-y-2 text-left">
-                <p class="text-[11px] text-slate-400">Apni Google Sheet ka link ya Web App URL yahan paste karein:</p>
-                <div class="flex flex-col sm:flex-row gap-2">
-                  <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
-                         value="https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec"
-                         placeholder="https://docs.google.com/spreadsheets/d/..."
-                         class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
-                  <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
-                          class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shrink-0 active:scale-95 transition">
-                    Connect 🔗
-                  </button>
-                </div>
+          <!-- SELF DEPLOYMENT BLOCK FOR MERCHANT'S OWN GOOGLE ACCOUNT -->
+          <div id="step3SelfDeployBlock" class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-indigo-500/40 shadow-xl space-y-3.5 text-left">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                <i data-lucide="rocket" class="w-4 h-4 text-indigo-400"></i>
+                <span>Apna Backend Web App Deploy Karein:</span>
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 font-bold border border-indigo-500/20">
+                Personal Account 📱
+              </span>
+            </div>
+
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+              Google Sheet me code pehle se shamil hai. Mobile ya PC se Apps Script kholein aur 2 clicks me deploy karein taki sabhi orders aapke personal Google Account se chalein:
+            </p>
+
+            <!-- 1-Tap Action Buttons -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <a id="step3BtnOpenSheetDesktop" href="#" target="_blank"
+                 class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition active:scale-95 text-center">
+                <i data-lucide="sheet" class="w-3.5 h-3.5"></i>
+                <span>1. Sheet Kholein ↗</span>
+              </a>
+              <a id="step3BtnOpenAppsScript" href="https://script.google.com/home" target="_blank"
+                 class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition active:scale-95 text-center">
+                <i data-lucide="code" class="w-3.5 h-3.5"></i>
+                <span>2. Apps Script Kholein ↗</span>
+              </a>
+            </div>
+
+            <!-- 3-Step Simple Mobile Guide -->
+            <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1.5 font-sans">
+              <div class="flex items-start gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">1</span>
+                <span>Sheet me <strong>Extensions ➔ Apps Script</strong> kholein (ya upar wala button dabayein)</span>
               </div>
-            </details>
+              <div class="flex items-start gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">2</span>
+                <span>Upar <strong>Deploy ➔ New deployment</strong> chunein, <strong>Who has access: Anyone</strong> select karein aur <strong>Deploy</strong> dabayein</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">3</span>
+                <span>Mila hua <strong>Web app URL</strong> (<code class="text-indigo-300 text-[10px]">.../exec</code>) copy karke niche paste karein:</span>
+              </div>
+            </div>
+
+            <!-- Input & Save Web App URL -->
+            <div class="space-y-1.5 pt-1">
+              <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i> Deploy kiya hua Web App URL / Sheet URL:
+              </label>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
+                       placeholder="https://script.google.com/macros/s/.../exec"
+                       class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none font-mono" />
+                <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
+                        class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition shrink-0 cursor-pointer">
+                  <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                  <span>Connect &amp; Step 4 ➔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Instant Central API 1-Click Fallback -->
+            <div class="pt-1 text-center">
+              <button type="button" onclick="connectInstantCentralApi()" id="btnInstantCentralApi"
+                      class="text-[11px] text-slate-400 hover:text-emerald-400 underline underline-offset-4 transition inline-flex items-center gap-1 cursor-pointer">
+                <i data-lucide="sparkles" class="w-3 h-3 text-emerald-400"></i>
+                <span>Deploy nahi karna? 1-Click me Central High-Speed API use karein</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1454,6 +1501,7 @@
       const card = document.getElementById('step3ConnectedSheetCard');
       const input = document.getElementById('step3ConnectedSheetInput');
       const link = document.getElementById('step3BtnOpenSheetLink');
+      const sheetDesktopLink = document.getElementById('step3BtnOpenSheetDesktop');
       const sheetUrlInput = document.getElementById('sheetUrlInput');
       const autoBtn = document.getElementById('btnGoogleAutoConnect');
       const autoBtnText = document.getElementById('btnGoogleAutoConnectText');
@@ -1473,7 +1521,8 @@
 
         if (input) input.value = fullSheetUrl;
         if (link) link.href = fullSheetUrl;
-        if (sheetUrlInput) sheetUrlInput.value = fullSheetUrl;
+        if (sheetDesktopLink) sheetDesktopLink.href = fullSheetUrl;
+        if (sheetUrlInput && !sheetUrlInput.value) sheetUrlInput.value = fullSheetUrl;
         if (card) card.classList.remove('hidden');
 
         if (autoBtn && autoBtnText) {
@@ -1484,6 +1533,18 @@
         }
       }
       if (window.lucide) lucide.createIcons();
+    }
+
+    function connectInstantCentralApi() {
+      const sheetId = (currentUser && currentUser.sheet_id) || localStorage.getItem('google_sheet_id');
+      if (!sheetId) {
+        showStepNotice('sheetConnectNotice', 'Pehle Upar 1-Click Google Sheet Connect Karein!', false);
+        return;
+      }
+      const centralUrl = "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec?sheet_id=" + encodeURIComponent(sheetId);
+      const input = document.getElementById('sheetUrlInput');
+      if (input) input.value = centralUrl;
+      testAndSaveSheetConnection();
     }
 
     function copyConnectedGoogleSheetLink() {
@@ -2919,15 +2980,15 @@
             if (hubLink) hubLink.href = currentUser.google_spreadsheet_url;
           }
           localStorage.setItem('store_sheet_url', url);
-          if ((currentUser.onboarding_step || 1) < 3) {
-            currentUser.onboarding_step = 3;
+          if ((currentUser.onboarding_step || 1) < 4) {
+            currentUser.onboarding_step = 4;
           }
           saveUserLocally();
           generateSyncQr();
           syncAppStepUrlDisplay(url);
           updateStepUI(currentUser.onboarding_step);
           setTimeout(() => {
-            switchMasterStep(3);
+            switchMasterStep(4);
           }, 1000);
 
           // Sync with Sheet backend
@@ -2945,11 +3006,14 @@
           localStorage.setItem('google_spreadsheet_url', currentUser.google_spreadsheet_url);
         }
         localStorage.setItem('store_sheet_url', url);
-        if ((currentUser.onboarding_step || 1) < 3) currentUser.onboarding_step = 3;
+        if ((currentUser.onboarding_step || 1) < 4) currentUser.onboarding_step = 4;
         saveUserLocally();
         generateSyncQr();
         syncAppStepUrlDisplay(url);
         updateStepUI(currentUser.onboarding_step);
+        setTimeout(() => {
+          switchMasterStep(4);
+        }, 1000);
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<i data-lucide="zap" class="w-4 h-4"></i> <span>Test & Connect Sheet 🔗</span>`;
