@@ -62,31 +62,21 @@ function doGet(e) {
           'sheet_id=' + encodeURIComponent(newId) + 
           '&sheet_url=' + encodeURIComponent(newUrl);
 
-        var redirectHtml = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Connecting SheetStore...</title>
-          <meta http-equiv="refresh" content="1;url=${returnTarget}">
-          <script src="https://cdn.tailwindcss.com"></script>
-        </head>
-        <body class="bg-slate-950 text-white flex items-center justify-center min-h-screen p-4 text-center font-sans">
-          <div class="space-y-4 max-w-sm bg-slate-900 border border-emerald-500/30 p-6 rounded-3xl shadow-2xl">
-            <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center text-3xl font-black">✓</div>
-            <h2 class="text-xl font-bold">Google Sheet Safalta-purvak Jud Gayi!</h2>
-            <p class="text-xs text-slate-400">Dashboard par wapas redirect kiya ja raha hai...</p>
-            <a href="${returnTarget}" class="w-full inline-block py-3 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs shadow-lg">Dashboard Par Wapas Jayein ➔</a>
-          </div>
-          <script>
-            setTimeout(function() {
-              window.location.href = "${returnTarget}";
-            }, 800);
-          </script>
-        </body>
-        </html>
-        `;
+        var redirectHtml = '<!DOCTYPE html>' +
+          '<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
+          '<title>Connecting SheetStore...</title>' +
+          '<meta http-equiv="refresh" content="1;url=' + returnTarget + '">' +
+          '<script src="https://cdn.tailwindcss.com"><\/script></head>' +
+          '<body class="bg-slate-950 text-white flex items-center justify-center min-h-screen p-4 text-center font-sans">' +
+          '<div class="space-y-4 max-w-sm bg-slate-900 border border-emerald-500/30 p-6 rounded-3xl shadow-2xl">' +
+          '<div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center text-3xl font-black">\u2713</div>' +
+          '<h2 class="text-xl font-bold">Google Sheet Safalta-purvak Jud Gayi!</h2>' +
+          '<p class="text-xs text-slate-400">Dashboard par wapas redirect kiya ja raha hai...</p>' +
+          '<a href="' + returnTarget + '" class="w-full inline-block py-3 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs shadow-lg">Dashboard Par Wapas Jayein \u2192</a>' +
+          '</div>' +
+          '<script>' +
+          'setTimeout(function() { window.location.href = "' + returnTarget + '"; }, 800);' +
+          '<\/script></body></html>';
 
         return HtmlService.createHtmlOutput(redirectHtml)
           .setTitle("Connecting SheetStore...")
