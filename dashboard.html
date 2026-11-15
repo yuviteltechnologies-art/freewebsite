@@ -700,12 +700,12 @@
               </a>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                <a href="https://docs.google.com/spreadsheets/d/1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc/copy" 
+                <a href="https://docs.google.com/spreadsheets/d/1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc/edit?usp=sharing" 
                    target="_blank"
                    class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-blue-400 hover:text-white border border-blue-500/30 font-semibold text-[11px] flex items-center justify-center gap-1.5 transition active:scale-95 text-center"
-                   title="Agar app khul rahi hai, toh is link par 2 sec long-press karke 'Open in new tab' chunein">
+                   title="Open template sheet directly">
                   <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
-                  <span>Direct Sheet Copy ↗</span>
+                  <span>Direct Template Sheet Kholein ↗</span>
                 </a>
 
                 <button type="button" onclick="shareSheetSetupToWhatsApp()"
@@ -2968,53 +2968,43 @@
       }
     }
 
-    const GOOGLE_PROVISIONER_URL = "https://script.google.com/macros/s/AKfycbzeZXMVNjQWdULpipKJufmQSV1A2SFw8s9UAtSw53Hy_QaBt54rw_-wvYlqZft_6jFZlg/exec";
+    const CENTRAL_STORE_API_URL = "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec";
 
-    // 1-Click Auto Provisioning with Google Account (Tareeqa B)
-    function startGoogleAutoProvisioning() {
-      const currentCleanUrl = window.location.href.split('?')[0].split('#')[0];
-      const webAppUrl = GOOGLE_PROVISIONER_URL + "?redirect_url=" + encodeURIComponent(currentCleanUrl);
-
+    // 1-Click Auto Provisioning with Google Account
+    async function startGoogleAutoProvisioning() {
       const btn = document.getElementById('btnGoogleAutoConnect');
       const btnText = document.getElementById('btnGoogleAutoConnectText');
       if (btn && btnText) {
         btn.disabled = true;
-        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Window Khul Rahi Hai...</span>`;
+        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Sheet Ban Rahi Hai...</span>`;
         if (window.lucide) lucide.createIcons();
       }
 
-      const width = 520;
-      const height = 660;
-      const left = window.screenX + Math.max(0, (window.outerWidth - width) / 2);
-      const top = window.screenY + Math.max(0, (window.outerHeight - height) / 2);
+      const storeName = (currentUser && currentUser.brand_name) || "SheetStore Pro";
+      const apiUrl = CENTRAL_STORE_API_URL + "?action=createStoreSheet&store_name=" + encodeURIComponent(storeName);
 
-      let popup = null;
       try {
-        popup = window.open(webAppUrl, "google_provisioning_popup", `width=${width},height=${height},left=${left},top=${top},status=no,menubar=no,toolbar=no,scrollbars=yes,resizable=yes`);
-      } catch (e) {
-        console.warn("Popup blocked or failed:", e);
-      }
-
-      // If popup was blocked or browser is on mobile tab navigation, redirect in current tab
-      if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-        window.location.href = webAppUrl;
-        return;
-      }
-
-      // Periodically check if popup closed without completing
-      const checkPopupTimer = setInterval(() => {
-        if (!popup || popup.closed) {
-          clearInterval(checkPopupTimer);
-          if (btn && btnText && !currentUser.sheet_id) {
-            btn.disabled = false;
-            btnText.innerText = "⚡ 1-Click Connect with Google Account";
-          }
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        if (data && data.success && data.sheet_id) {
+          handleAutoConnectedSheet(data.sheet_id, data.sheet_url);
+          return;
         }
-      }, 1200);
+      } catch (err) {
+        console.warn("Direct API provision fallback:", err);
+      }
+
+      // Safe Fallback: Direct Template Sheet with sharing parameters (Zero crash on mobile)
+      window.open("https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/edit?usp=sharing", "_blank");
+      if (btn && btnText) {
+        btn.disabled = false;
+        btnText.innerText = "⚡ 1-Click Connect with Google Account";
+        if (window.lucide) lucide.createIcons();
+      }
     }
 
     const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
-    const GOOGLE_SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/copy";
+    const GOOGLE_SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/edit?usp=sharing";
 
     // 1-Click Copy for Address Bar Paste (Bypasses Google Sheets App on Android)
     async function copySheetLinkForAddressBar() {

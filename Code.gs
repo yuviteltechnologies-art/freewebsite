@@ -37,6 +37,27 @@ function doGet(e) {
     var action = params.action ? String(params.action).trim() : "";
 
     // ----------------------------------------------------
+    // ACTION 0.1: 1-Click Auto Provision Store Sheet (Zero Friction, 100% Mobile Compatible)
+    // ----------------------------------------------------
+    if (action === "createStoreSheet" || action === "autoProvisionSheet") {
+      var templateId = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
+      var storeTitle = params.store_name || params.brand_name || "Digital Store";
+      var templateFile = DriveApp.getFileById(templateId);
+      var newSheetFile = templateFile.makeCopy(storeTitle + " - Products & Orders");
+      newSheetFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.EDIT);
+      
+      var newId = newSheetFile.getId();
+      var newUrl = newSheetFile.getUrl();
+      
+      return returnJsonResponse({
+        success: true,
+        sheet_id: newId,
+        sheet_url: newUrl,
+        message: "Google Sheet successfully created and linked!"
+      });
+    }
+
+    // ----------------------------------------------------
     // ACTION 0: Run setupAutoTabs remotely via URL
     // ----------------------------------------------------
     if (action === "setupTabs" || action === "setupAutoTabs" || action === "init") {
