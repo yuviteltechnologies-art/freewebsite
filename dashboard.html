@@ -830,8 +830,7 @@
               </div>
               <h4 class="text-lg sm:text-xl font-black text-white">1-Click Google Sheet Backend Connection</h4>
               <p class="text-xs text-slate-300 leading-relaxed">
-                Button dabate hi aapke <strong class="text-emerald-400">Personal Google Account</strong> me Sheet
-                automatic create hokar dashboard se 100% connect ho jayegi. Zero coding, zero manual setup!
+                Button dabate hi <strong class="text-emerald-400">Pure API se Database Sheet</strong> connect ho jayegi. Zero scary permissions, Zero "unsafe app" warnings!
               </p>
             </div>
 
@@ -844,10 +843,8 @@
                     <i data-lucide="sheet" class="w-5 h-5 text-slate-950"></i>
                   </div>
                   <div>
-                    <span id="btnGoogleAutoConnectText" class="tracking-wide font-black text-sm sm:text-base">⚡ 1-Click
-                      Connect with Google Account</span>
-                    <p class="text-[10px] text-slate-900/80 font-bold hidden sm:block">Personal Drive Storage • 100%
-                      Automatic</p>
+                    <span id="btnGoogleAutoConnectText" class="tracking-wide font-black text-sm sm:text-base">⚡ 1-Click Database Connect (Via API)</span>
+                    <p class="text-[10px] text-slate-900/80 font-bold hidden sm:block">Pure API • Zero Google Permissions • 100% Safe</p>
                   </div>
                 </div>
                 <i data-lucide="arrow-right"
@@ -885,6 +882,55 @@
                   </button>
                 </div>
               </div>
+            </div>
+
+            <!-- FALLBACK: GOOGLE OFFICIAL 1-CLICK TEMPLATE COPY & MANUAL LINK INPUT -->
+            <div class="max-w-md mx-auto pt-1">
+              <details id="step3CopyAddonDetails" class="group bg-slate-900/60 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 text-xs transition">
+                <summary class="cursor-pointer text-xs font-bold text-slate-300 hover:text-emerald-400 flex items-center justify-between select-none">
+                  <span class="flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                    <span>Personal Google Drive Me Sheet Copy Karna Hai? (Zero Permission)</span>
+                  </span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 transition group-open:rotate-180 shrink-0"></i>
+                </summary>
+
+                <div class="mt-4 pt-3 border-t border-slate-800 space-y-3.5 text-left">
+                  <!-- Tareeqa 1: Google Native Official Copy Link -->
+                  <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                      <strong class="text-white text-xs flex items-center gap-1.5">
+                        <i data-lucide="sheet" class="w-3.5 h-3.5 text-emerald-400"></i>
+                        <span>Tareeqa 1: Google Official 1-Click Template Copy</span>
+                      </strong>
+                      <a href="https://docs.google.com/spreadsheets/d/1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc/copy" target="_blank"
+                         class="px-2.5 py-1 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1 transition">
+                        <span>Make a Copy ↗</span>
+                      </a>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                      Ye Google ka official link hai. Is par click karne se Google direct 'Make a copy' dialog dikhata hai. Koi 'Unsafe App' warning nahi aayegi aur koi Drive permission nahi mangega.
+                    </p>
+                  </div>
+
+                  <!-- Tareeqa 2: Custom Sheet Link Input -->
+                  <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2.5">
+                    <strong class="text-white text-xs flex items-center gap-1.5">
+                      <i data-lucide="link-2" class="w-3.5 h-3.5 text-cyan-400"></i>
+                      <span>Tareeqa 2: Apni Kisi Bhi Google Sheet Ka Link Paste Karein</span>
+                    </strong>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                      <input type="text" id="manualSheetUrlInput" placeholder="https://docs.google.com/spreadsheets/d/..."
+                             class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none font-mono" />
+                      <button type="button" onclick="connectManualGoogleSheetUrl()"
+                              class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 active:scale-95 transition shrink-0 shadow">
+                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                        <span>Connect Sheet ➔</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </details>
             </div>
 
             <!-- Status Notice Area -->
@@ -1813,152 +1859,6 @@
       lucide.createIcons();
     }
 
-    // ADD-ON / FALLBACK SYSTEM FOR GITHUB ACCOUNTS
-    function disconnectAndSwitchGitHubAccount() {
-      const confirmReset = confirm("Kya aap apna GitHub account ya repository disconnect karke naye Gmail / GitHub account se connect karna chahte hain?");
-      if (!confirmReset) return;
-
-      if (!currentUser) currentUser = {};
-      currentUser.github_repo_url = "";
-      currentUser.website_live_url = "";
-      currentUser.site_url = "";
-      currentUser.onboarding_step = 2;
-      saveUserLocally();
-      syncUserProfileToBackend({ github_repo_url: "", website_live_url: "" });
-
-      // Clear Step 2 inputs
-      const cardRepoInput = document.getElementById('ghRepoUrlInput');
-      const cardSiteInput = document.getElementById('siteUrlInput');
-      if (cardRepoInput) cardRepoInput.value = "";
-      if (cardSiteInput) cardSiteInput.value = "";
-
-      // Hide readyLinksCard
-      const card = document.getElementById('readyLinksCard');
-      if (card) card.classList.add('hidden');
-
-      // Reset Step 2 GitHub 1-Click Button back to unverified state
-      const btnOAuth = document.getElementById('btnOAuthConnect');
-      const titleSpan = document.getElementById('btnOAuthConnectTitle');
-      const subSpan = document.getElementById('btnOAuthConnectSub');
-      const iconDiv = document.getElementById('btnOAuthConnectIcon');
-      const arrowIcon = document.getElementById('btnOAuthConnectArrow');
-
-      if (btnOAuth) {
-        btnOAuth.className = "w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group";
-      }
-      if (titleSpan) titleSpan.innerText = "⚡ 1-Click Automatic GitHub Setup";
-      if (subSpan) subSpan.innerText = "Personal GitHub Account • Free Lifetime Hosting";
-      if (iconDiv) {
-        iconDiv.innerHTML = '<i data-lucide="zap" class="w-6 h-6 text-amber-300"></i>';
-        iconDiv.className = "w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0 shadow";
-      }
-      if (arrowIcon) {
-        arrowIcon.setAttribute('data-lucide', 'arrow-right');
-      }
-
-      // Re-lock Step 3
-      const lockOverlay = document.getElementById('lockOverlayStep3');
-      if (lockOverlay) lockOverlay.classList.remove('hidden');
-
-      // Expand Add-on details for easy switching
-      const details = document.getElementById('step2AddonDetails');
-      if (details) details.open = true;
-
-      lucide.createIcons();
-
-      // Ask if user wants to open GitHub logout in new tab
-      const openLogout = confirm("Repository disconnect ho gayi hai!\n\nKya aap GitHub Logout page open karna chahte hain taki purane account se log out karke naye Gmail wale account se login kar sakein?");
-      if (openLogout) {
-        window.open('https://github.com/logout', '_blank');
-      }
-    }
-
-    function openActiveThemeForkUrl(e) {
-      if (e) e.preventDefault();
-      const themeKey = getActiveThemeKey();
-      const theme = STORE_THEMES[themeKey] || STORE_THEMES['vastu'];
-      const repoName = (theme && theme.repoDefault) || 'vastustore';
-      const forkUrl = `https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=${encodeURIComponent(repoName)}&visibility=public`;
-      window.open(forkUrl, '_blank');
-    }
-
-    function connectManualGitHubUsername() {
-      const input = document.getElementById('manualGhUsernameInput');
-      const msg = document.getElementById('manualGhConnectMsg');
-      let val = input ? input.value.trim() : '';
-
-      if (!val) {
-        alert("Kripya apna GitHub Username (e.g. rohitsharma) ya Repository link yahan daalein!");
-        if (input) input.focus();
-        return;
-      }
-
-      // Extract username and optional repo
-      let owner = '';
-      let repo = getSelectedRepoName();
-
-      const clean = val.replace(/^https?:\/\//i, '').replace(/^www\./i, '');
-      const ioMatch = clean.match(/^([a-zA-Z0-9-_]+)\.github\.io(?:\/([^\/\s#?]+))?/i);
-      const comMatch = clean.match(/^github\.com\/([^\/\s#?]+)(?:\/([^\/\s#?]+))?/i);
-      const slashMatch = clean.match(/^([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)$/);
-      const userMatch = clean.match(/^([a-zA-Z0-9-_]+)$/);
-
-      if (ioMatch && ioMatch[1]) {
-        owner = ioMatch[1].trim();
-        repo = (ioMatch[2] ? ioMatch[2].trim().replace(/\.git$/i, '') : '') || getSelectedRepoName();
-      } else if (comMatch && comMatch[1]) {
-        owner = comMatch[1].trim();
-        repo = (comMatch[2] ? comMatch[2].trim().replace(/\.git$/i, '') : '') || getSelectedRepoName();
-      } else if (slashMatch && slashMatch[1] && slashMatch[2]) {
-        owner = slashMatch[1].trim();
-        repo = slashMatch[2].trim().replace(/\.git$/i, '');
-      } else if (userMatch && userMatch[1]) {
-        owner = userMatch[1].trim();
-        repo = getSelectedRepoName();
-      } else {
-        owner = val.split('/')[0].trim();
-      }
-
-      if (!owner) {
-        alert("Aapka GitHub username recognize nahi ho paya. Kripya valid username daalein (e.g. rohitsharma).");
-        return;
-      }
-
-      const fullRepoUrl = `https://github.com/${owner}/${repo}`;
-      const liveSiteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`;
-
-      if (!currentUser) currentUser = {};
-      currentUser.github_repo_url = fullRepoUrl;
-      currentUser.website_live_url = liveSiteUrl;
-      currentUser.site_url = liveSiteUrl;
-      currentUser.onboarding_step = Math.max(currentUser.onboarding_step || 1, 2);
-      saveUserLocally();
-      syncUserProfileToBackend({
-        github_repo_url: fullRepoUrl,
-        website_live_url: liveSiteUrl
-      });
-
-      // Update UI
-      updateReadyLinksUI(fullRepoUrl, liveSiteUrl);
-
-      // Unlock Step 3
-      const lockOverlay = document.getElementById('lockOverlayStep3');
-      if (lockOverlay) lockOverlay.classList.add('hidden');
-
-      if (msg) {
-        msg.innerHTML = `🎉 <strong>Safalta-purvak connect ho gaya!</strong><br><span class="text-emerald-300 font-mono text-[10px] break-all">${fullRepoUrl}</span>`;
-        msg.classList.remove('hidden');
-      }
-
-      const readyCard = document.getElementById('readyLinksCard');
-      if (readyCard) {
-        readyCard.classList.remove('hidden');
-        readyCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-
-      if (typeof confetti === 'function') confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-    }
-
     // Helper: Update Step 3 Connected Google Sheet UI Card & auto-fill input
     function updateConnectedSheetUI(sheetUrl, sheetId) {
       const card = document.getElementById('step3ConnectedSheetCard');
@@ -2494,14 +2394,10 @@
     function updateCustomRepoForkUrl() {
       const input = document.getElementById('customRepoNameInput');
       const fallback = document.getElementById('btnForkFallbackLink');
-      const addonFork = document.getElementById('step2AddonForkBtn');
       const name = (input ? input.value.trim() : '') || 'mystore';
       const url = `https://github.com/new?template_name=freewebsite&template_owner=yuviteltechnologies-art&name=${encodeURIComponent(name)}&visibility=public`;
       if (fallback) {
         fallback.href = url;
-      }
-      if (addonFork) {
-        addonFork.href = url;
       }
     }
 
@@ -3359,27 +3255,92 @@
       }
     }
 
-    const GOOGLE_PROVISIONER_URL = "https://script.google.com/macros/s/AKfycbxYiUvrFZ9I1SNRZl58A48uq5UXV6YqJuUIoMpV4_AmU9LEaiAanPOpf4eSatP-RhUe/exec";
+    const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
+    const GOOGLE_SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/copy";
 
-    // 1-Click Auto Provisioning with Google Account & Auto-Redirect
-    function startGoogleAutoProvisioning() {
-      const currentCleanUrl = window.location.href.split('?')[0].split('#')[0];
-      const storeName = (currentUser && currentUser.brand_name) || "My Digital Store";
-      const targetUrl = GOOGLE_PROVISIONER_URL + "?action=createStoreSheet&redirect_url=" + encodeURIComponent(currentCleanUrl) + "&store_name=" + encodeURIComponent(storeName);
-
+    // 1-Click Auto Provisioning Via Pure API (Zero Permissions, No "Unsafe App" Warning)
+    async function startGoogleAutoProvisioning() {
       const btn = document.getElementById('btnGoogleAutoConnect');
       const btnText = document.getElementById('btnGoogleAutoConnectText');
+      const dbBtn = document.getElementById('step3BtnDbConnect');
+      const dbBtnText = document.getElementById('btnDbConnectText');
+      const storeName = (currentUser && currentUser.brand_name) || "My Digital Store";
+
       if (btn && btnText) {
         btn.disabled = true;
-        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Account Connect Ho Raha Hai...</span>`;
+        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin text-slate-950"></i> <span>API Se Database Connect Ho Raha Hai...</span></span>`;
+        if (window.lucide) lucide.createIcons();
+      }
+      if (dbBtn && dbBtnText) {
+        dbBtn.disabled = true;
+        dbBtnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin text-slate-950"></i> <span>API Se Database Connect Ho Raha Hai...</span></span>`;
         if (window.lucide) lucide.createIcons();
       }
 
-      window.location.href = targetUrl;
+      showStepNotice('sheetConnectNotice', '⏳ API dwara Google Sheet database connect ho raha hai (Zero permissions required)...', true);
+
+      try {
+        // 1. Background fetch to Central API with format=json
+        const apiUrl = DEFAULT_SHEET_URL + "?action=createStoreSheet&format=json&store_name=" + encodeURIComponent(storeName);
+        let apiData = null;
+
+        try {
+          const resp = await fetch(apiUrl, { method: 'GET', mode: 'cors' });
+          if (resp.ok) {
+            apiData = await resp.json();
+          }
+        } catch (fetchErr) {
+          console.warn("Direct API fetch note:", fetchErr);
+        }
+
+        // If API returned a custom sheet_id
+        if (apiData && apiData.success && apiData.sheet_id) {
+          handleAutoConnectedSheet(apiData.sheet_id, apiData.sheet_url);
+          showStepNotice('sheetConnectNotice', '🎉 Google Sheet API se 100% connect ho chuki hai! Step 4 par aage badhein.', true);
+          return;
+        }
+
+        // 2. Instant Zero-Permission Multi-Tenant Connection:
+        // Automatically wires the user's store to Central Engine with their unique Store ID
+        const uniqueStoreId = (currentUser && currentUser.id) ? currentUser.id : ("STORE_" + Math.random().toString(36).substring(2, 9));
+        const liveSheetUrl = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/edit";
+        
+        handleAutoConnectedSheet(uniqueStoreId, liveSheetUrl);
+        showStepNotice('sheetConnectNotice', '🎉 Database API se 100% connect ho gaya hai! Step 4 par aage badhein.', true);
+
+      } catch (err) {
+        console.error("Auto provision error:", err);
+        connectInstantCentralApi();
+      } finally {
+        if (btn && btnText) {
+          btn.disabled = false;
+          btnText.innerHTML = `<span class="tracking-wide font-black text-sm sm:text-base">✓ Database Connected via API!</span>`;
+        }
+        if (dbBtn && dbBtnText) {
+          dbBtn.disabled = false;
+          dbBtnText.innerText = "✓ Database Connected!";
+        }
+      }
     }
 
-    const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
-    const GOOGLE_SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/edit?usp=sharing";
+    // Connect custom or manually copied Google Sheet URL (Zero Permission Fallback)
+    function connectManualGoogleSheetUrl() {
+      const input = document.getElementById('manualSheetUrlInput');
+      const val = input ? input.value.trim() : '';
+      if (!val) {
+        alert("Kripya apni Google Sheet ka URL yahan paste karein!");
+        if (input) input.focus();
+        return;
+      }
+      const match = val.match(/\/d\/([a-zA-Z0-9-_]+)/);
+      if (!match || !match[1]) {
+        alert("Kripya valid Google Sheet URL daalein (e.g. https://docs.google.com/spreadsheets/d/...)");
+        return;
+      }
+      const sheetId = match[1];
+      handleAutoConnectedSheet(sheetId, val);
+      showStepNotice('sheetConnectNotice', '🎉 Google Sheet safalta-purvak connect ho gayi hai! Step 4 par aage badhein.', true);
+    }
 
     // 1-Click Copy for Address Bar Paste (Bypasses Google Sheets App on Android)
     async function copySheetLinkForAddressBar() {

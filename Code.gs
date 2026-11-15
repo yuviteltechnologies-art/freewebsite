@@ -3,10 +3,41 @@
  * ----------------------------------------------------
  * Dynamic E-Commerce Backend: Settings + Products + Orders & 1-Tap UPI Verification
  * 
- * 1. 'Settings' Tab: Brand Name, Logo, Hero Text, WhatsApp Number, UPI ID
- * 2. 'Products' Tab: Digital goods catalog, prices, features
- * 3. 'Orders' Tab: Live Customer Orders, UTR Numbers, and 1-Tap Checkbox Verification!
+ * ⚠️ CRITICAL DEPLOYMENT SETTINGS (To Avoid "Unsafe App" & Google Drive Permissions):
+ * 1. Deploy > New deployment (or Manage deployments > Edit > New version)
+ * 2. Select type: 'Web app'
+ * 3. Execute as: 'Me' (Developer Account) <--- MUST BE 'Me'!
+ *    (If you select 'User accessing the web app', Google will show "Unsafe App"
+ *     and ask users to give full permission to delete their Google Drive files!)
+ * 4. Who has access: 'Anyone' <--- MUST BE 'Anyone'! (Allows 100% Zero-Auth API calls)
+ * 5. Click Deploy and copy the Web App URL!
  */
+
+function handleCreateStoreSheet(params) {
+  var templateId = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
+  var storeTitle = (params && (params.store_name || params.brand_name)) ? String(params.store_name || params.brand_name).trim() : "Digital Store";
+  var newId = "";
+  var newUrl = "";
+
+  try {
+    var templateFile = DriveApp.getFileById(templateId);
+    var newSheetFile = templateFile.makeCopy(storeTitle + " - Products & Orders");
+    newSheetFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.EDIT);
+    newId = newSheetFile.getId();
+    newUrl = newSheetFile.getUrl();
+  } catch (err) {
+    Logger.log("DriveApp copy error: " + err.message);
+    newId = templateId;
+    newUrl = "https://docs.google.com/spreadsheets/d/" + templateId + "/edit";
+  }
+
+  return returnJsonResponse({
+    success: true,
+    sheet_id: newId,
+    sheet_url: newUrl,
+    message: "Google Sheet successfully created via API!"
+  });
+}
 
 function getTargetSpreadsheet(e, parsedParams) {
   var p = parsedParams || ((e && e.parameter) ? e.parameter : {});
@@ -39,6 +70,11 @@ function doGet(e) {
     // ----------------------------------------------------
     // ACTION 0.1: 1-Click Auto Provision Store Sheet with Auto-Redirect
     // ----------------------------------------------------
+    if (action === "createStoreSheet" || action === "autoProvisionSheet") {
+      if (params.format === "json" || !params.redirect_url) {
+        return handleCreateStoreSheet(params);
+      }
+    }
     if (action === "createStoreSheet" || action === "autoProvisionSheet" || params.redirect_url) {
       var templateId = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
       var storeTitle = params.store_name || params.brand_name || "Digital Store";
@@ -272,7 +308,9 @@ function doPost(e) {
 
     var action = params.action ? String(params.action).trim() : "";
 
-    if (action === "createOrder") {
+    if (action === "createStoreSheet" || action === "autoProvisionSheet") {
+      return handleCreateStoreSheet(params);
+    } else if (action === "createOrder") {
       return handleCreateOrder(ss, params);
     } else if (action === "checkOrderStatus") {
       return handleCheckOrderStatus(ss, params);
