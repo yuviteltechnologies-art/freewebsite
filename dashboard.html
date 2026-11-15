@@ -2970,48 +2970,21 @@
 
     const GOOGLE_PROVISIONER_URL = "https://script.google.com/macros/s/AKfycbxa7h_zQzQtER5VmF8_o_uBVkaBX3jPJgxVJTA3jE9-y2j39b3L56qwGqwz9BgZ0GjZ/exec";
 
-    // 1-Click Auto Provisioning with Google Account (In-Page Background Flow)
-    async function startGoogleAutoProvisioning() {
+    // 1-Click Auto Provisioning with Google Account & Auto-Redirect
+    function startGoogleAutoProvisioning() {
+      const currentCleanUrl = window.location.href.split('?')[0].split('#')[0];
+      const storeName = (currentUser && currentUser.brand_name) || "My Digital Store";
+      const targetUrl = GOOGLE_PROVISIONER_URL + "?action=createStoreSheet&redirect_url=" + encodeURIComponent(currentCleanUrl) + "&store_name=" + encodeURIComponent(storeName);
+
       const btn = document.getElementById('btnGoogleAutoConnect');
       const btnText = document.getElementById('btnGoogleAutoConnectText');
       if (btn && btnText) {
         btn.disabled = true;
-        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Sheet Connect Ho Rahi Hai...</span>`;
+        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Account Connect Ho Raha Hai...</span>`;
         if (window.lucide) lucide.createIcons();
       }
 
-      const storeName = (currentUser && currentUser.brand_name) || "My Digital Store";
-      const apiUrl = GOOGLE_PROVISIONER_URL + "?action=createStoreSheet&store_name=" + encodeURIComponent(storeName);
-
-      try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        
-        let sheetId = data.sheet_id;
-        let sheetUrl = data.sheet_url;
-        if (!sheetId && data.spreadsheet_url) {
-          const match = data.spreadsheet_url.match(/\/d\/([a-zA-Z0-9-_]+)/);
-          sheetId = match ? match[1] : null;
-          sheetUrl = data.spreadsheet_url;
-        }
-
-        if (sheetId) {
-          handleAutoConnectedSheet(sheetId, sheetUrl);
-          return;
-        } else {
-          throw new Error("No sheet ID found in response");
-        }
-      } catch (err) {
-        console.warn("Background auto provision fallback:", err);
-        // Fallback: If background fetch fails, open Web App safely
-        const currentCleanUrl = window.location.href.split('?')[0].split('#')[0];
-        window.open(GOOGLE_PROVISIONER_URL + "?authuser=0&redirect_url=" + encodeURIComponent(currentCleanUrl), "_blank");
-        if (btn && btnText) {
-          btn.disabled = false;
-          btnText.innerText = "⚡ 1-Click Connect with Google Account";
-          if (window.lucide) lucide.createIcons();
-        }
-      }
+      window.location.href = targetUrl;
     }
 
     const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";

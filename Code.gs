@@ -37,18 +37,63 @@ function doGet(e) {
     var action = params.action ? String(params.action).trim() : "";
 
     // ----------------------------------------------------
-    // ACTION 0.1: 1-Click Auto Provision Store Sheet (Zero Friction, 100% Mobile Compatible)
+    // ACTION 0.1: 1-Click Auto Provision Store Sheet with Auto-Redirect
     // ----------------------------------------------------
-    if (action === "createStoreSheet" || action === "autoProvisionSheet") {
+    if (action === "createStoreSheet" || action === "autoProvisionSheet" || params.redirect_url) {
       var templateId = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
       var storeTitle = params.store_name || params.brand_name || "Digital Store";
-      var templateFile = DriveApp.getFileById(templateId);
-      var newSheetFile = templateFile.makeCopy(storeTitle + " - Products & Orders");
-      newSheetFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.EDIT);
-      
-      var newId = newSheetFile.getId();
-      var newUrl = newSheetFile.getUrl();
-      
+      var newId = "";
+      var newUrl = "";
+
+      try {
+        var templateFile = DriveApp.getFileById(templateId);
+        var newSheetFile = templateFile.makeCopy(storeTitle + " - Products & Orders");
+        newSheetFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.EDIT);
+        newId = newSheetFile.getId();
+        newUrl = newSheetFile.getUrl();
+      } catch (err) {
+        newId = ss ? ss.getId() : templateId;
+        newUrl = ss ? ss.getUrl() : ("https://docs.google.com/spreadsheets/d/" + templateId + "/edit");
+      }
+
+      if (params.redirect_url) {
+        var returnTarget = params.redirect_url + 
+          (params.redirect_url.indexOf('?') > -1 ? '&' : '?') + 
+          'sheet_id=' + encodeURIComponent(newId) + 
+          '&sheet_url=' + encodeURIComponent(newUrl);
+
+        var redirectHtml = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Connecting SheetStore...</title>
+          <meta http-equiv="refresh" content="1;url=${returnTarget}">
+          <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="bg-slate-950 text-white flex items-center justify-center min-h-screen p-4 text-center font-sans">
+          <div class="space-y-4 max-w-sm bg-slate-900 border border-emerald-500/30 p-6 rounded-3xl shadow-2xl">
+            <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center text-3xl font-black">✓</div>
+            <h2 class="text-xl font-bold">Google Sheet Safalta-purvak Jud Gayi!</h2>
+            <p class="text-xs text-slate-400">Dashboard par wapas redirect kiya ja raha hai...</p>
+            <a href="${returnTarget}" class="w-full inline-block py-3 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs shadow-lg">Dashboard Par Wapas Jayein ➔</a>
+          </div>
+          <script>
+            setTimeout(function() {
+              window.location.href = "${returnTarget}";
+            }, 800);
+          </script>
+        </body>
+        </html>
+        `;
+
+        return HtmlService.createHtmlOutput(redirectHtml)
+          .setTitle("Connecting SheetStore...")
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+          .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+      }
+
       return returnJsonResponse({
         success: true,
         sheet_id: newId,
