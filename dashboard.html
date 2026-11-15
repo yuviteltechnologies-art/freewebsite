@@ -271,43 +271,54 @@
         </div>
       </div>
 
-      <!-- TOP HORIZONTAL STEPPER (Matching Mockup UX) -->
+      <!-- TOP HORIZONTAL STEPPER (4-Step Systematic Flow) -->
       <div class="mt-8 pt-6 border-t border-slate-800/80">
-        <div class="relative flex items-center justify-between max-w-2xl mx-auto px-4">
+        <div class="relative flex items-center justify-between max-w-3xl mx-auto px-4">
           <!-- Connecting Line Behind Steps -->
-          <div class="absolute left-10 right-10 top-5 h-1 bg-slate-800 rounded-full z-0">
-            <div id="horizontalProgressLine" class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-700" style="width: 15%;"></div>
+          <div class="absolute left-8 right-8 top-5 h-1 bg-slate-800 rounded-full z-0">
+            <div id="horizontalProgressLine" class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full transition-all duration-700" style="width: 12%;"></div>
           </div>
 
-          <!-- Step 1 Circle & Label -->
+          <!-- Step 1 Circle & Label (Theme) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(1)">
             <div id="topStepCircle1" class="w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105">
               <span>1</span>
             </div>
             <div class="text-center mt-2">
               <p id="topStepTitle1" class="text-xs font-bold text-white">Step 1</p>
-              <p class="text-[10px] text-blue-400 font-medium hidden sm:block">Website Setup</p>
+              <p class="text-[10px] text-blue-400 font-medium hidden sm:block">Store Theme</p>
             </div>
           </div>
 
-          <!-- Step 2 Circle & Label -->
+          <!-- Step 2 Circle & Label (Website Setup) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(2)">
             <div id="topStepCircle2" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>2</span>
             </div>
             <div class="text-center mt-2">
               <p id="topStepTitle2" class="text-xs font-bold text-slate-400">Step 2</p>
-              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Google Sheet</p>
+              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Website Setup</p>
             </div>
           </div>
 
-          <!-- Step 3 Circle & Label -->
+          <!-- Step 3 Circle & Label (Google Sheet) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(3)">
             <div id="topStepCircle3" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>3</span>
             </div>
             <div class="text-center mt-2">
               <p id="topStepTitle3" class="text-xs font-bold text-slate-400">Step 3</p>
+              <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Google Sheet</p>
+            </div>
+          </div>
+
+          <!-- Step 4 Circle & Label (Android App) -->
+          <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(4)">
+            <div id="topStepCircle4" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
+              <span>4</span>
+            </div>
+            <div class="text-center mt-2">
+              <p id="topStepTitle4" class="text-xs font-bold text-slate-400">Step 4</p>
               <p class="text-[10px] text-slate-500 font-medium hidden sm:block">Android App</p>
             </div>
           </div>
@@ -315,10 +326,11 @@
 
         <!-- Linear Progress Bar & Labels (Hidden fallback for JS compatibility) -->
         <div class="hidden">
-          <div id="progressBarFill" style="width: 33%;"></div>
-          <span id="stepLabel1">1. GitHub Code Copy</span>
-          <span id="stepLabel2">2. Google Sheet Connect</span>
-          <span id="stepLabel3">3. Android Admin App</span>
+          <div id="progressBarFill" style="width: 25%;"></div>
+          <span id="stepLabel1">1. Store Theme Selection</span>
+          <span id="stepLabel2">2. Website Setup (1-Click)</span>
+          <span id="stepLabel3">3. Google Sheet Connect</span>
+          <span id="stepLabel4">4. Android Admin App</span>
         </div>
       </div>
 
@@ -328,27 +340,27 @@
         <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
         <div id="cardStep1" class="transition-all relative">
         
-        <!-- TOP CARD HEADER -->
+        <!-- STEP 1 HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
           <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10">
-              <i data-lucide="globe" class="w-5 h-5"></i>
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold shadow-md shadow-indigo-500/10">
+              <i data-lucide="palette" class="w-5 h-5"></i>
             </div>
             <div>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Website Setup (1-Click Automation)</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Apne store ke liye lifetime free hosting aur GitHub repository activate karein.</p>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Storefront Theme Chunein (Select Theme)</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Apne business ya shop ke anuroop flagship theme chunein — yehi aapke live store par load hogi.</p>
             </div>
           </div>
-          <span id="badgeStep1" class="px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
-            <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i>
-            <span>100% Automated</span>
+          <span id="badgeStep1" class="px-3.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>Theme Selection</span>
           </span>
         </div>
 
-        <!-- ACTIVE STOREFRONT THEME BANNER (SET AFTER PAYMENT) -->
-        <div id="activeThemeBanner" class="mb-5 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
-          <div class="flex items-center gap-3">
-            <div id="activeThemeIconBox" class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-2xl shadow-inner shrink-0">
+        <!-- ACTIVE STOREFRONT THEME SHOWCASE BANNER -->
+        <div id="activeThemeBanner" class="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border-2 border-indigo-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+          <div class="flex items-center gap-3.5">
+            <div id="activeThemeIconBox" class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-3xl shadow-inner shrink-0">
               🕉️
             </div>
             <div>
@@ -356,25 +368,214 @@
                 <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Selected Frontend Theme</span>
                 <span class="text-[10px] text-slate-400">Default for Your Customers</span>
               </div>
-              <h4 id="activeThemeTitle" class="font-heading font-bold text-sm sm:text-base text-white mt-0.5">वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)</h4>
-              <p id="activeThemeSubtitle" class="text-[11px] text-slate-300">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
+              <h4 id="activeThemeTitle" class="font-heading font-bold text-base sm:text-lg text-white mt-0.5">वास्तु ब्रह्मांड (Vastu Shastra & 16 Zones)</h4>
+              <p id="activeThemeSubtitle" class="text-xs text-slate-300">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
             </div>
           </div>
           <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
             <a id="activeThemeDemoBtn" href="vastu-demo.html" target="_blank"
-               class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow">
+               class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-cyan-200 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow">
               <span>Preview Demo</span>
               <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             </a>
-            <button type="button" onclick="openThemeSelectorModal()"
-                    class="px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/40 text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow">
-              <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-400"></i>
-              <span>Change Theme (थीम बदलें)</span>
-            </button>
           </div>
         </div>
 
-                <!-- MAIN STEP 1 1-CLICK CONTAINER -->
+        <!-- 6 FLAGSHIP THEMES INTERACTIVE SELECTION GRID -->
+        <div class="space-y-3 mb-6">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-slate-200 flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-indigo-400"></i>
+              <span>Select Theme for Your Online Store:</span>
+            </label>
+            <span class="text-[11px] text-slate-400">Niche kisi bhi theme par click karein</span>
+          </div>
+
+          <div id="themeCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <!-- Theme Card 1: Vastu -->
+            <div id="themeCard_vastu" onclick="selectDashboardTheme('vastu')"
+                 class="p-4 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex flex-col justify-between group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="text-3xl">🕉️</span>
+                  <a href="vastu-demo.html" target="_blank" onclick="event.stopPropagation()"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                    <span>Preview Demo</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+                <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-300 transition">वास्तु ब्रह्मांड</h4>
+                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप</p>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] font-mono text-slate-500">vastu-demo.html</span>
+                <span id="themeBadge_vastu" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">✓ Selected Theme</span>
+              </div>
+            </div>
+
+            <!-- Theme Card 2: Saree -->
+            <div id="themeCard_saree" onclick="selectDashboardTheme('saree')"
+                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-pink-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-pink-500/10">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="text-3xl">🥻</span>
+                  <a href="saree-demo.html" target="_blank" onclick="event.stopPropagation()"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                    <span>Preview Demo</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+                <h4 class="font-heading font-bold text-sm text-white group-hover:text-pink-300 transition">नूलम साड़ी (NOOLAM)</h4>
+                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक ज़ूम व डायरेक्ट व्हाट्सऐप ऑर्डरिंग</p>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] font-mono text-slate-500">saree-demo.html</span>
+                <span id="themeBadge_saree" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
+              </div>
+            </div>
+
+            <!-- Theme Card 3: Electronics -->
+            <div id="themeCard_electronics" onclick="selectDashboardTheme('electronics')"
+                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-blue-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-blue-500/10">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="text-3xl">⚡</span>
+                  <a href="demo.html?theme=electronics" target="_blank" onclick="event.stopPropagation()"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                    <span>Preview Demo</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+                <h4 class="font-heading font-bold text-sm text-white group-hover:text-blue-300 transition">Electronics Pro</h4>
+                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Mobiles, Smartwatches, Audio, Specs Comparer & Tech Catalog</p>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=electronics</span>
+                <span id="themeBadge_electronics" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
+              </div>
+            </div>
+
+            <!-- Theme Card 4: Fashion -->
+            <div id="themeCard_fashion" onclick="selectDashboardTheme('fashion')"
+                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-purple-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-purple-500/10">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="text-3xl">👗</span>
+                  <a href="demo.html?theme=fashion" target="_blank" onclick="event.stopPropagation()"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                    <span>Preview Demo</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+                <h4 class="font-heading font-bold text-sm text-white group-hover:text-purple-300 transition">Fashion & Apparel</h4>
+                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Clothing, Dresses, Streetwear & Luxury Style Catalog</p>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=fashion</span>
+                <span id="themeBadge_fashion" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
+              </div>
+            </div>
+
+            <!-- Theme Card 5: Grocery -->
+            <div id="themeCard_grocery_food" onclick="selectDashboardTheme('grocery_food')"
+                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-emerald-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-emerald-500/10">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="text-3xl">🛒</span>
+                  <a href="demo.html?theme=grocery_food" target="_blank" onclick="event.stopPropagation()"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                    <span>Preview Demo</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+                <h4 class="font-heading font-bold text-sm text-white group-hover:text-emerald-300 transition">Grocery & Daily Food</h4>
+                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart</p>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=grocery_food</span>
+                <span id="themeBadge_grocery_food" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
+              </div>
+            </div>
+
+            <!-- Theme Card 6: Beauty -->
+            <div id="themeCard_beauty_personal_care" onclick="selectDashboardTheme('beauty_personal_care')"
+                 class="p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-rose-400/80 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-rose-500/10">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="text-3xl">💄</span>
+                  <a href="demo.html?theme=beauty_personal_care" target="_blank" onclick="event.stopPropagation()"
+                     class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1 transition" title="Live Preview Dekhein">
+                    <span>Preview Demo</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+                <h4 class="font-heading font-bold text-sm text-white group-hover:text-rose-300 transition">Beauty & Cosmetics</h4>
+                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Skincare, Makeup, Serums & Salon Grade Products</p>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] font-mono text-slate-500">demo.html?theme=beauty_personal_care</span>
+                <span id="themeBadge_beauty_personal_care" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1 PROCEED BUTTON -->
+        <div class="pt-4 border-t border-slate-800/80">
+          <button type="button" onclick="confirmThemeAndGoToStep2()"
+                  class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-500/25 transition transform active:scale-95">
+            <span>Theme Confirm Karein ➔ Agla Step: Website Setup (Step 2)</span>
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- STEP 2: WEBSITE SETUP (1-CLICK AUTOMATION) -->
+      <div id="cardStep2" class="transition-all relative hidden">
+        
+        <!-- Top Back Navigation -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
+          <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Pichhla: Step 1 (Theme Badlein)</span>
+          </button>
+          <span class="text-[11px] text-slate-400 font-medium">Master Step 2 of 4</span>
+        </div>
+
+        <!-- TOP CARD HEADER -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 mb-5">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10">
+              <i data-lucide="globe" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 2: Website Setup (1-Click Automation)</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Apne store ke liye lifetime free hosting aur GitHub repository activate karein.</p>
+            </div>
+          </div>
+          <span id="badgeStep2" class="px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>100% Automated</span>
+          </span>
+        </div>
+
+        <!-- SELECTED THEME REMINDER PILL -->
+        <div class="mb-5 p-3 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <span id="step2ThemePillIcon" class="text-xl">🕉️</span>
+            <div>
+              <div class="text-[10px] text-slate-400">Selected Store Theme:</div>
+              <div id="step2ThemePillTitle" class="text-xs sm:text-sm font-bold text-white">वास्तु ब्रह्मांड (vastu)</div>
+            </div>
+          </div>
+          <button type="button" onclick="switchMasterStep(1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 text-xs font-semibold border border-slate-700 transition active:scale-95 flex items-center gap-1">
+            <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+            <span>Badlein</span>
+          </button>
+        </div>
+
+        <!-- MAIN STEP 2 1-CLICK CONTAINER -->
         <div class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-5">
           
           <!-- STORE REPOSITORY NAME INPUT BOX -->
@@ -448,7 +649,7 @@
                 </li>
                 <li class="flex items-center gap-1.5 text-slate-200">
                   <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
-                  <span><strong class="text-emerald-400">'main' branch</strong> par 100% Free Lifetime GitHub Pages hosting automatically enable kare.</span>
+                  <span>Aapke repository me <strong class="text-emerald-400">'main' branch</strong> par 100% Free Lifetime GitHub Pages hosting automatically enable kare.</span>
                 </li>
               </ul>
             </div>
@@ -535,11 +736,11 @@
               </div>
             </div>
 
-            <!-- PROCEED TO STEP 2 BUTTON -->
+            <!-- PROCEED TO STEP 3 BUTTON -->
             <div class="pt-2">
-              <button type="button" onclick="switchMasterStep(2)"
+              <button type="button" onclick="switchMasterStep(3)"
                       class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
-                <span>Agla Step: Google Sheet Connect Karein (Step 2)</span>
+                <span>Agla Step: Google Sheet Connect Karein (Step 3)</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </button>
             </div>
@@ -572,45 +773,45 @@
       </div>
 
       <!-- STEP 2: GOOGLE SHEET CONNECT & TEST -->
-      <div id="cardStep2" class="transition-all relative hidden">
+      <div id="cardStep3" class="transition-all relative hidden">
         <!-- Top Back Navigation -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(1)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+          <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-blue-400 text-xs font-bold transition active:scale-95 border border-slate-700">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 1 (Website Setup)</span>
+            <span>Pichhla: Step 2 (Website Setup)</span>
           </button>
-          <span class="text-[11px] text-slate-400 font-medium">Master Step 2 of 3</span>
+          <span class="text-[11px] text-slate-400 font-medium">Master Step 3 of 4</span>
         </div>
         <!-- LOCK OVERLAY FOR STEP 2 (Shown when Step 1 is not complete) -->
-        <div id="lockOverlayStep2" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
+        <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
             <i data-lucide="lock" class="w-6 h-6"></i>
           </div>
-          <h4 class="font-heading font-bold text-lg text-white">Step 2 Abhi Locked Hai 🔒</h4>
+          <h4 class="font-heading font-bold text-lg text-white">Step 3 Abhi Locked Hai 🔒</h4>
           <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
-            Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 1</strong> me apni GitHub repository ka link paste karke save karein.
+            Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 2</strong> me apni GitHub repository setup karein.
           </p>
-          <a href="#cardStep1" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25">
+          <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25">
             <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
-            <span>Pehle Step 1 Poora Karein</span>
+            <span>Pehle Step 2 Setup Karein</span>
           </a>
         </div>
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-heading font-black text-lg flex items-center justify-center">2</span>
+            <span class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-heading font-black text-lg flex items-center justify-center">3</span>
             <div>
-              <h3 class="font-heading font-bold text-xl text-white">Step 2: Google Sheet Register Connect Karein</h3>
+              <h3 class="font-heading font-bold text-xl text-white">Step 3: Google Sheet Register Connect Karein</h3>
               <p class="text-xs text-slate-400">Google Sheet ko apna live database banayein taaki orders sheet me automatic save hon.</p>
             </div>
           </div>
-          <span id="badgeStep2" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+          <span id="badgeStep3" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
             <i data-lucide="circle" class="w-3.5 h-3.5"></i>
-            <span>Pending Step 1</span>
+            <span>Pending Step 2</span>
           </span>
         </div>
         <!-- STEP 2 READY LINKS CARD (MIRRORED FOR INSTANT ACCESS) -->
-        <div id="step2ReadyLinksCard" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950/40 to-slate-900 border border-emerald-500/40 shadow-xl space-y-3">
+        <div id="step3ReadyLinksCard" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950/40 to-slate-900 border border-emerald-500/40 shadow-xl space-y-3">
           <div class="flex items-center justify-between pb-2 border-b border-slate-800">
             <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
               <i data-lucide="check-circle" class="w-4 h-4"></i>
@@ -626,14 +827,14 @@
                 <i data-lucide="github" class="w-3 h-3"></i> GitHub Repository:
               </span>
               <div class="flex items-center gap-1.5">
-                <input type="text" id="step2CardRepoUrlInput" readonly
+                <input type="text" id="step3CardRepoUrlInput" readonly
                        class="flex-1 px-3 py-1.5 bg-slate-950 border border-blue-500/30 rounded-lg text-xs text-blue-200 font-mono select-all focus:outline-none" />
-                <button type="button" id="step2BtnCopyRepoLink" onclick="copyCardLink('step2CardRepoUrlInput', 'step2BtnCopyRepoLink')"
+                <button type="button" id="step3BtnCopyRepoLink" onclick="copyCardLink('step3CardRepoUrlInput', 'step3BtnCopyRepoLink')"
                         class="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Repo Link">
                   <i data-lucide="copy" class="w-3 h-3"></i>
                   <span>Copy</span>
                 </button>
-                <a id="step2BtnOpenRepoUrl" href="#" target="_blank"
+                <a id="step3BtnOpenRepoUrl" href="#" target="_blank"
                    class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition active:scale-95 shrink-0 border border-slate-700" title="Open GitHub Repo">
                   <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                 </a>
@@ -646,14 +847,14 @@
                 <i data-lucide="globe" class="w-3 h-3"></i> Live Website Storefront:
               </span>
               <div class="flex items-center gap-1.5">
-                <input type="text" id="step2CardSiteUrlInput" readonly
+                <input type="text" id="step3CardSiteUrlInput" readonly
                        class="flex-1 px-3 py-1.5 bg-slate-950 border border-emerald-500/30 rounded-lg text-xs text-emerald-200 font-mono select-all focus:outline-none font-bold" />
-                <button type="button" id="step2BtnCopySiteLink" onclick="copyCardLink('step2CardSiteUrlInput', 'step2BtnCopySiteLink')"
+                <button type="button" id="step3BtnCopySiteLink" onclick="copyCardLink('step3CardSiteUrlInput', 'step3BtnCopySiteLink')"
                         class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Website Link">
                   <i data-lucide="copy" class="w-3 h-3"></i>
                   <span>Copy</span>
                 </button>
-                <a id="step2BtnOpenSiteUrl" href="#" target="_blank"
+                <a id="step3BtnOpenSiteUrl" href="#" target="_blank"
                    class="px-2 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Open Live Store">
                   <span>Open ↗</span>
                 </a>
@@ -966,54 +1167,54 @@
           </div>
         </div>
 
-        <!-- Bottom Navigation Bar for Step 2 -->
+        <!-- Bottom Navigation Bar for Step 4 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(1)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+          <button type="button" onclick="switchMasterStep(3)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 1</span>
+            <span>Pichhla: Step 3 (Google Sheet)</span>
           </button>
 
-          <button type="button" onclick="switchMasterStep(3)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95">
-            <span>Agla: Step 3 (Android App)</span>
+          <button type="button" onclick="switchMasterStep(4)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95">
+            <span>Agla: Step 4 (Android App)</span>
             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
           </button>
         </div>
       </div>
 
-      <!-- STEP 3: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
-      <div id="cardStep3" class="transition-all relative hidden">
+      <!-- STEP 4: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
+      <div id="cardStep4" class="transition-all relative hidden">
         <!-- Top Back Navigation -->
         <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-5">
-          <button type="button" onclick="switchMasterStep(2)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-indigo-400 text-xs font-bold transition active:scale-95 border border-slate-700">
+          <button type="button" onclick="switchMasterStep(3)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-750 text-indigo-400 text-xs font-bold transition active:scale-95 border border-slate-700">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 2 (Google Sheet)</span>
+            <span>Pichhla: Step 3 (Google Sheet)</span>
           </button>
-          <span class="text-[11px] text-slate-400 font-medium">Master Step 3 of 3</span>
+          <span class="text-[11px] text-slate-400 font-medium">Master Step 4 of 4</span>
         </div>
         <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
-        <div id="lockOverlayStep3" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
+        <div id="lockOverlayStep4" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
           <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
             <i data-lucide="lock" class="w-6 h-6"></i>
           </div>
-          <h4 class="font-heading font-bold text-lg text-white">Step 3 Abhi Locked Hai 🔒</h4>
+          <h4 class="font-heading font-bold text-lg text-white">Step 4 Abhi Locked Hai 🔒</h4>
           <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
-            Android Mobile App download karne se pehle <strong class="text-indigo-400">Step 2</strong> me apni Google Sheet connect karein.
+            Android Mobile App download karne se pehle <strong class="text-indigo-400">Step 3</strong> me apni Google Sheet connect karein.
           </p>
-          <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
+          <a href="javascript:void(0)" onclick="switchMasterStep(3)" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
             <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
-            <span>Pehle Step 2 Connect Karein</span>
+            <span>Pehle Step 3 Connect Karein</span>
           </a>
         </div>
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">3</span>
+            <span class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">4</span>
             <div>
-              <h3 class="font-heading font-bold text-xl text-white">Step 3: Android Admin App Download & 1-Tap Sync</h3>
+              <h3 class="font-heading font-bold text-xl text-white">Step 4: Android Admin App Download & 1-Tap Sync</h3>
               <p class="text-xs text-slate-400">Apne mobile app se orders dekhein, price badlein aur 5 ready-made designs apply karein.</p>
             </div>
           </div>
-          <span id="badgeStep3" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+          <span id="badgeStep4" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
             <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
             <span>Mobile Control</span>
           </span>
@@ -1157,11 +1358,11 @@
 
         </div>
 
-        <!-- Bottom Navigation Bar for Step 3 -->
+        <!-- Bottom Navigation Bar for Step 4 -->
         <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(2)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+          <button type="button" onclick="switchMasterStep(3)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Pichhla: Step 2</span>
+            <span>Pichhla: Step 3 (Google Sheet)</span>
           </button>
 
           <a id="hubBottomLiveLink" href="index.html" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-500/25 active:scale-95">
@@ -1366,12 +1567,41 @@
       if (subtitle) subtitle.innerText = theme.subtitle;
       if (demoBtn) demoBtn.href = theme.demoUrl;
 
-      // Update pills in Sub-Step 1.1
+      // Update Step 2 Theme Reminder Pill
+      const pillIcon = document.getElementById('step2ThemePillIcon');
+      const pillTitle = document.getElementById('step2ThemePillTitle');
+      if (pillIcon) pillIcon.innerText = theme.icon;
+      if (pillTitle) pillTitle.innerText = ${theme.title} ();
+
+      // Update Interactive Theme Grid Cards
+      const themeKeys = ['vastu', 'saree', 'electronics', 'fashion', 'grocery_food', 'beauty_personal_care'];
+      themeKeys.forEach(k => {
+        const card = document.getElementById(	hemeCard_);
+        const badge = document.getElementById(	hemeBadge_);
+        if (card) {
+          if (k === key) {
+            card.className = "p-4 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex flex-col justify-between group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30";
+          } else {
+            card.className = "p-4 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-slate-700 cursor-pointer transition-all flex flex-col justify-between group shadow-md hover:shadow-slate-700/10";
+          }
+        }
+        if (badge) {
+          if (k === key) {
+            badge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+            badge.innerText = "✓ Selected Theme";
+          } else {
+            badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700";
+            badge.innerText = "Select Theme";
+          }
+        }
+      });
+
+      // Update pills in Step 2 Repo Box
       const pillsContainer = document.getElementById('quickRepoPillsContainer');
       if (pillsContainer && theme.pills) {
-        let html = `<span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>`;
+        let html = <span class="text-[10px] text-slate-500 font-semibold">Quick Pills:</span>;
         theme.pills.forEach(p => {
-          html += `<button type="button" onclick="setQuickRepoName('${p}')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95">${p}</button>`;
+          html += <button type="button" onclick="setQuickRepoName('')" class="text-[10px] px-2.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-blue-400 font-mono border border-slate-700 transition active:scale-95"></button>;
         });
         pillsContainer.innerHTML = html;
       }
@@ -1390,7 +1620,32 @@
       handleGhRepoPaste();
     }
 
-    function openThemeSelectorModal() {
+    function selectDashboardTheme(themeKey) {
+      localStorage.setItem('sheetstore_selected_theme', themeKey);
+      localStorage.setItem('store_active_template', themeKey);
+      if (currentUser) {
+        currentUser.selected_theme = themeKey;
+        saveUserLocally();
+      }
+      updateActiveThemeUI(themeKey);
+    }
+
+    function confirmThemeAndGoToStep2() {
+      const activeKey = getActiveThemeKey();
+      localStorage.setItem('sheetstore_selected_theme', activeKey);
+      localStorage.setItem('store_active_template', activeKey);
+      localStorage.setItem('sheetstore_theme_confirmed', 'true');
+      if (currentUser) {
+        currentUser.selected_theme = activeKey;
+        currentUser.theme_confirmed = true;
+        saveUserLocally();
+        syncUserProfileToBackend({ selected_theme: activeKey });
+      }
+      updateActiveThemeUI(activeKey);
+      switchMasterStep(2);
+    }
+
+        function openThemeSelectorModal() {
       const modal = document.getElementById('dashboardThemeSelectorModal');
       if (modal) {
         modal.classList.remove('hidden');
@@ -1479,37 +1734,37 @@
 
     function updateReadyLinksUI(repoUrl, siteUrl) {
       const card = document.getElementById('readyLinksCard');
-      const step2Card = document.getElementById('step2ReadyLinksCard');
+      const step3Card = document.getElementById('step3ReadyLinksCard');
       const cardRepoInput = document.getElementById('ghRepoUrlInput');
       const cardSiteInput = document.getElementById('siteUrlInput');
-      const step2RepoInput = document.getElementById('step2CardRepoUrlInput');
-      const step2SiteInput = document.getElementById('step2CardSiteUrlInput');
+      const step3RepoInput = document.getElementById('step3CardRepoUrlInput');
+      const step3SiteInput = document.getElementById('step3CardSiteUrlInput');
       const btnOpenRepo = document.getElementById('btnOpenRepoUrl');
       const btnOpenSite = document.getElementById('btnOpenSiteUrl');
-      const step2BtnOpenRepo = document.getElementById('step2BtnOpenRepoUrl');
-      const step2BtnOpenSite = document.getElementById('step2BtnOpenSiteUrl');
+      const step3BtnOpenRepo = document.getElementById('step3BtnOpenRepoUrl');
+      const step3BtnOpenSite = document.getElementById('step3BtnOpenSiteUrl');
 
       const r = repoUrl || (currentUser && currentUser.github_repo_url) || (cardRepoInput ? cardRepoInput.value.trim() : '') || '';
       const s = siteUrl || (currentUser && (currentUser.website_live_url || currentUser.site_url)) || (cardSiteInput ? cardSiteInput.value.trim() : '') || '';
 
       if (cardRepoInput && r) cardRepoInput.value = r;
       if (cardSiteInput && s) cardSiteInput.value = s;
-      if (step2RepoInput && r) step2RepoInput.value = r;
-      if (step2SiteInput && s) step2SiteInput.value = s;
+      if (step3RepoInput && r) step3RepoInput.value = r;
+      if (step3SiteInput && s) step3SiteInput.value = s;
 
       if (btnOpenRepo && r) btnOpenRepo.href = r;
       if (btnOpenSite && s) btnOpenSite.href = s;
-      if (step2BtnOpenRepo && r) step2BtnOpenRepo.href = r;
-      if (step2BtnOpenSite && s) step2BtnOpenSite.href = s;
+      if (step3BtnOpenRepo && r) step3BtnOpenRepo.href = r;
+      if (step3BtnOpenSite && s) step3BtnOpenSite.href = s;
 
       if (r || s) {
         if (card) card.classList.remove('hidden');
-        if (step2Card) step2Card.classList.remove('hidden');
+        if (step3Card) step3Card.classList.remove('hidden');
       }
       lucide.createIcons();
     }
 
-    function getBackendUrl() {
+        function getBackendUrl() {
       const stored = localStorage.getItem('store_sheet_url');
       if (!stored || !stored.includes('AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f')) {
         localStorage.setItem('store_sheet_url', DEFAULT_SHEET_URL);
@@ -1643,7 +1898,6 @@
       updateStepUI(currentUser.onboarding_step || 1);
 
       // Initialize Sub-Step 1 & Master Step
-      goToSubStep(1);
       switchMasterStep(currentUser.onboarding_step || 1);
 
       // STRICT PAYMENT VERIFICATION GUARD:
@@ -1993,21 +2247,21 @@
       if (elem) elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // MASTER STEP HORIZONTAL WIZARD (Show one process at a time)
+    // MASTER STEP HORIZONTAL WIZARD (4-Step Sequential Flow)
     let currentMasterStep = 1;
 
     function switchMasterStep(stepNum) {
-      if (stepNum < 1 || stepNum > 3) return;
+      if (stepNum < 1 || stepNum > 4) return;
 
       const userStep = currentUser ? (currentUser.onboarding_step || 1) : 1;
       
-      // Validation: Prevent skipping if previous step not complete
-      if (stepNum > userStep && stepNum === 2 && (!currentUser || !currentUser.github_repo_url)) {
-        alert("Pehle Step 1 poora karein aur apni repository link Google Sheet me save karein!");
+      // Validation: Prevent skipping ahead without required data
+      if (stepNum > userStep && stepNum === 3 && (!currentUser || !currentUser.github_repo_url)) {
+        alert("Pehle Step 2 poora karein aur apni repository create karein!");
         return;
       }
-      if (stepNum > userStep && stepNum === 3 && (!currentUser || !currentUser.sheet_url)) {
-        alert("Pehle Step 2 me Google Sheet connect karein!");
+      if (stepNum > userStep && stepNum === 4 && (!currentUser || !currentUser.sheet_url)) {
+        alert("Pehle Step 3 me Google Sheet connect karein!");
         return;
       }
 
@@ -2016,6 +2270,7 @@
       const card1 = document.getElementById('cardStep1');
       const card2 = document.getElementById('cardStep2');
       const card3 = document.getElementById('cardStep3');
+      const card4 = document.getElementById('cardStep4');
 
       if (card1) {
         if (stepNum === 1) {
@@ -2041,17 +2296,27 @@
         if (stepNum === 3) {
           card3.classList.remove('hidden');
           card3.classList.add('glass-card-active');
-          syncAppStepUrlDisplay();
         } else {
           card3.classList.add('hidden');
           card3.classList.remove('glass-card-active');
         }
       }
 
+      if (card4) {
+        if (stepNum === 4) {
+          card4.classList.remove('hidden');
+          card4.classList.add('glass-card-active');
+          syncAppStepUrlDisplay();
+        } else {
+          card4.classList.add('hidden');
+          card4.classList.remove('glass-card-active');
+        }
+      }
+
       updateMasterStepperUI(stepNum);
 
       // Scroll smoothly to active card
-      const targetCard = stepNum === 1 ? card1 : (stepNum === 2 ? card2 : card3);
+      const targetCard = stepNum === 1 ? card1 : (stepNum === 2 ? card2 : (stepNum === 3 ? card3 : card4));
       if (targetCard) {
         targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -2063,60 +2328,83 @@
       const topCirc1 = document.getElementById('topStepCircle1');
       const topCirc2 = document.getElementById('topStepCircle2');
       const topCirc3 = document.getElementById('topStepCircle3');
+      const topCirc4 = document.getElementById('topStepCircle4');
       const topProgressLine = document.getElementById('horizontalProgressLine');
 
       const userStep = currentUser ? (currentUser.onboarding_step || 1) : 1;
+      const themeConfirmed = localStorage.getItem('sheetstore_theme_confirmed') === 'true' || (currentUser && currentUser.theme_confirmed);
+      const repoReady = (currentUser && currentUser.github_repo_url) || (document.getElementById('ghRepoUrlInput') && document.getElementById('ghRepoUrlInput').value);
+      const sheetReady = (currentUser && currentUser.sheet_url) || (document.getElementById('sheetUrlInput') && document.getElementById('sheetUrlInput').value && document.getElementById('sheetUrlInput').value !== DEFAULT_SHEET_URL);
 
       if (topProgressLine) {
-        if (activeStep === 1) topProgressLine.style.width = "15%";
-        else if (activeStep === 2) topProgressLine.style.width = "55%";
-        else if (activeStep === 3) topProgressLine.style.width = "100%";
+        if (activeStep === 1) topProgressLine.style.width = "12%";
+        else if (activeStep === 2) topProgressLine.style.width = "38%";
+        else if (activeStep === 3) topProgressLine.style.width = "65%";
+        else if (activeStep === 4) topProgressLine.style.width = "100%";
       }
 
-      // Circle 1
+      // Circle 1: Store Theme
       if (topCirc1) {
         if (activeStep === 1) {
           topCirc1.className = "w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/25 transition group-hover:scale-105";
-          topCirc1.innerHTML = userStep > 1 ? `<i data-lucide="check" class="w-5 h-5"></i>` : `<span>1</span>`;
-        } else if (userStep >= 2 || (currentUser && currentUser.github_repo_url)) {
+          topCirc1.innerHTML = themeConfirmed ? <i data-lucide="check" class="w-5 h-5"></i> : <span>1</span>;
+        } else if (themeConfirmed || activeStep > 1) {
           topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc1.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+          topCirc1.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
         } else {
           topCirc1.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc1.innerHTML = `<span>1</span>`;
+          topCirc1.innerHTML = <span>1</span>;
         }
       }
 
-      // Circle 2
+      // Circle 2: Website Setup
       if (topCirc2) {
         if (activeStep === 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/30 ring-4 ring-indigo-500/25 transition group-hover:scale-105";
-          topCirc2.innerHTML = userStep >= 3 ? `<i data-lucide="check" class="w-5 h-5"></i>` : `<span>2</span>`;
-        } else if (userStep >= 3 || (currentUser && currentUser.sheet_url)) {
+          topCirc2.innerHTML = repoReady ? <i data-lucide="check" class="w-5 h-5"></i> : <span>2</span>;
+        } else if (repoReady || activeStep > 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc2.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
-        } else if (userStep >= 2) {
+          topCirc2.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+        } else if (themeConfirmed || activeStep >= 2) {
           topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-indigo-500 text-indigo-400 font-bold flex items-center justify-center text-sm transition group-hover:scale-105";
-          topCirc2.innerHTML = `<span>2</span>`;
+          topCirc2.innerHTML = <span>2</span>;
         } else {
           topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc2.innerHTML = `<span>2</span>`;
+          topCirc2.innerHTML = <span>2</span>;
         }
       }
 
-      // Circle 3
+      // Circle 3: Google Sheet
       if (topCirc3) {
         if (activeStep === 3) {
-          topCirc3.className = "w-11 h-11 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-500/25 transition group-hover:scale-105";
-          topCirc3.innerHTML = userStep >= 3 ? `<i data-lucide="check" class="w-5 h-5"></i>` : `<span>3</span>`;
-        } else if (userStep >= 3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-purple-500/30 ring-4 ring-purple-500/25 transition group-hover:scale-105";
+          topCirc3.innerHTML = sheetReady ? <i data-lucide="check" class="w-5 h-5"></i> : <span>3</span>;
+        } else if (sheetReady || activeStep > 3) {
           topCirc3.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc3.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
+          topCirc3.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+        } else if (repoReady || activeStep >= 3) {
+          topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-purple-500 text-purple-400 font-bold flex items-center justify-center text-sm transition group-hover:scale-105";
+          topCirc3.innerHTML = <span>3</span>;
         } else {
           topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
-          topCirc3.innerHTML = `<span>3</span>`;
+          topCirc3.innerHTML = <span>3</span>;
         }
       }
+
+      // Circle 4: Android App
+      if (topCirc4) {
+        if (activeStep === 4) {
+          topCirc4.className = "w-11 h-11 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-500/25 transition group-hover:scale-105";
+          topCirc4.innerHTML = userStep >= 4 ? <i data-lucide="check" class="w-5 h-5"></i> : <span>4</span>;
+        } else if (userStep >= 4) {
+          topCirc4.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
+          topCirc4.innerHTML = <i data-lucide="check" class="w-5 h-5"></i>;
+        } else {
+          topCirc4.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition";
+          topCirc4.innerHTML = <span>4</span>;
+        }
+      }
+      lucide.createIcons();
     }
 
     function updateStepUI(step) {
@@ -2127,149 +2415,151 @@
       const badge1 = document.getElementById('badgeStep1');
       const badge2 = document.getElementById('badgeStep2');
       const badge3 = document.getElementById('badgeStep3');
+      const badge4 = document.getElementById('badgeStep4');
 
       const card1 = document.getElementById('cardStep1');
       const card2 = document.getElementById('cardStep2');
       const card3 = document.getElementById('cardStep3');
+      const card4 = document.getElementById('cardStep4');
 
-      const lock2 = document.getElementById('lockOverlayStep2');
       const lock3 = document.getElementById('lockOverlayStep3');
+      const lock4 = document.getElementById('lockOverlayStep4');
 
-      const topCirc1 = document.getElementById('topStepCircle1');
-      const topCirc2 = document.getElementById('topStepCircle2');
-      const topCirc3 = document.getElementById('topStepCircle3');
-      const topProgressLine = document.getElementById('horizontalProgressLine');
+      const repoReady = (currentUser && currentUser.github_repo_url) || (document.getElementById('ghRepoUrlInput') && document.getElementById('ghRepoUrlInput').value);
+      const sheetReady = (currentUser && currentUser.sheet_url) || (document.getElementById('sheetUrlInput') && document.getElementById('sheetUrlInput').value && document.getElementById('sheetUrlInput').value !== DEFAULT_SHEET_URL);
 
       if (step === 1) {
-        if (pPercent) pPercent.innerText = "33%";
-        if (pStatus) pStatus.innerText = "Step 1 of 3: GitHub Setup Baki Hai";
+        if (pPercent) pPercent.innerText = "25%";
+        if (pStatus) pStatus.innerText = "Step 1 of 4: Storefront Theme Chunein";
         if (pBar) {
-          pBar.style.width = "33%";
+          pBar.style.width = "25%";
           pBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out";
         }
-        if (topProgressLine) topProgressLine.style.width = "15%";
-
-        if (topCirc1) {
-          topCirc1.className = "w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105";
-          topCirc1.innerHTML = `<span>1</span>`;
-        }
-        if (topCirc2) {
-          topCirc2.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500";
-          topCirc2.innerHTML = `<span>2</span>`;
-        }
-        if (topCirc3) {
-          topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500";
-          topCirc3.innerHTML = `<span>3</span>`;
-        }
-
         if (badge1) {
-          badge1.className = "px-3.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
-          badge1.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Action Required</span>`;
+          badge1.className = "px-3.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge1.innerHTML = <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-300"></i> <span>Theme Selection</span>;
         }
         if (badge2) {
-          badge2.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge2.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 1)</span>`;
+          badge2.className = "px-3.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge2.innerHTML = <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready Next</span>;
         }
         if (badge3) {
           badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+          badge3.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 2 Baki)</span>;
+        }
+        if (badge4) {
+          badge4.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge4.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>;
         }
 
         if (card1) card1.classList.add('glass-card-active');
         if (card2) card2.classList.remove('glass-card-active');
         if (card3) card3.classList.remove('glass-card-active');
+        if (card4) card4.classList.remove('glass-card-active');
 
-        if (lock2) lock2.classList.remove('hidden');
         if (lock3) lock3.classList.remove('hidden');
+        if (lock4) lock4.classList.remove('hidden');
 
       } else if (step === 2) {
-        if (pPercent) pPercent.innerText = "66%";
-        if (pStatus) pStatus.innerText = "Step 2 of 3: Connect Google Sheet";
+        if (pPercent) pPercent.innerText = "50%";
+        if (pStatus) pStatus.innerText = "Step 2 of 4: Website Setup (1-Click Automation)";
         if (pBar) {
-          pBar.style.width = "66%";
+          pBar.style.width = "50%";
           pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
         }
-        if (topProgressLine) topProgressLine.style.width = "55%";
-
-        if (topCirc1) {
-          topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc1.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
-        }
-        if (topCirc2) {
-          topCirc2.className = "w-11 h-11 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/30 ring-4 ring-indigo-500/20 transition group-hover:scale-105";
-          topCirc2.innerHTML = `<span>2</span>`;
-        }
-        if (topCirc3) {
-          topCirc3.className = "w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500";
-          topCirc3.innerHTML = `<span>3</span>`;
-        }
-
         if (badge1) {
-          badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified ✓</span>`;
+          badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
         }
         if (badge2) {
-          badge2.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge2.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>`;
+          badge2.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge2.innerHTML = <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i> <span>100% Automated</span>;
         }
         if (badge3) {
           badge3.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Complete Step 2)</span>`;
+          badge3.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 2 Baki)</span>;
+        }
+        if (badge4) {
+          badge4.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge4.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>;
         }
 
         if (card1) card1.classList.remove('glass-card-active');
         if (card2) card2.classList.add('glass-card-active');
         if (card3) card3.classList.remove('glass-card-active');
+        if (card4) card4.classList.remove('glass-card-active');
 
-        if (lock2) lock2.classList.add('hidden'); // UNLOCKED!
-        if (lock3) lock3.classList.remove('hidden'); // STILL LOCKED
+        if (lock3 && !repoReady) lock3.classList.remove('hidden');
+        if (lock4) lock4.classList.remove('hidden');
 
-      } else if (step >= 3) {
-        if (pPercent) pPercent.innerText = "100%";
-        if (pStatus) pStatus.innerText = "Store 100% Ready & Live! ðŸŽ‰";
+      } else if (step === 3) {
+        if (pPercent) pPercent.innerText = "75%";
+        if (pStatus) pStatus.innerText = "Step 3 of 4: Google Sheet Register Connect";
         if (pBar) {
-          pBar.style.width = "100%";
-          pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
+          pBar.style.width = "75%";
+          pBar.className = "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-700 ease-out";
         }
-        if (topProgressLine) topProgressLine.style.width = "100%";
-
-        if (topCirc1) {
-          topCirc1.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc1.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
-        }
-        if (topCirc2) {
-          topCirc2.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 transition group-hover:scale-105";
-          topCirc2.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
-        }
-        if (topCirc3) {
-          topCirc3.className = "w-11 h-11 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-500/20 transition group-hover:scale-105";
-          topCirc3.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i>`;
-        }
-
         if (badge1) {
-          badge1.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge1.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Saved & Verified ✓</span>`;
+          badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
         }
         if (badge2) {
-          badge2.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge2.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>`;
+          badge2.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge2.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Repo & Site Live ✓</span>;
         }
         if (badge3) {
-          badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
-          badge3.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>`;
+          badge3.className = "px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge3.innerHTML = <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span>Ready to Connect (Unlocked)</span>;
+        }
+        if (badge4) {
+          badge4.className = "px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge4.innerHTML = <i data-lucide="lock" class="w-3.5 h-3.5"></i> <span>Locked (Step 3 Baki)</span>;
         }
 
         if (card1) card1.classList.remove('glass-card-active');
         if (card2) card2.classList.remove('glass-card-active');
         if (card3) card3.classList.add('glass-card-active');
+        if (card4) card4.classList.remove('glass-card-active');
 
-        if (lock2) lock2.classList.add('hidden'); // UNLOCKED
         if (lock3) lock3.classList.add('hidden'); // UNLOCKED!
+        if (lock4) lock4.classList.remove('hidden'); // STILL LOCKED
+
+      } else if (step >= 4) {
+        if (pPercent) pPercent.innerText = "100%";
+        if (pStatus) pStatus.innerText = "Store 100% Ready & Live! 🎉";
+        if (pBar) {
+          pBar.style.width = "100%";
+          pBar.className = "bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-400 h-3 rounded-full transition-all duration-700 ease-out";
+        }
+        if (badge1) {
+          badge1.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge1.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Theme Selected ✓</span>;
+        }
+        if (badge2) {
+          badge2.className = "px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm";
+          badge2.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Repo & Site Live ✓</span>;
+        }
+        if (badge3) {
+          badge3.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge3.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Connected ✓</span>;
+        }
+        if (badge4) {
+          badge4.className = "px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold self-start sm:self-auto flex items-center gap-1";
+          badge4.innerHTML = <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span>Admin App Ready ✓</span>;
+        }
+
+        if (card1) card1.classList.remove('glass-card-active');
+        if (card2) card2.classList.remove('glass-card-active');
+        if (card3) card3.classList.remove('glass-card-active');
+        if (card4) card4.classList.add('glass-card-active');
+
+        if (lock3) lock3.classList.add('hidden'); // UNLOCKED
+        if (lock4) lock4.classList.add('hidden'); // UNLOCKED!
       }
       lucide.createIcons();
     }
 
-    // Helper: Realtime GitHub Repo URL Paste Parser & Universal Formula Generator
+        // Helper: Realtime GitHub Repo URL Paste Parser & Universal Formula Generator
     function handleGhRepoPaste() {
       const repoInput = document.getElementById('ghRepoUrlInput');
       const val = (repoInput ? repoInput.value : '').trim();
@@ -2979,6 +3269,7 @@
 
           setTimeout(() => {
             if (modal) modal.classList.add('hidden');
+            switchMasterStep(2);
             const readyCard = document.getElementById('readyLinksCard');
             if (readyCard) {
               readyCard.classList.remove('hidden');
