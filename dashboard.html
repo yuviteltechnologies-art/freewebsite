@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="hi" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Store Launchpad & Dashboard | SheetStore Pro</title>
-  <meta name="description" content="Apni website aur Google Sheet ko live karein aur Android Admin app se connect karein." />
-  
+  <meta name="description"
+    content="Apni website aur Google Sheet ko live karein aur Android Admin app se connect karein." />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -39,14 +43,16 @@
     body {
       background: #080C1A;
       background-image: radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.12), transparent 40%),
-                        radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.08), transparent 40%),
-                        radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.1), transparent 50%);
+        radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.08), transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.1), transparent 50%);
     }
+
     .glass-card {
       background: rgba(15, 23, 42, 0.8);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(56, 189, 248, 0.15);
     }
+
     .glass-card-active {
       border-color: rgba(59, 130, 246, 0.5) !important;
       box-shadow: 0 10px 35px -5px rgba(37, 99, 235, 0.15);
@@ -54,19 +60,22 @@
   </style>
 </head>
 
-<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+<body
+  class="text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
 
   <!-- TOP HEADER -->
   <header class="border-b border-slate-800 bg-[#0B1120]/90 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      
+
       <!-- Brand -->
       <a href="index.html" class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+        <div
+          class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
           <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
         </div>
         <div>
-          <span class="font-heading font-extrabold text-lg text-white">SheetStore <span class="text-blue-500">Pro</span></span>
+          <span class="font-heading font-extrabold text-lg text-white">SheetStore <span
+              class="text-blue-500">Pro</span></span>
           <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Store Onboarding Launchpad</p>
         </div>
       </a>
@@ -74,7 +83,9 @@
       <!-- User Profile & Logout -->
       <div class="flex items-center gap-2.5">
         <div class="hidden sm:flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl">
-          <div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center font-heading" id="userAvatarText">
+          <div
+            class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center font-heading"
+            id="userAvatarText">
             U
           </div>
           <div class="text-left">
@@ -83,12 +94,14 @@
           </div>
         </div>
 
-        <button onclick="openChangePassModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-400 border border-blue-500/30 text-xs font-semibold transition hover:text-white">
+        <button onclick="openChangePassModal()"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-400 border border-blue-500/30 text-xs font-semibold transition hover:text-white">
           <i data-lucide="key" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Password Badlein</span>
         </button>
 
-        <button onclick="handleLogout()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-red-500/20 hover:text-red-400 text-slate-400 border border-slate-700 text-xs font-semibold transition">
+        <button onclick="handleLogout()"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-red-500/20 hover:text-red-400 text-slate-400 border border-slate-700 text-xs font-semibold transition">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
           <span>Logout</span>
         </button>
@@ -98,20 +111,25 @@
   </header>
 
   <!-- PAYMENT GUARD & ACCESS LOCK OVERLAY -->
-  <div id="paymentGuardOverlay" class="fixed inset-0 z-50 bg-[#080C1A]/95 backdrop-blur-2xl hidden flex items-center justify-center p-4 overflow-y-auto">
-    <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-red-500/30 text-center relative shadow-2xl my-auto">
-      <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-500/10">
+  <div id="paymentGuardOverlay"
+    class="fixed inset-0 z-50 bg-[#080C1A]/95 backdrop-blur-2xl hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div
+      class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-red-500/30 text-center relative shadow-2xl my-auto">
+      <div
+        class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-500/10">
         <i data-lucide="lock" class="w-8 h-8"></i>
       </div>
 
-      <span class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider inline-block mb-2">
+      <span
+        class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider inline-block mb-2">
         🔒 Access Locked • ₹499 Required
       </span>
       <h2 class="font-heading font-black text-xl sm:text-2xl text-white mb-2">
         Dashboard Unlock Karein
       </h2>
       <p class="text-xs text-slate-400 mb-4 leading-relaxed">
-        Yeh launchpad dashboard sirf paid members ke liye hai. Agar aapne payment kiya hai toh 12-digit UTR verify karein, ya QR scan karke pay karein.
+        Yeh launchpad dashboard sirf paid members ke liye hai. Agar aapne payment kiya hai toh 12-digit UTR verify
+        karein, ya QR scan karke pay karein.
       </p>
 
       <!-- 1-Tap UPI Apps Grid -->
@@ -120,7 +138,7 @@
         <div class="grid grid-cols-2 gap-2">
           <!-- PhonePe -->
           <button type="button" onclick="launchGuardUpi('phonepe')"
-                  class="p-2.5 rounded-xl bg-gradient-to-br from-[#5f259f] to-[#3b1266] border border-purple-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
+            class="p-2.5 rounded-xl bg-gradient-to-br from-[#5f259f] to-[#3b1266] border border-purple-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0">
               <span class="text-[#5f259f] font-black text-base leading-none">पे</span>
             </div>
@@ -132,13 +150,17 @@
 
           <!-- Google Pay -->
           <button type="button" onclick="launchGuardUpi('gpay')"
-                  class="p-2.5 rounded-xl bg-slate-950 border border-slate-700 hover:border-blue-400 text-left transition active:scale-95 shadow flex items-center gap-2">
+            class="p-2.5 rounded-xl bg-slate-950 border border-slate-700 hover:border-blue-400 text-left transition active:scale-95 shadow flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 p-1">
               <svg viewBox="0 0 24 24" class="w-full h-full">
-                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.99 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/>
-                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                <path fill="#4285F4"
+                  d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                <path fill="#34A853"
+                  d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                <path fill="#FBBC05"
+                  d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.99 0 12s.45 3.83 1.25 5.42l4.03-3.15z" />
+                <path fill="#EA4335"
+                  d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
               </svg>
             </div>
             <div class="min-w-0">
@@ -149,9 +171,10 @@
 
           <!-- Paytm -->
           <button type="button" onclick="launchGuardUpi('paytm')"
-                  class="p-2.5 rounded-xl bg-gradient-to-br from-[#002E6E] to-[#001838] border border-cyan-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
+            class="p-2.5 rounded-xl bg-gradient-to-br from-[#002E6E] to-[#001838] border border-cyan-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 p-1">
-              <span class="font-black text-[9px] tracking-tight leading-none"><span style="color:#002E6E;">pay</span><span style="color:#00BAF2;">tm</span></span>
+              <span class="font-black text-[9px] tracking-tight leading-none"><span
+                  style="color:#002E6E;">pay</span><span style="color:#00BAF2;">tm</span></span>
             </div>
             <div class="min-w-0">
               <p class="text-xs font-bold text-white leading-tight">Paytm UPI</p>
@@ -161,8 +184,9 @@
 
           <!-- Any UPI App -->
           <button type="button" onclick="launchGuardUpi('generic')"
-                  class="p-2.5 rounded-xl bg-gradient-to-br from-emerald-950 to-teal-950 border border-emerald-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0 text-slate-950 font-black text-xs font-mono">
+            class="p-2.5 rounded-xl bg-gradient-to-br from-emerald-950 to-teal-950 border border-emerald-500/40 text-left transition active:scale-95 shadow flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0 text-slate-950 font-black text-xs font-mono">
               UPI
             </div>
             <div class="min-w-0">
@@ -178,11 +202,13 @@
             🛡️ PhonePe/GPay me "Suspect App" warning aaye toh?
           </p>
           <p class="text-[10px] text-slate-300 leading-relaxed">
-            Browser se open karne par banking apps security alert dete hain. <strong>Aapka payment safe hai.</strong> Direct bina warning pay karne ke liye:
+            Browser se open karne par banking apps security alert dete hain. <strong>Aapka payment safe hai.</strong>
+            Direct bina warning pay karne ke liye:
           </p>
           <div class="flex items-center gap-2 pt-0.5">
             <span class="text-[10px] text-slate-400">Sabse Safe:</span>
-            <button type="button" onclick="copyGuardUpiId()" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-[10.5px] font-bold flex items-center gap-1 transition">
+            <button type="button" onclick="copyGuardUpiId()"
+              class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-[10.5px] font-bold flex items-center gap-1 transition">
               <i data-lucide="copy" class="w-3 h-3"></i>
               <span>Copy UPI: yuvitel@upi</span>
             </button>
@@ -197,8 +223,9 @@
       <details class="text-center mb-4 text-xs text-slate-400 cursor-pointer">
         <summary class="hover:text-cyan-400 select-none font-medium">📷 Ya QR Code scan karke pay karein</summary>
         <div class="bg-white p-3 rounded-2xl text-center my-3 max-w-[190px] mx-auto shadow-inner">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore&am=499&cu=INR&tn=SheetStoreOrder" 
-               alt="UPI QR Code" class="w-36 h-36 mx-auto rounded-lg" />
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yuvitel@upi&pn=SheetStore&am=499&cu=INR&tn=SheetStoreOrder"
+            alt="UPI QR Code" class="w-36 h-36 mx-auto rounded-lg" />
           <p class="text-xs font-bold text-slate-900 font-sans mt-1">Amount: ₹499</p>
           <p class="text-[10px] text-slate-600 font-mono">UPI: yuvitel@upi</p>
         </div>
@@ -209,28 +236,31 @@
         <div>
           <label class="block text-[11px] font-semibold text-slate-300 mb-1">WhatsApp Mobile Number *</label>
           <input type="tel" id="guardPhoneInput" placeholder="Aapka 10-digit WhatsApp number" maxlength="10"
-                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-blue-500" />
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-blue-500" />
         </div>
         <div>
           <label class="block text-[11px] font-semibold text-amber-300 mb-1">12-Digit UPI UTR / Ref No. *</label>
           <input type="text" id="guardUtrInput" placeholder="e.g. 412984920194" maxlength="12"
-                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-amber-500/50 rounded-xl text-xs text-white font-mono focus:outline-none focus:border-blue-500" />
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-amber-500/50 rounded-xl text-xs text-white font-mono focus:outline-none focus:border-blue-500" />
         </div>
       </div>
 
-      <div id="guardAlertBox" class="hidden mb-3 p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 text-left">
+      <div id="guardAlertBox"
+        class="hidden mb-3 p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 text-left">
         <i id="guardAlertIcon" data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
         <span id="guardAlertMsg"></span>
       </div>
 
       <button onclick="handleGuardVerify()" id="btnGuardVerify"
-              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-blue-500/25 transition active:scale-95 flex items-center justify-center gap-2 mb-2.5">
+        class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-blue-500/25 transition active:scale-95 flex items-center justify-center gap-2 mb-2.5">
         <i data-lucide="shield-check" class="w-4 h-4"></i>
         <span>Verify Payment &amp; Unlock Dashboard 🚀</span>
       </button>
 
-      <a id="guardWhatsappBtn" href="https://wa.me/917987823521?text=Namaste!%20Maine%20SheetStore%20Pro%20ke%20liye%20Rs.499%20pay%20kiya%20hai.%20Kripya%20mera%20dashboard%20unlock%20karein." target="_blank"
-         class="w-full py-2.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-semibold text-xs flex items-center justify-center gap-2 transition mb-3">
+      <a id="guardWhatsappBtn"
+        href="https://wa.me/917987823521?text=Namaste!%20Maine%20SheetStore%20Pro%20ke%20liye%20Rs.499%20pay%20kiya%20hai.%20Kripya%20mera%20dashboard%20unlock%20karein."
+        target="_blank"
+        class="w-full py-2.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-semibold text-xs flex items-center justify-center gap-2 transition mb-3">
         <i data-lucide="message-circle" class="w-4 h-4"></i>
         <span>WhatsApp Par Screenshot Bhejein</span>
       </a>
@@ -248,15 +278,18 @@
     <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 mb-2">
+          <span
+            class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 mb-2">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
             <span>4-Step Automated Store Setup</span>
           </span>
           <h1 class="font-heading font-black text-2xl sm:text-4xl text-white">
-            Namaste, <span id="welcomeUserName" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">Store Owner</span>! 👋
+            Namaste, <span id="welcomeUserName"
+              class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">Store Owner</span>! 👋
           </h1>
           <p class="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-xl">
-            Aapki dukaan ko 100% live karne ke liye bas ye <strong class="text-white">4 aasan steps</strong> poore karein. Coding ki 0% zaroorat hai.
+            Aapki dukaan ko 100% live karne ke liye bas ye <strong class="text-white">4 aasan steps</strong> poore
+            karein. Coding ki 0% zaroorat hai.
           </p>
         </div>
 
@@ -264,7 +297,8 @@
         <div class="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 sm:p-5 text-center min-w-[200px]">
           <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Setup Progress</p>
           <div class="flex items-baseline justify-center gap-1 my-1">
-            <span id="progressPercentText" class="font-heading font-black text-3xl sm:text-4xl text-emerald-400">33%</span>
+            <span id="progressPercentText"
+              class="font-heading font-black text-3xl sm:text-4xl text-emerald-400">33%</span>
             <span class="text-xs text-slate-500 font-semibold">Done</span>
           </div>
           <p id="progressStatusText" class="text-[11px] text-blue-400 font-medium">Step 1 Ready</p>
@@ -276,12 +310,15 @@
         <div class="relative flex items-center justify-between max-w-3xl mx-auto px-4">
           <!-- Connecting Line Behind Steps -->
           <div class="absolute left-8 right-8 top-5 h-1 bg-slate-800 rounded-full z-0">
-            <div id="horizontalProgressLine" class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full transition-all duration-700" style="width: 12%;"></div>
+            <div id="horizontalProgressLine"
+              class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full transition-all duration-700"
+              style="width: 12%;"></div>
           </div>
 
           <!-- Step 1 Circle & Label (Theme) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(1)">
-            <div id="topStepCircle1" class="w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105">
+            <div id="topStepCircle1"
+              class="w-11 h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-blue-500/30 ring-4 ring-blue-500/20 transition group-hover:scale-105">
               <span>1</span>
             </div>
             <div class="text-center mt-2">
@@ -292,7 +329,8 @@
 
           <!-- Step 2 Circle & Label (Frontend Setup) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(2)">
-            <div id="topStepCircle2" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
+            <div id="topStepCircle2"
+              class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>2</span>
             </div>
             <div class="text-center mt-2">
@@ -303,7 +341,8 @@
 
           <!-- Step 3 Circle & Label (Google Sheet) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(3)">
-            <div id="topStepCircle3" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
+            <div id="topStepCircle3"
+              class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>3</span>
             </div>
             <div class="text-center mt-2">
@@ -314,7 +353,8 @@
 
           <!-- Step 4 Circle & Label (Android App) -->
           <div class="relative z-10 flex flex-col items-center cursor-pointer group" onclick="switchMasterStep(4)">
-            <div id="topStepCircle4" class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
+            <div id="topStepCircle4"
+              class="w-11 h-11 rounded-full bg-slate-900 border-2 border-slate-700 text-slate-400 font-bold flex items-center justify-center text-sm transition group-hover:border-slate-500">
               <span>4</span>
             </div>
             <div class="text-center mt-2">
@@ -340,710 +380,777 @@
         <!-- STEP 1: GITHUB TEMPLATE FORK & VERIFY (FULL-WIDTH EXPANDED WIZARD) -->
         <div id="cardStep1" class="transition-all relative">
 
-        <!-- STEP 1 HEADER -->
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold shadow-md shadow-indigo-500/10 shrink-0">
-              <i data-lucide="palette" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Theme Selection</h3>
-            </div>
-          </div>
-          <span id="badgeStep1" class="hidden"></span>
-        </div>
-
-        <!-- 6 FLAGSHIP THEMES SELECTION GRID (2 IN A ROW) -->
-        <div class="space-y-3 mb-6">
-          <div id="themeCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Theme Card 1: Vastu -->
-            <div id="themeCard_vastu" onclick="selectDashboardTheme('vastu')"
-                 class="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <span class="text-3xl shrink-0">🕉️</span>
-                <div class="min-w-0">
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-300 transition truncate">वास्तु ब्रह्मांड</h4>
-                  <span id="themeBadge_vastu" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">✓ Selected</span>
-                </div>
+          <!-- STEP 1 HEADER -->
+          <div class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold shadow-md shadow-indigo-500/10 shrink-0">
+                <i data-lucide="palette" class="w-5 h-5"></i>
               </div>
-              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('vastu')"
-                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
-                <span>Preview</span>
-              </button>
-            </div>
-
-            <!-- Theme Card 2: Saree -->
-            <div id="themeCard_saree" onclick="selectDashboardTheme('saree')"
-                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-pink-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-pink-500/10">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <span class="text-3xl shrink-0">🥻</span>
-                <div class="min-w-0">
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-pink-300 transition truncate">नूलम साड़ी</h4>
-                  <span id="themeBadge_saree" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-                </div>
+              <div>
+                <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 1: Theme Selection</h3>
               </div>
-              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('saree')"
-                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
-                <span>Preview</span>
-              </button>
             </div>
-
-            <!-- Theme Card 3: Electronics -->
-            <div id="themeCard_electronics" onclick="selectDashboardTheme('electronics')"
-                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-blue-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-blue-500/10">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <span class="text-3xl shrink-0">⚡</span>
-                <div class="min-w-0">
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-blue-300 transition truncate">Electronics Pro</h4>
-                  <span id="themeBadge_electronics" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-                </div>
-              </div>
-              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('electronics')"
-                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
-                <span>Preview</span>
-              </button>
-            </div>
-
-            <!-- Theme Card 4: Fashion -->
-            <div id="themeCard_fashion" onclick="selectDashboardTheme('fashion')"
-                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-purple-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-purple-500/10">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <span class="text-3xl shrink-0">👗</span>
-                <div class="min-w-0">
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-purple-300 transition truncate">Fashion & Apparel</h4>
-                  <span id="themeBadge_fashion" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-                </div>
-              </div>
-              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('fashion')"
-                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
-                <span>Preview</span>
-              </button>
-            </div>
-
-            <!-- Theme Card 5: Grocery -->
-            <div id="themeCard_grocery_food" onclick="selectDashboardTheme('grocery_food')"
-                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-emerald-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-emerald-500/10">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <span class="text-3xl shrink-0">🛒</span>
-                <div class="min-w-0">
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-emerald-300 transition truncate">Grocery & Food</h4>
-                  <span id="themeBadge_grocery_food" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-                </div>
-              </div>
-              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('grocery_food')"
-                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
-                <span>Preview</span>
-              </button>
-            </div>
-
-            <!-- Theme Card 6: Beauty -->
-            <div id="themeCard_beauty_personal_care" onclick="selectDashboardTheme('beauty_personal_care')"
-                 class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-rose-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-rose-500/10">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <span class="text-3xl shrink-0">💄</span>
-                <div class="min-w-0">
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-rose-300 transition truncate">Beauty & Cosmetics</h4>
-                  <span id="themeBadge_beauty_personal_care" class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select Theme</span>
-                </div>
-              </div>
-              <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('beauty_personal_care')"
-                 class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0" title="Live Preview Dekhein">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
-                <span>Preview</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom Navigation Bar for Step 1 -->
-        <div class="pt-5 border-t border-slate-800/80 flex items-center justify-end">
-          <button type="button" onclick="confirmThemeAndGoToStep2()"
-                  class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/25 active:scale-95 transition">
-            <span>Next</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
-        </div>
-
-      </div>
-
-      <!-- STEP 2: FRONTEND SETUP (1-CLICK AUTOMATION) -->
-      <div id="cardStep2" class="transition-all relative hidden">
-
-        <!-- TOP CARD HEADER -->
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10 shrink-0">
-              <i data-lucide="globe" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 2: Frontend Setup</h3>
-            </div>
-          </div>
-          <span id="badgeStep2" class="hidden"></span>
-        </div>
-
-        <!-- MAIN STEP 2 1-CLICK CONTAINER -->
-        <div class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-5">
-
-          <!-- PRIMARY 1-CLICK AUTO SETUP BUTTON -->
-          <div>
-            <button type="button" onclick="startGitHubOAuthFlow()" id="btnOAuthConnect"
-               class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group">
-              <div class="flex items-center gap-3 text-left">
-                <div class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0 shadow">
-                  <i data-lucide="zap" class="w-6 h-6 text-amber-300"></i>
-                </div>
-                <div>
-                  <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub Setup</span>
-                </div>
-              </div>
-              <i data-lucide="arrow-right" class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
-            </button>
+            <span id="badgeStep1" class="hidden"></span>
           </div>
 
-          <!-- STEP 2 READY LINKS CARD (SAVED GITHUB REPO & LIVE SITE) -->
-          <div id="readyLinksCard" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950/40 to-slate-900 border border-emerald-500/40 shadow-xl space-y-3">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                <i data-lucide="check-circle" class="w-4 h-4"></i>
-                <span>Aapke Store &amp; Repository Links (Saved):</span>
-              </span>
-              <span class="text-[10px] text-slate-400">1-Click Copy Ready</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <!-- Repo URL -->
-              <div class="space-y-1">
-                <span class="text-[11px] font-bold text-blue-300 flex items-center gap-1">
-                  <i data-lucide="github" class="w-3 h-3"></i> GitHub Repository:
-                </span>
-                <div class="flex items-center gap-1.5">
-                  <input type="text" id="cardRepoUrlInput" readonly
-                         class="flex-1 px-3 py-1.5 bg-slate-950 border border-blue-500/30 rounded-lg text-xs text-blue-200 font-mono select-all focus:outline-none" />
-                  <button type="button" id="btnCopyRepoLink" onclick="copyCardLink('cardRepoUrlInput', 'btnCopyRepoLink')"
-                          class="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Repo Link">
-                    <i data-lucide="copy" class="w-3 h-3"></i>
-                    <span>Copy</span>
-                  </button>
-                  <a id="btnOpenRepoUrl" href="#" target="_blank"
-                     class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition active:scale-95 shrink-0 border border-slate-700" title="Open GitHub Repo">
-                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                  </a>
+          <!-- 6 FLAGSHIP THEMES SELECTION GRID (2 IN A ROW) -->
+          <div class="space-y-3 mb-6">
+            <div id="themeCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Theme Card 1: Vastu -->
+              <div id="themeCard_vastu" onclick="selectDashboardTheme('vastu')"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="text-3xl shrink-0">🕉️</span>
+                  <div class="min-w-0">
+                    <h4
+                      class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-300 transition truncate">
+                      वास्तु ब्रह्मांड</h4>
+                    <span id="themeBadge_vastu"
+                      class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">✓
+                      Selected</span>
+                  </div>
                 </div>
+                <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('vastu')"
+                  class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0"
+                  title="Live Preview Dekhein">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Preview</span>
+                </button>
               </div>
 
-              <!-- Website URL -->
-              <div class="space-y-1">
-                <span class="text-[11px] font-bold text-emerald-300 flex items-center gap-1">
-                  <i data-lucide="globe" class="w-3 h-3"></i> Live Website Storefront:
-                </span>
-                <div class="flex items-center gap-1.5">
-                  <input type="text" id="cardSiteUrlInput" readonly
-                         class="flex-1 px-3 py-1.5 bg-slate-950 border border-emerald-500/30 rounded-lg text-xs text-emerald-200 font-mono select-all focus:outline-none font-bold" />
-                  <button type="button" id="btnCopySiteLink" onclick="copyCardLink('cardSiteUrlInput', 'btnCopySiteLink')"
-                          class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Website Link">
-                    <i data-lucide="copy" class="w-3 h-3"></i>
-                    <span>Copy</span>
-                  </button>
-                  <a id="btnOpenSiteUrl" href="#" target="_blank"
-                     class="px-2 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Open Live Store">
-                    <span>Open ↗</span>
-                  </a>
+              <!-- Theme Card 2: Saree -->
+              <div id="themeCard_saree" onclick="selectDashboardTheme('saree')"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-pink-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-pink-500/10">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="text-3xl shrink-0">🥻</span>
+                  <div class="min-w-0">
+                    <h4
+                      class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-pink-300 transition truncate">
+                      नूलम साड़ी</h4>
+                    <span id="themeBadge_saree"
+                      class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select
+                      Theme</span>
+                  </div>
                 </div>
+                <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('saree')"
+                  class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0"
+                  title="Live Preview Dekhein">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Preview</span>
+                </button>
+              </div>
+
+              <!-- Theme Card 3: Electronics -->
+              <div id="themeCard_electronics" onclick="selectDashboardTheme('electronics')"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-blue-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-blue-500/10">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="text-3xl shrink-0">⚡</span>
+                  <div class="min-w-0">
+                    <h4
+                      class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-blue-300 transition truncate">
+                      Electronics Pro</h4>
+                    <span id="themeBadge_electronics"
+                      class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select
+                      Theme</span>
+                  </div>
+                </div>
+                <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('electronics')"
+                  class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0"
+                  title="Live Preview Dekhein">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Preview</span>
+                </button>
+              </div>
+
+              <!-- Theme Card 4: Fashion -->
+              <div id="themeCard_fashion" onclick="selectDashboardTheme('fashion')"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-purple-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-purple-500/10">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="text-3xl shrink-0">👗</span>
+                  <div class="min-w-0">
+                    <h4
+                      class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-purple-300 transition truncate">
+                      Fashion & Apparel</h4>
+                    <span id="themeBadge_fashion"
+                      class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select
+                      Theme</span>
+                  </div>
+                </div>
+                <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('fashion')"
+                  class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0"
+                  title="Live Preview Dekhein">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Preview</span>
+                </button>
+              </div>
+
+              <!-- Theme Card 5: Grocery -->
+              <div id="themeCard_grocery_food" onclick="selectDashboardTheme('grocery_food')"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-emerald-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-emerald-500/10">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="text-3xl shrink-0">🛒</span>
+                  <div class="min-w-0">
+                    <h4
+                      class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-emerald-300 transition truncate">
+                      Grocery & Food</h4>
+                    <span id="themeBadge_grocery_food"
+                      class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select
+                      Theme</span>
+                  </div>
+                </div>
+                <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('grocery_food')"
+                  class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0"
+                  title="Live Preview Dekhein">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Preview</span>
+                </button>
+              </div>
+
+              <!-- Theme Card 6: Beauty -->
+              <div id="themeCard_beauty_personal_care" onclick="selectDashboardTheme('beauty_personal_care')"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 hover:border-rose-400/80 cursor-pointer transition-all flex items-center justify-between gap-4 group shadow-md hover:shadow-rose-500/10">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="text-3xl shrink-0">💄</span>
+                  <div class="min-w-0">
+                    <h4
+                      class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-rose-300 transition truncate">
+                      Beauty & Cosmetics</h4>
+                    <span id="themeBadge_beauty_personal_care"
+                      class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Select
+                      Theme</span>
+                  </div>
+                </div>
+                <button type="button" onclick="event.stopPropagation(); openThemePreviewModal('beauty_personal_care')"
+                  class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1.5 transition active:scale-95 shadow shrink-0"
+                  title="Live Preview Dekhein">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Preview</span>
+                </button>
               </div>
             </div>
           </div>
 
-          <!-- Bottom Navigation Bar for Step 2 -->
-          <div class="pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-            <button type="button" onclick="switchMasterStep(1)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
-              <i data-lucide="arrow-left" class="w-4 h-4"></i>
-              <span>Back</span>
-            </button>
-            <button type="button" onclick="switchMasterStep(3)"
-                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/25 active:scale-95 transition">
+          <!-- Bottom Navigation Bar for Step 1 -->
+          <div class="pt-5 border-t border-slate-800/80 flex items-center justify-end">
+            <button type="button" onclick="confirmThemeAndGoToStep2()"
+              class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/25 active:scale-95 transition">
               <span>Next</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>
           </div>
 
-          <!-- HIDDEN BACKWARDS-COMPATIBILITY HOOKS -->
-          <div class="hidden">
-            
-            <input type="text" id="ghRepoUrlInput" />
-            <input type="text" id="siteUrlInput" />
-            <button id="btnCopyRepoLink"></button>
-            <button id="btnCopySiteLink"></button>
-            <a id="btnOpenRepoUrl" href="#"></a>
-            <a id="btnOpenSiteUrl" href="#"></a>
-            <input type="text" id="customRepoNameInput" value="vastustore" />
-            <span id="step2ThemePillIcon"></span>
-            <span id="step2ThemePillTitle"></span>
-            <span id="ghPreviewLiveUrl"></span>
-            <span id="summaryRepoUrl"></span>
-            <span id="summaryLiveUrl"></span>
-            <div id="subStepView1"></div>
-            <div id="subStepView2"></div>
-            <div id="subStepView3"></div>
-            <div id="subStepView4"></div>
-            <button id="subStepNavItem1"></button>
-            <button id="subStepNavItem2"></button>
-            <button id="subStepNavItem3"></button>
-            <button id="subStepNavItem4"></button>
-            <button id="subStepDot1"></button>
-            <button id="subStepDot2"></button>
-            <button id="subStepDot3"></button>
-            <button id="subStepDot4"></button>
-            <button id="btnPrevSubStep"></button>
-            <button id="btnNextSubStep"><span id="btnNextSubStepText"></span></button>
-            <a id="btnForkFallbackLink" href="#"></a>
-          </div>
-
         </div>
 
-      </div>
+        <!-- STEP 2: FRONTEND SETUP (1-CLICK AUTOMATION) -->
+        <div id="cardStep2" class="transition-all relative hidden">
 
-      <!-- STEP 3: GOOGLE SHEET CONNECT & TEST -->
-      <div id="cardStep3" class="transition-all relative hidden">
-        <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
-        <div id="lockOverlayStep3" class="hidden absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
-          <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
-            <i data-lucide="lock" class="w-6 h-6"></i>
+          <!-- TOP CARD HEADER -->
+          <div class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold shadow-md shadow-blue-500/10 shrink-0">
+                <i data-lucide="globe" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Step 2: Frontend Setup</h3>
+              </div>
+            </div>
+            <span id="badgeStep2" class="hidden"></span>
           </div>
-          <h4 class="font-heading font-bold text-lg text-white">Step 3 Abhi Locked Hai 🔒</h4>
-          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
-            Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 2 (Frontend Setup)</strong> me apni GitHub repository setup karein.
-          </p>
-          <a href="javascript:void(0)" onclick="switchMasterStep(2)" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25">
-            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
-            <span>Pehle Step 2 (Frontend Setup) Karein</span>
-          </a>
-        </div>
 
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-heading font-black text-lg flex items-center justify-center">3</span>
+          <!-- MAIN STEP 2 1-CLICK CONTAINER -->
+          <div class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-5">
+
+            <!-- PRIMARY 1-CLICK AUTO SETUP BUTTON -->
             <div>
-              <h3 class="font-heading font-bold text-xl text-white">Step 3: Backend Step</h3>
-              <p class="text-xs text-slate-400">Google Sheet ko apna live database banayein — 1-Click me automatic connect karein.</p>
-            </div>
-          </div>
-          <span id="badgeStep3" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
-            <i data-lucide="circle" class="w-3.5 h-3.5"></i>
-            <span>Pending Step 2</span>
-          </span>
-        </div>
-        <!-- HERO 1-CLICK AUTOMATIC CONNECT BOX -->
-        <div class="bg-gradient-to-br from-slate-900 via-slate-900/90 to-emerald-950/20 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
-          <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div class="max-w-md mx-auto space-y-3">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/30">
-              <i data-lucide="zap" class="w-8 h-8 text-slate-950"></i>
-            </div>
-            <h4 class="text-lg sm:text-xl font-black text-white">1-Click Google Sheet Backend Connection</h4>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Button dabate hi aapke <strong class="text-emerald-400">Personal Google Account</strong> me Sheet automatic create hokar dashboard se 100% connect ho jayegi. Zero coding, zero manual setup!
-            </p>
-          </div>
-
-          <!-- PRIMARY 1-CLICK AUTO GOOGLE CONNECT BUTTON -->
-          <div class="max-w-md mx-auto">
-            <button type="button" onclick="startGoogleAutoProvisioning()" id="btnGoogleAutoConnect"
-               class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group cursor-pointer">
-              <div class="flex items-center gap-3 text-left">
-                <div class="w-10 h-10 rounded-xl bg-slate-950/20 flex items-center justify-center shrink-0">
-                  <i data-lucide="sheet" class="w-5 h-5 text-slate-950"></i>
+              <button type="button" onclick="startGitHubOAuthFlow()" id="btnOAuthConnect"
+                class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group">
+                <div class="flex items-center gap-3 text-left">
+                  <div class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0 shadow">
+                    <i data-lucide="zap" class="w-6 h-6 text-amber-300"></i>
+                  </div>
+                  <div>
+                    <span class="tracking-wide font-extrabold text-sm sm:text-base">⚡ 1-Click Automatic GitHub
+                      Setup</span>
+                  </div>
                 </div>
-                <div>
-                  <span id="btnGoogleAutoConnectText" class="tracking-wide font-black text-sm sm:text-base">⚡ 1-Click Connect with Google Account</span>
-                  <p class="text-[10px] text-slate-900/80 font-bold hidden sm:block">Personal Drive Storage • 100% Automatic</p>
+                <i data-lucide="arrow-right"
+                  class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0"></i>
+              </button>
+            </div>
+
+            <!-- Bottom Navigation Bar for Step 2 -->
+            <div class="pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+              <button type="button" onclick="switchMasterStep(1)"
+                class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>Back</span>
+              </button>
+              <button type="button" onclick="switchMasterStep(3)"
+                class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/25 active:scale-95 transition">
+                <span>Next</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- HIDDEN BACKWARDS-COMPATIBILITY HOOKS -->
+            <div class="hidden">
+              <div id="readyLinksCard"></div>
+              <input type="text" id="ghRepoUrlInput" />
+              <input type="text" id="siteUrlInput" />
+              <button id="btnCopyRepoLink"></button>
+              <button id="btnCopySiteLink"></button>
+              <a id="btnOpenRepoUrl" href="#"></a>
+              <a id="btnOpenSiteUrl" href="#"></a>
+              <input type="text" id="customRepoNameInput" value="vastustore" />
+              <span id="step2ThemePillIcon"></span>
+              <span id="step2ThemePillTitle"></span>
+              <span id="ghPreviewLiveUrl"></span>
+              <span id="summaryRepoUrl"></span>
+              <span id="summaryLiveUrl"></span>
+              <div id="subStepView1"></div>
+              <div id="subStepView2"></div>
+              <div id="subStepView3"></div>
+              <div id="subStepView4"></div>
+              <button id="subStepNavItem1"></button>
+              <button id="subStepNavItem2"></button>
+              <button id="subStepNavItem3"></button>
+              <button id="subStepNavItem4"></button>
+              <button id="subStepDot1"></button>
+              <button id="subStepDot2"></button>
+              <button id="subStepDot3"></button>
+              <button id="subStepDot4"></button>
+              <button id="btnPrevSubStep"></button>
+              <button id="btnNextSubStep"><span id="btnNextSubStepText"></span></button>
+              <a id="btnForkFallbackLink" href="#"></a>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- STEP 3: GOOGLE SHEET CONNECT & TEST -->
+        <div id="cardStep3" class="transition-all relative hidden">
+          <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
+          <div id="lockOverlayStep3"
+            class="hidden absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
+            <div
+              class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-xl shadow-indigo-500/10">
+              <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-white">Step 3 Abhi Locked Hai 🔒</h4>
+            <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
+              Google Sheet connect karne ke liye pehle <strong class="text-blue-400">Step 2 (Frontend Setup)</strong> me
+              apni GitHub repository setup karein.
+            </p>
+            <a href="javascript:void(0)" onclick="switchMasterStep(2)"
+              class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-blue-500/25">
+              <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+              <span>Pehle Step 2 (Frontend Setup) Karein</span>
+            </a>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div class="flex items-center gap-3">
+              <span
+                class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-heading font-black text-lg flex items-center justify-center">3</span>
+              <div>
+                <h3 class="font-heading font-bold text-xl text-white">Step 3: Backend Step</h3>
+                <p class="text-xs text-slate-400">Google Sheet ko apna live database banayein — 1-Click me automatic
+                  connect karein.</p>
+              </div>
+            </div>
+            <span id="badgeStep3"
+              class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+              <i data-lucide="circle" class="w-3.5 h-3.5"></i>
+              <span>Pending Step 2</span>
+            </span>
+          </div>
+
+          <!-- HERO 1-CLICK AUTOMATIC CONNECT BOX -->
+          <div
+            class="bg-gradient-to-br from-slate-900 via-slate-900/90 to-emerald-950/20 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+            <div
+              class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none">
+            </div>
+            <div
+              class="absolute -bottom-24 -left-24 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none">
+            </div>
+
+            <div class="max-w-md mx-auto space-y-3">
+              <div
+                class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                <i data-lucide="zap" class="w-8 h-8 text-slate-950"></i>
+              </div>
+              <h4 class="text-lg sm:text-xl font-black text-white">1-Click Google Sheet Backend Connection</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Button dabate hi aapke <strong class="text-emerald-400">Personal Google Account</strong> me Sheet
+                automatic create hokar dashboard se 100% connect ho jayegi. Zero coding, zero manual setup!
+              </p>
+            </div>
+
+            <!-- PRIMARY 1-CLICK AUTO GOOGLE CONNECT BUTTON -->
+            <div class="max-w-md mx-auto">
+              <button type="button" onclick="startGoogleAutoProvisioning()" id="btnGoogleAutoConnect"
+                class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm sm:text-base flex items-center justify-between gap-3 shadow-xl shadow-emerald-500/30 transition transform active:scale-95 group cursor-pointer">
+                <div class="flex items-center gap-3 text-left">
+                  <div class="w-10 h-10 rounded-xl bg-slate-950/20 flex items-center justify-center shrink-0">
+                    <i data-lucide="sheet" class="w-5 h-5 text-slate-950"></i>
+                  </div>
+                  <div>
+                    <span id="btnGoogleAutoConnectText" class="tracking-wide font-black text-sm sm:text-base">⚡ 1-Click
+                      Connect with Google Account</span>
+                    <p class="text-[10px] text-slate-900/80 font-bold hidden sm:block">Personal Drive Storage • 100%
+                      Automatic</p>
+                  </div>
+                </div>
+                <i data-lucide="arrow-right"
+                  class="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition-transform shrink-0"></i>
+              </button>
+            </div>
+
+            <!-- CONNECTED GOOGLE SHEET CARD (Auto-appears when sheet is created/connected) -->
+            <div id="step3ConnectedSheetCard" class="hidden max-w-md mx-auto p-4 rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 border border-emerald-500/50 shadow-xl space-y-3 text-left">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                  <span>Aapki Connected Google Sheet (Live):</span>
+                </span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                  ✓ Drive Me Ready
+                </span>
+              </div>
+
+              <div class="space-y-1.5">
+                <span class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                  <i data-lucide="sheet" class="w-3.5 h-3.5 text-emerald-400"></i> Direct Sheet Link (Orders &amp; Products):
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <input type="text" id="step3ConnectedSheetInput" readonly
+                         class="flex-1 px-3 py-2 bg-slate-950 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 font-mono select-all focus:outline-none font-bold" />
+                  <button type="button" id="step3BtnCopySheetLink" onclick="copyConnectedGoogleSheetLink()"
+                          class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Sheet Link">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span id="step3BtnCopySheetLinkText">Copy</span>
+                  </button>
+                  <button type="button" onclick="openConnectedSheetDirectInChrome()" id="step3BtnOpenSheetLink"
+                     class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition active:scale-95 shrink-0 border border-slate-700" title="Open Google Sheet (Chrome Direct)">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                  </button>
                 </div>
               </div>
-              <i data-lucide="arrow-right" class="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition-transform shrink-0"></i>
-            </button>
-          </div>
-
-          <!-- CONNECTED GOOGLE SHEET CARD (Auto-appears with Copy button when sheet connects) -->
-          <div id="step3ConnectedSheetCard" class="hidden max-w-md mx-auto p-4 rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 border border-emerald-500/50 shadow-xl space-y-3 text-left">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-                <span>Aapki Connected Google Sheet (Live):</span>
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                ✓ Auto-Saved
-              </span>
             </div>
 
-            <div class="space-y-1.5">
-              <span class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
-                <i data-lucide="sheet" class="w-3.5 h-3.5 text-emerald-400"></i> Direct Sheet Link (Orders &amp; Products):
-              </span>
-              <div class="flex items-center gap-1.5">
-                <input type="text" id="step3ConnectedSheetInput" readonly
-                       class="flex-1 px-3 py-2 bg-slate-950 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 font-mono select-all focus:outline-none font-bold" />
-                <button type="button" id="step3BtnCopySheetLink" onclick="copyConnectedGoogleSheetLink()"
-                        class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0" title="Copy Sheet Link">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                  <span id="step3BtnCopySheetLinkText">Copy</span>
+            <!-- Status Notice Area -->
+            <div id="sheetConnectNotice" class="hidden max-w-md mx-auto p-3.5 rounded-xl text-xs font-medium border flex items-center gap-2.5"></div>
+
+            <!-- SELF DEPLOYMENT BLOCK (Direct script.google.com/home with Authentic Account Continuity) -->
+            <div id="step3SelfDeployBlock" class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-indigo-500/40 shadow-xl space-y-4 text-left">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                  <i data-lucide="rocket" class="w-4 h-4 text-indigo-400"></i>
+                  <span>Apna Personal Backend Web App Deploy Karein:</span>
+                </span>
+                <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/30">
+                  Direct Chrome Open 🚀
+                </span>
+              </div>
+
+              <!-- Email Continuity Notice -->
+              <div class="flex items-center justify-between bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 text-[11px]">
+                <span class="text-slate-400 flex items-center gap-1">
+                  <i data-lucide="mail" class="w-3.5 h-3.5 text-blue-400"></i> Google Account:
+                </span>
+                <span id="step3DeployAccountEmail" class="font-mono text-emerald-400 font-bold truncate max-w-[200px]">Aapka Google Account</span>
+              </div>
+
+              <!-- Project Name Reminder with 1-Click Copy -->
+              <div class="bg-indigo-950/40 border border-indigo-500/30 p-2.5 rounded-xl text-xs space-y-1">
+                <div class="text-[10px] uppercase tracking-wider text-indigo-300 font-bold flex items-center justify-between">
+                  <span>Apps Script me is project par tap karein:</span>
+                  <button type="button" onclick="copyProjectName()" class="text-emerald-400 hover:underline flex items-center gap-1 font-sans text-[10px] cursor-pointer">
+                    <i data-lucide="copy" class="w-2.5 h-2.5"></i> <span id="copyProjNameStatus">Copy Name</span>
+                  </button>
+                </div>
+                <div id="step3ProjectNameText" class="font-mono font-black text-amber-300 text-xs sm:text-sm select-all">
+                  Digital Store - Products &amp; Orders
+                </div>
+              </div>
+
+              <!-- PRIMARY ACTION: DIRECT TO script.google.com/home in Chrome -->
+              <div>
+                <button type="button" onclick="openAppsScriptHome()" id="step3BtnOpenAppsScript"
+                   class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 transition transform active:scale-95 cursor-pointer">
+                  <i data-lucide="external-link" class="w-4 h-4"></i>
+                  <span>1-Click Apps Script Kholein (script.google.com/home) ↗</span>
                 </button>
-                <a id="step3BtnOpenSheetLink" href="#" target="_blank"
-                   class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition active:scale-95 shrink-0 border border-slate-700" title="Open Google Sheet">
-                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                <p class="text-[10px] text-slate-400 text-center mt-1.5">
+                  ⚡ Mobile Chrome me seedha khulega (Sheets App me redirect nahi hoga)
+                </p>
+              </div>
+
+              <!-- 3-Step Simple Mobile Guide -->
+              <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-2 font-sans">
+                <div class="flex items-start gap-2">
+                  <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">1</span>
+                  <div>
+                    <strong>Project Chunein:</strong> Upar button daba kar Apps Script kholein aur list me sabse upar <strong id="step3GuideProjectName" class="text-amber-300">Digital Store - Products &amp; Orders</strong> par tap karein.
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">2</span>
+                  <div>
+                    <strong>Deploy Karein:</strong> Upar <strong>Deploy ➔ New deployment</strong> chunein. Gear icon par Web app select karein, <strong>Who has access: Anyone</strong> rakhein aur blue <strong>Deploy</strong> dabayein.
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">3</span>
+                  <div>
+                    <strong>Link Paste Karein:</strong> Mila hua <strong>Web app URL</strong> copy karke niche paste karein aur Connect dabayein!
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input & Save Web App URL -->
+              <div class="space-y-1.5 pt-1">
+                <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                  <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i> Deploy kiya hua Web App URL:
+                </label>
+                <div class="flex flex-col sm:flex-row gap-2">
+                  <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
+                         placeholder="https://script.google.com/macros/s/.../exec"
+                         class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none font-mono" />
+                  <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
+                          class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition shrink-0 cursor-pointer">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                    <span>Connect &amp; Step 4 ➔</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Instant Central API 1-Click Fallback -->
+              <div class="pt-1.5 text-center border-t border-slate-800/80">
+                <button type="button" onclick="connectInstantCentralApi()" id="btnInstantCentralApi"
+                        class="text-[11px] text-slate-400 hover:text-emerald-400 underline underline-offset-4 transition inline-flex items-center gap-1 cursor-pointer">
+                  <i data-lucide="sparkles" class="w-3 h-3 text-emerald-400"></i>
+                  <span>Abhi deploy nahi karna? 1-Click me Instant Connect karein</span>
+                </button>
+              </div>
+            </div>
+
+
+          <!-- Bottom Navigation Bar for Step 3 -->
+          <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+            <button type="button" onclick="switchMasterStep(2)"
+              class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back</span>
+            </button>
+
+            <button type="button" onclick="switchMasterStep(4)"
+              class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition">
+              <span>Next</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
+        <div id="cardStep4" class="transition-all relative hidden">
+          <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
+          <div id="lockOverlayStep4"
+            class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
+            <div
+              class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
+              <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-white">Step 4 Abhi Locked Hai 🔒</h4>
+            <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
+              Android Mobile App download karne se pehle <strong class="text-indigo-400">Step 3</strong> me apni Google
+              Sheet connect karein.
+            </p>
+            <a href="javascript:void(0)" onclick="switchMasterStep(3)"
+              class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
+              <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+              <span>Pehle Step 3 Connect Karein</span>
+            </a>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div class="flex items-center gap-3">
+              <span
+                class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">4</span>
+              <div>
+                <h3 class="font-heading font-bold text-xl text-white">Step 4: Android Admin App Download & 1-Tap Sync
+                </h3>
+                <p class="text-xs text-slate-400">Apne mobile app se orders dekhein, price badlein aur 5 ready-made
+                  designs apply karein.</p>
+              </div>
+            </div>
+            <span id="badgeStep4"
+              class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+              <span>Mobile Control</span>
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 items-start">
+
+            <!-- Column 1: Direct APK Download & Sharing -->
+            <div
+              class="space-y-3.5 bg-slate-950/70 border border-slate-800 p-4 sm:p-5 rounded-2xl flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <i data-lucide="smartphone" class="w-4 h-4 text-purple-400"></i>
+                    <span>1. Direct Android App (.APK) Download</span>
+                  </h4>
+                  <span
+                    class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 font-bold border border-purple-500/20">
+                    Direct File 📲
+                  </span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                  Live customer orders dekhne, 1-tap UTR verify karne aur prices update karne ke liye official <strong
+                    class="text-white">SheetStore Admin App</strong> download karein.
+                </p>
+
+                <!-- Direct APK Download Button -->
+                <a href="downloads/SheetStore-Admin.apk" download="SheetStore-Admin.apk" id="directApkDownloadBtn"
+                  class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-600/25 transition hover:scale-[1.01] active:scale-95 text-center mb-3">
+                  <i data-lucide="download" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                  <span>Download SheetStore-Admin.apk (Direct File) 📲</span>
+                </a>
+
+                <!-- Direct APK Link Sharing Box -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
+                      <i data-lucide="share-2" class="w-3.5 h-3.5 text-purple-400"></i>
+                      <span>Direct APK Link (WhatsApp ya Mobile pe bhejein):</span>
+                    </span>
+                    <span
+                      class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono">Direct
+                      .apk</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input type="text" id="directApkUrlInput" readonly
+                      value="https://yuviteltechnologies-art.github.io/freewebsite/downloads/SheetStore-Admin.apk"
+                      class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-purple-300 font-mono select-all focus:outline-none" />
+                    <button type="button" onclick="copyDirectApkLink()" id="btnCopyApkLink"
+                      class="px-3.5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-purple-600/20">
+                      <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                      <span id="btnCopyApkText">Copy Link</span>
+                    </button>
+                  </div>
+                  <p class="text-[10px] text-slate-400 mt-1.5">
+                    Is link par click karte hi seedhe APK download hogi — koi GitHub folder ya code nahi dikhega.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Complete Confirmation Button -->
+              <button type="button" onclick="markAppCompleted()" id="markAppBtn"
+                class="w-full mt-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition active:scale-95">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span>Maine App Install Kar Liya Hai ✓</span>
+              </button>
+            </div>
+
+            <!-- Column 2: How App Runs with Step 2 Google Sheet Macros URL -->
+            <div
+              class="space-y-3.5 bg-slate-950/70 border border-emerald-500/30 p-4 sm:p-5 rounded-2xl flex flex-col justify-between shadow-lg shadow-emerald-500/5">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+                    <span>2. App me Zero-Typing Automatic Login</span>
+                  </h4>
+                  <span
+                    class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                    Zero Typing ⚡
+                  </span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                  App me <strong class="text-emerald-400">koi bhi lamba URL paste karne ki zaroorat nahi hai!</strong>
+                  Step 2 me connect kiya hua Sheet URL aapke Mobile Number se automatically link ho chuka hai.
+                </p>
+
+                <!-- Super Easy Automatic Flow Banner -->
+                <div
+                  class="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-indigo-950/40 border border-emerald-500/30 rounded-xl p-3.5 mb-3">
+                  <div class="flex items-center gap-2 mb-2">
+                    <div
+                      class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+                      ✓</div>
+                    <h5 class="text-xs font-bold text-white">Mobile Number &amp; Password se Direct Login:</h5>
+                  </div>
+                  <div class="space-y-2 text-xs text-slate-200">
+                    <div class="flex items-start gap-2">
+                      <span
+                        class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">1</span>
+                      <span>Phone me <strong class="text-white">SheetStore Admin App</strong> open karein.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span
+                        class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">2</span>
+                      <span>Apna <strong class="text-emerald-300">Mobile Number</strong> aur Password (<strong
+                          class="text-white font-mono">123456</strong>) daal kar <strong>Log In 🚀</strong>
+                        dabayein.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span
+                        class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">3</span>
+                      <span>Central Database se aapki <strong class="text-emerald-400">Google Sheet apne aap
+                          connect</strong> ho jayegi aur saare orders live load ho jayenge!</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Backup: Step 2 Connected URL Display & 1-Click Copy -->
+                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
+                      <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i>
+                      <span>Backup Option: Direct Sheet URL Copy</span>
+                    </span>
+                    <span
+                      class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Optional</span>
+                  </div>
+                  <div class="flex items-center gap-2 mb-1.5">
+                    <input type="text" id="appStep2UrlDisplay" readonly
+                      value="https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec"
+                      class="w-full px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-[11px] text-emerald-300 font-mono select-all focus:outline-none" />
+                    <button type="button" onclick="copyConnectedSheetUrlForApp()" id="btnCopySheetForApp"
+                      class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1 transition active:scale-95 shadow-md shadow-indigo-600/20">
+                      <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                      <span id="btnCopySheetForAppText">Copy</span>
+                    </button>
+                  </div>
+                  <p class="text-[10px] text-slate-400">
+                    (Agar manual paste karna chahein toh app me upar <strong class="text-slate-300">⚙️ Sheet
+                      URL</strong> par tap karke ye link paste kar sakte hain).
+                  </p>
+                </div>
+              </div>
+
+              <!-- Alternative QR Scan Option -->
+              <div
+                class="mt-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800/80 flex items-center justify-between gap-3">
+                <div class="text-left">
+                  <p class="text-[11px] font-bold text-slate-200 flex items-center gap-1">
+                    <i data-lucide="qr-code" class="w-3.5 h-3.5 text-purple-400"></i>
+                    <span>Mobile QR Scan Option:</span>
+                  </p>
+                  <p class="text-[10px] text-slate-400">Google Lens ya Camera se scan karke direct Sheet URL copy
+                    karein.</p>
+                </div>
+                <div class="bg-white p-1 rounded-lg shadow shrink-0">
+                  <img id="appSyncQrCode" src="" alt="App Sync QR" class="w-14 h-14" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- STORE QUICK HUB / MANAGEMENT PREVIEW (Only visible upon completion or in Step 4) -->
+          <div id="storeQuickHubSection" class="hidden mt-6 pt-6 border-t border-slate-800/80">
+            <div
+              class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border-2 border-emerald-500/40 shadow-xl">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 text-2xl shadow-inner">
+                    🎉
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span
+                        class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Setup
+                        Complete</span>
+                      <span class="text-[10px] text-slate-400">100% Free Lifetime Hosting</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-base sm:text-lg text-white mt-0.5">Aapki Live Dukaan Ka Quick
+                      Hub</h3>
+                    <p class="text-xs text-slate-300">Yahan se aap apni live website, Google Sheet database aur support
+                      ko direct open kar sakte hain.</p>
+                  </div>
+                </div>
+                <span
+                  class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span>Store Ready</span>
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Live Store Link -->
+                <a id="hubLiveSiteLink" href="index.html" target="_blank"
+                  class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-blue-500/50 transition flex items-center gap-3 group shadow">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-105 transition">
+                    <i data-lucide="globe" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Aapki Website</p>
+                    <p class="text-xs font-bold text-white group-hover:text-blue-400 flex items-center gap-1">Open Live
+                      Site <i data-lucide="external-link" class="w-3 h-3"></i></p>
+                  </div>
+                </a>
+
+                <!-- Live Sheet Link -->
+                <a id="hubSheetLink" href="#" target="_blank"
+                  class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-3 group shadow">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition">
+                    <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Google Sheet Database</p>
+                    <p class="text-xs font-bold text-white group-hover:text-emerald-400 flex items-center gap-1">Hisaab
+                      Register <i data-lucide="external-link" class="w-3 h-3"></i></p>
+                  </div>
+                </a>
+
+                <!-- Support Link -->
+                <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20setup%20me%20help%20chahiye"
+                  target="_blank"
+                  class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-3 group shadow">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-105 transition">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">VIP Support</p>
+                    <p class="text-xs font-bold text-white group-hover:text-amber-400 flex items-center gap-1">WhatsApp
+                      Chat <i data-lucide="external-link" class="w-3 h-3"></i></p>
+                  </div>
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Status Notice Area -->
-          <div id="sheetConnectNotice" class="hidden max-w-md mx-auto p-3.5 rounded-xl text-xs font-medium border flex items-center gap-2.5"></div>
-
-          <!-- SELF DEPLOYMENT BLOCK FOR MERCHANT'S OWN GOOGLE ACCOUNT -->
-          <div id="step3SelfDeployBlock" class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-indigo-500/40 shadow-xl space-y-3.5 text-left">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span class="text-xs font-bold text-white flex items-center gap-1.5">
-                <i data-lucide="rocket" class="w-4 h-4 text-indigo-400"></i>
-                <span>Apna Backend Web App Deploy Karein:</span>
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 font-bold border border-indigo-500/20">
-                Personal Account 📱
-              </span>
-            </div>
-
-            <p class="text-[11px] text-slate-300 leading-relaxed">
-              Google Sheet me code pehle se shamil hai. Mobile ya PC se Apps Script kholein aur 2 clicks me deploy karein taki sabhi orders aapke personal Google Account se chalein:
-            </p>
-
-            <!-- 1-Tap Action Buttons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <a id="step3BtnOpenSheetDesktop" href="#" target="_blank"
-                 class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition active:scale-95 text-center">
-                <i data-lucide="sheet" class="w-3.5 h-3.5"></i>
-                <span>1. Sheet Kholein ↗</span>
-              </a>
-              <a id="step3BtnOpenAppsScript" href="https://script.google.com/home" target="_blank"
-                 class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition active:scale-95 text-center">
-                <i data-lucide="code" class="w-3.5 h-3.5"></i>
-                <span>2. Apps Script Kholein ↗</span>
-              </a>
-            </div>
-
-            <!-- 3-Step Simple Mobile Guide -->
-            <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1.5 font-sans">
-              <div class="flex items-start gap-1.5">
-                <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">1</span>
-                <span>Sheet me <strong>Extensions ➔ Apps Script</strong> kholein (ya upar wala button dabayein)</span>
-              </div>
-              <div class="flex items-start gap-1.5">
-                <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">2</span>
-                <span>Upar <strong>Deploy ➔ New deployment</strong> chunein, <strong>Who has access: Anyone</strong> select karein aur <strong>Deploy</strong> dabayein</span>
-              </div>
-              <div class="flex items-start gap-1.5">
-                <span class="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">3</span>
-                <span>Mila hua <strong>Web app URL</strong> (<code class="text-indigo-300 text-[10px]">.../exec</code>) copy karke niche paste karein:</span>
-              </div>
-            </div>
-
-            <!-- Input & Save Web App URL -->
-            <div class="space-y-1.5 pt-1">
-              <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
-                <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i> Deploy kiya hua Web App URL / Sheet URL:
-              </label>
-              <div class="flex flex-col sm:flex-row gap-2">
-                <input type="url" id="sheetUrlInput" oninput="handleSheetUrlInput()"
-                       placeholder="https://script.google.com/macros/s/.../exec"
-                       class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none font-mono" />
-                <button type="button" onclick="testAndSaveSheetConnection()" id="connectSheetBtn"
-                        class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition shrink-0 cursor-pointer">
-                  <i data-lucide="zap" class="w-3.5 h-3.5"></i>
-                  <span>Connect &amp; Step 4 ➔</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Instant Central API 1-Click Fallback -->
-            <div class="pt-1 text-center">
-              <button type="button" onclick="connectInstantCentralApi()" id="btnInstantCentralApi"
-                      class="text-[11px] text-slate-400 hover:text-emerald-400 underline underline-offset-4 transition inline-flex items-center gap-1 cursor-pointer">
-                <i data-lucide="sparkles" class="w-3 h-3 text-emerald-400"></i>
-                <span>Deploy nahi karna? 1-Click me Central High-Speed API use karein</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Bottom Navigation Bar for Step 3 -->
-        <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(2)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Back</span>
-          </button>
-
-          <button type="button" onclick="switchMasterStep(4)" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-indigo-500/25 active:scale-95 transition">
-            <span>Next</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP 4: ANDROID ADMIN APK DOWNLOAD & 1-TAP SYNC -->
-      <div id="cardStep4" class="transition-all relative hidden">
-        <!-- LOCK OVERLAY FOR STEP 3 (Shown when Step 2 is not complete) -->
-        <div id="lockOverlayStep4" class="absolute inset-0 bg-[#0B1120]/92 backdrop-blur-md rounded-3xl z-30 flex flex-col items-center justify-center p-6 text-center border border-slate-800">
-          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-xl shadow-purple-500/10">
-            <i data-lucide="lock" class="w-6 h-6"></i>
-          </div>
-          <h4 class="font-heading font-bold text-lg text-white">Step 4 Abhi Locked Hai 🔒</h4>
-          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4 leading-relaxed">
-            Android Mobile App download karne se pehle <strong class="text-indigo-400">Step 3</strong> me apni Google Sheet connect karein.
-          </p>
-          <a href="javascript:void(0)" onclick="switchMasterStep(3)" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-indigo-500/25">
-            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
-            <span>Pehle Step 3 Connect Karein</span>
-          </a>
-        </div>
-
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 font-heading font-black text-lg flex items-center justify-center">4</span>
-            <div>
-              <h3 class="font-heading font-bold text-xl text-white">Step 4: Android Admin App Download & 1-Tap Sync</h3>
-              <p class="text-xs text-slate-400">Apne mobile app se orders dekhein, price badlein aur 5 ready-made designs apply karein.</p>
-            </div>
-          </div>
-          <span id="badgeStep4" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold self-start sm:self-auto flex items-center gap-1">
-            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
-            <span>Mobile Control</span>
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 items-start">
-          
-          <!-- Column 1: Direct APK Download & Sharing -->
-          <div class="space-y-3.5 bg-slate-950/70 border border-slate-800 p-4 sm:p-5 rounded-2xl flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <i data-lucide="smartphone" class="w-4 h-4 text-purple-400"></i>
-                  <span>1. Direct Android App (.APK) Download</span>
-                </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 font-bold border border-purple-500/20">
-                  Direct File 📲
-                </span>
-              </div>
-              <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                Live customer orders dekhne, 1-tap UTR verify karne aur prices update karne ke liye official <strong class="text-white">SheetStore Admin App</strong> download karein.
-              </p>
-
-              <!-- Direct APK Download Button -->
-              <a href="downloads/SheetStore-Admin.apk" download="SheetStore-Admin.apk" id="directApkDownloadBtn"
-                 class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-600/25 transition hover:scale-[1.01] active:scale-95 text-center mb-3">
-                <i data-lucide="download" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                <span>Download SheetStore-Admin.apk (Direct File) 📲</span>
-              </a>
-
-              <!-- Direct APK Link Sharing Box -->
-              <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
-                    <i data-lucide="share-2" class="w-3.5 h-3.5 text-purple-400"></i>
-                    <span>Direct APK Link (WhatsApp ya Mobile pe bhejein):</span>
-                  </span>
-                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono">Direct .apk</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <input type="text" id="directApkUrlInput" readonly
-                         value="https://yuviteltechnologies-art.github.io/freewebsite/downloads/SheetStore-Admin.apk"
-                         class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-purple-300 font-mono select-all focus:outline-none" />
-                  <button type="button" onclick="copyDirectApkLink()" id="btnCopyApkLink"
-                          class="px-3.5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 transition active:scale-95 shadow-md shadow-purple-600/20">
-                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                    <span id="btnCopyApkText">Copy Link</span>
-                  </button>
-                </div>
-                <p class="text-[10px] text-slate-400 mt-1.5">
-                  Is link par click karte hi seedhe APK download hogi — koi GitHub folder ya code nahi dikhega.
-                </p>
-              </div>
-            </div>
-
-            <!-- Complete Confirmation Button -->
-            <button type="button" onclick="markAppCompleted()" id="markAppBtn"
-                    class="w-full mt-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition active:scale-95">
-              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
-              <span>Maine App Install Kar Liya Hai ✓</span>
+          <!-- Bottom Navigation Bar for Step 4 -->
+          <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+            <button type="button" onclick="switchMasterStep(3)"
+              class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back</span>
             </button>
-          </div>
 
-          <!-- Column 2: How App Runs with Step 2 Google Sheet Macros URL -->
-          <div class="space-y-3.5 bg-slate-950/70 border border-emerald-500/30 p-4 sm:p-5 rounded-2xl flex flex-col justify-between shadow-lg shadow-emerald-500/5">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                  <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
-                  <span>2. App me Zero-Typing Automatic Login</span>
-                </h4>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                  Zero Typing ⚡
-                </span>
-              </div>
-              <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                App me <strong class="text-emerald-400">koi bhi lamba URL paste karne ki zaroorat nahi hai!</strong> Step 2 me connect kiya hua Sheet URL aapke Mobile Number se automatically link ho chuka hai.
-              </p>
-
-              <!-- Super Easy Automatic Flow Banner -->
-              <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-indigo-950/40 border border-emerald-500/30 rounded-xl p-3.5 mb-3">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</div>
-                  <h5 class="text-xs font-bold text-white">Mobile Number &amp; Password se Direct Login:</h5>
-                </div>
-                <div class="space-y-2 text-xs text-slate-200">
-                  <div class="flex items-start gap-2">
-                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">1</span>
-                    <span>Phone me <strong class="text-white">SheetStore Admin App</strong> open karein.</span>
-                  </div>
-                  <div class="flex items-start gap-2">
-                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">2</span>
-                    <span>Apna <strong class="text-emerald-300">Mobile Number</strong> aur Password (<strong class="text-white font-mono">123456</strong>) daal kar <strong>Log In 🚀</strong> dabayein.</span>
-                  </div>
-                  <div class="flex items-start gap-2">
-                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">3</span>
-                    <span>Central Database se aapki <strong class="text-emerald-400">Google Sheet apne aap connect</strong> ho jayegi aur saare orders live load ho jayenge!</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Backup: Step 2 Connected URL Display & 1-Click Copy -->
-              <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
-                    <i data-lucide="link" class="w-3.5 h-3.5 text-blue-400"></i>
-                    <span>Backup Option: Direct Sheet URL Copy</span>
-                  </span>
-                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">Optional</span>
-                </div>
-                <div class="flex items-center gap-2 mb-1.5">
-                  <input type="text" id="appStep2UrlDisplay" readonly
-                         value="https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec"
-                         class="w-full px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-[11px] text-emerald-300 font-mono select-all focus:outline-none" />
-                  <button type="button" onclick="copyConnectedSheetUrlForApp()" id="btnCopySheetForApp"
-                          class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold shrink-0 flex items-center gap-1 transition active:scale-95 shadow-md shadow-indigo-600/20">
-                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                    <span id="btnCopySheetForAppText">Copy</span>
-                  </button>
-                </div>
-                <p class="text-[10px] text-slate-400">
-                  (Agar manual paste karna chahein toh app me upar <strong class="text-slate-300">⚙️ Sheet URL</strong> par tap karke ye link paste kar sakte hain).
-                </p>
-              </div>
-            </div>
-
-            <!-- Alternative QR Scan Option -->
-            <div class="mt-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800/80 flex items-center justify-between gap-3">
-              <div class="text-left">
-                <p class="text-[11px] font-bold text-slate-200 flex items-center gap-1">
-                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-purple-400"></i>
-                  <span>Mobile QR Scan Option:</span>
-                </p>
-                <p class="text-[10px] text-slate-400">Google Lens ya Camera se scan karke direct Sheet URL copy karein.</p>
-              </div>
-              <div class="bg-white p-1 rounded-lg shadow shrink-0">
-                <img id="appSyncQrCode" src="" alt="App Sync QR" class="w-14 h-14" />
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- STORE QUICK HUB / MANAGEMENT PREVIEW (Only visible upon completion or in Step 4) -->
-        <div id="storeQuickHubSection" class="hidden mt-6 pt-6 border-t border-slate-800/80">
-          <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border-2 border-emerald-500/40 shadow-xl">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 text-2xl shadow-inner">
-                  🎉
-                </div>
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Setup Complete</span>
-                    <span class="text-[10px] text-slate-400">100% Free Lifetime Hosting</span>
-                  </div>
-                  <h3 class="font-heading font-bold text-base sm:text-lg text-white mt-0.5">Aapki Live Dukaan Ka Quick Hub</h3>
-                  <p class="text-xs text-slate-300">Yahan se aap apni live website, Google Sheet database aur support ko direct open kar sakte hain.</p>
-                </div>
-              </div>
-              <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
-                <span>Store Ready</span>
-              </span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <!-- Live Store Link -->
-              <a id="hubLiveSiteLink" href="index.html" target="_blank"
-                 class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-blue-500/50 transition flex items-center gap-3 group shadow">
-                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-105 transition">
-                  <i data-lucide="globe" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Aapki Website</p>
-                  <p class="text-xs font-bold text-white group-hover:text-blue-400 flex items-center gap-1">Open Live Site <i data-lucide="external-link" class="w-3 h-3"></i></p>
-                </div>
-              </a>
-
-              <!-- Live Sheet Link -->
-              <a id="hubSheetLink" href="#" target="_blank"
-                 class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-3 group shadow">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition">
-                  <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Google Sheet Database</p>
-                  <p class="text-xs font-bold text-white group-hover:text-emerald-400 flex items-center gap-1">Hisaab Register <i data-lucide="external-link" class="w-3 h-3"></i></p>
-                </div>
-              </a>
-
-              <!-- Support Link -->
-              <a href="https://wa.me/919999999999?text=Namaste!%20Mujhe%20SheetStore%20Pro%20setup%20me%20help%20chahiye" target="_blank"
-                 class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-3 group shadow">
-                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-105 transition">
-                  <i data-lucide="message-circle" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">VIP Support</p>
-                  <p class="text-xs font-bold text-white group-hover:text-amber-400 flex items-center gap-1">WhatsApp Chat <i data-lucide="external-link" class="w-3 h-3"></i></p>
-                </div>
-              </a>
-            </div>
+            <a id="hubBottomLiveLink" href="index.html" target="_blank"
+              class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-emerald-500/25 active:scale-95 transition">
+              <span>Open Live Store</span>
+              <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
           </div>
         </div>
 
-        <!-- Bottom Navigation Bar for Step 4 -->
-        <div class="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
-          <button type="button" onclick="switchMasterStep(3)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Back</span>
-          </button>
-
-          <a id="hubBottomLiveLink" href="index.html" target="_blank" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-emerald-500/25 active:scale-95 transition">
-            <span>Open Live Store</span>
-            <i data-lucide="external-link" class="w-4 h-4"></i>
-          </a>
-        </div>
+        <!-- END OF ACTIVE MASTER STEP CONTAINER -->
       </div>
 
-      <!-- END OF ACTIVE MASTER STEP CONTAINER -->
-      </div>
-
-    <!-- END OF UNIFIED 3-STEP STORE SETUP WIZARD CARD -->
+      <!-- END OF UNIFIED 3-STEP STORE SETUP WIZARD CARD -->
     </div>
 
 
@@ -1051,14 +1158,17 @@
   </main>
 
   <!-- CHANGE PASSWORD MODAL -->
-  <div id="changePassModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl text-left border border-blue-500/40">
+  <div id="changePassModal"
+    class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div
+      class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl text-left border border-blue-500/40">
       <button onclick="closeChangePassModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
       <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+        <div
+          class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
           <i data-lucide="key" class="w-5 h-5"></i>
         </div>
         <div>
@@ -1067,27 +1177,28 @@
         </div>
       </div>
 
-      <div id="changePassAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2"></div>
+      <div id="changePassAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-medium border flex items-center gap-2">
+      </div>
 
       <form onsubmit="handleChangePassSubmit(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Purana Password (Default: 123456)</label>
           <input type="password" id="oldPasswordInput" required placeholder="Purana password"
-                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Naya Password</label>
           <input type="password" id="newPasswordInput" required placeholder="Kam se kam 4 akshar"
-                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Naya Password Confirm Karein</label>
           <input type="password" id="confirmPasswordInput" required placeholder="Dobara naya password daalein"
-                 class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none" />
         </div>
 
         <button type="submit" id="changePassSubmitBtn"
-                class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
+          class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition active:scale-95">
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>Password Save Karein ⚡</span>
         </button>
@@ -1098,33 +1209,37 @@
   <!-- ========================================================
        IN-DASHBOARD THEME PREVIEW FULLSCREEN MODAL (WITH BACK BUTTON)
        ======================================================== -->
-  <div id="themePreviewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col" style="display: none;">
+  <div id="themePreviewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col"
+    style="display: none;">
     <!-- Top Navigation Bar -->
-    <div class="bg-slate-900 border-b border-slate-800 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 shrink-0 shadow-xl z-20">
+    <div
+      class="bg-slate-900 border-b border-slate-800 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 shrink-0 shadow-xl z-20">
       <div class="flex items-center gap-2 sm:gap-3 min-w-0">
         <button type="button" onclick="closeThemePreviewModal()"
-                class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 border border-slate-700 active:scale-95 transition shadow shrink-0">
+          class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 border border-slate-700 active:scale-95 transition shadow shrink-0">
           <i data-lucide="arrow-left" class="w-4 h-4 text-cyan-400"></i>
           <span>← Wapas Themes Par (Back)</span>
         </button>
         <div class="flex items-center gap-2 min-w-0">
           <span id="themePreviewModalIcon" class="text-xl sm:text-2xl shrink-0">🕉️</span>
           <div class="truncate">
-            <h4 id="themePreviewModalTitle" class="font-bold text-xs sm:text-sm text-white truncate">वास्तु ब्रह्मांड</h4>
-            <p class="text-[10px] text-slate-400 hidden sm:block">Live Interactive Demo • Wapas button daba kar dusri theme bhi dekh sakte hain</p>
+            <h4 id="themePreviewModalTitle" class="font-bold text-xs sm:text-sm text-white truncate">वास्तु ब्रह्मांड
+            </h4>
+            <p class="text-[10px] text-slate-400 hidden sm:block">Live Interactive Demo • Wapas button daba kar dusri
+              theme bhi dekh sakte hain</p>
           </div>
         </div>
       </div>
 
       <div class="flex items-center gap-2 shrink-0">
         <button type="button" onclick="selectThemeFromPreview()"
-                class="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center gap-1.5 shadow-lg shadow-emerald-600/30 active:scale-95 transition">
+          class="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center gap-1.5 shadow-lg shadow-emerald-600/30 active:scale-95 transition">
           <i data-lucide="check-circle-2" class="w-4 h-4"></i>
           <span>✓ Yeh Theme Chunein</span>
         </button>
         <button type="button" onclick="closeThemePreviewModal()"
-                class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 active:scale-95 transition"
-                title="Close Preview">
+          class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 active:scale-95 transition"
+          title="Close Preview">
           <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
         </button>
       </div>
@@ -1133,11 +1248,14 @@
     <!-- Responsive Iframe Container -->
     <div class="relative flex-1 w-full bg-slate-950 overflow-hidden">
       <!-- Loading Spinner -->
-      <div id="themePreviewSpinner" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/85 gap-3 pointer-events-none">
+      <div id="themePreviewSpinner"
+        class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/85 gap-3 pointer-events-none">
         <div class="w-10 h-10 border-4 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin"></div>
         <p class="text-xs text-slate-300 font-medium">Theme demo load ho raha hai...</p>
       </div>
-      <iframe id="themePreviewIframe" src="" class="w-full h-full border-0 bg-slate-950" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe id="themePreviewIframe" src="" class="w-full h-full border-0 bg-slate-950"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
     </div>
   </div>
 
@@ -1148,7 +1266,7 @@
 
   <script>
     const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec";
-    
+
     let currentUser = null;
 
     // FLAGSHIP STOREFRONT THEMES CONFIGURATION
@@ -1306,7 +1424,7 @@
       }
 
       if (iframe) {
-        iframe.onload = function() {
+        iframe.onload = function () {
           if (spinner) {
             spinner.classList.add('hidden');
             spinner.style.display = 'none';
@@ -1324,7 +1442,7 @@
       // Add browser history entry so device/browser back button returns to themes grid
       try {
         window.history.pushState({ modalOpen: 'themePreview' }, '');
-      } catch (e) {}
+      } catch (e) { }
 
       if (window.lucide) lucide.createIcons();
     }
@@ -1342,7 +1460,7 @@
       if (triggerHistoryBack && window.history.state && window.history.state.modalOpen === 'themePreview') {
         try {
           window.history.back();
-        } catch (e) {}
+        } catch (e) { }
       }
     }
 
@@ -1357,7 +1475,7 @@
     }
 
     // Intercept mobile/hardware back button to smoothly close modal
-    window.addEventListener('popstate', function(e) {
+    window.addEventListener('popstate', function (e) {
       const modal = document.getElementById('themePreviewModal');
       if (modal && !modal.classList.contains('hidden')) {
         closeThemePreviewModal(false);
@@ -1389,7 +1507,7 @@
       switchMasterStep(2);
     }
 
-        function openThemeSelectorModal() {
+    function openThemeSelectorModal() {
       const modal = document.getElementById('dashboardThemeSelectorModal');
       if (modal) {
         modal.classList.remove('hidden');
@@ -1402,7 +1520,7 @@
       if (modal) modal.classList.add('hidden');
     }
 
-        function applyNewThemeFromModal(themeKey) {
+    function applyNewThemeFromModal(themeKey) {
       localStorage.setItem('sheetstore_selected_theme', themeKey);
       localStorage.setItem('store_active_template', themeKey);
       localStorage.setItem('sheetstore_theme_confirmed', 'true');
@@ -1439,7 +1557,7 @@
       const input = document.getElementById(inputId);
       const btn = document.getElementById(btnId);
       if (!input || !input.value) return;
-      
+
       const textToCopy = input.value.trim();
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -1472,28 +1590,34 @@
 
     function updateReadyLinksUI(repoUrl, siteUrl) {
       const card = document.getElementById('readyLinksCard');
-      const cardRepoInput = document.getElementById('cardRepoUrlInput') || document.getElementById('ghRepoUrlInput');
-      const cardSiteInput = document.getElementById('cardSiteUrlInput') || document.getElementById('siteUrlInput');
+      const step3Card = document.getElementById('step3ReadyLinksCard');
+      const cardRepoInput = document.getElementById('ghRepoUrlInput');
+      const cardSiteInput = document.getElementById('siteUrlInput');
+      const step3RepoInput = document.getElementById('step3CardRepoUrlInput');
+      const step3SiteInput = document.getElementById('step3CardSiteUrlInput');
       const btnOpenRepo = document.getElementById('btnOpenRepoUrl');
       const btnOpenSite = document.getElementById('btnOpenSiteUrl');
+      const step3BtnOpenRepo = document.getElementById('step3BtnOpenRepoUrl');
+      const step3BtnOpenSite = document.getElementById('step3BtnOpenSiteUrl');
 
       const r = repoUrl || (currentUser && currentUser.github_repo_url) || (cardRepoInput ? cardRepoInput.value.trim() : '') || '';
       const s = siteUrl || (currentUser && (currentUser.website_live_url || currentUser.site_url)) || (cardSiteInput ? cardSiteInput.value.trim() : '') || '';
 
       if (cardRepoInput && r) cardRepoInput.value = r;
       if (cardSiteInput && s) cardSiteInput.value = s;
-      const ghRepoUrlInput = document.getElementById('ghRepoUrlInput');
-      if (ghRepoUrlInput && r) ghRepoUrlInput.value = r;
-      const siteUrlInput = document.getElementById('siteUrlInput');
-      if (siteUrlInput && s) siteUrlInput.value = s;
+      if (step3RepoInput && r) step3RepoInput.value = r;
+      if (step3SiteInput && s) step3SiteInput.value = s;
 
       if (btnOpenRepo && r) btnOpenRepo.href = r;
       if (btnOpenSite && s) btnOpenSite.href = s;
+      if (step3BtnOpenRepo && r) step3BtnOpenRepo.href = r;
+      if (step3BtnOpenSite && s) step3BtnOpenSite.href = s;
 
       if (r || s) {
         if (card) card.classList.remove('hidden');
+        if (step3Card) step3Card.classList.remove('hidden');
       }
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     // Helper: Update Step 3 Connected Google Sheet UI Card & auto-fill input
@@ -1501,13 +1625,25 @@
       const card = document.getElementById('step3ConnectedSheetCard');
       const input = document.getElementById('step3ConnectedSheetInput');
       const link = document.getElementById('step3BtnOpenSheetLink');
-      const sheetDesktopLink = document.getElementById('step3BtnOpenSheetDesktop');
       const sheetUrlInput = document.getElementById('sheetUrlInput');
       const autoBtn = document.getElementById('btnGoogleAutoConnect');
       const autoBtnText = document.getElementById('btnGoogleAutoConnectText');
+      const emailBadge = document.getElementById('step3DeployAccountEmail');
+      const projNameBadge = document.getElementById('step3ProjectNameText');
+      const guideProjBadge = document.getElementById('step3GuideProjectName');
 
       const sUrl = sheetUrl || (currentUser && (currentUser.google_spreadsheet_url || currentUser.sheet_url)) || localStorage.getItem('google_spreadsheet_url') || '';
       const sId = sheetId || (currentUser && currentUser.sheet_id) || '';
+
+      const storeName = (currentUser && currentUser.brand_name) || "Digital Store";
+      const fullProjectName = storeName + " - Products & Orders";
+      if (projNameBadge) projNameBadge.innerText = fullProjectName;
+      if (guideProjBadge) guideProjBadge.innerText = fullProjectName;
+
+      const userEmail = (currentUser && currentUser.email) || localStorage.getItem('sheetstore_user_email') || '';
+      if (emailBadge) {
+        emailBadge.innerText = userEmail || "Aapka Google Account";
+      }
 
       if (sUrl || sId) {
         let fullSheetUrl = sUrl;
@@ -1520,8 +1656,6 @@
         }
 
         if (input) input.value = fullSheetUrl;
-        if (link) link.href = fullSheetUrl;
-        if (sheetDesktopLink) sheetDesktopLink.href = fullSheetUrl;
         if (sheetUrlInput && !sheetUrlInput.value) sheetUrlInput.value = fullSheetUrl;
         if (card) card.classList.remove('hidden');
 
@@ -1533,6 +1667,53 @@
         }
       }
       if (window.lucide) lucide.createIcons();
+    }
+
+    // Direct to script.google.com/home with Authentic Google Account continuity
+    function openAppsScriptHome() {
+      const userEmail = (currentUser && currentUser.email) || localStorage.getItem('sheetstore_user_email') || '';
+      let targetUrl = 'https://script.google.com/home';
+      if (userEmail && userEmail.includes('@')) {
+        targetUrl = 'https://accounts.google.com/AccountChooser?continue=' + encodeURIComponent('https://script.google.com/home') + '&Email=' + encodeURIComponent(userEmail);
+      }
+      window.open(targetUrl, '_blank');
+    }
+
+    // Open connected Google Sheet directly in Chrome on mobile (bypassing native Sheets App)
+    function openConnectedSheetDirectInChrome() {
+      const input = document.getElementById('step3ConnectedSheetInput');
+      const sheetUrl = (input && input.value) ? input.value : ((currentUser && currentUser.google_spreadsheet_url) || '');
+      if (!sheetUrl) return;
+
+      const isAndroid = /android/i.test(navigator.userAgent);
+      if (isAndroid) {
+        const match = sheetUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        const sheetId = match ? match[1] : '';
+        if (sheetId) {
+          const chromeIntent = "intent://docs.google.com/spreadsheets/d/" + sheetId + "/edit#Intent;scheme=https;package=com.android.chrome;end";
+          const fallbackTimer = setTimeout(() => { window.open(sheetUrl, '_blank'); }, 1500);
+          window.addEventListener('blur', () => clearTimeout(fallbackTimer), { once: true });
+          window.location.href = chromeIntent;
+          return;
+        }
+      }
+      window.open(sheetUrl, '_blank');
+    }
+
+    // 1-Click Copy Project Name so user can easily search in Apps Script
+    function copyProjectName() {
+      const badge = document.getElementById('step3ProjectNameText');
+      const status = document.getElementById('copyProjNameStatus');
+      const text = badge ? badge.innerText.trim() : "Digital Store - Products & Orders";
+      if (!text) return;
+
+      navigator.clipboard.writeText(text).then(() => {
+        if (status) status.innerText = "✓ Copied!";
+        if (typeof confetti === 'function') confetti({ particleCount: 40, spread: 50, origin: { y: 0.6 } });
+        setTimeout(() => { if (status) status.innerText = "Copy Name"; }, 2500);
+      }).catch(() => {
+        prompt("Apps Script Project Name:", text);
+      });
     }
 
     function connectInstantCentralApi() {
@@ -1585,7 +1766,7 @@
       const urlSheetUrl = urlParams.get('sheet_url');
 
       const stored = localStorage.getItem('sheetstore_auth_user');
-      
+
       if (!stored && !urlOrderId && !oauthCode && !urlSheetId) {
         // Not logged in and no order in URL -> redirect to auth
         window.location.href = "auth.html";
@@ -1717,7 +1898,6 @@
       checkPaymentLockStatus();
       maybePromptThemeSelection();
       updateReadyLinksUI();
-      updateConnectedSheetUI();
 
       if (urlSheetId) {
         handleAutoConnectedSheet(urlSheetId, urlSheetUrl);
@@ -1826,7 +2006,7 @@
         if (cleanOrderId) queryParts.push(`order_id=${encodeURIComponent(cleanOrderId)}`);
         if (currentUser.phone) queryParts.push(`phone=${encodeURIComponent(currentUser.phone)}`);
         if (currentUser.email) queryParts.push(`email=${encodeURIComponent(currentUser.email)}`);
-        
+
         const url = `${DEFAULT_SHEET_URL}?action=checkOrderStatus&${queryParts.join('&')}`;
         const res = await fetch(url);
         const data = await res.json();
@@ -2391,7 +2571,7 @@
       lucide.createIcons();
     }
 
-        // Helper: Realtime GitHub Repo URL Paste Parser & Universal Formula Generator
+    // Helper: Realtime GitHub Repo URL Paste Parser & Universal Formula Generator
     function handleGhRepoPaste() {
       const repoInput = document.getElementById('ghRepoUrlInput');
       const val = (repoInput ? repoInput.value : '').trim();
@@ -2500,7 +2680,7 @@
       const userId = currentUser.id || "";
       const phone = currentUser.phone ? String(currentUser.phone) : "";
       const identifier = email || userId || phone;
-      
+
       const params = new URLSearchParams({
         action: 'updateUserProfile',
         identifier: identifier,
@@ -2737,7 +2917,14 @@
       const input = document.getElementById('sheetUrlInput');
       const notice = document.getElementById('sheetConnectNotice');
       if (!input || !notice) return;
-      const val = input.value.trim();
+      let val = input.value.trim();
+
+      // Auto-extract https://script.google.com/macros/s/.../exec if user pasted wrapped text
+      const execMatch = val.match(/https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9-_]+\/exec/);
+      if (execMatch && execMatch[0] !== val) {
+        val = execMatch[0];
+        input.value = val;
+      }
 
       if (!val) {
         notice.classList.add('hidden');
@@ -2895,7 +3082,6 @@
       saveUserLocally();
       generateSyncQr();
       syncAppStepUrlDisplay(webAppApiUrl);
-      updateConnectedSheetUI(fullSheetUrl, sheetId);
       updateStepUI(currentUser.onboarding_step);
 
       const hubLink = document.getElementById('hubSheetLink');
@@ -2974,7 +3160,6 @@
           if (sheetId) {
             currentUser.sheet_id = sheetId;
             currentUser.google_spreadsheet_url = "https://docs.google.com/spreadsheets/d/" + sheetId + "/edit";
-            updateConnectedSheetUI(currentUser.google_spreadsheet_url, sheetId);
             localStorage.setItem('google_spreadsheet_url', currentUser.google_spreadsheet_url);
             const hubLink = document.getElementById('hubSheetLink');
             if (hubLink) hubLink.href = currentUser.google_spreadsheet_url;
@@ -3002,7 +3187,6 @@
         if (sheetId) {
           currentUser.sheet_id = sheetId;
           currentUser.google_spreadsheet_url = "https://docs.google.com/spreadsheets/d/" + sheetId + "/edit";
-            updateConnectedSheetUI(currentUser.google_spreadsheet_url, sheetId);
           localStorage.setItem('google_spreadsheet_url', currentUser.google_spreadsheet_url);
         }
         localStorage.setItem('store_sheet_url', url);
@@ -3176,10 +3360,10 @@
     function startGitHubOAuthFlow() {
       const repoName = getSelectedRepoName();
       localStorage.setItem('pending_oauth_repo', repoName);
-      
+
       const redirectUri = getOAuthRedirectUri();
       const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=repo,workflow&state=gh_oauth`;
-      
+
       window.location.href = authUrl;
     }
 
@@ -3231,7 +3415,7 @@
       try {
         const redirectUri = getOAuthRedirectUri();
         const endpoint = `${DEFAULT_SHEET_URL}?action=githubOAuth&code=${encodeURIComponent(code)}&repo=${encodeURIComponent(repoName)}&identifier=${encodeURIComponent(identifier)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
-        
+
         const res = await fetch(endpoint);
         clearTimeout(t1);
         clearTimeout(t2);
@@ -3244,7 +3428,7 @@
           if (step1) step1.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">1. GitHub Connected (${data.username})</span>`;
           if (step2) step2.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">2. Repo Ready (${data.repo_name})</span>`;
           if (step3) step3.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">3. Template Files 100% Copied ('main' branch)</span>`;
-          
+
           if (data.pages_enabled) {
             if (step4) step4.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 shrink-0 text-emerald-400"></i> <span class="text-emerald-400">4. GitHub Pages 100% Activated on 'main'!</span>`;
             if (title) title.innerHTML = `🎉 Badhai Ho! Website Ready Hai!`;
@@ -3452,7 +3636,7 @@
     function getGitHubUpDownFeatures(position = 'down') {
       const screenW = window.screen.availWidth || window.screen.width || 1280;
       const screenH = window.screen.availHeight || window.screen.height || 720;
-      
+
       const width = Math.max(760, screenW - 20);
       const height = Math.max(380, Math.floor(screenH * 0.49));
       const left = 10;
@@ -3471,14 +3655,14 @@
     function toggleGitHubWindowPosition() {
       const nextPos = (currentGhPosition === 'down') ? 'up' : 'down';
       currentGhPosition = nextPos;
-      
+
       const winInfo = getGitHubUpDownFeatures(nextPos);
       if (activeGhHalfWindow && !activeGhHalfWindow.closed) {
         try {
           activeGhHalfWindow.moveTo(winInfo.left, winInfo.top);
           activeGhHalfWindow.resizeTo(winInfo.width, winInfo.height);
           activeGhHalfWindow.focus();
-        } catch(e) {}
+        } catch (e) { }
       }
       updateGhPositionStatusUI(nextPos);
     }
@@ -3486,7 +3670,7 @@
     function updateGhPositionStatusUI(pos) {
       const statusText = document.getElementById('splitScreenStatusText');
       const toggleBtnText = document.getElementById('btnToggleGhPosText');
-      
+
       if (pos === 'down') {
         if (statusText) {
           statusText.innerHTML = `🟢 Up &amp; Down Split Active: <strong>Niche (Down Side)</strong> Window Me GitHub Khula Hai`;
@@ -3509,7 +3693,7 @@
       if (activeGhHalfWindow && !activeGhHalfWindow.closed) {
         try {
           activeGhHalfWindow.close();
-        } catch(e) {}
+        } catch (e) { }
       }
       activeGhHalfWindow = null;
 
@@ -3553,10 +3737,10 @@
     function openPagesSettingsInHalfWindow() {
       const repoInput = document.getElementById('ghRepoUrlInput');
       const val = (repoInput ? repoInput.value : '').trim();
-      
+
       let owner = '';
       let repo = getSelectedRepoName();
-      
+
       const match = val.match(/(?:github\.com\/|github\.io\/)?([a-zA-Z0-9-_]+)(?:\/([a-zA-Z0-9-_]+))?/i);
       if (match && match[1]) {
         owner = match[1].trim();
@@ -3572,7 +3756,7 @@
           activeGhHalfWindow.location.href = pagesUrl;
           activeGhHalfWindow.focus();
           return;
-        } catch(e) {}
+        } catch (e) { }
       }
 
       activeGhHalfWindow = window.open(pagesUrl, 'GitHubRepoUpDownWindow', winInfo.features);
@@ -3774,56 +3958,70 @@
   <!-- ========================================================
        COMPACT MOBILE-FRIENDLY GITHUB SETUP POPUP (BOTTOM SHEET)
        ======================================================== -->
-  <div id="ghCopyAssistantModal" class="hidden fixed inset-0 z-50 bg-black/45 flex items-end sm:items-center justify-center p-2 sm:p-4 overflow-y-auto transition-all" onclick="closeGhCopyAssistantModal()">
-    <div class="relative w-full max-w-lg bg-slate-900/95 border-t-2 sm:border border-emerald-500/50 rounded-t-3xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3 max-h-[70vh] overflow-y-auto text-left shadow-black/80 backdrop-blur-sm" onclick="event.stopPropagation()">
-      
+  <div id="ghCopyAssistantModal"
+    class="hidden fixed inset-0 z-50 bg-black/45 flex items-end sm:items-center justify-center p-2 sm:p-4 overflow-y-auto transition-all"
+    onclick="closeGhCopyAssistantModal()">
+    <div
+      class="relative w-full max-w-lg bg-slate-900/95 border-t-2 sm:border border-emerald-500/50 rounded-t-3xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3 max-h-[70vh] overflow-y-auto text-left shadow-black/80 backdrop-blur-sm"
+      onclick="event.stopPropagation()">
+
       <!-- Mobile Drag Handle -->
       <div class="w-12 h-1.5 bg-slate-700/80 rounded-full mx-auto sm:hidden mb-1"></div>
 
       <!-- Modal Header -->
       <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
         <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+          <div
+            class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
             <i data-lucide="git-fork" class="w-4 h-4"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
               <h3 class="font-heading font-bold text-sm sm:text-base text-white">GitHub Setup Assistant</h3>
-              <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30">Step 1.2</span>
+              <span
+                class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30">Step
+                1.2</span>
             </div>
             <p class="text-[10px] text-slate-400">Peeche Dashboard background me live chal raha hai 👁️</p>
           </div>
         </div>
-        <button type="button" onclick="closeGhCopyAssistantModal()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition" title="Popup Band Karein">
+        <button type="button" onclick="closeGhCopyAssistantModal()"
+          class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition"
+          title="Popup Band Karein">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
       <!-- Welcome Back Notification (Auto-detects when returning from GitHub tab) -->
-      <div id="modalReturnBanner" class="hidden p-2.5 rounded-xl bg-emerald-950/70 border border-emerald-500/40 flex items-center justify-between text-xs text-emerald-200 animate-pulse">
+      <div id="modalReturnBanner"
+        class="hidden p-2.5 rounded-xl bg-emerald-950/70 border border-emerald-500/40 flex items-center justify-between text-xs text-emerald-200 animate-pulse">
         <div class="flex items-center gap-2">
           <span class="text-base">👋</span>
           <div>
             <p class="font-bold text-white text-[11px]">Wapas aane par swagat hai!</p>
-            <p class="text-[10px] text-emerald-300">Niche apna GitHub <strong>Username</strong> likhein ya Paste karein:</p>
+            <p class="text-[10px] text-emerald-300">Niche apna GitHub <strong>Username</strong> likhein ya Paste karein:
+            </p>
           </div>
         </div>
       </div>
 
       <!-- COMPACT 3-STEP ACTION FLOW -->
       <div class="space-y-2.5">
-        
+
         <!-- Step 1: Open GitHub (1-Tap) -->
         <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
+              <span
+                class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
               <span>GitHub Par Repo Banayein:</span>
             </span>
-            <span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Public Default</span>
+            <span
+              class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Public
+              Default</span>
           </div>
           <a id="modalReopenPopupBtn" href="#" target="_blank" onclick="markAwaitingGhReturn()"
-             class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow text-center">
+            class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow text-center">
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             <span>👉 1-Tap Me GitHub Repo Kholein (Create repository) ↗</span>
           </a>
@@ -3836,30 +4034,36 @@
         <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
+              <span
+                class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
               <span>GitHub Username ya Repo Link Daalein:</span>
             </span>
-            <span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">✨ Sirf Username Bhi Chalega</span>
+            <span
+              class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">✨
+              Sirf Username Bhi Chalega</span>
           </div>
           <div class="flex items-center gap-2">
             <input type="text" id="modalGhInput" placeholder="jaise: rahul123 ya poora link"
-                   oninput="handleModalGhInput()"
-                   class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
+              oninput="handleModalGhInput()"
+              class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:border-emerald-500 focus:outline-none font-mono" />
             <button type="button" onclick="pasteFromClipboardToModalInput()"
-                    class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shrink-0 transition active:scale-95 shadow">
+              class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shrink-0 transition active:scale-95 shadow">
               <i data-lucide="clipboard-paste" class="w-3.5 h-3.5"></i>
               <span>📋 Paste</span>
             </button>
           </div>
           <p class="text-[10px] text-slate-400 leading-tight">
-            💡 <strong>Mobile Tip:</strong> Link copy karne ke chakkar me na padein — sirf apna GitHub <strong>Username</strong> likhein, baki links hum khud auto-generate kar denge!
+            💡 <strong>Mobile Tip:</strong> Link copy karne ke chakkar me na padein — sirf apna GitHub
+            <strong>Username</strong> likhein, baki links hum khud auto-generate kar denge!
           </p>
-          
+
           <!-- Live Link Preview -->
-          <div id="modalCalculatedLinks" class="hidden p-2.5 rounded-lg bg-slate-900 border border-emerald-500/30 text-xs font-mono space-y-1">
+          <div id="modalCalculatedLinks"
+            class="hidden p-2.5 rounded-lg bg-slate-900 border border-emerald-500/30 text-xs font-mono space-y-1">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px]">
               <span class="text-slate-400 font-sans">Live Website:</span>
-              <span id="modalLiveSiteText" class="text-emerald-400 font-bold break-all">https://username.github.io/mystore/</span>
+              <span id="modalLiveSiteText"
+                class="text-emerald-400 font-bold break-all">https://username.github.io/mystore/</span>
             </div>
           </div>
         </div>
@@ -3868,13 +4072,14 @@
         <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
+              <span
+                class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
               <span>Pages Settings (Branch: main ➔ Save):</span>
             </span>
             <span class="text-[9px] text-amber-400 font-bold">Zaroori Step</span>
           </div>
           <a id="modalDirectPagesBtn" href="https://github.com/settings" target="_blank"
-             class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow text-center">
+            class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow text-center">
             <i data-lucide="settings" class="w-3.5 h-3.5"></i>
             <span>Pages Settings Kholein (Branch: main ➔ Save) ↗</span>
           </a>
@@ -3883,7 +4088,7 @@
         <!-- Support Backup Option -->
         <div class="text-center pt-0.5">
           <a href="https://wa.me/?text=Hi%2C+mujhe+Vastu+Store+ka+GitHub+setup+karne+me+help+chahiye" target="_blank"
-             class="text-[10px] text-slate-400 hover:text-emerald-400 transition underline inline-flex items-center gap-1">
+            class="text-[10px] text-slate-400 hover:text-emerald-400 transition underline inline-flex items-center gap-1">
             <i data-lucide="message-circle" class="w-3 h-3 text-emerald-400"></i>
             <span>Mobile par koi problem ho rahi hai? Direct WhatsApp Support Lein ↗</span>
           </a>
@@ -3894,11 +4099,11 @@
       <!-- Compact Footer Actions -->
       <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
         <button type="button" onclick="closeGhCopyAssistantModal()"
-                class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+          class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
           Band Karein
         </button>
         <button type="button" onclick="confirmModalAndGoToStep2()"
-                class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 transition active:scale-95">
+          class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 transition active:scale-95">
           <span>Google Sheet Connect (Step 2) ➔</span>
           <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </button>
@@ -3910,9 +4115,12 @@
   <!-- ========================================================
        OAUTH AUTOMATION PROGRESS MODAL
        ======================================================== -->
-  <div id="oauthLoadingModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="relative w-full max-w-md bg-slate-900 border border-emerald-500/50 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4 text-center">
-      <div class="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto animate-pulse">
+  <div id="oauthLoadingModal"
+    class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div
+      class="relative w-full max-w-md bg-slate-900 border border-emerald-500/50 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4 text-center">
+      <div
+        class="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto animate-pulse">
         <i data-lucide="zap" class="w-8 h-8 text-amber-300"></i>
       </div>
       <div class="space-y-1">
@@ -3945,7 +4153,9 @@
       </div>
 
       <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-        <div id="oauthProgressBar" class="bg-gradient-to-r from-emerald-500 to-cyan-500 h-1.5 rounded-full transition-all duration-500 w-1/3"></div>
+        <div id="oauthProgressBar"
+          class="bg-gradient-to-r from-emerald-500 to-cyan-500 h-1.5 rounded-full transition-all duration-500 w-1/3">
+        </div>
       </div>
     </div>
   </div>
@@ -3953,104 +4163,126 @@
   <!-- ========================================================
        IN-DASHBOARD THEME SELECTOR MODAL
        ======================================================== -->
-  <div id="dashboardThemeSelectorModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
-    <div class="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-4 my-6 text-left" onclick="event.stopPropagation()">
+  <div id="dashboardThemeSelectorModal"
+    class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div
+      class="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-4 my-6 text-left"
+      onclick="event.stopPropagation()">
       <div class="flex items-start justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 text-xl shrink-0">
+          <div
+            class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 text-xl shrink-0">
             🎨
           </div>
           <div>
             <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Storefront Theme Chunein</h3>
-            <p class="text-xs text-slate-400">Jo theme aap chunte hain, wahi aapke frontend par default set ho jayegi:</p>
+            <p class="text-xs text-slate-400">Jo theme aap chunte hain, wahi aapke frontend par default set ho jayegi:
+            </p>
           </div>
         </div>
-        <button type="button" onclick="closeThemeSelectorModal()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition">
+        <button type="button" onclick="closeThemeSelectorModal()"
+          class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
       <!-- 6 Flagship Themes Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[55vh] overflow-y-auto pr-1">
-        
+
         <!-- Theme 1: Vastu -->
-        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-amber-400 cursor-pointer transition relative group dashboard-theme-card"
-             onclick="applyNewThemeFromModal('vastu')">
+        <div
+          class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-amber-400 cursor-pointer transition relative group dashboard-theme-card"
+          onclick="applyNewThemeFromModal('vastu')">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-2xl">🕉️</span>
             <span class="text-[10px] text-amber-400 font-mono font-semibold">vastu-demo.html</span>
           </div>
           <h4 class="font-bold text-xs sm:text-sm text-amber-300">वास्तु ब्रह्मांड (Vastu Brahmand)</h4>
-          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड व डिजिटल गाइड्स शॉप।</p>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">2D जियो-प्लॉटर, 16 ज़ोन, 45 देवता चक्र, वीडियो गाइड
+            व डिजिटल गाइड्स शॉप।</p>
           <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
             <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
-            <a href="vastu-demo.html" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+            <a href="vastu-demo.html" target="_blank" onclick="event.stopPropagation()"
+              class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
           </div>
         </div>
 
         <!-- Theme 2: Saree -->
-        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-amber-400 cursor-pointer transition relative group dashboard-theme-card"
-             onclick="applyNewThemeFromModal('saree')">
+        <div
+          class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-amber-400 cursor-pointer transition relative group dashboard-theme-card"
+          onclick="applyNewThemeFromModal('saree')">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-2xl">🥻</span>
             <span class="text-[10px] text-amber-400 font-mono font-semibold">saree-demo.html</span>
           </div>
           <h4 class="font-bold text-xs sm:text-sm text-[#F5DE7A]">नूलम साड़ी (NOOLAM Saree)</h4>
-          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक ज़ूम व डायरेक्ट व्हाट्सएप ऑर्डरिंग।</p>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">बनारसी, कांजीवरम, सिल्क, ब्राइडल ड्रेप्स, फैब्रिक
+            ज़ूम व डायरेक्ट व्हाट्सएप ऑर्डरिंग।</p>
           <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
             <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
-            <a href="saree-demo.html" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+            <a href="saree-demo.html" target="_blank" onclick="event.stopPropagation()"
+              class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
           </div>
         </div>
 
         <!-- Theme 3: Electronics -->
-        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-cyan-400 cursor-pointer transition relative group dashboard-theme-card"
-             onclick="applyNewThemeFromModal('electronics')">
+        <div
+          class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-cyan-400 cursor-pointer transition relative group dashboard-theme-card"
+          onclick="applyNewThemeFromModal('electronics')">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-2xl">⚡</span>
             <span class="text-[10px] text-cyan-400 font-mono font-semibold">theme=electronics</span>
           </div>
           <h4 class="font-bold text-xs sm:text-sm text-cyan-300">Electronics &amp; Gadgets Pro</h4>
-          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Mobiles, Smartwatches, Audio, Specs Comparer & Tech Catalog.</p>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Mobiles, Smartwatches, Audio, Specs Comparer & Tech
+            Catalog.</p>
           <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
             <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
-            <a href="demo.html?theme=electronics" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+            <a href="demo.html?theme=electronics" target="_blank" onclick="event.stopPropagation()"
+              class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
           </div>
         </div>
 
         <!-- Theme 4: Fashion -->
-        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-rose-400 cursor-pointer transition relative group dashboard-theme-card"
-             onclick="applyNewThemeFromModal('fashion')">
+        <div
+          class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-rose-400 cursor-pointer transition relative group dashboard-theme-card"
+          onclick="applyNewThemeFromModal('fashion')">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-2xl">👗</span>
             <span class="text-[10px] text-rose-400 font-mono font-semibold">theme=fashion</span>
           </div>
           <h4 class="font-bold text-xs sm:text-sm text-rose-300">Fashion &amp; Apparel Boutique</h4>
-          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Clothing, Dresses, Streetwear & Luxury Style Catalog.</p>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Clothing, Dresses, Streetwear & Luxury Style
+            Catalog.</p>
           <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
             <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
-            <a href="demo.html?theme=fashion" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+            <a href="demo.html?theme=fashion" target="_blank" onclick="event.stopPropagation()"
+              class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
           </div>
         </div>
 
         <!-- Theme 5: Grocery -->
-        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-emerald-400 cursor-pointer transition relative group dashboard-theme-card"
-             onclick="applyNewThemeFromModal('grocery_food')">
+        <div
+          class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-emerald-400 cursor-pointer transition relative group dashboard-theme-card"
+          onclick="applyNewThemeFromModal('grocery_food')">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-2xl">🛒</span>
             <span class="text-[10px] text-emerald-400 font-mono font-semibold">theme=grocery_food</span>
           </div>
           <h4 class="font-bold text-xs sm:text-sm text-emerald-300">Grocery &amp; Daily Food</h4>
-          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart.</p>
+          <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Fresh Organics, Fruits, Dairy, Snacks & Quick Cart.
+          </p>
           <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
             <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
-            <a href="demo.html?theme=grocery_food" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+            <a href="demo.html?theme=grocery_food" target="_blank" onclick="event.stopPropagation()"
+              class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
           </div>
         </div>
 
         <!-- Theme 6: Beauty -->
-        <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-pink-400 cursor-pointer transition relative group dashboard-theme-card"
-             onclick="applyNewThemeFromModal('beauty_personal_care')">
+        <div
+          class="p-3.5 rounded-2xl bg-slate-950 border border-slate-700 hover:border-pink-400 cursor-pointer transition relative group dashboard-theme-card"
+          onclick="applyNewThemeFromModal('beauty_personal_care')">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-2xl">💄</span>
             <span class="text-[10px] text-pink-400 font-mono font-semibold">theme=beauty_personal_care</span>
@@ -4059,14 +4291,16 @@
           <p class="text-[11px] text-slate-300 mt-0.5 line-clamp-2">Skincare, Makeup, Serums & Salon Grade Products.</p>
           <div class="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800">
             <span class="text-[10px] text-emerald-400 font-bold">Select This ➔</span>
-            <a href="demo.html?theme=beauty_personal_care" target="_blank" onclick="event.stopPropagation()" class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
+            <a href="demo.html?theme=beauty_personal_care" target="_blank" onclick="event.stopPropagation()"
+              class="text-[10px] text-cyan-400 hover:underline">Demo ↗</a>
           </div>
         </div>
 
       </div>
 
       <div class="pt-3 border-t border-slate-800 text-center">
-        <button type="button" onclick="closeThemeSelectorModal()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+        <button type="button" onclick="closeThemeSelectorModal()"
+          class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
           Band Karein
         </button>
       </div>
@@ -4074,15 +4308,19 @@
   </div>
 
   <!-- Lightbox Modal for Screenshots -->
-  <div id="imageLightboxModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+  <div id="imageLightboxModal"
+    class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+    onclick="closeImageModal()">
     <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
-      <button type="button" onclick="closeImageModal()" class="absolute -top-10 right-0 p-1.5 px-3 text-white hover:text-red-400 font-bold text-xs flex items-center gap-1 bg-slate-900 rounded-lg border border-slate-700">
+      <button type="button" onclick="closeImageModal()"
+        class="absolute -top-10 right-0 p-1.5 px-3 text-white hover:text-red-400 font-bold text-xs flex items-center gap-1 bg-slate-900 rounded-lg border border-slate-700">
         <i data-lucide="x" class="w-3.5 h-3.5"></i> Band Karein [ESC]
       </button>
-      <img id="lightboxImage" src="" alt="Screenshot" class="max-w-full max-h-[80vh] rounded-xl border border-slate-700 shadow-2xl object-contain bg-slate-950" />
+      <img id="lightboxImage" src="" alt="Screenshot"
+        class="max-w-full max-h-[80vh] rounded-xl border border-slate-700 shadow-2xl object-contain bg-slate-950" />
       <p id="lightboxCaption" class="text-xs text-slate-300 mt-2.5 text-center font-medium max-w-lg"></p>
     </div>
   </div>
 </body>
-</html>
 
+</html>
