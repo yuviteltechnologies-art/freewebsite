@@ -2968,39 +2968,23 @@
       }
     }
 
-    const CENTRAL_STORE_API_URL = "https://script.google.com/macros/s/AKfycbzOoxV4jcP_lNwMDTVhguuKCS9o4PPTYoPJ1oL7gB_-XssArwgYqkk1BIn6ySCI8r3f/exec";
+    const GOOGLE_PROVISIONER_URL = "https://script.google.com/macros/s/AKfycbxa7h_zQzQtER5VmF8_o_uBVkaBX3jPJgxVJTA3jE9-y2j39b3L56qwGqwz9BgZ0GjZ/exec";
 
-    // 1-Click Auto Provisioning with Google Account
-    async function startGoogleAutoProvisioning() {
+    // 1-Click Auto Provisioning with Google Account & Auto-Redirect
+    function startGoogleAutoProvisioning() {
+      const currentCleanUrl = window.location.href.split('?')[0].split('#')[0];
+      const webAppUrl = GOOGLE_PROVISIONER_URL + "?authuser=0&redirect_url=" + encodeURIComponent(currentCleanUrl);
+
       const btn = document.getElementById('btnGoogleAutoConnect');
       const btnText = document.getElementById('btnGoogleAutoConnectText');
       if (btn && btnText) {
         btn.disabled = true;
-        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Sheet Ban Rahi Hai...</span>`;
+        btnText.innerHTML = `<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Google Account Connect Ho Raha Hai...</span>`;
         if (window.lucide) lucide.createIcons();
       }
 
-      const storeName = (currentUser && currentUser.brand_name) || "SheetStore Pro";
-      const apiUrl = CENTRAL_STORE_API_URL + "?action=createStoreSheet&store_name=" + encodeURIComponent(storeName);
-
-      try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        if (data && data.success && data.sheet_id) {
-          handleAutoConnectedSheet(data.sheet_id, data.sheet_url);
-          return;
-        }
-      } catch (err) {
-        console.warn("Direct API provision fallback:", err);
-      }
-
-      // Safe Fallback: Direct Template Sheet with sharing parameters (Zero crash on mobile)
-      window.open("https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/edit?usp=sharing", "_blank");
-      if (btn && btnText) {
-        btn.disabled = false;
-        btnText.innerText = "⚡ 1-Click Connect with Google Account";
-        if (window.lucide) lucide.createIcons();
-      }
+      // Smooth direct navigation so sheet is created and redirects straight back to dashboard
+      window.location.href = webAppUrl;
     }
 
     const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
