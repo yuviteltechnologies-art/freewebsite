@@ -640,40 +640,78 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <!-- Copy Sheet Template Button (Direct in Chrome & WhatsApp Share) -->
-          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+          <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-3">
             <div>
               <div class="flex items-center justify-between mb-1">
                 <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                   <i data-lucide="sheet" class="w-4 h-4 text-emerald-400"></i>
-                  <span>1. Google Sheet Copy (Chrome Direct)</span>
+                  <span>1. Google Sheet Copy (Mobile Bypass)</span>
                 </h4>
                 <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                  🚀 Mobile App Bypass
+                  📱 Mobile Friendly
                 </span>
               </div>
-              <p class="text-xs text-slate-400 mb-3">
-                Yeh sheet direct Chrome me open hogi taaki Sheets app me na fasein aur Extensions &gt; Apps Script aasaani se mil sake.
+              <p class="text-xs text-slate-400">
+                Android phone me Sheets App khulne se rokne ke liye niche diye gaye options use karein:
               </p>
             </div>
 
-            <div class="space-y-2 mt-2">
-              <button type="button" onclick="openSheetDirectInChrome()"
-                      class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
+            <!-- Primary Mobile Action: Address Bar Paste Bypass -->
+            <div class="space-y-2">
+              <button type="button" onclick="copySheetLinkForAddressBar()" id="btnCopySheetLink"
+                      class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95">
                 <i data-lucide="copy" class="w-4 h-4"></i>
-                <span>Open &amp; Copy Sheet (Direct Chrome) 📑</span>
+                <span id="btnCopySheetLinkText">📋 1-Click Copy Link (Chrome Address Bar me Paste Karein)</span>
               </button>
 
-              <button type="button" onclick="shareSheetSetupToWhatsApp()"
-                      class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95">
-                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                <span>📲 WhatsApp par Setup Link bhejein (Open on PC)</span>
-              </button>
+              <!-- Dynamic Tip Box after Copy -->
+              <div id="copyAddressBarTip" class="hidden p-3 bg-emerald-950/70 border border-emerald-500/40 rounded-xl text-xs text-emerald-200 space-y-1.5 animate-fadeIn">
+                <div class="font-bold flex items-center gap-1.5 text-white text-xs">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                  <span>Link Copied! Ab yeh 2 steps karein:</span>
+                </div>
+                <ol class="list-decimal list-inside space-y-1 text-slate-300 text-[11px] pl-1 leading-relaxed">
+                  <li>Upar Chrome ke <strong class="text-white">Address bar</strong> (jahan URL likha hai) me <strong class="text-emerald-400">Paste</strong> karke Enter/Go karein. (Isse Google Sheets App nahi khulegi, direct Chrome me khulega!).</li>
+                  <li>Sheet khulne par Chrome ke <strong class="text-white">⋮ (3-dots)</strong> &rarr; <strong class="text-white">"Desktop site"</strong> tick karein, taaki <strong class="text-white">Extensions &gt; Apps Script</strong> dikhe!</li>
+                </ol>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <a href="https://docs.google.com/spreadsheets/d/1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc/copy" 
+                   target="_blank"
+                   class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-blue-400 hover:text-white border border-blue-500/30 font-semibold text-[11px] flex items-center justify-center gap-1.5 transition active:scale-95 text-center"
+                   title="Agar app khul rahi hai, toh is link par 2 sec long-press karke 'Open in new tab' chunein">
+                  <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+                  <span>Direct Open ↗</span>
+                </a>
+
+                <button type="button" onclick="shareSheetSetupToWhatsApp()"
+                        class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-400 hover:text-white border border-emerald-500/30 font-semibold text-[11px] flex items-center justify-center gap-1.5 transition active:scale-95 text-center">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5 shrink-0"></i>
+                  <span>📲 WhatsApp to PC</span>
+                </button>
+              </div>
             </div>
 
-            <div class="mt-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 flex items-start gap-2">
-              <i data-lucide="smartphone" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
-              <span><strong>Mobile Tip:</strong> Sheet open hone ke baad Chrome me upar <strong>⋮ (3-dots)</strong> dabakar <strong>"Desktop site"</strong> tick karein, tabhi Extensions aur Deploy button dikhega.</span>
-            </div>
+            <!-- Collapsible Android 10-Second Permanent Fix -->
+            <details class="group bg-slate-900/60 border border-slate-800/80 rounded-xl p-2.5 text-xs text-slate-300">
+              <summary class="font-bold text-slate-300 cursor-pointer flex items-center justify-between text-[11px] select-none hover:text-emerald-400 transition">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="settings" class="w-3.5 h-3.5 text-amber-400"></i>
+                  <span>Phone me Sheets App band karne ka permanent tareeqa (10 Sec)</span>
+                </span>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition group-open:rotate-180"></i>
+              </summary>
+              <div class="mt-2 pt-2 border-t border-slate-800 text-[11px] space-y-1.5 text-slate-400">
+                <p>Android phone me Sheets App har link ko capture kar leti hai. Isko 10 second me band karein:</p>
+                <div class="bg-slate-950 p-2 rounded-lg border border-slate-800 space-y-0.5 text-slate-300 font-mono text-[10px]">
+                  1. Phone Settings &rarr; Apps (Manage Apps)<br/>
+                  2. Google Sheets chunein &rarr; "Open by default"<br/>
+                  3. "Open supported links" ko OFF kar dein
+                </div>
+                <p class="text-emerald-400 text-[10px]">Iske baad phone me koi bhi sheet link kabhi app me nahi jayegi, direct Chrome me khulegi!</p>
+              </div>
+            </details>
           </div>
 
           <!-- Enter Apps Script Web App URL -->
@@ -2876,6 +2914,40 @@
 
     const GOOGLE_SHEET_TEMPLATE_ID = "1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc";
     const GOOGLE_SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/copy";
+
+    // 1-Click Copy for Address Bar Paste (Bypasses Google Sheets App on Android)
+    async function copySheetLinkForAddressBar() {
+      const btnText = document.getElementById('btnCopySheetLinkText');
+      const tip = document.getElementById('copyAddressBarTip');
+
+      try {
+        await navigator.clipboard.writeText(GOOGLE_SHEET_COPY_URL);
+      } catch (err) {
+        const textarea = document.createElement('textarea');
+        textarea.value = GOOGLE_SHEET_COPY_URL;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+
+      if (btnText) {
+        btnText.innerText = "✓ Link Copied! (Ab Address Bar me Paste karein)";
+      }
+      if (tip) {
+        tip.classList.remove('hidden');
+        tip.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+      }
+
+      setTimeout(() => {
+        if (btnText) {
+          btnText.innerText = "📋 1-Click Copy Link (Chrome Address Bar me Paste Karein)";
+        }
+      }, 5000);
+    }
 
     // Direct in Chrome for Android to bypass native Sheets App interception
     function openSheetDirectInChrome() {
