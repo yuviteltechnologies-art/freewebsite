@@ -896,21 +896,62 @@
                 </summary>
 
                 <div class="mt-4 pt-3 border-t border-slate-800 space-y-3.5 text-left">
-                  <!-- Tareeqa 1: Google Native Official Copy Link -->
-                  <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                  <!-- Tareeqa 1: Google Native Official Copy Link with Multi-Browser Intents -->
+                  <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-3">
                     <div class="flex items-center justify-between gap-2">
                       <strong class="text-white text-xs flex items-center gap-1.5">
-                        <i data-lucide="sheet" class="w-3.5 h-3.5 text-emerald-400"></i>
+                        <i data-lucide="sheet" class="w-4 h-4 text-emerald-400"></i>
                         <span>Tareeqa 1: Google Official 1-Click Template Copy</span>
                       </strong>
-                      <a href="https://docs.google.com/spreadsheets/d/1UrKX7co3In04ijuxYP8HUgHYVD8YVgQOoJL41itO1uc/copy" target="_blank"
-                         class="px-2.5 py-1 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1 transition">
-                        <span>Make a Copy ↗</span>
-                      </a>
+                      <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                        Zero Permission ✓
+                      </span>
                     </div>
+
                     <p class="text-[11px] text-slate-400 leading-relaxed">
-                      Ye Google ka official link hai. Is par click karne se Google direct 'Make a copy' dialog dikhata hai. Koi 'Unsafe App' warning nahi aayegi aur koi Drive permission nahi mangega.
+                      Mobile Sheets/Drive App ko bypass karke direct browser me 'Make a copy' dialog kholne ke liye apna browser chunein:
                     </p>
+
+                    <!-- Multi-Browser 1-Tap Pills Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                      <!-- Chrome Intent -->
+                      <button type="button" onclick="openSheetInBrowser('chrome')"
+                              class="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-850 text-white border border-slate-700 hover:border-amber-400 flex items-center justify-center gap-1.5 transition active:scale-95 group text-xs font-bold shadow">
+                        <span class="text-base">🌐</span>
+                        <span>Chrome ↗</span>
+                      </button>
+
+                      <!-- Firefox Intent -->
+                      <button type="button" onclick="openSheetInBrowser('firefox')"
+                              class="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-850 text-white border border-slate-700 hover:border-orange-400 flex items-center justify-center gap-1.5 transition active:scale-95 group text-xs font-bold shadow">
+                        <span class="text-base">🦊</span>
+                        <span>Firefox ↗</span>
+                      </button>
+
+                      <!-- Brave Intent -->
+                      <button type="button" onclick="openSheetInBrowser('brave')"
+                              class="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-850 text-white border border-slate-700 hover:border-orange-500 flex items-center justify-center gap-1.5 transition active:scale-95 group text-xs font-bold shadow">
+                        <span class="text-base">🦁</span>
+                        <span>Brave ↗</span>
+                      </button>
+
+                      <!-- Samsung / Default Intent -->
+                      <button type="button" onclick="openSheetInBrowser('samsung')"
+                              class="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-850 text-white border border-slate-700 hover:border-blue-400 flex items-center justify-center gap-1.5 transition active:scale-95 group text-xs font-bold shadow">
+                        <span class="text-base">📱</span>
+                        <span>Samsung ↗</span>
+                      </button>
+                    </div>
+
+                    <!-- 1-Click Copy Link (Address bar paste fallback) -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px] gap-2">
+                      <span class="text-slate-400 truncate">Ya link copy karke kisi bhi browser me paste karein:</span>
+                      <button type="button" onclick="copySheetLinkForAddressBar()" id="btnCopySheetLink"
+                              class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-[10px] border border-slate-700 flex items-center gap-1 transition active:scale-95 shrink-0">
+                        <i data-lucide="copy" class="w-3 h-3"></i>
+                        <span id="btnCopySheetLinkText">Copy Link</span>
+                      </button>
+                    </div>
                   </div>
 
                   <!-- Tareeqa 2: Custom Sheet Link Input -->
@@ -3376,21 +3417,43 @@
       }, 5000);
     }
 
-    // Direct in Chrome for Android to bypass native Sheets App interception
-    function openSheetDirectInChrome() {
+    // Multi-Browser Intent Launcher (Chrome, Firefox, Brave, Samsung Internet, Generic)
+    function openSheetInBrowser(browserType = 'chrome') {
       const isAndroid = /android/i.test(navigator.userAgent);
-      if (isAndroid) {
-        // Android Chrome Intent forces Google Chrome browser package directly
-        const chromeIntent = "intent://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/copy#Intent;scheme=https;package=com.android.chrome;end";
-        // Fallback safety in case intent fails
-        const fallbackTimer = setTimeout(() => {
-          window.open(GOOGLE_SHEET_COPY_URL, '_blank');
-        }, 1500);
-        window.addEventListener('blur', () => clearTimeout(fallbackTimer), { once: true });
-        window.location.href = chromeIntent;
-      } else {
-        window.open(GOOGLE_SHEET_COPY_URL, '_blank');
+      const copyUrl = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_TEMPLATE_ID + "/copy";
+
+      if (!isAndroid) {
+        window.open(copyUrl, '_blank');
+        return;
       }
+
+      let packageId = 'com.android.chrome';
+      if (browserType === 'firefox') {
+        packageId = 'org.mozilla.firefox';
+      } else if (browserType === 'samsung') {
+        packageId = 'com.sec.android.app.sbrowser';
+      } else if (browserType === 'brave') {
+        packageId = 'com.brave.browser';
+      } else if (browserType === 'opera') {
+        packageId = 'com.opera.browser';
+      }
+
+      let intentUrl = `intent://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_TEMPLATE_ID}/copy#Intent;scheme=https;package=${packageId};end`;
+      if (browserType === 'default') {
+        intentUrl = `intent://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_TEMPLATE_ID}/copy#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end`;
+      }
+
+      // Fallback safety: If selected browser is not installed, open normal copyUrl
+      const fallbackTimer = setTimeout(() => {
+        window.open(copyUrl, '_blank');
+      }, 1500);
+      window.addEventListener('blur', () => clearTimeout(fallbackTimer), { once: true });
+      window.location.href = intentUrl;
+    }
+
+    // Direct in Chrome for Android to bypass native Sheets App interception (Backward Compatibility)
+    function openSheetDirectInChrome() {
+      openSheetInBrowser('chrome');
     }
 
     // Share link to WhatsApp for 1-minute completion on laptop/PC
