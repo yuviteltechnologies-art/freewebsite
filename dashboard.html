@@ -552,88 +552,6 @@
             </button>
           </div>
 
-          <!-- PROMINENT REPOSITORY & WEBSITE LINKS DISPLAY CARD (SHOWN WHEN READY) -->
-          <div id="readyLinksCard" class="hidden p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950/40 to-slate-900 border-2 border-emerald-500/50 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg shrink-0">
-                  🎉
-                </div>
-                <div>
-                  <h4 class="font-heading font-bold text-sm sm:text-base text-white">Badhai Ho! Aapka Store Setup Complete Hai!</h4>
-                  <p class="text-[11px] text-slate-400">Dono links taiyaar hain — yahan se 1-click me copy karein:</p>
-                </div>
-              </div>
-              <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold">
-                ✓ Ready
-              </span>
-            </div>
-
-            <!-- LINK 1: GITHUB REPO LINK -->
-            <div class="space-y-1.5">
-              <label class="block text-xs font-bold text-blue-300 flex items-center justify-between">
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="github" class="w-3.5 h-3.5"></i>
-                  <span>1. GitHub Repository Link:</span>
-                </span>
-                <span class="text-[10px] text-slate-400 font-normal">Aapka Source Code Repo</span>
-              </label>
-              <div class="flex items-center gap-2">
-                <input type="text" id="ghRepoUrlInput" readonly
-                       placeholder="https://github.com/username/store"
-                       class="flex-1 px-3.5 py-2.5 bg-slate-950 border border-blue-500/30 rounded-xl text-xs sm:text-sm text-blue-200 font-mono select-all focus:outline-none" />
-                
-                <button type="button" id="btnCopyRepoLink" onclick="copyCardLink('ghRepoUrlInput', 'btnCopyRepoLink')"
-                        class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 transition active:scale-95 shrink-0 shadow">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                  <span>Copy Repo Link</span>
-                </button>
-                <a id="btnOpenRepoUrl" href="#" target="_blank"
-                   class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs flex items-center gap-1 transition active:scale-95 shrink-0 border border-slate-700" title="GitHub Repo Kholein">
-                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- LINK 2: LIVE WEBSITE LINK (DIRECTLY BELOW REPO LINK) -->
-            <div class="space-y-1.5 pt-2 border-t border-slate-800/80">
-              <label class="block text-xs font-bold text-emerald-300 flex items-center justify-between">
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="globe" class="w-3.5 h-3.5"></i>
-                  <span>2. Live Website Link (Customer Storefront):</span>
-                </span>
-                <span class="text-[10px] text-emerald-400 font-bold">100% Free Hosting</span>
-              </label>
-              <div class="flex items-center gap-2">
-                <input type="text" id="siteUrlInput" readonly
-                       placeholder="https://username.github.io/store/"
-                       class="flex-1 px-3.5 py-2.5 bg-slate-950 border border-emerald-500/40 rounded-xl text-xs sm:text-sm text-emerald-200 font-mono select-all focus:outline-none font-bold" />
-                
-                <button type="button" id="btnCopySiteLink" onclick="copyCardLink('siteUrlInput', 'btnCopySiteLink')"
-                        class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 transition active:scale-95 shrink-0 shadow">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                  <span>Copy Website Link</span>
-                </button>
-                <a id="btnOpenSiteUrl" href="#" target="_blank"
-                   class="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs flex items-center gap-1.5 transition active:scale-95 shrink-0 shadow" title="Live Website Kholein">
-                  <span>Open Store</span>
-                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- BUILD NOTICE -->
-            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 flex items-start gap-2">
-              <i data-lucide="clock" class="w-4 h-4 shrink-0 text-amber-400 mt-0.5"></i>
-              <div>
-                <p class="font-bold">Important Note on First-Time Launch:</p>
-                <p class="text-slate-300 text-[10.5px] leading-relaxed">
-                  GitHub Pages naye repository par website deploy karne me <strong>1 se 2 minute</strong> ka samay leta hai. Agar turant 404 dikhe to ghabrayein nahi, 1 minute baad refresh karein!
-                </p>
-              </div>
-            </div>
-          </div>
-
           <!-- Bottom Navigation Bar for Step 2 -->
           <div class="pt-5 border-t border-slate-800/80 flex items-center justify-between gap-3">
             <button type="button" onclick="switchMasterStep(1)" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 border border-slate-700 active:scale-95">
@@ -649,6 +567,13 @@
 
           <!-- HIDDEN BACKWARDS-COMPATIBILITY HOOKS -->
           <div class="hidden">
+            <div id="readyLinksCard"></div>
+            <input type="text" id="ghRepoUrlInput" />
+            <input type="text" id="siteUrlInput" />
+            <button id="btnCopyRepoLink"></button>
+            <button id="btnCopySiteLink"></button>
+            <a id="btnOpenRepoUrl" href="#"></a>
+            <a id="btnOpenSiteUrl" href="#"></a>
             <input type="text" id="customRepoNameInput" value="vastustore" />
             <span id="step2ThemePillIcon"></span>
             <span id="step2ThemePillTitle"></span>
@@ -3295,12 +3220,7 @@
 
           setTimeout(() => {
             if (modal) modal.classList.add('hidden');
-            switchMasterStep(2);
-            const readyCard = document.getElementById('readyLinksCard');
-            if (readyCard) {
-              readyCard.classList.remove('hidden');
-              readyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            switchMasterStep(3);
           }, 1800);
 
         } else {
